@@ -1,0 +1,28 @@
+html{color:#fff;font-family:'Open sans',sans-serif;font-size:16px;line-height:1.4;}
+h1,h2,h3,h4,h5,h6 {
+    text-align:center;
+}
+
+#header, #side-panel, #view-message { display: none; }
+
+.dashboard {
+    overflow: hidden;
+    position: absolute; left:0px; top:0px;
+    height:   100%;
+    width:    100%;
+}
+
+.config {
+    position: absolute; right:1%; top:1%;
+    z-index:  999;
+    margin:   0;     padding: 0;
+    width:    15px;  height:  16px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.config:hover {
+    width:    auto; height: auto;
+    padding:  10px;
+    overflow: visible;
+}

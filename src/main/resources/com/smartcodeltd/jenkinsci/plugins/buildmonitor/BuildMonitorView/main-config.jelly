@@ -1,0 +1,14 @@
+<div class="config">
+    <h2>Build Monitor</h2>
+    <ul>
+        <li>
+            <a href="configure">Configure View</a>
+        </li>
+        <li>
+            <a href="delete">Delete View</a>
+        </li>
+        <li>
+            <a href="../../">Jenkins Home</a>
+        </li>
+    </ul>
+</div>

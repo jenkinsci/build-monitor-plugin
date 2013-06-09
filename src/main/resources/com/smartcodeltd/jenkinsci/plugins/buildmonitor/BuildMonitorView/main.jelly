@@ -1,0 +1,29 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+         xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
+         xmlns:i="jelly:fmt">
+    <l:layout>
+        <l:header>
+            <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700"/>
+            <link rel="stylesheet" href="${resURL}/plugin/build-monitor/css/normalize.css"/>
+            <link rel="stylesheet" href="${resURL}/plugin/build-monitor/css/style.css"/>
+            <style type="text/css">
+                .dashboard { background: url('${resURL}/plugin/build-monitor/images/background.png'); }
+                .config { background: url('${imagesURL}/16x16/help.png') top right no-repeat #73bfff; }
+            </style>
+            <meta http-equiv="refresh" content="${from.refresh}"/>
+        </l:header>
+
+        <j:choose>
+            <j:when test="${empty(items)}">
+                <st:include page="noJob.jelly"/>
+            </j:when>
+            <j:otherwise>
+                <div class="dashboard">
+                    <h1>${it.displayName}</h1>
+                    <st:include page="main-config.jelly"/>
+                    <st:include page="main-jobs.jelly"/>
+                </div>
+            </j:otherwise>
+        </j:choose>
+    </l:layout>
+</j:jelly>

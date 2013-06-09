@@ -1,0 +1,9 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+    <f:entry title="${%Jobs}">
+        <j:forEach var="job" items="${app.items}">
+            <f:checkbox name="${job.name}" checked="${it.contains(job)}" />
+            ${job.name}
+            <br/>
+        </j:forEach>
+    </f:entry>
+</j:jelly>
