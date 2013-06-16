@@ -2,4 +2,9 @@
          xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
          xmlns:i="jelly:fmt">
 
+    <ul>
+    <j:forEach var="job" items="${it.jobs}">
+        <li class="${job.status()}">Job: ${job} ${job.status()}.</li>
+    </j:forEach>
+    </ul>
 </j:jelly>
