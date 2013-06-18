@@ -132,11 +132,11 @@ public class JobViewTest {
                 whereTheLastBuildWasBrokenBy("Adam").
                 andThePreviousBuildWasBrokenBy("Ben", "Connor").
                 andThePreviousBuildWasBrokenBy("Daniel").
-                andThePreviousBuildSucceededThanksTo("Erol")));
+                andThePreviousBuildSucceededThanksTo("Errol")));
 
         assertThat(view.culprits(), hasSize(4));
         assertThat(view.culprits(), hasItems("Adam", "Ben", "Connor", "Daniel"));
-        assertThat(view.culprits(), not(hasItem("Erol")));
+        assertThat(view.culprits(), not(hasItem("Errol")));
     }
 
     /*
