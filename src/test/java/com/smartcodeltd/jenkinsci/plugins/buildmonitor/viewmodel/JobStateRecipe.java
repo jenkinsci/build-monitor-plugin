@@ -2,12 +2,9 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import hudson.model.AbstractBuild;
 import hudson.model.Job;
-import hudson.model.Result;
 
 import java.util.Stack;
 
-import static hudson.model.Result.FAILURE;
-import static hudson.model.Result.SUCCESS;
 import static org.mockito.Mockito.*;
 
 public class JobStateRecipe {
@@ -24,40 +21,16 @@ public class JobStateRecipe {
         return this;
     }
 
-    public JobStateRecipe whereTheLastBuildResultIs(Result result) {
-        return whereThePreviousBuildResultIs(result);
+    public JobStateRecipe whereTheCurrentBuildNumberIs(int number) {
+        return updatedWithOnlyOneHistoryEntryFor(a(build().whichNumberIs(number)));
     }
 
-    public JobStateRecipe whereThePreviousBuildResultIs(Result result) {
-        return updatedWithEarliestHistoryEntryFor(a(build().thatFinishedWith(result)));
+    public JobStateRecipe whereTheLast(BuildStateRecipe recipe) {
+        return updatedWithOnlyOneHistoryEntryFor(recipe.execute());
     }
 
-    public JobStateRecipe whereTheLastBuildWasBrokenBy(String... culprits) {
-        return andThePreviousBuildWasBrokenBy(culprits);
-    }
-
-    public JobStateRecipe andThePreviousBuildWasBrokenBy(String... culprits) {
-        return updatedWithEarliestHistoryEntryFor(a(build().
-                thatFinishedWith(FAILURE).
-                withChangesFrom(culprits)));
-    }
-
-    public JobStateRecipe andThePreviousBuildSucceededThanksTo(String... committers) {
-        return updatedWithEarliestHistoryEntryFor(a(build().
-                thatFinishedWith(SUCCESS).
-                withChangesFrom(committers)));
-    }
-
-    public JobStateRecipe thatHasntStartedYet() {
-        return updatedWithOnlyOneHistoryEntryFor(a(build().thatHasntStartedYet()));
-    }
-
-    public JobStateRecipe thatIsStillBuilding() {
-        return updatedWithOnlyOneHistoryEntryFor(a(build().thatIsStillBuilding()));
-    }
-
-    public JobStateRecipe thatIsStillUpdatingTheLog() {
-        return updatedWithOnlyOneHistoryEntryFor(a(build().thatIsStillUpdatingTheLog()));
+    public JobStateRecipe andThePrevious(BuildStateRecipe recipe) {
+        return updatedWithEarliestHistoryEntryFor(recipe.execute());
     }
 
     @SuppressWarnings("unchecked")
@@ -79,7 +52,6 @@ public class JobStateRecipe {
 
         return job;
     }
-
 
     private JobStateRecipe updatedWithEarliestHistoryEntryFor(AbstractBuild build) {
         buildHistory.push(build);
