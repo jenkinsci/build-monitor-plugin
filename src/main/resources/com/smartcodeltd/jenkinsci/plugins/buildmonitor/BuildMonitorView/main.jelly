@@ -1,29 +1,90 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
          xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
          xmlns:i="jelly:fmt">
+
     <l:layout>
+
+        <j:set var="resourcesURL" value="${resURL}/plugin/build-monitor" />
+        <j:set var="jobsURL" value="${rootURL}/job" />
+        <j:set var="angularVersion" value="1.0.7" />
+
         <l:header>
             <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700"/>
-            <link rel="stylesheet" href="${resURL}/plugin/build-monitor/css/normalize.css"/>
-            <link rel="stylesheet" href="${resURL}/plugin/build-monitor/css/style.css"/>
+            <link rel="stylesheet" href="${resourcesURL}/css/normalize.css"/>
+            <link rel="stylesheet" href="${resourcesURL}/css/industrial.css"/>
             <style type="text/css">
-                .dashboard { background: url('${resURL}/plugin/build-monitor/images/background.png'); }
+                .dashboard { background: url('${resourcesURL}/images/background.png'); }
                 .config { background: url('${imagesURL}/16x16/help.png') top right no-repeat #73bfff; }
             </style>
-            <meta http-equiv="refresh" content="${from.refresh}"/>
+
+            <script src="//ajax.googleapis.com/ajax/libs/angularjs/${angularVersion}/angular.min.js"></script>
+            <script>window.angular || document.write('\x3Cscript src="${resourcesURL}/libs/angular-${angularVersion}.min.js">\x3C/script>')</script>
+
+            <script>
+                var buildMonitor = angular.
+                    module('buildMonitor', []).
+                    service('fetch', function($q, $rootScope) {
+                        var proxy   = <st:bind value="${it}"/>;
+
+                        this.current = function() {
+                            var def = $q.defer();
+
+                            // todo: Jenkins JavaScript proxy doesn't seem like it was supporting error handling.
+                            //       is there a better way?
+                            proxy.fetchJobViews(function(response) {
+                               def.resolve(response.responseObject());
+                               $rootScope.$apply();
+                            });
+
+                            return def.promise;
+                        }
+                    }).
+
+                    controller('JobViewsController', function($scope, fetch) {
+                        $scope.jobs = {};
+
+                        function refreshJobs() {
+                            fetch.current().then(function(current) {
+                                $scope.jobs = current.jobs;
+                            });
+                        }
+
+                        (function() {
+                            refreshJobs();
+                            setInterval(refreshJobs, 5000);
+                        })();
+                    });
+            </script>
         </l:header>
 
-        <j:choose>
-            <j:when test="${empty(items)}">
-                <st:include page="noJob.jelly"/>
-            </j:when>
-            <j:otherwise>
-                <div class="dashboard">
+        <l:main-panel>
+            <div class="build-monitor dashboard" data-ng-app="buildMonitor">
+                <header>
                     <h1>${it.displayName}</h1>
-                    <st:include page="main-config.jelly"/>
-                    <st:include page="main-jobs.jelly"/>
-                </div>
-            </j:otherwise>
-        </j:choose>
+                </header>
+
+                <st:include page="main-config.jelly"/>
+
+                <ul id="job-views" data-ng-controller="JobViewsController" ng-init="updateJobs()">
+                    <li ng-repeat="job in jobs" class="{{job.status}}">
+                        <div class="progress" style="width: {{job.progress}}%">
+                            <span>{{job.progress}}%</span>
+                        </div>
+
+                        <div class="meta">
+                            <h2>
+                                <a href="${jobsURL}/{{job.name}}">{{job.name}}</a>
+                                <a href="${jobsURL}/{{job.name}}/{{job.buildNumber}}/console">(#{{job.buildNumber}})</a>
+                            </h2>
+                            <ul>
+                                <li data-ng-repeat="name in job.culprits">
+                                    <p>{{name}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </l:main-panel>
     </l:layout>
 </j:jelly>
