@@ -5,10 +5,10 @@ import hudson.model.Result;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.SyntacticSugar.asFollows;
 import static hudson.model.Result.*;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
@@ -136,6 +136,11 @@ public class JobViewTest {
                         andThePrevious(build().finishedWith(SUCCESS))))
         );
 
+
+        // I could do this instead of having two assertions:
+        // assertThat(view.status(), both(containsString("successful")).and(containsString("running")));
+        // but then it would require Java 7
+
         for (JobView view : views) {
             assertThat(view.status(), containsString("successful"));
             assertThat(view.status(), containsString("running"));
@@ -221,9 +226,5 @@ public class JobViewTest {
         when(systemTime.getTime()).thenReturn(currentDate.getTime());
 
         return currentDate;
-    }
-
-    private <T> List<T> asFollows(T... examples) {
-        return Arrays.asList(examples);
     }
 }
