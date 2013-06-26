@@ -12,7 +12,7 @@ public class JobStateRecipe {
     private Stack<AbstractBuild> buildHistory = new Stack<AbstractBuild>();
 
     public JobStateRecipe() {
-        job = mock(Job.class, RETURNS_DEEP_STUBS);
+        job = mock(Job.class);
     }
 
     public JobStateRecipe withName(String name) {
@@ -23,6 +23,12 @@ public class JobStateRecipe {
 
     public JobStateRecipe whereTheCurrentBuildNumberIs(int number) {
         return updatedWithOnlyOneHistoryEntryFor(a(build().whichNumberIs(number)));
+    }
+
+    public JobStateRecipe thatHasNeverRun() {
+        buildHistory.clear();
+
+        return this;
     }
 
     public JobStateRecipe whereTheLast(BuildStateRecipe recipe) {

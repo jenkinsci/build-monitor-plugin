@@ -6,13 +6,50 @@ h1,h2,h3,h4,h5,h6 {
 #header, #side-panel, #view-message { display: none; }
 
 /*
-    Typography
-*/
-.build-monitor.dashboard a,
-.build-monitor.dashboard a:visited {
+ *   Colours & Typography
+ */
+
+.build-monitor a,
+.build-monitor a:visited {
     color:white;
+    text-decoration: none;
+}
+.build-monitor a:hover {
+    text-decoration: underline;
 }
 
+.build-monitor header h1 {
+    margin:auto;
+    font-size: 3em;
+    letter-spacing: 0.1em;
+}
+
+.build-monitor h2 {
+    font-size: 2.5em;
+}
+
+.build-monitor .successful { background-color:darkgreen; }
+.build-monitor .failing { background-color:darkred; }
+.build-monitor .running { }
+
+.build-monitor a.build-number {
+    display:block;
+    position:absolute;
+    bottom:-0.2em; right:0.1em;
+    font-weight: bold;
+    font-size: 5em;
+    color:rgba(255,255,255, 0.3);
+}
+
+.build-monitor footer {
+    padding:0.7em 1.5em 0 0;
+    text-align: right;
+    color: #ddd;
+}
+
+/*
+ *   Layout
+ */
 
 .build-monitor.dashboard {
     overflow: hidden;
@@ -20,48 +57,88 @@ h1,h2,h3,h4,h5,h6 {
     height:   100%;
     width:    100%;
     margin:0; padding: 0;
+
+    display: -webkit-flex;
+    display: flex;
+            flex-flow: column;
+    -webkit-flex-flow: column;
+    -webkit-justify-content: space-around;
+            justify-content: space-around;
 }
 
 .build-monitor header {
-    height:5%;
+    -webkit-flex: 8;
+            flex: 8;
+
+    display: -webkit-flex;
+    display: flex;
+
+    align-items:   center;
+    align-content: center;
 }
 
-.build-monitor header h1 {
-    margin:0; padding-top:0.5%;
+.build-monitor ul#job-views {
+    -webkit-flex: 88;
+            flex: 88;
+}
+
+.build-monitor footer {
+    -webkit-flex: 4;
+            flex: 4;
 }
 
 .build-monitor ul#job-views {
     list-style-type: none;
     margin:0; padding:0;
-    width:100%;
-    height:90%;
-    /*border:1px solid red;*/
+
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+            flex-flow: row wrap;
+    -webkit-justify-content: space-around;
+            justify-content: space-around;
 }
 
 .build-monitor ul#job-views li {
+    -webkit-flex: 1 40%;
+            flex: 1 40%;
+
+    margin:0.5%;
+}
+
+.build-monitor ul#job-views li .meta {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: column;
+            flex-flow: column;
+    -webkit-justify-content: space-around;
+            justify-content: space-around;
+}
+
+/*
+ *   Job meta-data
+ */
+
+.build-monitor ul#job-views li .meta {
+    z-index: 10;
+    position:absolute; left:0; top:0;
+    width:100%; height:100%;
+}
+
+/*
+ *   Progress bar
+ */
+
+.build-monitor ul#job-views li {
     position:relative;
-    display: inline-block;
-    margin:0.25%; padding:0;
-    width:49.5%;
-    height:48.5%;
     border-radius:10px;
-}
-
-.build-monitor ul#job-views li.successful h2 {
-    margin-top:23%;
-}
-
-.build-monitor ul#job-views li.failing h2 {
-    margin-top:18%;
+    overflow: hidden;
 }
 
 .build-monitor ul#job-views .progress {
     z-index: 0;
     position:absolute; left:0; top:0;
-    background-color: pink;
     width:0%; height:100%;
-    transition: width 1s;
-    -webkit-transition: width 1s;
     text-align: right;
     overflow: hidden;
     border-radius:10px;
@@ -75,16 +152,12 @@ h1,h2,h3,h4,h5,h6 {
     -webkit-animation: forFailing 2s infinite alternate;
 }
 
-@-webkit-keyframes forSuccessful { 0% {background-color: darkgreen;} 100% {background-color: green;} }
-@-webkit-keyframes forFailing { 0% {background-color: darkred;} 100% {background-color: red;} }
+@-webkit-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: greenyellow;} }
+@-webkit-keyframes forFailing { 0% {background-color: darkred;} 100% {background-color: crimson;} }
 
-#div { -webkit-animation: colorPulse 10s infinite alternate; }
-
-.build-monitor ul#job-views li .meta {
-    z-index: 10;
-    position:absolute; left:0; top:0;
-    width:100%; height:100%;
-}
+/*
+ *   Config box
+ */
 
 .config {
     position: absolute; right:1%; top:1%;
@@ -100,28 +173,3 @@ h1,h2,h3,h4,h5,h6 {
     padding:  10px;
     overflow: visible;
 }
-
-.successful {
-    background-color:darkgreen;
-}
-
-.failing {
-    background-color:darkred;
-}
-
-.running {
-
-}
-
-/*
-screen:
-    width:  100%;
-    height: 100%;
-    columns: 2;
-    jobs:    6;
-
-panel:
-    width:  100%/columns
-
-
-*/

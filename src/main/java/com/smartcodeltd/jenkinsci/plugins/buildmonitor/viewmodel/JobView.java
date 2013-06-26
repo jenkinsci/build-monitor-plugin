@@ -36,8 +36,13 @@ public class JobView {
     }
 
     @JsonProperty
-    public int buildNumber() {
-        return job.getLastBuild().getNumber();
+    public Integer buildNumber() {
+        if (job.getLastBuild() == null) {
+            return null;
+        }
+        else {
+            return job.getLastBuild().getNumber();
+        }
     }
 
     @JsonProperty

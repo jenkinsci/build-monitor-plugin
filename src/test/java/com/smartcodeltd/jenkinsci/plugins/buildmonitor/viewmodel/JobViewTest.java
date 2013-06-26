@@ -12,6 +12,7 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.SyntacticSugar.asF
 import static hudson.model.Result.*;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -37,6 +38,13 @@ public class JobViewTest {
         view = JobView.of(a(job().whereTheCurrentBuildNumberIs(5)));
 
         assertThat(view.buildNumber(), is(5));
+    }
+
+    @Test
+    public void shouldAdmitIfItDoesntKnowTheBuildNumber() throws Exception {
+        view = JobView.of(a(job().thatHasNeverRun()));
+
+        assertThat(view.buildNumber(), is(nullValue()));
     }
 
     /*

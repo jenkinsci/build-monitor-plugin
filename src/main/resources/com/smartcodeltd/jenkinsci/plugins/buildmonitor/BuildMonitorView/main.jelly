@@ -73,17 +73,24 @@
 
                         <div class="meta">
                             <h2>
-                                <a href="${jobsURL}/{{job.name}}">{{job.name}}</a>
-                                <a href="${jobsURL}/{{job.name}}/{{job.buildNumber}}/console">(#{{job.buildNumber}})</a>
+                                <a title="{{job.name}}"
+                                   href="${jobsURL}/{{job.name}}">{{job.name}}</a>
                             </h2>
                             <ul>
                                 <li data-ng-repeat="name in job.culprits">
                                     <p>{{name}}</p>
                                 </li>
                             </ul>
+                            <a data-ng-show="!!job.buildNumber" class="build-number"
+                               title="Console output for {{job.name}}, build #{{job.buildNumber}}"
+                               href="${jobsURL}/{{job.name}}/{{job.buildNumber}}/console">#{{job.buildNumber}}</a>
                         </div>
                     </li>
                 </ul>
+
+                <footer>
+                    <a href="http://smartcodeltd.co.uk" rel="external">Developed by Jan Molak</a>
+                </footer>
             </div>
         </l:main-panel>
     </l:layout>
