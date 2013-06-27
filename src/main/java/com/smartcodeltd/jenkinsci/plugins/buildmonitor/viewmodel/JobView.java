@@ -3,9 +3,9 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 import hudson.model.*;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
+import static hudson.model.Result.SUCCESS;
 
 public class JobView {
     private final Date systemTime;
@@ -66,24 +66,24 @@ public class JobView {
     }
 
     @JsonProperty
-    public List<String> culprits() {
-        List<String> culprits = new ArrayList();
+    public Set<String> culprits() {
+        Set<String> culprits = new HashSet<String>();
 
         Run<?, ?> run = job.getLastBuild();
 
-        while (run != null) {
+        while (run != null && ! SUCCESS.equals(run.getResult())) {
+
             if (run instanceof AbstractBuild<?, ?>) {
                 AbstractBuild<?, ?> build = (AbstractBuild<?, ?>) run;
-                for (User culprit : build.getCulprits()) {
-                    culprits.add(culprit.getFullName());
+
+                if (! (isRunning(build))) {
+                    for (User culprit : build.getCulprits()) {
+                        culprits.add(culprit.getFullName());
+                    }
                 }
             }
-            run = run.getPreviousBuild();
 
-            // only look for culprits in broken builds
-            if (run != null && Result.SUCCESS.equals(run.getResult())) {
-                run = null;
-            }
+            run = run.getPreviousBuild();
         }
 
         return culprits;
@@ -119,10 +119,12 @@ public class JobView {
     }
 
     private boolean isRunning() {
-        Run<?, ?> lastBuild = job.getLastBuild();
+        return isRunning(job.getLastBuild());
+    }
 
-        return (lastBuild != null)
-               && (lastBuild.hasntStartedYet() || lastBuild.isBuilding() || lastBuild.isLogUpdated());
+    private boolean isRunning(Run<?, ?> build) {
+        return (build != null)
+                && (build.hasntStartedYet() || build.isBuilding() || build.isLogUpdated());
     }
 
     public String toString() {

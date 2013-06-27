@@ -9,7 +9,7 @@
         <j:set var="angularVersion" value="1.0.7" />
 
         <l:header>
-            <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700"/>
+            <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700"/>
             <link rel="stylesheet" href="${resourcesURL}/css/normalize.css"/>
             <link rel="stylesheet" href="${resourcesURL}/css/industrial.css"/>
             <style type="text/css">
@@ -76,9 +76,9 @@
                                 <a title="{{job.name}}"
                                    href="${jobsURL}/{{job.name}}">{{job.name}}</a>
                             </h2>
-                            <ul>
+                            <ul data-ng-show="job.culprits.size() > 0" class="culprits">
                                 <li data-ng-repeat="name in job.culprits">
-                                    <p>{{name}}</p>
+                                    {{name}}
                                 </li>
                             </ul>
                             <a data-ng-show="!!job.buildNumber" class="build-number"
@@ -89,7 +89,7 @@
                 </ul>
 
                 <footer>
-                    <a href="http://smartcodeltd.co.uk" rel="external">Developed by Jan Molak</a>
+                    <a href="http://smartcodeltd.co.uk" rel="external">Build Monitor plugin developed by Jan Molak</a>
                 </footer>
             </div>
         </l:main-panel>

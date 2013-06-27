@@ -1,6 +1,7 @@
 html{color:#fff;font-family:'Open sans',sans-serif;font-size:16px;line-height:1.4;}
 h1,h2,h3,h4,h5,h6 {
     text-align:center;
+    margin:0; padding:0;
 }
 
 #header, #side-panel, #view-message { display: none; }
@@ -20,12 +21,12 @@ h1,h2,h3,h4,h5,h6 {
 
 .build-monitor header h1 {
     margin:auto;
-    font-size: 3em;
+    font-size: 4em;
     letter-spacing: 0.1em;
 }
 
 .build-monitor h2 {
-    font-size: 2.5em;
+    font-size: 3.5em;
 }
 
 .build-monitor .successful { background-color:darkgreen; }
@@ -45,6 +46,21 @@ h1,h2,h3,h4,h5,h6 {
     padding:0.7em 1.5em 0 0;
     text-align: right;
     color: #ddd;
+}
+
+
+.build-monitor ul.culprits {
+    list-style-type: none;
+    margin: 0 0 0.25em 1em; padding: 0;
+    font-size: 1.2em;
+}
+
+.build-monitor ul.culprits li { display: inline-block; }
+.build-monitor ul.culprits li:after { content: ","; }
+.build-monitor ul.culprits li:last-child:after { content: ""; }
+
+.build-monitor .failing ul.culprits li:first-child:before {
+    content: "Possible Culprits: ";
 }
 
 /*
@@ -106,13 +122,34 @@ h1,h2,h3,h4,h5,h6 {
     margin:0.5%;
 }
 
-.build-monitor ul#job-views li .meta {
+.build-monitor ul#job-views .meta {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-flow: column;
             flex-flow: column;
     -webkit-justify-content: space-around;
             justify-content: space-around;
+    align-content: center;
+    align-items:center;
+}
+
+.build-monitor ul#job-views .meta h2 {
+    -webkit-flex: 4;
+    flex: 4;
+
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: column;
+    flex-flow: column;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+}
+
+.build-monitor ul#job-views .meta .culprits {
+    -webkit-flex: 1 ;
+    flex: 1;
+    width:75%;
+    overflow: hidden;
 }
 
 /*
@@ -143,16 +180,19 @@ h1,h2,h3,h4,h5,h6 {
     overflow: hidden;
     border-radius:10px;
 }
+.build-monitor ul#job-views .progress span {
+    display:none;
+}
 
 .build-monitor ul#job-views .successful > .progress {
-    -webkit-animation: forSuccessful 2s infinite alternate;
+    -webkit-animation: forSuccessful 2.25s 2 alternate;
 }
 
 .build-monitor ul#job-views .failing > .progress {
-    -webkit-animation: forFailing 2s infinite alternate;
+    -webkit-animation: forFailing 2.25s 2 alternate;
 }
 
-@-webkit-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: greenyellow;} }
+@-webkit-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: limegreen;} }
 @-webkit-keyframes forFailing { 0% {background-color: darkred;} 100% {background-color: crimson;} }
 
 /*

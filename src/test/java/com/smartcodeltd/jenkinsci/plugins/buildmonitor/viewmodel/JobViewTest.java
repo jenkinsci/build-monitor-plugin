@@ -2,6 +2,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import hudson.model.Job;
 import hudson.model.Result;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -182,8 +183,9 @@ public class JobViewTest {
      */
 
     @Test
+    @Ignore
     public void shouldKnowHowLongTheJobHasBeenFailing() {
-        // TODO
+        // TODO Implement missing feature
     }
 
     /*
@@ -209,6 +211,48 @@ public class JobViewTest {
         assertThat(view.culprits(), hasSize(4));
         assertThat(view.culprits(), hasItems("Adam", "Ben", "Connor", "Daniel"));
         assertThat(view.culprits(), not(hasItem("Errol")));
+    }
+
+    @Test
+    public void shouldOnlyMentionEachCulpritOnce() throws Exception {
+        view = JobView.of(a(job().
+                whereTheLast(build().wasBrokenBy("Adam")).
+                andThePrevious(build().wasBrokenBy("Adam", "Ben")).
+                andThePrevious(build().wasBrokenBy("Ben", "Connor"))));
+
+        assertThat(view.culprits(), hasSize(3));
+        assertThat(view.culprits(), hasItems("Adam", "Ben", "Connor"));
+    }
+
+    @Test
+    public void shouldNotMentionAnyCulpritsIfTheBuildWasSuccessful() throws Exception {
+        view = JobView.of(a(job().whereTheLast(build().succeededThanksTo("Adam"))));
+
+        assertThat(view.culprits(), hasSize(0));
+    }
+
+    @Test
+    public void shouldNotMentionAnyCulpritsIfTheBuildWasSuccessfulAndIsStillRunning() throws Exception {
+        view = JobView.of(a(job().
+                whereTheLast(build().isStillBuilding()).
+                andThePrevious(build().succeededThanksTo("Adam"))));
+
+        assertThat(view.culprits(), hasSize(0));
+    }
+
+    @Test
+    @Ignore
+    public void shouldKnowTheAuthorsOfCommitsThatMadeItIntoTheBuild() throws Exception {
+        //TODO implement shouldKnowTheAuthorsOfCommitsThatMadeItIntoTheBuild
+//        List<JobView> views = asFollows(
+//            JobView.of(a(job().whereTheLast(build().succeededThanksTo("Adam")))),
+//            JobView.of(a(job().whereTheLast(build().wasBrokenBy("Adam"))))
+//        );
+//
+//        for (JobView view : views) {
+//            assertThat(view.authors(), hasSize(1));
+//            assertThat(view.authors(), hasItems("Adam"));
+//        }
     }
 
     /*
