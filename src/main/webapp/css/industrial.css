@@ -3,6 +3,12 @@ h1,h2,h3,h4,h5,h6 {
     text-align:center;
     margin:0; padding:0;
 }
+h1,h2,h3,h4,h5,h6, li, a {
+    font-family: 'Open sans', Verdana, Helvetica, sans serif;
+}
+header>h1 {
+    text-shadow: 2px 2px rgba(0,0,0,0.5);
+}
 
 #header, #side-panel, #view-message { display: none; }
 
@@ -27,6 +33,10 @@ h1,h2,h3,h4,h5,h6 {
 
 .build-monitor h2 {
     font-size: 3.5em;
+}
+
+.build-monitor p {
+    font-size: 2em;
 }
 
 .build-monitor .successful { background-color:darkgreen; }
@@ -186,14 +196,34 @@ h1,h2,h3,h4,h5,h6 {
 
 .build-monitor ul#job-views .successful > .progress {
     -webkit-animation: forSuccessful 2.25s 2 alternate;
+    background-color: green;
 }
 
 .build-monitor ul#job-views .failing > .progress {
     -webkit-animation: forFailing 2.25s 2 alternate;
+    background-color: darkred;
 }
 
 @-webkit-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: limegreen;} }
-@-webkit-keyframes forFailing { 0% {background-color: darkred;} 100% {background-color: crimson;} }
+@-webkit-keyframes forFailing { 0% {background-color: firebrick;} 100% {background-color: crimson;} }
+
+/*
+ *   Modal
+ */
+.modal {
+    width: 60%;
+    margin-left: -30%;
+    color: #000;
+    background: #fff;
+}
+.modal-header h1 {
+    text-align: left;
+    font-size:2.5em;
+}
+.modal-body p {
+    font-size:2em;
+}
+
 
 /*
  *   Config box

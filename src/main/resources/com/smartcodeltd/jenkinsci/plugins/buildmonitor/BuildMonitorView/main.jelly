@@ -11,6 +11,7 @@
         <l:header>
             <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700"/>
             <link rel="stylesheet" href="${resourcesURL}/css/normalize.css"/>
+            <link rel="stylesheet" href="${resourcesURL}/css/bootstrap-combined.2.3.2.min.css"/>
             <link rel="stylesheet" href="${resourcesURL}/css/industrial.css"/>
             <style type="text/css">
                 .dashboard { background: url('${resourcesURL}/images/background.png'); }
@@ -19,40 +20,72 @@
 
             <script src="//ajax.googleapis.com/ajax/libs/angularjs/${angularVersion}/angular.min.js"></script>
             <script>window.angular || document.write('\x3Cscript src="${resourcesURL}/libs/angular-${angularVersion}.min.js">\x3C/script>')</script>
+            <script src="${resourcesURL}/libs/ui-bootstrap-custom-tpls-0.4.0.js"></script>
+
 
             <script>
                 var buildMonitor = angular.
-                    module('buildMonitor', []).
+                    module('buildMonitor', ['ui.bootstrap.dialog', 'template/dialog/message.html']).
+                    service('notifyUser', function($dialog, $window) {
+                        this.about = function(problemStatus) {
+
+                            var title   = "Sorry to bother you, but there is a slight issue ..."
+                            var message = "Jenkins returned a \"" + problemStatus + "\" response " +
+                                          "causing the last request to fail. " +
+                                          "This usually means a network connection problem " +
+                                          "or that Jenkins is being restarted. " +
+                                          "Don't worry, reloading the page should help :-)";
+
+                            $dialog.messageBox(title, message, [
+                                { result: "reload", label: "Reload the page"}
+                            ]).open().then(function(result) {
+                                $window.location.reload();
+                            });
+                        }
+                    }).
                     service('fetch', function($q, $rootScope) {
+                        // TODO: This seems to be a cool way of integrating legacy code: http://jsfiddle.net/d8vX3/1/
                         var proxy   = <st:bind value="${it}"/>;
 
                         this.current = function() {
-                            var def = $q.defer();
+                            var deferred = $q.defer();
 
-                            // todo: Jenkins JavaScript proxy doesn't seem like it was supporting error handling.
-                            //       is there a better way?
                             proxy.fetchJobViews(function(response) {
-                               def.resolve(response.responseObject());
-                               $rootScope.$apply();
+
+                                if (response.status === 200) {
+                                    deferred.resolve(response.responseObject());
+                                } else {
+                                    deferred.reject({ status: response.status });
+                                }
+
+                                $rootScope.$apply();
                             });
 
-                            return def.promise;
+                            return deferred.promise;
                         }
                     }).
 
-                    controller('JobViewsController', function($scope, fetch) {
+                    controller('JobViewsController', function($scope, $rootScope, $dialog, $timeout, fetch) {
                         $scope.jobs = {};
 
-                        function refreshJobs() {
+                        var update = function() {
+                            var updating;
                             fetch.current().then(function(current) {
                                 $scope.jobs = current.jobs;
+                                updating = $timeout(update, 5000)
+                            }, function(error) {
+                                $timeout.cancel(updating);
+                                $rootScope.$broadcast("communication-error", error);
                             });
                         }
 
-                        (function() {
-                            refreshJobs();
-                            setInterval(refreshJobs, 5000);
-                        })();
+                        update();
+                    }).
+
+                    run(function($rootScope, notifyUser) {
+                        $rootScope.$on('communication-error', function(event, error) {
+                            notifyUser.about(error.status);
+                        });
                     });
             </script>
         </l:header>
