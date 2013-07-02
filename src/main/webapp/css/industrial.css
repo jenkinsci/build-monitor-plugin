@@ -201,11 +201,11 @@ header>h1 {
 
 .build-monitor ul#job-views .failing > .progress {
     -webkit-animation: forFailing 2.25s 2 alternate;
-    background-color: darkred;
+    background-color: firebrick;
 }
 
 @-webkit-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: limegreen;} }
-@-webkit-keyframes forFailing { 0% {background-color: firebrick;} 100% {background-color: crimson;} }
+@-webkit-keyframes forFailing { 0% {background-color: firebrick;} 100% {background-color: red;} }
 
 /*
  *   Modal
