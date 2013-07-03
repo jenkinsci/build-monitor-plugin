@@ -1,3 +1,13 @@
+/*
+ *   Hide Jenkins UI
+ */
+
+#header, #side-panel, #view-message { display: none; }
+
+/*
+ *   Colours & Typography
+ */
+
 html{color:#fff;font-family:'Open sans',sans-serif;font-size:16px;line-height:1.4;}
 h1,h2,h3,h4,h5,h6 {
     text-align:center;
@@ -9,12 +19,6 @@ h1,h2,h3,h4,h5,h6, li, a {
 header>h1 {
     text-shadow: 2px 2px rgba(0,0,0,0.5);
 }
-
-#header, #side-panel, #view-message { display: none; }
-
-/*
- *   Colours & Typography
- */
 
 .build-monitor a,
 .build-monitor a:visited {
@@ -224,22 +228,67 @@ header>h1 {
     font-size:2em;
 }
 
+/*
+ *   Images and icons
+ */
+.dashboard { background: url('industrial/background.png'); }
+
+.icon {
+    display:inline-block;
+    width:16px; height:16px;
+    *margin-right:.3em;
+    line-height:16px;
+    vertical-align:text-top;
+    background-image:url("industrial/glyphs.png");
+    background-position:0px 0px;
+    background-repeat:no-repeat;
+    margin-top:1px;
+    background-size:48px 16px; /* half of the size so that it looks descent on Retina */
+    text-indent: -9999px;
+}
+.icon.settings { background-position:0px 0px;}
+.icon.font-decrease { background-position:-16px 0px;}
+.icon.font-increase { background-position:-32px 0px;}
+
 
 /*
- *   Config box
+ *   Config nav
  */
 
-.config {
+.build-monitor nav {
     position: absolute; right:1%; top:1%;
     z-index:  999;
     margin:   0;     padding: 0;
-    width:    15px;  height:  16px;
-    overflow: hidden;
-    border-radius: 8px;
+    background: rgba(100, 100, 100, 0.3);
+    border-radius: 5px;
+    opacity: 0.6;
+}
+.build-monitor nav, .build-monitor nav .icon {
+    -webkit-transition: all 0.25s;
+    transition: all 0.25s;
 }
 
-.config:hover {
-    width:    auto; height: auto;
-    padding:  10px;
-    overflow: visible;
+.build-monitor nav:hover {
+    background: rgba(100, 100, 100, 0.75);
+    opacity: 1;
+}
+.build-monitor nav:hover .icon {
+    background-size: 96px 32px;
+    width:32px; height:32px;
+    line-height:32px;
+}
+.build-monitor nav:hover .icon.settings { background-position:0px 0px;}
+.build-monitor nav:hover .icon.font-decrease { background-position:-32px 0px;}
+.build-monitor nav:hover .icon.font-increase { background-position:-64px 0px;}
+
+.build-monitor nav ul {
+    list-style-type: none;
+    padding:0;
+}
+.build-monitor nav li {
+    display:inline-block;
+    margin:0 0.5em;
+}
+.build-monitor nav li:last-child {
+    margin:0 1em 0 1.5em;
 }

@@ -1,14 +1,7 @@
-<div class="config">
-    <h2>Build Monitor</h2>
+<nav>
     <ul>
-        <li>
-            <a href="configure">Configure View</a>
-        </li>
-        <li>
-            <a href="delete">Delete View</a>
-        </li>
-        <li>
-            <a href="../../">Jenkins Home</a>
-        </li>
+        <!--<li><a class="icon font-decrease" href="#" title="Decrease font size">decrease font size</a></li>-->
+        <!--<li><a class="icon font-increase" href="#" title="Increase font size">increase font size</a></li>-->
+        <li><a class="icon settings" href="configure" title="Plugin settings">settings</a></li>
     </ul>
-</div>
+</nav>

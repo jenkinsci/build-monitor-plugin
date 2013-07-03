@@ -10,18 +10,14 @@
 
         <l:header>
             <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700"/>
-            <link rel="stylesheet" href="${resourcesURL}/css/normalize.css"/>
-            <link rel="stylesheet" href="${resourcesURL}/css/bootstrap-combined.2.3.2.min.css"/>
-            <link rel="stylesheet" href="${resourcesURL}/css/industrial.css"/>
-            <style type="text/css">
-                .dashboard { background: url('${resourcesURL}/images/background.png'); }
-                .config { background: url('${imagesURL}/16x16/help.png') top right no-repeat #73bfff; }
-            </style>
+            <link rel="stylesheet" href="${resourcesURL}/styles/normalize.css"/>
+            <link rel="stylesheet" href="${resourcesURL}/styles/bootstrap-combined.2.3.2.min.css"/>
+
+            <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
 
             <script src="//ajax.googleapis.com/ajax/libs/angularjs/${angularVersion}/angular.min.js"></script>
             <script>window.angular || document.write('\x3Cscript src="${resourcesURL}/libs/angular-${angularVersion}.min.js">\x3C/script>')</script>
             <script src="${resourcesURL}/libs/ui-bootstrap-custom-tpls-0.4.0.js"></script>
-
 
             <script>
                 var buildMonitor = angular.
@@ -98,7 +94,7 @@
 
                 <st:include page="main-config.jelly"/>
 
-                <ul id="job-views" data-ng-controller="JobViewsController" ng-init="updateJobs()">
+                <ul id="job-views" data-ng-controller="JobViewsController" data-ng-class="font_size">
                     <li ng-repeat="job in jobs" class="{{job.status}}">
                         <div class="progress" style="width: {{job.progress}}%">
                             <span>{{job.progress}}%</span>
