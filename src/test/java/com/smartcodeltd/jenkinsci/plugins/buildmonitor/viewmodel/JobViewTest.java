@@ -22,6 +22,9 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * @author Jan Molak
+ */
 public class JobViewTest {
 
     private static final String theName = "Test Job Name";

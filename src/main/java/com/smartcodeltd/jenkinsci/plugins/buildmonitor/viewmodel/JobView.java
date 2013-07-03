@@ -7,6 +7,9 @@ import java.util.*;
 
 import static hudson.model.Result.SUCCESS;
 
+/**
+ * @author Jan Molak
+ */
 public class JobView {
     private final Date systemTime;
     private final Job<?, ?> job;

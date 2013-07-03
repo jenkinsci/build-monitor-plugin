@@ -7,6 +7,9 @@ import java.util.Stack;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Jan Molak
+ */
 public class JobStateRecipe {
     private Job<?, ?> job;
     private Stack<AbstractBuild> buildHistory = new Stack<AbstractBuild>();

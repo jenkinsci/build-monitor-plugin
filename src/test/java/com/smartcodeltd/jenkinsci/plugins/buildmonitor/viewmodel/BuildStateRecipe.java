@@ -10,6 +10,9 @@ import java.util.*;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Jan Molak
+ */
 public class BuildStateRecipe {
 
     private AbstractBuild<?, ?> build;
