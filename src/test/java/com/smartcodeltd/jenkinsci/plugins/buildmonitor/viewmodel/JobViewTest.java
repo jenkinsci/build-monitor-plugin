@@ -13,9 +13,7 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.SyntacticSugar.asF
 import static hudson.model.Result.*;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -27,7 +25,8 @@ import static org.mockito.Mockito.when;
  */
 public class JobViewTest {
 
-    private static final String theName = "Test Job Name";
+    private static final String theName     = "some-corporate-TLAs-followed-by-a-project-name";
+    private static final String displayName = "Pretty name that has some actual meaning for the team";
     private JobView view;
 
     @Test
@@ -35,6 +34,17 @@ public class JobViewTest {
         view = JobView.of(a(job().withName(theName)));
 
         assertThat(view.name(), is(theName));
+    }
+
+    /*
+     * If you were not aware of this, the configuration page of each job has an "Advanced Project Options"
+     * section, where you can set a user-friendly "Display Name"
+     */
+    @Test
+    public void shouldPreferTheDisplayNameOverName() throws Exception {
+        view = JobView.of(a(job().withName(theName).withDisplayName(displayName)));
+
+        assertThat(view.name(), is(displayName));
     }
 
     @Test

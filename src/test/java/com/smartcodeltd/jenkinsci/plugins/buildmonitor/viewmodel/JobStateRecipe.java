@@ -24,6 +24,13 @@ public class JobStateRecipe {
         return this;
     }
 
+    public JobStateRecipe withDisplayName(String name) {
+        when(job.getDisplayNameOrNull()).thenReturn(name);
+        when(job.getDisplayName()).thenReturn(name);
+
+        return this;
+    }
+
     public JobStateRecipe whereTheCurrentBuildNumberIs(int number) {
         return updatedWithOnlyOneHistoryEntryFor(a(build().whichNumberIs(number)));
     }

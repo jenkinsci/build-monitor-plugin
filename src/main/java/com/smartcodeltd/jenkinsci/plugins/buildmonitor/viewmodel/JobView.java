@@ -24,7 +24,9 @@ public class JobView {
 
     @JsonProperty
     public String name() {
-        return job.getName();
+        return (null != job.getDisplayNameOrNull())
+                ? job.getDisplayName()
+                : job.getName();
     }
 
     @JsonProperty
