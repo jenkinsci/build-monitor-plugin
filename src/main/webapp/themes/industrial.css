@@ -47,6 +47,9 @@ h1,h2,h3,h4,h5,h6, li, a {
 header>h1 {
     text-shadow: 2px 2px rgba(0,0,0,0.5);
 }
+h2 {
+    text-shadow: 1px 1px rgba(0,0,0,0.5);
+}
 
 .build-monitor a,
 .build-monitor a:visited {
@@ -61,6 +64,8 @@ header>h1 {
     margin:auto;
     font-size: 4em;
     letter-spacing: 0.1em;
+    display:block;
+
 }
 
 .build-monitor h2 {
@@ -108,6 +113,7 @@ header>h1 {
 /*
  *   Layout
  */
+.dashboard { background: url('industrial/background.png'); }
 
 .build-monitor.dashboard {
     overflow: hidden;
@@ -158,10 +164,23 @@ header>h1 {
 }
 
 .build-monitor ul#job-views li {
-    -webkit-flex: 1 40%;
-            flex: 1 40%;
-
     margin:0.5%;
+}
+.build-monitor ul#job-views.columns-1 li {
+    -webkit-flex: 1 99%;
+    flex: 1 99%;
+}
+.build-monitor ul#job-views.columns-2 li {
+    -webkit-flex: 1 48%;
+    flex: 1 48%;
+}
+.build-monitor ul#job-views.columns-3 li {
+    -webkit-flex: 1 32%;
+    flex: 1 32%;
+}
+.build-monitor ul#job-views.columns-4 li {
+    -webkit-flex: 1 24%;
+    flex: 1 24%;
 }
 
 .build-monitor ul#job-views .meta {
@@ -256,67 +275,181 @@ header>h1 {
     font-size:2em;
 }
 
-/*
- *   Images and icons
- */
-.dashboard { background: url('industrial/background.png'); }
-
-.icon {
-    display:inline-block;
-    width:16px; height:16px;
-    *margin-right:.3em;
-    line-height:16px;
-    vertical-align:text-top;
-    background-image:url("industrial/glyphs.png");
-    background-position:0px 0px;
-    background-repeat:no-repeat;
-    margin-top:1px;
-    background-size:48px 16px; /* half of the size so that it looks descent on Retina */
-    text-indent: -9999px;
-}
-.icon.settings { background-position:0px 0px;}
-.icon.font-decrease { background-position:-16px 0px;}
-.icon.font-increase { background-position:-32px 0px;}
-
 
 /*
  *   Config nav
  */
 
 .build-monitor nav {
-    position: absolute; right:1%; top:1%;
-    z-index:  999;
-    margin:   0;     padding: 0;
-    background: rgba(100, 100, 100, 0.3);
+    border:1px solid white;
+    z-index: 999;
+    position:absolute;
+    top:12px;
+    right:0.5%;
+    width:32px;
+    overflow: hidden;
+    margin: 0;  padding: 0.5em;
+    background: rgba(57, 57, 57, 0.7);
     border-radius: 5px;
-    opacity: 0.6;
-}
-.build-monitor nav, .build-monitor nav .icon {
-    -webkit-transition: all 0.25s;
-    transition: all 0.25s;
-}
+    opacity:0.5;
 
+    -webkit-transition: all 0.25 ease-in;
+    transition: all 0.25s ease-in;
+}
 .build-monitor nav:hover {
-    background: rgba(100, 100, 100, 0.75);
-    opacity: 1;
+    opacity:1.0;
 }
-.build-monitor nav:hover .icon {
-    background-size: 96px 32px;
-    width:32px; height:32px;
-    line-height:32px;
+.build-monitor .showSettings {
+    opacity: 1.0;
+    width:200px !important;
 }
-.build-monitor nav:hover .icon.settings { background-position:0px 0px;}
-.build-monitor nav:hover .icon.font-decrease { background-position:-32px 0px;}
-.build-monitor nav:hover .icon.font-increase { background-position:-64px 0px;}
+.build-monitor nav.showSettings ul {
+    height:auto;
+}
 
 .build-monitor nav ul {
+    height:0;
+    width:200px !important;
+    overflow: hidden;
+
     list-style-type: none;
-    padding:0;
+    margin:0; padding:0;
 }
 .build-monitor nav li {
-    display:inline-block;
+    display: block;
     margin:0 0.5em;
+    border-radius: 5px;
+}
+
+.build-monitor nav label {
+    width:100%;
+}
+.build-monitor nav li:nth-child(1),
+.build-monitor nav li:nth-child(3) {
+    margin-top:2em;
 }
 .build-monitor nav li:last-child {
-    margin:0 1em 0 1.5em;
+    padding:1em 0 0.5em 0;
 }
+
+.build-monitor nav li .slider-label {
+    width:100px;
+    margin-right:10px;
+}
+
+.build-monitor nav li a.btn {
+    width: 86%;
+    color: #000 !important;
+    text-decoration: none;
+}
+.build-monitor nav li button.btn {
+    width: 100%;
+}
+
+/*
+ *   Angular slider
+ */
+slider {
+    width: 120px;
+}
+
+slider span {
+    white-space: nowrap;
+    position: absolute;
+    display: inline-block;
+}
+slider span.base {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+slider span.bar {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    -webkit-border-radius: 1em/1em;
+    border-radius: 1em/1em;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c0c0c0), color-stop(1, #8d8d8d));
+    background: -webkit-linear-gradient(top, #c0c0c0 0%, #8d8d8d 100%);
+    background: -moz-linear-gradient(top, #c0c0c0 0%, #8d8d8d 100%);
+    background: -o-linear-gradient(top, #c0c0c0 0%, #8d8d8d 100%);
+    background: -ms-linear-gradient(top, #c0c0c0 0%, #8d8d8d 100%);
+    background: linear-gradient(top, #c0c0c0 0%, #8d8d8d 100%);
+    -webkit-box-shadow: inset 2px 2px 5px;
+    box-shadow: inset 2px 2px 5px;
+}
+slider span.bar.selection {
+    width: 0%;
+    z-index: 1;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #13b6ff), color-stop(1, #00a8f3));
+    background: -webkit-linear-gradient(top, #13b6ff 0%, #00a8f3 100%);
+    background: -moz-linear-gradient(top, #13b6ff 0%, #00a8f3 100%);
+    background: -o-linear-gradient(top, #13b6ff 0%, #00a8f3 100%);
+    background: -ms-linear-gradient(top, #13b6ff 0%, #00a8f3 100%);
+    background: linear-gradient(top, #13b6ff 0%, #00a8f3 100%);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+slider span.pointer {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    top: -8px;
+    background-color: #fff;
+    border: 1px solid #000;
+    z-index: 2;
+    -webkit-border-radius: 1em/1em;
+    border-radius: 1em/1em;
+}
+slider span.pointer:after {
+    content: '';
+    background-color: #808080;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    -webkit-border-radius: 1em/1em;
+    border-radius: 1em/1em;
+}
+slider span.pointer:hover:after {
+    background-color: #000;
+}
+slider span.pointer.active:after {
+    background-color: #f00;
+}
+slider span.bubble {
+    cursor: default;
+    top: -22px;
+    padding: 1px 3px 1px 3px;
+    font-size: 0.7em;
+    font-family: sans-serif;
+}
+slider span.bubble.selection {
+    top: 15px;
+}
+slider span.bubble.limit {
+    color: #808080;
+}
+
+/*
+ * Inspired by WittySparks - (c) Sravan Kumar, WittySparks.com
+ */
+.build-monitor nav input[type='checkbox']{opacity:0;position:absolute;filter:alpha(opacity=0);margin:5px 0 0 5px}
+.build-monitor nav input[type='checkbox']:focus+label{color:#C30}
+.build-monitor nav input[type='checkbox']+label {
+    background:url("industrial/glyphs.png") left top no-repeat;
+    background-size:32px 32px;
+    position:relative;
+    margin:0; padding:0 0 0 40px;
+    cursor:pointer;
+    line-height:32px;
+    min-height:32px;
+    display:inline-block;
+    z-index:0;
+    font-weight:bold;
+}
+.build-monitor nav input[type='checkbox']+label { background-position:0 0}
+.build-monitor nav input[type='checkbox']:checked+label  { }
+.build-monitor nav input[type='checkbox']:disabled+label { }
+.build-monitor nav input[type='checkbox']:disabled:checked+label{ }

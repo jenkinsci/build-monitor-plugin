@@ -1,7 +1,24 @@
-<nav>
+<nav data-ng-class="{ showSettings:toggleSettings }">
+    <input id="toggleSettings" type="checkbox" class="settings" data-ng-model="toggleSettings" />
+    <label for="toggleSettings" title="Configure Build Monitor Settings">Settings</label>
+
+    <!-- workaround for angular-slider not working when initialised within a hidden element -->
     <ul>
-        <!--<li><a class="icon font-decrease" href="#" title="Decrease font size">decrease font size</a></li>-->
-        <!--<li><a class="icon font-increase" href="#" title="Increase font size">increase font size</a></li>-->
-        <li><a class="icon settings" href="configure" title="Plugin settings">settings</a></li>
+        <li>
+            <span class="slider-label">Font size</span>
+            <slider floor="0.5" ceiling="2" step="0.1" precision="1" data-ng-model="fontSize"></slider>
+        </li>
+        <li>
+            <span class="slider-label">Columns</span>
+            <slider floor="1" ceiling="4" step="1" precision="0" data-ng-model="numberOfColumns"></slider>
+        </li>
+        <li>
+            <a class="btn"
+               href="configure"
+               title="Plugin settings">Add/Remove Jobs</a>
+        </li>
+        <li>
+            <button class="btn btn-primary" data-ng-click="toggleSettings=false">Done</button>
+        </li>
     </ul>
 </nav>

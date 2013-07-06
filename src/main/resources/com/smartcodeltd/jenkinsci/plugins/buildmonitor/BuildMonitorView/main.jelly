@@ -6,22 +6,24 @@
 
         <j:set var="resourcesURL" value="${resURL}/plugin/build-monitor" />
         <j:set var="jobsURL" value="${rootURL}/job" />
-        <j:set var="angularVersion" value="1.0.7" />
+        <j:set var="angularVersion" value="1.1.5" />
 
         <l:header>
             <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700"/>
             <link rel="stylesheet" href="${resourcesURL}/styles/normalize.css"/>
             <link rel="stylesheet" href="${resourcesURL}/styles/bootstrap-combined.2.3.2.min.css"/>
+            <link rel="stylesheet" href="${resourcesURL}/styles/angular-slider.css"/>
 
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
 
             <script src="//ajax.googleapis.com/ajax/libs/angularjs/${angularVersion}/angular.min.js"></script>
             <script>window.angular || document.write('\x3Cscript src="${resourcesURL}/libs/angular-${angularVersion}.min.js">\x3C/script>')</script>
             <script src="${resourcesURL}/libs/ui-bootstrap-custom-tpls-0.4.0.js"></script>
+            <script src="${resourcesURL}/libs/angular-slider.js"></script>
 
             <script>
                 var buildMonitor = angular.
-                    module('buildMonitor', ['ui.bootstrap.dialog', 'template/dialog/message.html']).
+                    module('buildMonitor', ['ui.bootstrap.dialog', 'template/dialog/message.html', 'uiSlider']).
                     service('notifyUser', function($dialog, $window) {
                         this.about = function(problemStatus) {
 
@@ -61,9 +63,11 @@
                         }
                     }).
 
-                    controller('JobViewsController', function($scope, $rootScope, $dialog, $timeout, fetch) {
-                        $scope.jobs = {};
+                    controller('JobViews', function($scope, $dialog, $timeout, fetch) {
+                        $scope.fontSize = 1;
+                        $scope.numberOfColumns = 2;
 
+                        $scope.jobs = {};
                         var update = function() {
                             var updating;
                             fetch.current().then(function(current) {
@@ -87,14 +91,17 @@
         </l:header>
 
         <l:main-panel>
-            <div class="build-monitor dashboard" data-ng-app="buildMonitor">
+            <div class="build-monitor dashboard" data-ng-app="buildMonitor" data-ng-controller="JobViews">
                 <header>
                     <h1>${it.displayName}</h1>
                 </header>
 
                 <st:include page="main-config.jelly"/>
 
-                <ul id="job-views" data-ng-controller="JobViewsController" data-ng-class="font_size">
+                <ul id="job-views"
+                    style="font-size: {{fontSize}}em"
+                    class="columns-{{ numberOfColumns }}">
+
                     <li ng-repeat="job in jobs" class="{{job.status}}">
                         <div class="progress" style="width: {{job.progress}}%">
                             <span>{{job.progress}}%</span>
