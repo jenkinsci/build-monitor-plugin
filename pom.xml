@@ -19,7 +19,7 @@
         <developer>
             <id>jan.molak</id>
             <name>Jan Molak</name>
-            <email>jan.molak@smartcodeltd.co.uk</email>
+            <email>jan.molak+build.monitor@smartcodeltd.co.uk</email>
             <organization>SmartCode Ltd</organization>
             <organizationUrl>http://smartcodeltd.co.uk</organizationUrl>
         </developer>
@@ -74,4 +74,44 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>generate-test-resources</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>npm</executable>
+                    <arguments>
+                        <argument>install</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.kelveden</groupId>
+                <artifactId>maven-karma-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configFile>src/test/resources/karma-unit.conf.js</configFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
