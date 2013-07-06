@@ -17,77 +17,11 @@
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
 
             <script src="//ajax.googleapis.com/ajax/libs/angularjs/${angularVersion}/angular.min.js"></script>
+            <script src="//ajax.googleapis.com/ajax/libs/angularjs/${angularVersion}/angular-cookies.min.js"></script>
             <script>window.angular || document.write('\x3Cscript src="${resourcesURL}/libs/angular-${angularVersion}.min.js">\x3C/script>')</script>
+            <script>window.angular || document.write('\x3Cscript src="${resourcesURL}/libs/angular-cookies-${angularVersion}.min.js">\x3C/script>')</script>
             <script src="${resourcesURL}/libs/ui-bootstrap-custom-tpls-0.4.0.js"></script>
             <script src="${resourcesURL}/libs/angular-slider.js"></script>
-
-            <script>
-                var buildMonitor = angular.
-                    module('buildMonitor', ['ui.bootstrap.dialog', 'template/dialog/message.html', 'uiSlider']).
-                    service('notifyUser', function($dialog, $window) {
-                        this.about = function(problemStatus) {
-
-                            var title   = "Sorry to bother you, but there is a slight issue ..."
-                            var message = "Jenkins returned a \"" + problemStatus + "\" response " +
-                                          "causing the last request to fail. " +
-                                          "This usually means a network connection problem " +
-                                          "or that Jenkins is being restarted. " +
-                                          "Don't worry, reloading the page should help :-)";
-
-                            $dialog.messageBox(title, message, [
-                                { result: "reload", label: "Reload the page"}
-                            ]).open().then(function(result) {
-                                $window.location.reload();
-                            });
-                        }
-                    }).
-                    service('fetch', function($q, $rootScope) {
-                        // TODO: This seems to be a cool way of integrating legacy code: http://jsfiddle.net/d8vX3/1/
-                        var proxy   = <st:bind value="${it}"/>;
-
-                        this.current = function() {
-                            var deferred = $q.defer();
-
-                            proxy.fetchJobViews(function(response) {
-
-                                if (response.status === 200) {
-                                    deferred.resolve(response.responseObject());
-                                } else {
-                                    deferred.reject({ status: response.status });
-                                }
-
-                                $rootScope.$apply();
-                            });
-
-                            return deferred.promise;
-                        }
-                    }).
-
-                    controller('JobViews', function($scope, $dialog, $timeout, fetch) {
-                        $scope.fontSize = 1;
-                        $scope.numberOfColumns = 2;
-
-                        $scope.jobs = {};
-                        var update = function() {
-                            var updating;
-                            fetch.current().then(function(current) {
-                                $scope.jobs = current.jobs;
-                                updating = $timeout(update, 5000)
-                            }, function(error) {
-                                $timeout.cancel(updating);
-                                $rootScope.$broadcast("communication-error", error);
-                            });
-                        }
-
-                        update();
-                    }).
-
-                    run(function($rootScope, notifyUser) {
-                        $rootScope.$on('communication-error', function(event, error) {
-                            notifyUser.about(error.status);
-                        });
-                    });
-            </script>
         </l:header>
 
         <l:main-panel>
@@ -98,36 +32,26 @@
 
                 <st:include page="main-config.jelly"/>
 
-                <ul id="job-views"
-                    style="font-size: {{fontSize}}em"
-                    class="columns-{{ numberOfColumns }}">
-
-                    <li ng-repeat="job in jobs" class="{{job.status}}">
-                        <div class="progress" style="width: {{job.progress}}%">
-                            <span>{{job.progress}}%</span>
-                        </div>
-
-                        <div class="meta">
-                            <h2>
-                                <a title="{{job.name}}"
-                                   href="${jobsURL}/{{job.name}}">{{job.name}}</a>
-                            </h2>
-                            <ul data-ng-show="job.culprits.size() > 0" class="culprits">
-                                <li data-ng-repeat="name in job.culprits">
-                                    {{name}}
-                                </li>
-                            </ul>
-                            <a data-ng-show="!!job.buildNumber" class="build-number"
-                               title="Console output for {{job.name}}, build #{{job.buildNumber}}"
-                               href="${jobsURL}/{{job.name}}/{{job.buildNumber}}/console">#{{job.buildNumber}}</a>
-                        </div>
-                    </li>
-                </ul>
+                <st:include page="main-jobViews.jelly"/>
 
                 <footer>
                     <a href="http://smartcodeltd.co.uk" rel="external">Build Monitor plugin developed by Jan Molak</a>
                 </footer>
             </div>
+
+            <script src="${resourcesURL}/scripts/app.js"></script>
+            <script src="${resourcesURL}/scripts/services.js"></script>
+            <script>
+                'use strict';
+
+                angular.
+                    module('buildMonitor.services').
+                    service('jenkins', function() {
+                        this.proxy = <st:bind value="${it}"/>;
+                        this.buildMonitorName = '${it.displayName}';
+                    });
+            </script>
+            <script src="${resourcesURL}/scripts/controllers.js"></script>
         </l:main-panel>
     </l:layout>
 </j:jelly>

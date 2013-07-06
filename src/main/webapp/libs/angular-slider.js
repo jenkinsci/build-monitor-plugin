@@ -1,5 +1,5 @@
 // contains fix https://raw.github.com/costasovo/angular-slider/39ecbab86ea0cfbcc30958fd0171127208ea1535/angular-slider.js
-// contains "32px" hack on line 186
+// contains "145px" hack on line 186
 (function() {
   var MODULE_NAME, SLIDER_TAG, angularize, bindHtml, gap, halfWidth, hide, inputEvents, module, offset, offsetLeft, pixelize, qualifiedDirectiveDefinition, roundStep, show, sliderDirective, width;
 
