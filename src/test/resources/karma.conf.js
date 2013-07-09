@@ -9,17 +9,19 @@ frameworks = ['jasmine'];
 
 // list of files / patterns to load in the browser
 files = [
-  JASMINE,
-  JASMINE_ADAPTER,
-  'src/main/webapp/libs/**/*.js',
-  'src/main/webapp/scripts/**/*.js',
-  'src/test/javascript/**/*Spec.js'
+    JASMINE,
+    JASMINE_ADAPTER,
+    'src/main/webapp/libs/**/*.js',
+    'src/test/resources/angular-mocks.js',
+    'src/test/resources/sinon-1.7.3.js',
+    'src/main/webapp/scripts/**/*.js',
+    'src/test/javascript/**/*Spec.js'
 ];
 
 
 // list of files to exclude
 exclude = [
-  
+
 ];
 
 preprocessors = {
