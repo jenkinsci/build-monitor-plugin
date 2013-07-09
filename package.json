@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "test":  "node_modules/karma/bin/karma start src/test/resources/karma-unit.conf.js --auto-watch"
+        "test":  "node_modules/karma/bin/karma start src/test/resources/karma.conf.js --auto-watch"
     },
     "repository": {
         "type": "git",

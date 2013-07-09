@@ -46,10 +46,8 @@
 
                 angular.
                     module('buildMonitor.services').
-                    service('jenkins', function() {
-                        this.proxy = <st:bind value="${it}"/>;
-                        this.buildMonitorName = '${it.displayName}';
-                    });
+                    value('jenkinsProxy', <st:bind value="${it}"/>).
+                    value('buildMonitorName', '${it.displayName}');
             </script>
             <script src="${resourcesURL}/scripts/controllers.js"></script>
         </l:main-panel>

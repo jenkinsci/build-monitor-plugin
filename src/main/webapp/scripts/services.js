@@ -20,15 +20,17 @@ angular.module('buildMonitor.services', ['ui.bootstrap.dialog', 'template/dialog
         }
     }).
 
-    service('fetch',function ($q, $rootScope, jenkins) {
+    service('fetch',function ($q, $rootScope, jenkinsProxy) {
         this.current = function () {
             var deferred = $q.defer();
 
-            jenkins.proxy.fetchJobViews(function (response) {
+            jenkinsProxy.fetchJobViews(function (response) {
 
                 if (response.status === 200) {
                     deferred.resolve(response.responseObject());
                 } else {
+                    // todo remove the below debug once proper error handling has been implemented
+                    console.error('RESPONSE RECEIVED', response.status);
                     deferred.reject({ status: response.status });
                 }
 
@@ -39,7 +41,7 @@ angular.module('buildMonitor.services', ['ui.bootstrap.dialog', 'template/dialog
         }
     }).
 
-    service('storage',function ($cookies, jenkins, hashCode) {
+    service('storage',function ($cookies, buildMonitorName, hashCode) {
         this.persist = function (name, value) {
             $cookies[prefix(name)] = value;
         }
@@ -53,13 +55,14 @@ angular.module('buildMonitor.services', ['ui.bootstrap.dialog', 'template/dialog
         }
 
         function prefix(name) {
-            return 'buildMonitor.' + hashCode.of(jenkins.buildMonitorName) + '.' + name;
+            return 'buildMonitor.' + hashCode.of(buildMonitorName) + '.' + name;
         }
     }).
 
     service('hashCode', function() {
         this.of = function(name) {
-            var hash = 0,
+            var name = name || '',
+                hash = 0,
                 char;
 
             if (name.length == 0) {
