@@ -112,6 +112,31 @@
                     <configFile>src/test/resources/karma.conf.js</configFile>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.6.2.201302030002</version>
+                <configuration>
+                    <destFile>${project.build.directory}/coverage/jacoco-unit.exec</destFile>
+                    <dataFile>${project.build.directory}/coverage/jacoco-unit.exec</dataFile>
+                    <check/>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
