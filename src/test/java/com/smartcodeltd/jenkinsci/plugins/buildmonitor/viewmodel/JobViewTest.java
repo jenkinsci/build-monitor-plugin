@@ -41,10 +41,17 @@ public class JobViewTest {
      * section, where you can set a user-friendly "Display Name"
      */
     @Test
-    public void shouldPreferTheDisplayNameOverName() throws Exception {
+    public void shouldPreferTheDisplayNameOverActualName() throws Exception {
         view = JobView.of(a(job().withName(theName).withDisplayName(displayName)));
 
         assertThat(view.name(), is(displayName));
+    }
+
+    @Test
+    public void shouldKnowTheUrlOfTheJob() throws Exception {
+        view = JobView.of(a(job().withName(theName).withDisplayName(displayName)));
+
+        assertThat(view.url(), is("job/" + theName));
     }
 
     @Test

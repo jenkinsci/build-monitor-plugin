@@ -30,6 +30,11 @@ public class JobView {
     }
 
     @JsonProperty
+    public String url() {
+        return job.getUrl();
+    }
+
+    @JsonProperty
     public String status() {
         String status = isSuccessful() ? "successful" : "failing";
 
