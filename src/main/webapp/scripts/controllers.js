@@ -3,7 +3,7 @@
 angular.
     module('buildMonitor.controllers', [ 'buildMonitor.services', 'uiSlider']).
 
-    controller('JobViews', function($scope, $dialog, $timeout, fetch, storage) {
+    controller('JobViews', function($scope, $rootScope, $dialog, $timeout, fetch, storage) {
         $scope.fontSize        = storage.retrieve('fontSize', 1);
         $scope.numberOfColumns = storage.retrieve('numberOfColumns', 2);
 
