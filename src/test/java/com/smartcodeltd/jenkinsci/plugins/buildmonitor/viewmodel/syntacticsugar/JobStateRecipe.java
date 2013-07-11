@@ -1,4 +1,4 @@
-package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
+package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
 import hudson.model.AbstractBuild;
 import hudson.model.ItemGroup;

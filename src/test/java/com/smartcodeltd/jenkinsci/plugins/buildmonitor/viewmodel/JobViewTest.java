@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.*;
 import hudson.model.Job;
 import hudson.model.Result;
 import org.junit.Ignore;
@@ -9,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.SyntacticSugar.asFollows;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Loops.asFollows;
 import static hudson.model.Result.*;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
