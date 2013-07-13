@@ -78,6 +78,11 @@ public class BuildMonitorView extends ListView {
         return asJsonObject("{jobs:" + m.writeValueAsString(jobViews()) + "}");
     }
 
+    public boolean isEmpty() {
+        return jobViews().isEmpty();
+    }
+
+
     private JSONObject asJsonObject(String jsonString) {
         return (JSONObject) JSONSerializer.toJSON(jsonString);
     }

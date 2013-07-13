@@ -32,10 +32,17 @@
 
                 <st:include page="main-config.jelly"/>
 
-                <st:include page="main-jobViews.jelly"/>
+                <j:choose>
+                    <j:when test="${it.isEmpty()}">
+                        <st:include page="main-empty.jelly"/>
+                    </j:when>
+                    <j:otherwise>
+                        <st:include page="main-jobViews.jelly"/>
+                    </j:otherwise>
+                </j:choose>
 
                 <footer>
-                    <a href="http://smartcodeltd.co.uk" rel="external">Build Monitor plugin developed by Jan Molak</a>
+                    Brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a>
                 </footer>
             </div>
 

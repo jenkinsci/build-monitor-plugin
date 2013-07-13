@@ -51,10 +51,14 @@ h2 {
     text-shadow: 1px 1px rgba(0,0,0,0.5);
 }
 
-.build-monitor a,
-.build-monitor a:visited {
-    color:white;
+.build-monitor a {
+    color: #73BFFF;
     text-decoration: none;
+}
+
+.build-monitor #job-views li a,
+.build-monitor #job-views li a:visited {
+    color:white;
 }
 .build-monitor a:hover {
     text-decoration: underline;
@@ -80,13 +84,16 @@ h2 {
 .build-monitor .failing { background-color:darkred; }
 .build-monitor .running { }
 
-.build-monitor a.build-number {
-    display:block;
-    position:absolute;
-    bottom:-0.2em; right:0.1em;
+.build-monitor #job-views a.build-number {
     font-weight: bold;
     font-size: 5em;
     color:rgba(255,255,255, 0.3);
+}
+
+.build-monitor #job-views a.build-number {
+    display:block;
+    position:absolute;
+    bottom:-0.2em; right:0.1em;
 }
 
 .build-monitor footer {
@@ -134,6 +141,8 @@ h2 {
     -webkit-flex: 8;
             flex: 8;
 
+    min-height:6em;
+
     display: -webkit-flex;
     display: flex;
 
@@ -141,9 +150,20 @@ h2 {
     align-content: center;
 }
 
-.build-monitor ul#job-views {
+.build-monitor #job-views {
     -webkit-flex: 88;
             flex: 88;
+
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+            flex-flow: row wrap;
+    -webkit-justify-content: space-around;
+            justify-content: space-around;
+}
+
+.build-monitor #job-views.empty em {
+    padding:5em 0 0 0;
 }
 
 .build-monitor footer {
@@ -154,13 +174,6 @@ h2 {
 .build-monitor ul#job-views {
     list-style-type: none;
     margin:0; padding:0;
-
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-flow: row wrap;
-            flex-flow: row wrap;
-    -webkit-justify-content: space-around;
-            justify-content: space-around;
 }
 
 .build-monitor ul#job-views li {
