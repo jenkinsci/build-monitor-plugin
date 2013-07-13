@@ -4,7 +4,7 @@
 
     <l:layout>
 
-        <j:set var="resourcesURL" value="${resURL}/plugin/build-monitor" />
+        <j:set var="resourcesURL" value="${resURL}/plugin/build-monitor-plugin" />
         <j:set var="jobsURL" value="${rootURL}/job" />
         <j:set var="angularVersion" value="1.1.5" />
 
