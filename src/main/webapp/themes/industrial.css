@@ -226,6 +226,9 @@ h2 {
     width:75%;
     overflow: hidden;
 }
+.build-monitor ul#job-views .meta .culprits li {
+    border-radius: 0;
+}
 
 /*
  *   Job meta-data
