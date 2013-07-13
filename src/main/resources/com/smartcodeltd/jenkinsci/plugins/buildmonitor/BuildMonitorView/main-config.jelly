@@ -15,7 +15,7 @@
         <li>
             <a class="btn"
                href="configure"
-               title="Plugin settings">Add/Remove Jobs</a>
+               title="Configure the '${it.displayName}' view">Add/Remove Jobs</a>
         </li>
         <li>
             <button class="btn btn-primary" data-ng-click="toggleSettings=false">Done</button>
