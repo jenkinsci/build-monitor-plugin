@@ -11,9 +11,14 @@ or one per project.
 
 ## Features
 
-I want to keep the plugin as simple as possible and avoid cluttering the view with statistics I don't find of high value in the context of a Build Monitor. 
-One of such statistics would be "percentage of passing tests" - it doesn't matter if your app is broken in 5% or 7%. If it is broken, you need to investigate it regardless 
-To do so you can click the name of the job to go to its detailed view, or click the build number to see the console output.
+I'd like to keep the plugin as simple as possible and avoid cluttering the view with statistics I don't find of high value in the context of a Build Monitor.
+
+Current functionality includes:
+
+1. Displaying the status and progress of selected jobs
+1. Displaying names of people who might be responsible for "breaking the build"
+1. Easily customisable number of columns and size of the font used, making it easier to accommodate screens of different sizes
+1. UI configuration is stored in a cookie, making it possible to display different number of columns and using different font size on each screen at your office
 
 All the features I'm hoping to add in the near future are listed in the "Roadmap" section of this README
 
@@ -47,11 +52,11 @@ you'll need to apply your changes again after restart. I'm working on this one, 
 ## Roadmap
 
 1. Display what triggered the build (SCM change, another job, manual)
-2. Display how long has a given job been failing for
-3. Support for [Claim Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Claim+plugin)
-4. Support for [Gravatar](http://gravatar.com)
-5. Display parameters of parametrized jobs
-6. Persist layout configuration changes in a long-lived cookie.
+1. Display how long has a given job been failing for
+1. Support for [Claim Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Claim+plugin)
+1. Support for [Gravatar](http://gravatar.com)
+1. Display parameters of parametrized jobs
+1. Persist layout configuration changes in a long-lived cookie.
 
 ## License: MIT
 
