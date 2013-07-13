@@ -59,7 +59,7 @@ public class BuildMonitorView extends ListView {
 
         @Override
         public String getDisplayName() {
-            return "Build Monitor";
+            return "Build Monitor View";
         }
     }
 

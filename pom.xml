@@ -5,25 +5,40 @@
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
         <version>1.509.1</version>
-        <!-- which version of Jenkins is this plugin built against? -->
     </parent>
 
     <groupId>com.smartcodeltd.jenkins-ci.plugins</groupId>
-    <artifactId>build-monitor</artifactId>
+    <artifactId>build-monitor-plugin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>hpi</packaging>
 
     <name>Build Monitor View</name>
+    <description></description>
+
+    <licenses>
+        <license>
+            <name>MIT license</name>
+            <comments>All source code is under the MIT license.</comments>
+        </license>
+    </licenses>
+
+    <url>http://wiki.jenkins-ci.org/display/JENKINS/Build+Monitor+Plugin</url>
 
     <developers>
         <developer>
             <id>jan.molak</id>
             <name>Jan Molak</name>
             <email>jan.molak+build.monitor@smartcodeltd.co.uk</email>
-            <organization>SmartCode Ltd</organization>
+            <organization>smartcode ltd</organization>
             <organizationUrl>http://smartcodeltd.co.uk</organizationUrl>
         </developer>
     </developers>
+
+    <scm>
+        <connection>scm:git:ssh://github.com/jan-molak/jenkins-build-monitor-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jan-molak/jenkins-build-monitor-plugin.git</developerConnection>
+        <url>https://github.com/jan-molak/jenkins-build-monitor-plugin</url>
+    </scm>
 
     <properties>
         <!--
@@ -47,6 +62,13 @@
             <url>http://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>maven.jenkins-ci.org</id>
+            <url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
