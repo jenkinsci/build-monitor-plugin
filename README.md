@@ -9,6 +9,21 @@ To create a new Build Monitor View, click on the "New View" tab, select "Build M
 to display on the monitor. You can have as many Build Monitor Views as you want - the most popular approach is to have one per team
 or one per project.
 
+## Features
+
+I want to keep the plugin as simple as possible and avoid cluttering the view with statistics I don't find of high value in the context of a Build Monitor. 
+One of such statistics would be "percentage of passing tests" - it doesn't matter if your app is broken in 5% or 7%. If it is broken, you need to investigate it regardless 
+To do so you can click the name of the job to go to its detailed view, or click the build number to see the console output.
+
+All the features I'm hoping to add in the near future are listed in the "Roadmap" section of this README
+
+# A picture is worth a thousand words
+
+![A place to start](https://wiki.jenkins-ci.org/download/attachments/68387008/0%20A%20place%20to%20start.png)
+![Adding jobs](https://wiki.jenkins-ci.org/download/attachments/68387008/1%20Adding%20jobs.png)
+![Two columns view](https://wiki.jenkins-ci.org/download/attachments/68387008/2%20Two%20columns%20view.png)
+![Single column view](https://wiki.jenkins-ci.org/download/attachments/68387008/3%20Single%20column%20view.png)
+
 ## Known Limitations
 
 ### Browser support - Google Chrome and Opera only.
