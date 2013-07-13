@@ -26,11 +26,12 @@
 
     <developers>
         <developer>
-            <id>jan.molak</id>
+            <id>jan-molak</id>
             <name>Jan Molak</name>
             <email>jan.molak+build.monitor@smartcodeltd.co.uk</email>
             <organization>smartcode ltd</organization>
             <organizationUrl>http://smartcodeltd.co.uk</organizationUrl>
+            <timezone>Europe/London</timezone>
         </developer>
     </developers>
 
