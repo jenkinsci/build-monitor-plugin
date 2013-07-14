@@ -1,6 +1,6 @@
 # Jenkins CI Build Monitor Plugin
 
-Provides a highly visible, subtly animated view of current project status.
+Provides a highly visible, subtly animated view of the current project status.
 Ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
 
 ## Setting up

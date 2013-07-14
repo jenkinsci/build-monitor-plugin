@@ -13,7 +13,10 @@
     <packaging>hpi</packaging>
 
     <name>Build Monitor View</name>
-    <description></description>
+    <description>
+        Provides a highly visible, subtly animated view of the current project status.
+        Ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
+    </description>
 
     <licenses>
         <license>
