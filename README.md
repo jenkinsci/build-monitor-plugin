@@ -1,7 +1,9 @@
 # Jenkins CI Build Monitor Plugin
 
-Provides a highly visible, subtly animated view of the current project status.
-Ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
+Build Monitor Plugin provides a highly visible view of the status of selected Jenkins jobs.
+
+It easily accommodates different computer screen sizes and is ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
+(Inspired by the no longer maintained RadiatorView plugin).
 
 ## Setting up
 
