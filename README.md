@@ -29,6 +29,11 @@ All the features I'm hoping to add in the near future are listed in the "Roadmap
 ![Two columns view](https://wiki.jenkins-ci.org/download/attachments/68387008/2%20Two%20columns%20view.png)
 ![Single column view](https://wiki.jenkins-ci.org/download/attachments/68387008/3%20Single%20column%20view.png)
 
+## TDD
+
+If you'd like to understand more about the logic behind the Build Monitor Plugin, 
+feel free to have a look at the [tests that drove the design](/src/test/java/com/smartcodeltd/jenkinsci/plugins/buildmonitor/viewmodel/JobViewTest.java).
+
 ## Known Limitations
 
 ### Browser support - Google Chrome and Opera only.
