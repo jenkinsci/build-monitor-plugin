@@ -5,6 +5,8 @@ Build Monitor Plugin provides a highly visible view of the status of selected Je
 It easily accommodates different computer screen sizes and is ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
 (Inspired by the no longer maintained RadiatorView plugin).
 
+[![Build Status](https://smartcode.ci.cloudbees.com/buildStatus/icon?job=jenkins-build-monitor-plugin)](https://smartcode.ci.cloudbees.com/job/jenkins-build-monitor-plugin/)
+
 ## Setting up
 
 To create a new Build Monitor View, click on the "New View" tab, select "Build Monitor View" and select jobs you wish
