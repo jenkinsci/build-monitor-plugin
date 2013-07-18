@@ -2,6 +2,6 @@
 *.iml
 
 target
-work
+work*
 
 node_modules

@@ -45,11 +45,8 @@
     </scm>
 
     <properties>
-        <!--
-          explicitly specifying the latest version here because one we get ofA the parent POM
-          tends to lag behind a bit
-        -->
-        <maven-hpi-plugin.version>1.95</maven-hpi-plugin.version>
+        <!-- using 1.74 as 1.95 doesn't seem to be compatible with 1.480 core -->
+        <maven-hpi-plugin.version>1.74</maven-hpi-plugin.version>
     </properties>
 
     <!-- get every artifact through repo.jenkins-ci.org, which proxies all the artifacts that we need -->
