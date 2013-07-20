@@ -2,7 +2,7 @@
          xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
          xmlns:i="jelly:fmt">
 
-    <l:layout>
+    <l:layout norefresh="true">
 
         <j:set var="resourcesURL" value="${resURL}/plugin/build-monitor-plugin" />
         <j:set var="jobsURL" value="${rootURL}/job" />
