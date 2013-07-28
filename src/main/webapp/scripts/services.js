@@ -21,7 +21,7 @@ angular.
         }
     }).
 
-    service('storage',function ($cookies, buildMonitorName, hashCode) {
+    service('storage',function ($cookies, buildMonitorName, hashCodeOf) {
         this.persist = function (name, value) {
             $cookies[prefix(name)] = value;
         }
@@ -35,12 +35,12 @@ angular.
         }
 
         function prefix(name) {
-            return 'buildMonitor.' + hashCode.of(buildMonitorName) + '.' + name;
+            return 'buildMonitor.' + hashCodeOf(buildMonitorName) + '.' + name;
         }
     }).
 
-    service('hashCode', function() {
-        this.of = function(name) {
+    factory('hashCodeOf', function() {
+        return function(name) {
             var name = name || '',
                 hash = 0,
                 char;
