@@ -19,6 +19,7 @@
             <script src="//ajax.googleapis.com/ajax/libs/angularjs/${angularVersion}/angular.min.js"></script>
             <script src="//ajax.googleapis.com/ajax/libs/angularjs/${angularVersion}/angular-cookies.min.js"></script>
             <script>window.angular || document.write('\x3Cscript src="${resourcesURL}/libs/angular-${angularVersion}.min.js">\x3C/script>')</script>
+<!-- todo: using window.angular is incorrect here; should check whether ngCookies is available instead! -->
             <script>window.angular || document.write('\x3Cscript src="${resourcesURL}/libs/angular-cookies-${angularVersion}.min.js">\x3C/script>')</script>
             <script src="${resourcesURL}/libs/ui-bootstrap-custom-tpls-0.4.0.js"></script>
             <script src="${resourcesURL}/libs/angular-slider.js"></script>
@@ -48,15 +49,28 @@
 
             <script src="${resourcesURL}/scripts/app.js"></script>
             <script src="${resourcesURL}/scripts/services.js"></script>
-            <script>
-                'use strict';
-
-                angular.
-                    module('buildMonitor.services').
-                    value('jenkinsProxy', <st:bind value="${it}"/>).
-                    value('buildMonitorName', '${it.displayName}');
-            </script>
+            <script src="${resourcesURL}/scripts/jenkins.js"></script>
             <script src="${resourcesURL}/scripts/controllers.js"></script>
+            <script>
+            'use strict';
+
+            // self-executing function here ensures that I'm only overriding makeStaplerProxy within its scope
+            (function() {
+                // todo: replace with a custom Jelly tag extending org.kohsuke.stapler.jelly.BindTag,
+                //  that would generate JSON describing the binding (such as below), to avoid having to use
+                //  the current implementation of BindTag, which couples me tightly to either prototype or jQuery.
+                var makeStaplerProxy = function(url, crumb, methods) {
+                        return { url: url, crumb: crumb, methods: methods }
+                    },
+                    bindings = { 'buildMonitor': <st:bind value="${it}"/> };
+
+                angular.module('buildMonitor').config(function(proxyProvider) {
+                    proxyProvider.configureProxiesUsing(bindings);
+                });
+
+                angular.module('buildMonitor.services').value('buildMonitorName', '${it.displayName}');
+            })();
+            </script>
         </l:main-panel>
     </l:layout>
 </j:jelly>

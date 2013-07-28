@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('buildMonitor.services', ['ui.bootstrap.dialog', 'template/dialog/message.html', 'ngCookies']).
+angular.
+    module('buildMonitor.services', ['ui.bootstrap.dialog', 'template/dialog/message.html', 'ngCookies']).
 
     service('notifyUser',function ($dialog, $window) {
         this.about = function (problemStatus) {
@@ -17,27 +18,6 @@ angular.module('buildMonitor.services', ['ui.bootstrap.dialog', 'template/dialog
                 ]).open().then(function (result) {
                     $window.location.reload();
                 });
-        }
-    }).
-
-    service('fetch',function ($q, $rootScope, jenkinsProxy) {
-        this.current = function () {
-            var deferred = $q.defer();
-
-            jenkinsProxy.fetchJobViews(function (response) {
-
-                if (response.status === 200) {
-                    deferred.resolve(response.responseObject());
-                } else {
-                    // todo remove the below debug once proper error handling has been implemented
-                    console.error('RESPONSE RECEIVED', response.status);
-                    deferred.reject({ status: response.status });
-                }
-
-                $rootScope.$apply();
-            });
-
-            return deferred.promise;
         }
     }).
 
@@ -77,5 +57,4 @@ angular.module('buildMonitor.services', ['ui.bootstrap.dialog', 'template/dialog
 
             return hash;
         }
-    })
-;
+    });
