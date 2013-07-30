@@ -26,8 +26,8 @@ import static org.mockito.Mockito.when;
  */
 public class JobViewTest {
 
-    private static final String theName     = "some-corporate-TLAs-followed-by-a-project-name";
-    private static final String displayName = "Pretty name that has some actual meaning for the team";
+    private static final String theName     = "some-TLAs-followed-by-a-project-name";
+    private static final String displayName = "Pretty name that has some actual meaning";
     private JobView view;
 
     @Test
