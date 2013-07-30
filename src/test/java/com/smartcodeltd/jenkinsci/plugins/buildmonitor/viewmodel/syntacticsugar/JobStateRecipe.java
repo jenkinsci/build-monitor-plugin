@@ -22,7 +22,7 @@ public class JobStateRecipe {
     public JobStateRecipe withName(String name) {
         when(job.getName()).thenReturn(name);
 
-        // The name of the job also defines its URL, that's my the stub for getUrl() is defined here as well.
+        // The name of the job also defines its URL, that's why the stub for getUrl() is defined here as well.
         // You could argue, that 'withUrl' could be a separate method on the builder,
         // but then this would allow for creation of impossible scenarios, such as:
         // job.withName("a-name").withUrl("something completely different"), which leads nowhere.
