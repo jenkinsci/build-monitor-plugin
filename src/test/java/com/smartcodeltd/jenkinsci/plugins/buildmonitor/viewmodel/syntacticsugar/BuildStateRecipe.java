@@ -21,14 +21,29 @@ public class BuildStateRecipe {
         build = mock(AbstractBuild.class);
     }
 
+    public BuildStateRecipe numberIs(int number) {
+        // see hudon.model.Run::getDisplayName
+        return nameIs("#" + number);
+    }
+
+    public BuildStateRecipe nameIs(String name) {
+        when(build.getDisplayName()).thenReturn(name);
+
+        return this;
+    }
+
+    public BuildStateRecipe whichNumberIs(int number) {
+        return numberIs(number);
+    }
+
     public BuildStateRecipe finishedWith(Result result) {
         when(build.getResult()).thenReturn(result);
 
         return this;
     }
 
-    public BuildStateRecipe whichNumberIs(int number) {
-        when(build.getNumber()).thenReturn(number);
+    public BuildStateRecipe urlIs(String url) {
+        when(build.getUrl()).thenReturn(url);
 
         return this;
     }

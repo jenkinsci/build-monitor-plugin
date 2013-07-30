@@ -85,13 +85,13 @@ h2 {
 .build-monitor .failing { background-color:darkred; }
 .build-monitor .running { }
 
-.build-monitor #job-views a.build-number {
+.build-monitor #job-views a.build-name {
     font-weight: bold;
     font-size: 5em;
     color:rgba(255,255,255, 0.3);
 }
 
-.build-monitor #job-views a.build-number {
+.build-monitor #job-views a.build-name {
     display:block;
     position:absolute;
     bottom:-0.2em; right:0.1em;

@@ -46,13 +46,17 @@ public class JobView {
     }
 
     @JsonProperty
-    public Integer buildNumber() {
-        if (job.getLastBuild() == null) {
-            return null;
-        }
-        else {
-            return job.getLastBuild().getNumber();
-        }
+    public String buildName() {
+        return job.getLastBuild() != null
+                ? job.getLastBuild().getDisplayName()
+                : null;
+    }
+
+    @JsonProperty
+    public String buildUrl() {
+        return job.getLastBuild() != null
+                ? job.getLastBuild().getUrl()
+                : null;
     }
 
     @JsonProperty

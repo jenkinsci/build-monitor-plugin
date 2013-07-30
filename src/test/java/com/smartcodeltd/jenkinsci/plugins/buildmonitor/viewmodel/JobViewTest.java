@@ -57,16 +57,31 @@ public class JobViewTest {
 
     @Test
     public void shouldKnowCurrentBuildNumber() {
-        view = JobView.of(a(job().whereTheCurrentBuildNumberIs(5)));
+        view = JobView.of(a(job().whereTheLast(build().numberIs(5))));
 
-        assertThat(view.buildNumber(), is(5));
+        assertThat(view.buildName(), is("#5"));
     }
 
     @Test
-    public void shouldAdmitIfItDoesntKnowTheBuildNumber() throws Exception {
+    public void shouldUseBuildNameIfItsKnown() throws Exception {
+        view = JobView.of(a(job().whereTheLast(build().nameIs("1.3.4+build.15"))));
+
+        assertThat(view.buildName(), is("1.3.4+build.15"));
+    }
+
+    @Test
+    public void shouldAdmitIfItDoesntKnowEitherBuildNumberNorBuildName() throws Exception {
         view = JobView.of(a(job().thatHasNeverRun()));
 
-        assertThat(view.buildNumber(), is(nullValue()));
+        assertThat(view.buildName(), is(nullValue()));
+    }
+
+    @Test
+    public void shouldKnowTheUrlOfTheBuild() throws Exception {
+        // setting url on the stub is far from ideal, but hudson.model.Run is not particularly easy to test ...
+        view = JobView.of(a(job().whereTheLast(build().urlIs("job/project-name/22/"))));
+
+        assertThat(view.buildUrl(), is("job/project-name/22/"));
     }
 
     /*

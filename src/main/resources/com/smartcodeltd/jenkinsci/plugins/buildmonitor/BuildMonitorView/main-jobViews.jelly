@@ -17,9 +17,9 @@
                     {{name}}
                 </li>
             </ul>
-            <a data-ng-show="!!job.buildNumber" class="build-number"
-               title="Console output for {{job.name}}, build #{{job.buildNumber}}"
-               href="{{job.url}}/{{job.buildNumber}}">#{{job.buildNumber}}</a>
+            <a data-ng-show="!!job.buildName" class="build-name"
+               title="Details of {{job.name}}, build {{job.buildName}}"
+               href="{{job.buildUrl}}">{{job.buildName}}</a>
         </div>
     </li>
 </ul>
