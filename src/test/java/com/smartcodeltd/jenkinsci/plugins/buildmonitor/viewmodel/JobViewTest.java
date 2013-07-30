@@ -35,6 +35,7 @@ public class JobViewTest {
         view = JobView.of(a(job().withName(theName)));
 
         assertThat(view.name(), is(theName));
+        assertThat(view.toString(), is(theName));
     }
 
     /*
@@ -46,6 +47,7 @@ public class JobViewTest {
         view = JobView.of(a(job().withName(theName).withDisplayName(displayName)));
 
         assertThat(view.name(), is(displayName));
+        assertThat(view.toString(), is(displayName));
     }
 
     @Test

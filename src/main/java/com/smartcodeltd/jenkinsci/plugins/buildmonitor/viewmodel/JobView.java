@@ -103,6 +103,10 @@ public class JobView {
         return culprits;
     }
 
+    public String toString() {
+        return name();
+    }
+
 
     private JobView(Job<?, ?> job, Date systemTime) {
         this.job = job;
@@ -139,9 +143,5 @@ public class JobView {
     private boolean isRunning(Run<?, ?> build) {
         return (build != null)
                 && (build.hasntStartedYet() || build.isBuilding() || build.isLogUpdated());
-    }
-
-    public String toString() {
-        return "[ job: '" + name() + "', status: '" + status() + "' ]";
     }
 }
