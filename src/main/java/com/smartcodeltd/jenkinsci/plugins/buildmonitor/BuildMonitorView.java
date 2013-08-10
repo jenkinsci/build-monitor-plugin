@@ -29,14 +29,18 @@ import hudson.model.AbstractProject;
 import hudson.model.ListView;
 import hudson.model.TopLevelItem;
 import hudson.model.ViewDescriptor;
+import hudson.util.FormValidation;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * @author Jan Molak
@@ -60,6 +64,18 @@ public class BuildMonitorView extends ListView {
         @Override
         public String getDisplayName() {
             return "Build Monitor View";
+        }
+
+        public FormValidation doCheckIncludeRegex(@QueryParameter String value) {
+            if(value != null && value.length() > 0) {
+                try {
+                    Pattern.compile(value);
+                } catch (PatternSyntaxException e) {
+                    return FormValidation.error(e.getMessage());
+                }
+            }
+
+            return FormValidation.ok();
         }
     }
 

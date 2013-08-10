@@ -6,4 +6,12 @@
             <br/>
         </j:forEach>
     </f:entry>
+
+    <f:optionalBlock name="useincluderegex"
+                     title="${%Use a regular expression to include jobs into the view}" checked="${it.includeRegex != null}"
+                     help="/help/view-config/includeregex.html">
+        <f:entry title="${%Regular expression}">
+            <f:textbox name="includeRegex" field="includeRegex" />
+        </f:entry>
+    </f:optionalBlock>
 </j:jelly>
