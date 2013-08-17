@@ -7,18 +7,14 @@
         <j:set var="angularVersion" value="1.1.5" />
 
         <l:header>
-            <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700"/>
             <link rel="stylesheet" href="${resourcesURL}/styles/normalize.css"/>
             <link rel="stylesheet" href="${resourcesURL}/styles/bootstrap-combined.2.3.2.min.css"/>
             <link rel="stylesheet" href="${resourcesURL}/styles/angular-slider.css"/>
 
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
 
-            <script src="//ajax.googleapis.com/ajax/libs/angularjs/${angularVersion}/angular.min.js"></script>
-            <script src="//ajax.googleapis.com/ajax/libs/angularjs/${angularVersion}/angular-cookies.min.js"></script>
-            <script>window.angular || document.write('\x3Cscript src="${resourcesURL}/libs/angular-${angularVersion}.min.js">\x3C/script>')</script>
-<!-- todo: using window.angular is incorrect here; should check whether ngCookies is available instead! -->
-            <script>window.angular || document.write('\x3Cscript src="${resourcesURL}/libs/angular-cookies-${angularVersion}.min.js">\x3C/script>')</script>
+            <script src="${resourcesURL}/libs/angular-${angularVersion}.min.js"></script>
+            <script src="${resourcesURL}/libs/angular-cookies-${angularVersion}.min.js"></script>
             <script src="${resourcesURL}/libs/ui-bootstrap-custom-tpls-0.4.0.js"></script>
             <script src="${resourcesURL}/libs/angular-slider.js"></script>
         </l:header>

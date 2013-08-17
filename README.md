@@ -69,12 +69,13 @@ you'll need to apply your changes again after restart. I'm working on this one, 
 
 ## License: MIT
 
-## Open Source Libraries Used
+## Open Source Software Used
 
-* Angular.js
-* Angular-slider http://prajwalkman.github.io/angular-slider/
-* Customized Angular-bootstrap
-* HTML5 Boilerplate normalize.css
+* [Angular.js](http://angularjs.org/)
+* [Angular-slider](http://prajwalkman.github.io/angular-slider/)
+* Customised [Angular Bootstrap](http://angular-ui.github.io/bootstrap/)
+* [HTML5 Boilerplate](http://html5boilerplate.com/) normalize.css
+* [OpenSans font](http://www.google.com/fonts/specimen/Open+Sans) by Steve Matteson
 
 ## Inspired by
 

@@ -36,6 +36,19 @@
  *   Colours & Typography
  */
 
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'), url("industrial/open-sans-normal.woff") format('woff');
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url("industrial/open-sans-bold.woff") format('woff');
+}
+
 html{color:#fff;font-family:'Open sans',sans-serif;font-size:16px;line-height:1.4;}
 h1,h2,h3,h4,h5,h6 {
     text-align:center;
