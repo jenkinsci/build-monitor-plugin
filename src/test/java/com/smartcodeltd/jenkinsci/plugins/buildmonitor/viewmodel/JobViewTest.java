@@ -147,7 +147,7 @@ public class JobViewTest {
 
     @Test
     public void shouldDescribeTheJobAsFailingIfItTheLastBuildFailed() {
-        for (Result result : asFollows(FAILURE, ABORTED, NOT_BUILT, UNSTABLE)) {
+        for (Result result : asFollows(FAILURE)) {
             view = JobView.of(a(job().whereTheLast(build().finishedWith(result))));
 
             assertThat(view.status(), containsString("failing"));

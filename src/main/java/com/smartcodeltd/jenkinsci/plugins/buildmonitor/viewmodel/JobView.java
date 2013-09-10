@@ -36,7 +36,25 @@ public class JobView {
 
     @JsonProperty
     public String status() {
-        String status = isSuccessful() ? "successful" : "failing";
+        String status = "";
+
+        switch (lastResult().ordinal) {
+            case 0:
+                status = "successfull";
+                break;
+            case 1:
+                status = "unstable";
+                break;
+            case 2:
+                status = "failing";
+                break;
+            case 3:
+                // Not built
+                break;
+            case 4:
+                status = "aborted";
+                break;
+        }
 
         if (isRunning()) {
             status += " running";
@@ -130,10 +148,6 @@ public class JobView {
         return lastBuild != null
                 ? lastBuild.getResult()
                 : Result.NOT_BUILT;
-    }
-
-    private boolean isSuccessful() {
-        return lastResult() == Result.SUCCESS;
     }
 
     private boolean isRunning() {
