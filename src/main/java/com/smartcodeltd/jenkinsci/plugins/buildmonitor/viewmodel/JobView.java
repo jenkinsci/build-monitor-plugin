@@ -98,6 +98,26 @@ public class JobView {
     }
 
     @JsonProperty
+    public int elapsedTime() {
+        if (! isRunning()) {
+            return 0;
+        }
+
+        final long now      = systemTime.getTime(),
+                duration = now - whenTheLastBuildStarted();
+
+        if (duration > estimatedDuration()) {
+            return 100;
+        }
+
+        if (estimatedDuration() > 0) {
+            return (int) ((float) duration / (float) estimatedDuration() * 100);
+        }
+
+        return 100;
+    }
+
+    @JsonProperty
     public Set<String> culprits() {
         Set<String> culprits = new HashSet<String>();
 
