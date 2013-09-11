@@ -4,6 +4,8 @@ import hudson.model.*;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.*;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 import static hudson.model.Result.SUCCESS;
 
@@ -36,11 +38,11 @@ public class JobView {
 
     @JsonProperty
     public String status() {
-        String status = "";
+        String status;
 
         switch (lastResult().ordinal) {
             case 0:
-                status = "successfull";
+                status = "successful";
                 break;
             case 1:
                 status = "unstable";
@@ -48,10 +50,7 @@ public class JobView {
             case 2:
                 status = "failing";
                 break;
-            case 3:
-                // Not built
-                break;
-            case 4:
+            default:
                 status = "aborted";
                 break;
         }
@@ -96,27 +95,19 @@ public class JobView {
 
         return 100;
     }
-
+/*
     @JsonProperty
-    public int elapsedTime() {
+    public String elapsedTime() {
         if (! isRunning()) {
-            return 0;
+            return formatTimestamp(lastBuildDuration());
         }
 
         final long now      = systemTime.getTime(),
                 duration = now - whenTheLastBuildStarted();
 
-        if (duration > estimatedDuration()) {
-            return 100;
-        }
-
-        if (estimatedDuration() > 0) {
-            return (int) ((float) duration / (float) estimatedDuration() * 100);
-        }
-
-        return 100;
+        return formatTimestamp(duration);
     }
-
+*/
     @JsonProperty
     public Set<String> culprits() {
         Set<String> culprits = new HashSet<String>();
@@ -141,6 +132,13 @@ public class JobView {
         return culprits;
     }
 
+    /*public String formatTimestamp(long timestamp) {
+        Date date = new Date(timestamp);
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        String timestampFormatted = formatter.format(date);
+        return timestampFormatted;
+    } */
+
     public String toString() {
         return name();
     }
@@ -158,6 +156,10 @@ public class JobView {
     private long estimatedDuration() {
         return job.getLastBuild().getEstimatedDuration();
     }
+    /*
+    private long lastBuildDuration() {
+        return job.getLastBuild().getDuration();
+    } */
 
     private Result lastResult() {
         Run<?, ?> lastBuild = job.getLastBuild();
