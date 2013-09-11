@@ -97,7 +97,7 @@ h2 {
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .unstable { background-color:darkgoldenrod; }
 .build-monitor .failing { background-color:darkred; }
-.build-monitor .aborted { background-color:darkgray; }
+.build-monitor .aborted { background-color:gray; }
 .build-monitor .running { }
 
 .build-monitor #job-views a.build-name {
@@ -297,13 +297,13 @@ h2 {
 
 .build-monitor ul#job-views .aborted > .progress {
     -webkit-animation: forAborted 2.25s 2 alternate;
-    background-color: gray;
+    background-color: darkgray;
 }
 
 @-webkit-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: limegreen;} }
-@-webkit-keyframes forUnstable { 0% {background-color: goldenrod;} 100% {background-color: golden;} }
+@-webkit-keyframes forUnstable { 0% {background-color: goldenrod;} 100% {background-color: gold;} }
 @-webkit-keyframes forFailing { 0% {background-color: firebrick;} 100% {background-color: red;} }
-@-webkit-keyframes forAborted { 0% {background-color: gray;} 100% {background-color: lightgray;} }
+@-webkit-keyframes forAborted { 0% {background-color: darkgray;} 100% {background-color: lightgray;} }
 
 /*
  *   Modal

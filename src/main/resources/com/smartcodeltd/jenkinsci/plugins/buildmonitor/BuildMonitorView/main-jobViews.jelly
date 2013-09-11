@@ -19,7 +19,7 @@
             </ul>
             <a data-ng-show="!!job.buildName" class="build-name"
                title="Details of {{job.name}}, build {{job.buildName}}"
-               href="{{job.buildUrl}}">{{job.buildName}}</a>
+               href="{{job.buildUrl}}">{{job.buildName}} - {{job.elapsedTime}}</a>
         </div>
     </li>
 </ul>

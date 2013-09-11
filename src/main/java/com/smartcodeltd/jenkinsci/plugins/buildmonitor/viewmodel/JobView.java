@@ -95,7 +95,7 @@ public class JobView {
 
         return 100;
     }
-/*
+
     @JsonProperty
     public String elapsedTime() {
         if (! isRunning()) {
@@ -106,8 +106,10 @@ public class JobView {
                 duration = now - whenTheLastBuildStarted();
 
         return formatTimestamp(duration);
+
+        //return String.valueOf(duration);
     }
-*/
+
     @JsonProperty
     public Set<String> culprits() {
         Set<String> culprits = new HashSet<String>();
@@ -132,12 +134,13 @@ public class JobView {
         return culprits;
     }
 
-    /*public String formatTimestamp(long timestamp) {
+    public String formatTimestamp(long timestamp) {
         Date date = new Date(timestamp);
-        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        String timestampFormatted = formatter.format(date);
-        return timestampFormatted;
-    } */
+        DateFormat formatter = new SimpleDateFormat("HH:mm");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+        String timeFormatted = formatter.format(date);
+        return timeFormatted;
+    }
 
     public String toString() {
         return name();
@@ -156,10 +159,10 @@ public class JobView {
     private long estimatedDuration() {
         return job.getLastBuild().getEstimatedDuration();
     }
-    /*
+
     private long lastBuildDuration() {
         return job.getLastBuild().getDuration();
-    } */
+    }
 
     private Result lastResult() {
         Run<?, ?> lastBuild = job.getLastBuild();
