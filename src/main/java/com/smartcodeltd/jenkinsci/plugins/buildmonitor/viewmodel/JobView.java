@@ -106,8 +106,6 @@ public class JobView {
                 duration = now - whenTheLastBuildStarted();
 
         return formatTimestamp(duration);
-
-        //return String.valueOf(duration);
     }
 
     @JsonProperty
