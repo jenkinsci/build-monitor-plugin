@@ -15,10 +15,10 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'src/test/resources/syntacticSugar.js',
-            'src/main/webapp/libs/angular-1.1.5.js',
-            'src/main/webapp/libs/angular-cookies-1.1.5.min.js',
-            'src/main/webapp/libs/angular-slider.js',
-            'src/main/webapp/libs/ui-*.js',
+            'src/main/webapp/vendor/angular-1.1.5.js',
+            'src/main/webapp/vendor/angular-cookies-1.1.5.min.js',
+            'src/main/webapp/vendor/angular-slider.js',
+            'src/main/webapp/vendor/ui-*.js',
             'src/test/resources/angular-mocks.js',
             'src/test/resources/sinon-1.7.3.js',
             'src/main/webapp/scripts/**/*.js',
