@@ -23,7 +23,11 @@ angular.
 
     service('storage',function ($cookies, buildMonitorName, hashCodeOf) {
         this.persist = function (name, value) {
-            $cookies[prefix(name)] = value;
+            var nextYear = new Date();
+            nextYear.setYear(now.getFullYear()+1);
+            YAHOO.util.Cookie.set(prefix(name), value, {
+                expires: nextYear
+            });
         }
 
         this.retrieve = function (name, defaultValue) {
