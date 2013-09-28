@@ -14,7 +14,6 @@
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
 
             <script src="${resourcesURL}/vendor/angular-${angularVersion}.min.js"></script>
-            <script src="${resourcesURL}/vendor/angular-cookies-${angularVersion}.min.js"></script>
             <script src="${resourcesURL}/vendor/ui-bootstrap-custom-tpls-0.4.0.js"></script>
             <script src="${resourcesURL}/vendor/angular-slider.js"></script>
         </l:header>
@@ -82,10 +81,20 @@
             <script>
                 'use strict';
 
-                angular.module('buildMonitor').config(function(proxyProvider) {
-                    proxyProvider.configureProxiesUsing(window.bindings);
-                });
-                angular.module('buildMonitor.services').value('buildMonitorName', '${it.displayName}');
+                angular.
+
+                    module('buildMonitor').
+
+                    config(function(proxyProvider, cookieJarProvider, hashCodeProvider) {
+                        var hashCodeOf = hashCodeProvider.hashCodeOf;
+
+                        proxyProvider.configureProxiesUsing(window.bindings);
+
+                        cookieJarProvider.describe({
+                            label:     'buildMonitor.' + hashCodeOf('${it.displayName}'),
+                            shelfLife: 365
+                        });
+                    });
             </script>
         </l:main-panel>
     </l:layout>

@@ -65,7 +65,7 @@ you'll need to apply your changes again after restart. I'm working on this one, 
 1. Support for [Claim Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Claim+plugin)
 1. Support for [Gravatar](http://gravatar.com)
 1. Display parameters of parametrized jobs
-1. Persist layout configuration changes in a long-lived cookie.
+1. ~~Persist layout configuration changes in a long-lived cookie.~~
 
 ## License: MIT
 

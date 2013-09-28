@@ -1,7 +1,9 @@
 'use strict';
 
 angular.
-    module('buildMonitor.services', ['ui.bootstrap.dialog', 'template/dialog/message.html', 'ngCookies']).
+    module('buildMonitor.services', ['ui.bootstrap.dialog', 'template/dialog/message.html']).
+
+    value('YahooCookie', YAHOO.util.Cookie).
 
     service('notifyUser',function ($dialog, $window) {
         this.about = function (problemStatus) {
@@ -21,26 +23,63 @@ angular.
         }
     }).
 
-    service('storage',function ($cookies, buildMonitorName, hashCodeOf) {
-        this.persist = function (name, value) {
-            $cookies[prefix(name)] = value;
+    provider('cookieJar',function () {
+        var defaultAttributes = {
+                label: '',
+                shelfLife: 0
+            },
+            attributes = {};
+
+        this.describe = function (cookieJarAttributes) {
+            attributes = cookieJarAttributes;
         }
 
-        this.retrieve = function (name, defaultValue) {
-            var value = $cookies[prefix(name)];
+        this.$get = ['YahooCookie', function (YahooCookie) {
+            return new CookieJar(YahooCookie, angular.extend(defaultAttributes, attributes));
+        }];
 
-            return (typeof value !== 'undefined')
-                ? value
-                : defaultValue;
-        }
 
-        function prefix(name) {
-            return 'buildMonitor.' + hashCodeOf(buildMonitorName) + '.' + name;
+        function CookieJar(YahooCookie, attributes) {
+
+            function expiryDetailsBasedOn(days) {
+                if (days <= 0) {
+                    return {};
+                }
+
+                return {
+                    expires: new Date(+new Date() + (days * 1000 * 3600 * 24))
+                }
+            }
+
+            function prefixed(name) {
+                return attributes.label
+                    ? attributes.label + '.' + name
+                    : name;
+            }
+
+            return {
+                put: function (name, value) {
+                    YahooCookie.set(prefixed(name), value, expiryDetailsBasedOn(attributes.shelfLife));
+                },
+                get: function (name, defaultValue) {
+                    var value = YahooCookie.get(prefixed(name));
+
+                    return (value !== null)
+                        ? value
+                        : defaultValue;
+                }
+            }
         }
     }).
 
-    factory('hashCodeOf', function() {
-        return function(name) {
+    provider('hashCode', function () {
+        this.hashCodeOf = hashCodeOf;
+
+        this.$get = function() {
+            return hashCodeOf
+        }
+
+        function hashCodeOf(name) {
             var name = name || '',
                 hash = 0,
                 char;
