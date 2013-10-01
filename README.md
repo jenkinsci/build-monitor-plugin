@@ -80,3 +80,7 @@ you'll need to apply your changes again after restart. I'm working on this one, 
 ## Inspired by
 
 No longer maintained [Radiator View Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Radiator+View+Plugin)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jan-molak/jenkins-build-monitor-plugin/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
