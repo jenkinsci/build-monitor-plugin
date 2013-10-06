@@ -50,14 +50,6 @@ What this means to you is that if you'd like to use the Build Monitor plugin, pl
 that you're using Chrome or Opera to display it. Safari 7 and Internet Explorer 11 will be supporting this functionality
 in the [near future](http://caniuse.com/flexbox).
 
-### View configuration stored in a session cookie
-
-Current implementation of Angular.js doesn't seem to allow for storing cookies with expiry time set to
-[anything longer than "session"](http://stackoverflow.com/questions/12624181/angularjs-how-to-set-expiration-date-for-cookie-in-angularjs).
-
-What this means to you is that if you change the default font size or column count settings and restart the browser,
-you'll need to apply your changes again after restart. I'm working on this one, so stay tuned.
-
 ## Roadmap
 
 1. Display what triggered the build (SCM change, another job, manual)
