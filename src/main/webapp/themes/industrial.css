@@ -387,7 +387,6 @@ slider {
  * Inspired by WittySparks - (c) Sravan Kumar, WittySparks.com
  */
 .build-monitor nav input[type='checkbox']{opacity:0;position:absolute;filter:alpha(opacity=0);margin:5px 0 0 5px}
-.build-monitor nav input[type='checkbox']:focus+label{color:#C30}
 .build-monitor nav input[type='checkbox']+label {
     background:url("industrial/glyphs.png") left top no-repeat;
     background-size:32px 32px;
