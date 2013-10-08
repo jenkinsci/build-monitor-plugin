@@ -31,7 +31,7 @@ public class JobViewTest {
     private JobView view;
 
     @Test
-    public void shouldKnowTheNameOfTheJobItsBasedOn() {
+    public void should_know_the_name_of_the_job_its_based_on() {
         view = JobView.of(a(job().withName(theName)));
 
         assertThat(view.name(), is(theName));
@@ -43,7 +43,7 @@ public class JobViewTest {
      * section, where you can set a user-friendly "Display Name"
      */
     @Test
-    public void shouldPreferTheDisplayNameOverActualName() throws Exception {
+    public void should_prefer_the_display_name_over_actual_name() throws Exception {
         view = JobView.of(a(job().withName(theName).withDisplayName(displayName)));
 
         assertThat(view.name(), is(displayName));
@@ -51,35 +51,35 @@ public class JobViewTest {
     }
 
     @Test
-    public void shouldKnowTheUrlOfTheJob() throws Exception {
+    public void should_know_the_url_of_the_job() throws Exception {
         view = JobView.of(a(job().withName(theName).withDisplayName(displayName)));
 
         assertThat(view.url(), is("job/" + theName));
     }
 
     @Test
-    public void shouldKnowCurrentBuildNumber() {
+    public void should_know_current_build_number() {
         view = JobView.of(a(job().whereTheLast(build().numberIs(5))));
 
         assertThat(view.buildName(), is("#5"));
     }
 
     @Test
-    public void shouldUseBuildNameIfItsKnown() throws Exception {
+    public void should_use_build_name_if_its_known() throws Exception {
         view = JobView.of(a(job().whereTheLast(build().nameIs("1.3.4+build.15"))));
 
         assertThat(view.buildName(), is("1.3.4+build.15"));
     }
 
     @Test
-    public void shouldAdmitIfItDoesntKnowEitherBuildNumberNorBuildName() throws Exception {
+    public void should_admit_if_it_doesnt_know_either_build_number_nor_build_name() throws Exception {
         view = JobView.of(a(job().thatHasNeverRun()));
 
         assertThat(view.buildName(), is(nullValue()));
     }
 
     @Test
-    public void shouldKnowTheUrlOfTheBuild() throws Exception {
+    public void should_know_the_url_of_the_build() throws Exception {
         // setting url on the stub is far from ideal, but hudson.model.Run is not particularly easy to test ...
         view = JobView.of(a(job().whereTheLast(build().urlIs("job/project-name/22/"))));
 
@@ -91,21 +91,21 @@ public class JobViewTest {
      */
 
     @Test
-    public void progressOfANotStartedJobShouldBeZero() throws Exception {
+    public void progress_of_a_not_started_job_should_be_zero() throws Exception {
         view = JobView.of(a(job()));
 
         assertThat(view.progress(), is(0));
     }
 
     @Test
-    public void progressOfAFinishedJobShouldBeZero() throws Exception {
+    public void progress_of_a_finished_job_should_be_zero() throws Exception {
         view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS))));
 
         assertThat(view.progress(), is(0));
     }
 
     @Test
-    public void progressOfANearlyFinishedJobShouldBe100() throws Exception {
+    public void progress_of_a_nearly_finished_job_should_be_100() throws Exception {
         view = JobView.of(
                     a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andIsEstimatedToTake(0))),
                     assumingThatCurrentTimeIs("12:00:00")
@@ -115,7 +115,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void progressOfAJobThatsTakingLongerThanItShouldIs100() throws Exception {
+    public void progress_of_a_job_thats_taking_longer_than_expected_should_be_100() throws Exception {
         view = JobView.of(
                 a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andIsEstimatedToTake(5))),
                 assumingThatCurrentTimeIs("12:20:00")
@@ -125,7 +125,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void shouldCalculateTheProgressOfARunningJob() throws Exception {
+    public void should_calculate_the_progress_of_a_running_job() throws Exception {
         view = JobView.of(
                 a(job().whereTheLast(build().isStillBuilding().startedAt("13:10:00").andIsEstimatedToTake(5))),
                 assumingThatCurrentTimeIs("13:11:00")
@@ -139,14 +139,14 @@ public class JobViewTest {
      */
 
     @Test
-    public void shouldDescribeTheJobAsSuccessfulIfTheLastBuildSucceeded() {
+    public void should_describe_the_job_as_successful_if_the_last_build_succeeded() {
         view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS))));
 
         assertThat(view.status(), containsString("successful"));
     }
 
     @Test
-    public void shouldDescribeTheJobAsFailingIfItTheLastBuildFailed() {
+    public void should_describe_the_job_as_failing_if_the_last_build_failed() {
         for (Result result : asFollows(FAILURE, ABORTED, NOT_BUILT, UNSTABLE)) {
             view = JobView.of(a(job().whereTheLast(build().finishedWith(result))));
 
@@ -155,7 +155,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void shouldDescribeTheJobAsRunningIfItIsRunning() {
+    public void should_describe_the_job_as_running_if_it_is_running() {
         List<JobView> views = asFollows(
                 JobView.of(a(job().whereTheLast(build().hasntStartedYet()))),
                 JobView.of(a(job().whereTheLast(build().isStillBuilding()))),
@@ -168,7 +168,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void shouldDescribeTheJobAsRunningAndSuccessfulIfItIsRunningAndThePreviousBuildSucceeded() {
+    public void should_describe_the_job_as_running_and_successful_if_it_is_running_and_the_previous_build_succeeded() {
         List<JobView> views = asFollows(
                 JobView.of(a(job().
                         whereTheLast(build().hasntStartedYet()).
@@ -195,7 +195,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void shouldDescribeTheJobAsRunningAndFailingIfItIsRunningAndThePreviousBuildFailed() {
+    public void should_describe_the_job_as_running_and_failing_if_it_is_running_and_the_previous_build_failed() {
         List<JobView> views = asFollows(
                 JobView.of(a(job().
                         whereTheLast(build().hasntStartedYet()).
@@ -222,7 +222,7 @@ public class JobViewTest {
 
     @Test
     @Ignore
-    public void shouldKnowHowLongTheJobHasBeenFailing() {
+    public void should_know_how_long_the_job_has_been_failing_for() {
         // TODO Implement missing feature
     }
 
@@ -231,7 +231,7 @@ public class JobViewTest {
      */
 
     @Test
-    public void shouldKnowWhoBrokeTheBuild() {
+    public void should_know_who_broke_the_build() {
         view = JobView.of(a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben"))));
 
         assertThat(view.culprits(), hasSize(2));
@@ -239,7 +239,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void shouldKnowWhoHasBeenCommittingOverBrokenBuild() {
+    public void should_know_who_has_been_committing_over_broken_build() {
         view = JobView.of(a(job().
                 whereTheLast(build().wasBrokenBy("Adam")).
                 andThePrevious(build().wasBrokenBy("Ben", "Connor")).
@@ -252,7 +252,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void shouldOnlyMentionEachCulpritOnce() throws Exception {
+    public void should_only_mention_each_culprit_once() throws Exception {
         view = JobView.of(a(job().
                 whereTheLast(build().wasBrokenBy("Adam")).
                 andThePrevious(build().wasBrokenBy("Adam", "Ben")).
@@ -263,14 +263,14 @@ public class JobViewTest {
     }
 
     @Test
-    public void shouldNotMentionAnyCulpritsIfTheBuildWasSuccessful() throws Exception {
+    public void should_not_mention_any_culprits_if_the_build_was_successful() throws Exception {
         view = JobView.of(a(job().whereTheLast(build().succeededThanksTo("Adam"))));
 
         assertThat(view.culprits(), hasSize(0));
     }
 
     @Test
-    public void shouldNotMentionAnyCulpritsIfTheBuildWasSuccessfulAndIsStillRunning() throws Exception {
+    public void should_not_mention_any_culprits_if_the_build_was_successful_and_is_still_running() throws Exception {
         view = JobView.of(a(job().
                 whereTheLast(build().isStillBuilding()).
                 andThePrevious(build().succeededThanksTo("Adam"))));
@@ -280,7 +280,7 @@ public class JobViewTest {
 
     @Test
     @Ignore
-    public void shouldKnowTheAuthorsOfCommitsThatMadeItIntoTheBuild() throws Exception {
+    public void should_know_the_authors_of_commits_that_made_it_into_the_build() throws Exception {
         //TODO implement shouldKnowTheAuthorsOfCommitsThatMadeItIntoTheBuild
 //        List<JobView> views = asFollows(
 //            JobView.of(a(job().whereTheLast(build().succeededThanksTo("Adam")))),
