@@ -4,6 +4,8 @@ import hudson.model.*;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.*;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 import static hudson.model.Result.SUCCESS;
 
@@ -36,7 +38,22 @@ public class JobView {
 
     @JsonProperty
     public String status() {
-        String status = isSuccessful() ? "successful" : "failing";
+        String status;
+
+        switch (lastResult().ordinal) {
+            case 0:
+                status = "successful";
+                break;
+            case 1:
+                status = "unstable";
+                break;
+            case 2:
+                status = "failing";
+                break;
+            default:
+                status = "aborted";
+                break;
+        }
 
         if (isRunning()) {
             status += " running";
@@ -80,6 +97,18 @@ public class JobView {
     }
 
     @JsonProperty
+    public String elapsedTime() {
+        if (! isRunning()) {
+            return formatTimestamp(lastBuildDuration());
+        }
+
+        final long now      = systemTime.getTime(),
+                duration = now - whenTheLastBuildStarted();
+
+        return formatTimestamp(duration);
+    }
+
+    @JsonProperty
     public Set<String> culprits() {
         Set<String> culprits = new HashSet<String>();
 
@@ -103,6 +132,14 @@ public class JobView {
         return culprits;
     }
 
+    public String formatTimestamp(long timestamp) {
+        Date date = new Date(timestamp);
+        DateFormat formatter = new SimpleDateFormat("HH:mm");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+        String timeFormatted = formatter.format(date);
+        return timeFormatted;
+    }
+
     public String toString() {
         return name();
     }
@@ -121,6 +158,10 @@ public class JobView {
         return job.getLastBuild().getEstimatedDuration();
     }
 
+    private long lastBuildDuration() {
+        return job.getLastBuild().getDuration();
+    }
+
     private Result lastResult() {
         Run<?, ?> lastBuild = job.getLastBuild();
         if (isRunning()) {
@@ -130,10 +171,6 @@ public class JobView {
         return lastBuild != null
                 ? lastBuild.getResult()
                 : Result.NOT_BUILT;
-    }
-
-    private boolean isSuccessful() {
-        return lastResult() == Result.SUCCESS;
     }
 
     private boolean isRunning() {

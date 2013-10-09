@@ -34,7 +34,6 @@
                         <st:include page="main-jobViews.jelly"/>
                     </j:otherwise>
                 </j:choose>
-
                 <footer>
                     Brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a>
                 </footer>
