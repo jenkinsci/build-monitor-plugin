@@ -6,6 +6,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.util.*;
 
 import static hudson.model.Result.SUCCESS;
+import static hudson.model.Result.NOT_BUILT;
 
 /**
  * @author Jan Molak
@@ -121,19 +122,20 @@ public class JobView {
         return job.getLastBuild().getEstimatedDuration();
     }
 
-    private Result lastResult() {
-        Run<?, ?> lastBuild = job.getLastBuild();
-        if (isRunning()) {
-            lastBuild = lastBuild.getPreviousBuild();
+    private Result lastCompletedBuildResult() {
+        Run<?, ?> previousBuild = job.getLastBuild();
+
+        while (isRunning(previousBuild)) {
+            previousBuild = previousBuild.getPreviousBuild();
         }
 
-        return lastBuild != null
-                ? lastBuild.getResult()
-                : Result.NOT_BUILT;
+        return previousBuild != null
+                ? previousBuild.getResult()
+                : NOT_BUILT;
     }
 
     private boolean isSuccessful() {
-        return lastResult() == Result.SUCCESS;
+        return lastCompletedBuildResult() == SUCCESS;
     }
 
     private boolean isRunning() {

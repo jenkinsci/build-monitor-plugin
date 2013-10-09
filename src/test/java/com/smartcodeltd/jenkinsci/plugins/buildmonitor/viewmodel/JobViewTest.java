@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.*;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.BuildStateRecipe;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.JobStateRecipe;
 import hudson.model.Job;
 import hudson.model.Result;
 import org.junit.Ignore;
@@ -216,6 +217,30 @@ public class JobViewTest {
         }
     }
 
+    /*
+     * Parallel build execution handling
+     */
+
+    @Test
+    public void should_describe_the_job_as_successful_when_there_are_several_builds_running_in_parallel_and_the_last_completed_was_successful() {
+        view = JobView.of(a(job().
+                        whereTheLast(build().isStillBuilding()).
+                        andThePrevious(build().isStillBuilding()).
+                        andThePrevious(build().finishedWith(SUCCESS))));
+
+        assertThat(view.status(), containsString("successful"));
+    }
+
+    @Test
+    public void should_describe_the_job_as_failing_when_there_are_several_builds_running_in_parallel_and_the_last_completed_failed() {
+        view = JobView.of(a(job().
+                whereTheLast(build().isStillBuilding()).
+                andThePrevious(build().isStillBuilding()).
+                andThePrevious(build().finishedWith(FAILURE))));
+
+        assertThat(view.status(), containsString("failing"));
+    }
+    
     /*
      * Should produce some basic build statistics
      */
