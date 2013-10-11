@@ -22,7 +22,7 @@ public class BuildStateRecipe {
     }
 
     public BuildStateRecipe numberIs(int number) {
-        // see hudon.model.Run::getDisplayName
+        // see hudson.model.Run::getDisplayName
         return nameIs("#" + number);
     }
 
