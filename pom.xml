@@ -39,6 +39,11 @@
         </developer>
     </developers>
 
+    <!-- If you have contributed to the project, please feel free to add your details below! -->
+    <contributors>
+
+    </contributors>
+
     <scm>
         <connection>scm:git:ssh://github.com/jan-molak/jenkins-build-monitor-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jan-molak/jenkins-build-monitor-plugin.git</developerConnection>
