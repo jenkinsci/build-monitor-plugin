@@ -88,19 +88,20 @@ h2 {
 
 .build-monitor h2 {
     font-size: 3.5em;
+    margin-bottom: 0.2em;
 }
 
 .build-monitor p {
-    font-size: 2em;
+    font-size: 1.2em;
+    margin: 0 0 0.5em 0;
 }
 
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .failing { background-color:darkred; }
-.build-monitor .running { }
 
 .build-monitor #job-views a.build-name {
     font-weight: bold;
-    font-size: 5em;
+    font-size: 4em;
     color:rgba(255,255,255, 0.3);
 }
 
@@ -221,25 +222,20 @@ h2 {
     align-items:center;
 }
 
-.build-monitor ul#job-views .meta h2 {
-    -webkit-flex: 4;
-    flex: 4;
-
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-flow: column;
-    flex-flow: column;
-    -webkit-justify-content: space-around;
-    justify-content: space-around;
+.build-monitor ul#job-views .meta .latest-results {
+    width:90%;
+}
+.build-monitor ul#job-views .meta .latest-results * {
+    text-align: center;
 }
 
-.build-monitor ul#job-views .meta .culprits {
-    -webkit-flex: 1 ;
-    flex: 1;
-    width:75%;
+.build-monitor ul#job-views .meta ul,
+.build-monitor ul#job-views .meta ol {
+    margin:0;
     overflow: hidden;
 }
-.build-monitor ul#job-views .meta .culprits li {
+.build-monitor ul#job-views .meta ul li,
+.build-monitor ul#job-views .meta ol li {
     border-radius: 0;
 }
 

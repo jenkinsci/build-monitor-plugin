@@ -8,15 +8,17 @@
         </div>
 
         <div class="meta">
-            <h2>
-                <a title="{{job.name}}"
-                   href="{{job.url}}">{{job.name}}</a>
-            </h2>
-            <ul data-ng-show="job.culprits.size() > 0" class="culprits">
-                <li data-ng-repeat="name in job.culprits">
-                    {{name}}
-                </li>
-            </ul>
+            <div class="latest-results">
+                <h2>
+                    <a title="{{job.name}}"
+                       href="{{job.url}}">{{job.name}}</a>
+                </h2>
+                <ul data-ng-show="job.culprits.size() > 0" class="culprits">
+                    <li data-ng-repeat="name in job.culprits">
+                        {{name}}
+                    </li>
+                </ul>
+            </div>
             <a data-ng-show="!!job.lastBuildName" class="build-name"
                title="Details of {{job.name}}, build {{job.lastBuildName}}"
                href="{{job.lastBuildUrl}}">{{job.lastBuildName}}</a>
