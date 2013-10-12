@@ -47,14 +47,14 @@ public class JobView {
     }
 
     @JsonProperty
-    public String buildName() {
+    public String lastBuildName() {
         return job.getLastBuild() != null
                 ? job.getLastBuild().getDisplayName()
                 : null;
     }
 
     @JsonProperty
-    public String buildUrl() {
+    public String lastBuildUrl() {
         return job.getLastBuild() != null
                 ? job.getLastBuild().getUrl()
                 : null;
