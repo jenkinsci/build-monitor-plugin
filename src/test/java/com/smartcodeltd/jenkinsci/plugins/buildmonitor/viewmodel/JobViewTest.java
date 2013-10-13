@@ -111,7 +111,7 @@ public class JobViewTest {
     @Test
     public void progress_of_a_nearly_finished_job_should_be_100() throws Exception {
         view = JobView.of(
-                    a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andWasEstimatedToTake(0))),
+                    a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andUsuallyTakes(0))),
                     assumingThatCurrentTimeIs("12:00:00")
         );
 
@@ -121,7 +121,7 @@ public class JobViewTest {
     @Test
     public void progress_of_a_job_thats_taking_longer_than_expected_should_be_100() throws Exception {
         view = JobView.of(
-                a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andWasEstimatedToTake(5))),
+                a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andUsuallyTakes(5))),
                 assumingThatCurrentTimeIs("12:20:00")
         );
 
@@ -131,7 +131,7 @@ public class JobViewTest {
     @Test
     public void should_calculate_the_progress_of_a_running_job() throws Exception {
         view = JobView.of(
-                a(job().whereTheLast(build().isStillBuilding().startedAt("13:10:00").andWasEstimatedToTake(5))),
+                a(job().whereTheLast(build().isStillBuilding().startedAt("13:10:00").andUsuallyTakes(5))),
                 assumingThatCurrentTimeIs("13:11:00")
         );
 
@@ -182,7 +182,7 @@ public class JobViewTest {
 
     @Test
     public void should_know_how_long_the_next_build_is_supposed_to_take() throws Exception {
-        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS).andWasEstimatedToTake(5))));
+        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS).andUsuallyTakes(5))));
 
         assertThat(view.estimatedDurationOfNextBuild(), is("5m 0s"));
     }

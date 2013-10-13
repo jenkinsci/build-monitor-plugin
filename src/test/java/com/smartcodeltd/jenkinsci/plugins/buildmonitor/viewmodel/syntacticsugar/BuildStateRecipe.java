@@ -110,7 +110,7 @@ public class BuildStateRecipe {
         return this;
     }
 
-    public BuildStateRecipe andWasEstimatedToTake(int minutes) throws Exception{
+    public BuildStateRecipe andUsuallyTakes(int minutes) throws Exception{
         long duration = (long) minutes * 60 * 1000;
 
         when(build.getEstimatedDuration()).thenReturn(duration);
