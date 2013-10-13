@@ -5,8 +5,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.*;
 
-import static hudson.model.Result.SUCCESS;
 import static hudson.model.Result.NOT_BUILT;
+import static hudson.model.Result.SUCCESS;
 
 /**
  * @author Jan Molak
@@ -61,20 +61,42 @@ public class JobView {
     }
 
     @JsonProperty
+    public String lastBuildDuration() {
+        // todo: extract to lastBuild which has ::elapsedTime and ::duration methods
+        if (isRunning()) {
+            return formatted(lastBuildElapsedTime());
+        } else if (null != job.getLastBuild()) {
+            return formatted(job.getLastBuild().getDuration());
+        }
+
+        return "";
+    }
+
+    @JsonProperty
+    public String estimatedDurationOfNextBuild() {
+        if (null != job.getLastBuild() && job.getLastBuild().getEstimatedDuration() > 0) {
+            return formatted(job.getLastBuild().getEstimatedDuration());
+        }
+
+        return "";
+    }
+
+    private String formatted(long duration) {
+        return new Duration(duration).toString();
+    }
+
+    @JsonProperty
     public int progress() {
         if (! isRunning()) {
             return 0;
         }
 
-        final long now      = systemTime.getTime(),
-                   duration = now - whenTheLastBuildStarted();
-
-        if (duration > estimatedDuration()) {
+        if (lastBuildElapsedTime() > estimatedDuration()) {
             return 100;
         }
 
         if (estimatedDuration() > 0) {
-            return (int) ((float) duration / (float) estimatedDuration() * 100);
+            return (int) ((float) lastBuildElapsedTime() / (float) estimatedDuration() * 100);
         }
 
         return 100;
@@ -122,6 +144,12 @@ public class JobView {
         return job.getLastBuild().getEstimatedDuration();
     }
 
+    private long lastBuildElapsedTime() {
+        final long now = systemTime.getTime();
+
+        return now - whenTheLastBuildStarted();
+    }
+
     private Result lastCompletedBuildResult() {
         Run<?, ?> previousBuild = job.getLastBuild();
 
@@ -145,5 +173,41 @@ public class JobView {
     private boolean isRunning(Run<?, ?> build) {
         return (build != null)
                 && (build.hasntStartedYet() || build.isBuilding() || build.isLogUpdated());
+    }
+
+    //todo: extract the Duration class, or move it to a BuildView class
+    private static class Duration {
+        private final long duration;
+
+        private final static long MILLISECOND =    1;
+        private final static long SECONDS     = 1000 * MILLISECOND;
+        private final static long MINUTES     =   60 * SECONDS;
+        private final static long HOURS       =   60 * MINUTES;
+
+        private Duration(long milliseconds) {
+            this.duration = milliseconds;
+        }
+
+        public long hours() {
+            return duration / HOURS;
+        }
+
+        public long minutes() {
+            return (duration - (hours() * HOURS)) / MINUTES ;
+        }
+
+        public long seconds() {
+            return (duration - (hours() * HOURS) - (minutes() * MINUTES) ) / SECONDS;
+        }
+
+        public String toString() {
+            String formatted;
+
+            formatted  = hours() > 0   ? hours() + "h " : "";
+            formatted += minutes() > 0 ? minutes() + "m " : "";
+            formatted += seconds() + "s";
+
+            return formatted;
+        }
     }
 }

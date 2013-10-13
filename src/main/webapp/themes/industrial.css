@@ -88,7 +88,7 @@ h2 {
 
 .build-monitor h2 {
     font-size: 3.5em;
-    margin-bottom: 0.2em;
+    margin-bottom: 0.1em;
 }
 
 .build-monitor p {
@@ -99,11 +99,15 @@ h2 {
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .failing { background-color:darkred; }
 
+.build-monitor #job-views .duration,
 .build-monitor #job-views a.build-name {
     font-weight: bold;
-    font-size: 4em;
     color:rgba(255,255,255, 0.3);
 }
+.build-monitor #job-views .build-name { font-size: 3.5em; }
+.build-monitor #job-views .duration   { font-size: 2.5em; line-height: 1.75em; }
+.build-monitor #job-views .duration>strong       { font-size: 1.4em; color:rgba(255,255,255,0.6); }
+.build-monitor #job-views .duration>strong:after { content:"|"; font-weight: normal; }
 
 .build-monitor footer {
     padding:0.7em 1.5em 0 0;
@@ -233,11 +237,16 @@ h2 {
     border-radius: 0;
 }
 
-.build-monitor #job-views a.build-name {
+.build-monitor #job-views .duration,
+.build-monitor #job-views .build-name {
     display:block;
     position:absolute;
-    bottom:-0.2em; right:0.1em;
 }
+.build-monitor #job-views .duration {
+    vertical-align: middle;
+}
+.build-monitor #job-views .build-name { bottom:0; left:0.2em; }
+.build-monitor #job-views .duration   { bottom:0;  right:0.3em; }
 
 /*
  *   Job meta-data

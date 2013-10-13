@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Loops.asFollows;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.assumeThat;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.assumeThatCurrentTime;
 import static hudson.model.Result.*;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
@@ -109,7 +111,7 @@ public class JobViewTest {
     @Test
     public void progress_of_a_nearly_finished_job_should_be_100() throws Exception {
         view = JobView.of(
-                    a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andIsEstimatedToTake(0))),
+                    a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andWasEstimatedToTake(0))),
                     assumingThatCurrentTimeIs("12:00:00")
         );
 
@@ -119,7 +121,7 @@ public class JobViewTest {
     @Test
     public void progress_of_a_job_thats_taking_longer_than_expected_should_be_100() throws Exception {
         view = JobView.of(
-                a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andIsEstimatedToTake(5))),
+                a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andWasEstimatedToTake(5))),
                 assumingThatCurrentTimeIs("12:20:00")
         );
 
@@ -129,13 +131,69 @@ public class JobViewTest {
     @Test
     public void should_calculate_the_progress_of_a_running_job() throws Exception {
         view = JobView.of(
-                a(job().whereTheLast(build().isStillBuilding().startedAt("13:10:00").andIsEstimatedToTake(5))),
+                a(job().whereTheLast(build().isStillBuilding().startedAt("13:10:00").andWasEstimatedToTake(5))),
                 assumingThatCurrentTimeIs("13:11:00")
         );
 
         assertThat(view.progress(), is(20));
     }
 
+    /*
+     * Elapsed time
+     */
+
+    @Test
+    public void should_know_how_long_a_build_has_been_running_for() throws Exception {
+
+        String startTime              = "13:10:00",
+               sixSecondsLater        = "13:10:06",
+               twoAndHalfMinutesLater = "13:12:30",
+               anHourAndHalfLater     = "14:40:00";
+        Date   currentTime = assumeThatCurrentTime().is(startTime);
+
+        view = JobView.of(
+                a(job().whereTheLast(build().startedAt(startTime).isStillBuilding())),
+                currentTime
+        );
+
+        assumeThat(currentTime).is(sixSecondsLater);
+        assertThat(view.lastBuildDuration(), is("6s"));
+
+        assumeThat(currentTime).is(twoAndHalfMinutesLater);
+        assertThat(view.lastBuildDuration(), is("2m 30s"));
+
+        assumeThat(currentTime).is(anHourAndHalfLater);
+        assertThat(view.lastBuildDuration(), is("1h 30m 0s"));
+    }
+
+    @Test
+    public void should_know_how_long_the_last_build_took_once_its_finished() throws Exception {
+        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS).andTook(3))));
+
+        assertThat(view.lastBuildDuration(), is("3m 0s"));
+    }
+
+    @Test
+    public void should_not_say_anything_about_the_duration_if_the_build_hasnt_run_yet() throws Exception {
+        view = JobView.of(a(job()));
+
+        assertThat(view.lastBuildDuration(), is(""));
+    }
+
+    @Test
+    public void should_know_how_long_the_next_build_is_supposed_to_take() throws Exception {
+        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS).andWasEstimatedToTake(5))));
+
+        assertThat(view.estimatedDurationOfNextBuild(), is("5m 0s"));
+    }
+
+    @Test
+    public void should_not_say_anything_if_it_doesnt_know_how_long_the_next_build_is_supposed_to_take() throws Exception {
+        view = JobView.of(a(job()));
+
+        assertThat(view.estimatedDurationOfNextBuild(), is(""));
+    }
+    
     /*
      * Should produce a meaningful status description that can be used in the CSS
      */
@@ -341,6 +399,6 @@ public class JobViewTest {
         Date systemTime = mock(Date.class);
         when(systemTime.getTime()).thenReturn(currentDate.getTime());
 
-        return currentDate;
+        return systemTime;
     }
 }
