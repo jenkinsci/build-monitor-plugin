@@ -7,6 +7,7 @@ import hudson.model.Result;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +45,7 @@ public class JobViewTest {
      * section, where you can set a user-friendly "Display Name"
      */
     @Test
-    public void should_prefer_the_display_name_over_actual_name() throws Exception {
+    public void should_prefer_the_display_name_over_actual_name() {
         view = JobView.of(a(job().withName(theName).withDisplayName(displayName)));
 
         assertThat(view.name(), is(displayName));
@@ -52,7 +53,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_know_the_url_of_the_job() throws Exception {
+    public void should_know_the_url_of_the_job() {
         view = JobView.of(a(job().withName(theName).withDisplayName(displayName)));
 
         assertThat(view.url(), is("job/" + theName));
@@ -66,21 +67,21 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_use_build_name_if_its_known() throws Exception {
+    public void should_use_build_name_if_its_known() {
         view = JobView.of(a(job().whereTheLast(build().nameIs("1.3.4+build.15"))));
 
         assertThat(view.lastBuildName(), is("1.3.4+build.15"));
     }
 
     @Test
-    public void should_admit_if_it_doesnt_know_either_build_number_nor_build_name() throws Exception {
+    public void should_admit_if_it_doesnt_know_either_build_number_nor_build_name() {
         view = JobView.of(a(job().thatHasNeverRun()));
 
         assertThat(view.lastBuildName(), is(nullValue()));
     }
 
     @Test
-    public void should_know_the_url_of_the_build() throws Exception {
+    public void should_know_the_url_of_the_build() {
         // setting url on the stub is far from ideal, but hudson.model.Run is not particularly easy to test ...
         view = JobView.of(a(job().whereTheLast(build().urlIs("job/project-name/22/"))));
 
@@ -92,14 +93,14 @@ public class JobViewTest {
      */
 
     @Test
-    public void progress_of_a_not_started_job_should_be_zero() throws Exception {
+    public void progress_of_a_not_started_job_should_be_zero() {
         view = JobView.of(a(job()));
 
         assertThat(view.progress(), is(0));
     }
 
     @Test
-    public void progress_of_a_finished_job_should_be_zero() throws Exception {
+    public void progress_of_a_finished_job_should_be_zero() {
         view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS))));
 
         assertThat(view.progress(), is(0));
@@ -277,7 +278,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_only_mention_each_culprit_once() throws Exception {
+    public void should_only_mention_each_culprit_once() {
         view = JobView.of(a(job().
                 whereTheLast(build().wasBrokenBy("Adam")).
                 andThePrevious(build().wasBrokenBy("Adam", "Ben")).
@@ -288,14 +289,14 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_not_mention_any_culprits_if_the_build_was_successful() throws Exception {
+    public void should_not_mention_any_culprits_if_the_build_was_successful() {
         view = JobView.of(a(job().whereTheLast(build().succeededThanksTo("Adam"))));
 
         assertThat(view.culprits(), hasSize(0));
     }
 
     @Test
-    public void should_not_mention_any_culprits_if_the_build_was_successful_and_is_still_running() throws Exception {
+    public void should_not_mention_any_culprits_if_the_build_was_successful_and_is_still_running() {
         view = JobView.of(a(job().
                 whereTheLast(build().isStillBuilding()).
                 andThePrevious(build().succeededThanksTo("Adam"))));
@@ -305,7 +306,7 @@ public class JobViewTest {
 
     @Test
     @Ignore
-    public void should_know_the_authors_of_commits_that_made_it_into_the_build() throws Exception {
+    public void should_know_the_authors_of_commits_that_made_it_into_the_build() {
         //TODO implement shouldKnowTheAuthorsOfCommitsThatMadeItIntoTheBuild
 //        List<JobView> views = asFollows(
 //            JobView.of(a(job().whereTheLast(build().succeededThanksTo("Adam")))),
@@ -334,7 +335,7 @@ public class JobViewTest {
         return new BuildStateRecipe();
     }
 
-    private Date assumingThatCurrentTimeIs(String currentTime) throws Exception {
+    private Date assumingThatCurrentTimeIs(String currentTime) throws ParseException {
         Date currentDate = new SimpleDateFormat("H:m:s").parse(currentTime);
 
         Date systemTime = mock(Date.class);
