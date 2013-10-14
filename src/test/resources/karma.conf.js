@@ -16,8 +16,7 @@ module.exports = function(config) {
         files: [
             'src/test/resources/syntacticSugar.js',
             'src/main/webapp/vendor/angular-1.1.5.js',
-            'src/main/webapp/vendor/angular-cookies-1.1.5.min.js',
-            'src/main/webapp/vendor/angular-slider.js',
+            'src/main/webapp/vendor/angular-slider-0.1.6.js',
             'src/main/webapp/vendor/ui-*.js',
             'src/test/resources/vendor/angular-mocks.js',
             'src/test/resources/vendor/sinon-1.7.3.js',
