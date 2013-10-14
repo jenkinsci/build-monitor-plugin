@@ -24,8 +24,9 @@
                title="Details of {{job.name}}, build {{job.lastBuildName}}"
                href="{{job.lastBuildUrl}}">{{job.lastBuildName}}</a>
 
-            <div data-ng-show="!!job.estimatedDurationOfNextBuild" class="duration">
-                <strong data-ng-show="job.progress > 0">{{job.lastBuildDuration}}</strong>{{job.estimatedDurationOfNextBuild}}
+            <div data-ng-show="!!job.estimatedDurationOfNextBuild" class="build-time">
+                <span class="elapsed" data-ng-show="job.progress > 0">{{job.lastBuildDuration}}</span>
+                <span class="estimated">{{job.estimatedDurationOfNextBuild}}</span>
             </div>
         </div>
     </li>

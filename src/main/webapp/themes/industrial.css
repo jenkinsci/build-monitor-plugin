@@ -99,15 +99,15 @@ h2 {
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .failing { background-color:darkred; }
 
-.build-monitor #job-views .duration,
+.build-monitor #job-views .build-time,
 .build-monitor #job-views a.build-name {
     font-weight: bold;
     color:rgba(255,255,255, 0.3);
 }
-.build-monitor #job-views .build-name { font-size: 3.5em; }
-.build-monitor #job-views .duration   { font-size: 2.5em; line-height: 1.75em; }
-.build-monitor #job-views .duration>strong       { font-size: 1.4em; color:rgba(255,255,255,0.6); }
-.build-monitor #job-views .duration>strong:after { content:"|"; font-weight: normal; }
+.build-monitor #job-views .build-name { font-size: 3em;  }
+.build-monitor #job-views .build-time   { font-size: 2em; line-height: 1.75em; }
+.build-monitor #job-views .build-time>.elapsed       { font-size: 1.0em; color:rgba(255,255,255,0.6); }
+.build-monitor #job-views .build-time>.elapsed:after { content:"|"; margin-left:0.1em; font-weight: normal; }
 
 .build-monitor footer {
     padding:0.7em 1.5em 0 0;
@@ -237,16 +237,16 @@ h2 {
     border-radius: 0;
 }
 
-.build-monitor #job-views .duration,
+.build-monitor #job-views .build-time,
 .build-monitor #job-views .build-name {
     display:block;
     position:absolute;
 }
-.build-monitor #job-views .duration {
+.build-monitor #job-views .build-time {
     vertical-align: middle;
 }
 .build-monitor #job-views .build-name { bottom:0; left:0.2em; }
-.build-monitor #job-views .duration   { bottom:0;  right:0.3em; }
+.build-monitor #job-views .build-time { bottom:0;  right:0.3em; }
 
 /*
  *   Job meta-data
@@ -262,10 +262,12 @@ h2 {
  *   Progress bar
  */
 
-.build-monitor ul#job-views li {
+.build-monitor ul#job-views>li {
     position:relative;
     border-radius:10px;
     overflow: hidden;
+    -webkit-box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
 }
 
 .build-monitor ul#job-views .progress {
