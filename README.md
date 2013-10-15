@@ -28,10 +28,10 @@ All the features I'm hoping to add in the near future are listed in the "Roadmap
 
 # A picture is worth a thousand words
 
-![A place to start](https://wiki.jenkins-ci.org/download/attachments/68387008/0%20A%20place%20to%20start.png)
-![Adding jobs](https://wiki.jenkins-ci.org/download/attachments/68387008/1%20Adding%20jobs.png)
-![Two columns view](https://wiki.jenkins-ci.org/download/attachments/68387008/2%20Two%20columns%20view.png)
-![Single column view](https://wiki.jenkins-ci.org/download/attachments/68387008/3%20Single%20column%20view.png)
+![A place to start](.README/0_A_place_to_start.png)
+![Adding jobs](.README/1_Adding_jobs.png)
+![Two columns view](.README/2_Two_columns_view.png)
+![Three columns view](.README/3_Three_columns_view.png)
 
 ## TDD
 
