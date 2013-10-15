@@ -9,12 +9,12 @@ public class NullBuildView implements BuildViewModel {
 
     @Override
     public String name() {
-        return null;
+        return "";
     }
 
     @Override
     public String url() {
-        return null;
+        return "";
     }
 
     @Override

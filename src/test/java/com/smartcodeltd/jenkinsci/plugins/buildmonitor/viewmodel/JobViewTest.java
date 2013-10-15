@@ -76,13 +76,6 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_admit_if_it_doesnt_know_either_build_number_nor_build_name() {
-        view = JobView.of(a(job().thatHasNeverRun()));
-
-        assertThat(view.lastBuildName(), is(nullValue()));
-    }
-
-    @Test
     public void should_know_the_url_of_the_build() {
         // setting url on the stub is far from ideal, but hudson.model.Run is not particularly easy to test ...
         view = JobView.of(a(job().whereTheLast(build().urlIs("job/project-name/22/"))));
@@ -184,14 +177,14 @@ public class JobViewTest {
     public void should_know_how_long_the_next_build_is_supposed_to_take() throws Exception {
         view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS).andUsuallyTakes(5))));
 
-        assertThat(view.estimatedDurationOfNextBuild(), is("5m 0s"));
+        assertThat(view.estimatedDuration(), is("5m 0s"));
     }
 
     @Test
     public void should_not_say_anything_if_it_doesnt_know_how_long_the_next_build_is_supposed_to_take() throws Exception {
         view = JobView.of(a(job()));
 
-        assertThat(view.estimatedDurationOfNextBuild(), is(""));
+        assertThat(view.estimatedDuration(), is(""));
     }
     
     /*
@@ -375,6 +368,19 @@ public class JobViewTest {
 //            assertThat(view.authors(), hasSize(1));
 //            assertThat(view.authors(), hasItems("Adam"));
 //        }
+    }
+
+    @Test
+    public void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() throws Exception {
+        view = JobView.of(a(job().thatHasNeverRun()));
+
+        assertThat(view.lastBuildName(),     is(""));
+        assertThat(view.lastBuildUrl(),      is(""));
+        assertThat(view.lastBuildDuration(), is(""));
+        assertThat(view.estimatedDuration(), is(""));
+        assertThat(view.progress(),          is(0));
+        assertThat(view.culprits(),          hasSize(0));
+        assertThat(view.status(),            is("failing"));
     }
 
     /*
