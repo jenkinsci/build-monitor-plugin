@@ -115,7 +115,7 @@ h2 {
 .build-monitor #job-views .build-time>.elapsed:after { content:"|"; margin-left:0.1em; font-weight: normal; }
 
 .build-monitor footer {
-    padding:0.7em 1.5em 0 0;
+    padding:0.7em 1.0% 0 0;
     text-align: right;
     color: #ddd;
 }
@@ -192,7 +192,8 @@ h2 {
 
 .build-monitor ul#job-views {
     list-style-type: none;
-    margin:0; padding:0;
+    margin: 0.5%;
+    padding:0;
 }
 
 .build-monitor ul#job-views>li {
@@ -328,7 +329,7 @@ h2 {
     z-index: 999;
     position:absolute;
     top:12px;
-    right:0.5%;
+    right:1.0%;
     width:32px;
     overflow: hidden;
     margin: 0;  padding: 0.5em;
