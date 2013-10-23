@@ -3,15 +3,15 @@
 angular.
     module('buildMonitor.controllers', [ 'buildMonitor.services', 'uiSlider']).
 
-    controller('JobViews', function($scope, $rootScope, $dialog, $timeout, proxy, storage) {
-        $scope.fontSize        = storage.retrieve('fontSize', 1);
-        $scope.numberOfColumns = storage.retrieve('numberOfColumns', 2);
+    controller('JobViews', function($scope, $rootScope, $dialog, $timeout, proxy, cookieJar) {
+        $scope.fontSize        = cookieJar.get('fontSize', 1);
+        $scope.numberOfColumns = cookieJar.get('numberOfColumns', 2);
 
         $scope.$watch('fontSize', function(currentFontSize) {
-            storage.persist('fontSize', currentFontSize);
+            cookieJar.put('fontSize', currentFontSize);
         });
         $scope.$watch('numberOfColumns', function(currentNumberOfColumns) {
-            storage.persist('numberOfColumns', currentNumberOfColumns);
+            cookieJar.put('numberOfColumns', currentNumberOfColumns);
         });
 
 

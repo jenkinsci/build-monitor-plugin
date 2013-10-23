@@ -21,14 +21,14 @@ public class BuildMonitorViewTest {
     }
 
     @Test
-    public void formValidatorShouldAllowValidRegExSpecifyingWhatJobsToInclude() throws Exception {
+    public void form_validator_should_allow_valid_reg_ex_specifying_what_jobs_to_include() {
         for (String regex : asFollows(null, "", ".*", "myproject-.*")) {
             assertThat(itShouldAllow(regex), validator.doCheckIncludeRegex(regex).kind, is(OK));
         }
     }
 
     @Test
-    public void formValidatorShouldAdviseHowARegExCouldBeImproved() throws Exception {
+    public void form_validator_should_advise_how_a_regex_could_be_improved() {
         FormValidation result = validator.doCheckIncludeRegex(")");
 
         assertThat(result.kind, is(ERROR));

@@ -39,8 +39,8 @@ public class JobView {
     @JsonProperty
     public String status() {
         String status;
-
-        switch (lastResult().ordinal) {
+        // todo: consider introducing a BuildResultJudge to keep this logic in one place
+        switch (lastCompletedBuild().result().ordinal) {
             case 0:
                 status = "successful";
                 break;
@@ -55,7 +55,7 @@ public class JobView {
                 break;
         }
 
-        if (isRunning()) {
+        if (lastBuild().isRunning()) {
             status += " running";
         }
 
@@ -63,83 +63,57 @@ public class JobView {
     }
 
     @JsonProperty
-    public String buildName() {
-        return job.getLastBuild() != null
-                ? job.getLastBuild().getDisplayName()
-                : null;
+    public String lastBuildName() {
+        return lastBuild().name();
     }
 
     @JsonProperty
-    public String buildUrl() {
-        return job.getLastBuild() != null
-                ? job.getLastBuild().getUrl()
-                : null;
+    public String lastBuildUrl() {
+        return lastBuild().url();
+    }
+
+    @JsonProperty
+    public String lastBuildDuration() {
+        if (lastBuild().isRunning()) {
+            return formatted(lastBuild().elapsedTime());
+        }
+
+        return formatted(lastBuild().duration());
+    }
+
+    @JsonProperty
+    public String estimatedDuration() {
+        return formatted(lastBuild().estimatedDuration());
+    }
+
+    private String formatted(Duration duration) {
+        return null != duration
+                ? duration.toString()
+                : "";
     }
 
     @JsonProperty
     public int progress() {
-        if (! isRunning()) {
-            return 0;
-        }
-
-        final long now      = systemTime.getTime(),
-                   duration = now - whenTheLastBuildStarted();
-
-        if (duration > estimatedDuration()) {
-            return 100;
-        }
-
-        if (estimatedDuration() > 0) {
-            return (int) ((float) duration / (float) estimatedDuration() * 100);
-        }
-
-        return 100;
-    }
-
-    @JsonProperty
-    public String elapsedTime() {
-        if (! isRunning()) {
-            return formatTimestamp(lastBuildDuration());
-        }
-
-        final long now      = systemTime.getTime(),
-                duration = now - whenTheLastBuildStarted();
-
-        return formatTimestamp(duration);
-
-        //return String.valueOf(duration);
+        return lastBuild().progress();
     }
 
     @JsonProperty
     public Set<String> culprits() {
         Set<String> culprits = new HashSet<String>();
 
-        Run<?, ?> run = job.getLastBuild();
+        BuildViewModel build = lastBuild();
+        // todo: consider introducing a BuildResultJudge to keep this logic in one place
+        while (! SUCCESS.equals(build.result())) {
+            culprits.addAll(build.culprits());
 
-        while (run != null && ! SUCCESS.equals(run.getResult())) {
-
-            if (run instanceof AbstractBuild<?, ?>) {
-                AbstractBuild<?, ?> build = (AbstractBuild<?, ?>) run;
-
-                if (! (isRunning(build))) {
-                    for (User culprit : build.getCulprits()) {
-                        culprits.add(culprit.getFullName());
-                    }
-                }
+            if (! build.hasPreviousBuild()) {
+                break;
             }
 
-            run = run.getPreviousBuild();
+            build = build.previousBuild();
         }
 
         return culprits;
-    }
-
-    public String formatTimestamp(long timestamp) {
-        Date date = new Date(timestamp);
-        DateFormat formatter = new SimpleDateFormat("HH:mm");
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT+0"));
-        String timeFormatted = formatter.format(date);
-        return timeFormatted;
     }
 
     public String toString() {
@@ -152,35 +126,24 @@ public class JobView {
         this.systemTime = systemTime;
     }
 
-    private long whenTheLastBuildStarted() {
-        return job.getLastBuild().getTimestamp().getTimeInMillis();
+    private BuildViewModel lastBuild() {
+        return buildViewOf(job.getLastBuild());
     }
 
-    private long estimatedDuration() {
-        return job.getLastBuild().getEstimatedDuration();
-    }
-
-    private long lastBuildDuration() {
-        return job.getLastBuild().getDuration();
-    }
-
-    private Result lastResult() {
-        Run<?, ?> lastBuild = job.getLastBuild();
-        if (isRunning()) {
-            lastBuild = lastBuild.getPreviousBuild();
+    private BuildViewModel lastCompletedBuild() {
+        BuildViewModel previousBuild = lastBuild();
+        while (previousBuild.isRunning() && previousBuild.hasPreviousBuild()) {
+            previousBuild = previousBuild.previousBuild();
         }
 
-        return lastBuild != null
-                ? lastBuild.getResult()
-                : Result.NOT_BUILT;
+        return previousBuild;
     }
 
-    private boolean isRunning() {
-        return isRunning(job.getLastBuild());
-    }
+    private BuildViewModel buildViewOf(Run<?, ?> build) {
+        if (null == build) {
+            return new NullBuildView();
+        }
 
-    private boolean isRunning(Run<?, ?> build) {
-        return (build != null)
-                && (build.hasntStartedYet() || build.isBuilding() || build.isLogUpdated());
+        return BuildView.of(job.getLastBuild(), systemTime);
     }
 }

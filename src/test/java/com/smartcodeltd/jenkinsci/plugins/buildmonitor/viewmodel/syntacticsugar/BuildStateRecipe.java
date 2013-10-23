@@ -22,7 +22,7 @@ public class BuildStateRecipe {
     }
 
     public BuildStateRecipe numberIs(int number) {
-        // see hudon.model.Run::getDisplayName
+        // see hudson.model.Run::getDisplayName
         return nameIs("#" + number);
     }
 
@@ -102,7 +102,15 @@ public class BuildStateRecipe {
         return this;
     }
 
-    public BuildStateRecipe andIsEstimatedToTake(int minutes) throws Exception{
+    public BuildStateRecipe andTook(int minutes) throws Exception{
+        long duration = (long) minutes * 60 * 1000;
+
+        when(build.getDuration()).thenReturn(duration);
+
+        return this;
+    }
+
+    public BuildStateRecipe andUsuallyTakes(int minutes) throws Exception{
         long duration = (long) minutes * 60 * 1000;
 
         when(build.getEstimatedDuration()).thenReturn(duration);

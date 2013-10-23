@@ -4,10 +4,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/jan-molak/build-monitor.git"
+        "url": "https://github.com/gmykhailiuta/jenkins-build-monitor-plugin.git"
     },
     "devDependencies": {
-        "karma": "0.8.x"
+        "karma": "~0.10",
+        "karma-coverage": "~0.1",
+        "karma-junit-reporter": "~0.1"
     },
     "engines": {
         "node": ">=0.10"

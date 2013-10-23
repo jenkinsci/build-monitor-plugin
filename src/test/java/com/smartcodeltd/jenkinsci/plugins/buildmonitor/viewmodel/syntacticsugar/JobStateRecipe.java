@@ -48,10 +48,6 @@ public class JobStateRecipe {
         return this;
     }
 
-    public JobStateRecipe whereTheCurrentBuildNumberIs(int number) {
-        return updatedWithOnlyOneHistoryEntryFor(a(build().whichNumberIs(number)));
-    }
-
     public JobStateRecipe thatHasNeverRun() {
         buildHistory.clear();
 
@@ -96,17 +92,5 @@ public class JobStateRecipe {
         buildHistory.clear();
 
         return updatedWithEarliestHistoryEntryFor(build);
-    }
-
-    /*
-     * Syntactic sugar
-     */
-
-    private BuildStateRecipe build() {
-        return new BuildStateRecipe();
-    }
-
-    private AbstractBuild<?, ?> a(BuildStateRecipe recipe) {
-        return recipe.execute();
     }
 }

@@ -5,7 +5,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2012, Jan Molak, SmartCode Ltd http://smartcodeltd.co.uk
+ * Copyright (c) 2013, Jan Molak, SmartCode Ltd http://smartcodeltd.co.uk
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -88,46 +88,51 @@ h2 {
 
 .build-monitor h2 {
     font-size: 3.5em;
+    margin-bottom: 0.1em;
 }
 
 .build-monitor p {
-    font-size: 2em;
+    font-size: 1.2em;
+    margin: 0 0 0.5em 0;
 }
 
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .unstable { background-color:darkgoldenrod; }
 .build-monitor .failing { background-color:darkred; }
 .build-monitor .aborted { background-color:gray; }
-.build-monitor .running { }
 
-.build-monitor #job-views a.build-name {
+.build-monitor #job-views .build-time,
+.build-monitor #job-views .build-name {
     font-weight: bold;
-    font-size: 5em;
     color:rgba(255,255,255, 0.3);
 }
-
-.build-monitor #job-views a.build-name {
-    display:block;
-    position:absolute;
-    bottom:-0.2em; right:0.1em;
+.build-monitor #job-views .running .build-time,
+.build-monitor #job-views .running .build-name {
+    font-weight: bold;
+    color:rgba(255,255,255, 0.5);
 }
+.build-monitor #job-views .build-name { font-size: 3em;  }
+.build-monitor #job-views .build-time { font-size: 2em; line-height: 1.75em; }
+.build-monitor #job-views .build-time>.elapsed       { font-size: 1.0em; color:rgba(255,255,255,0.7); }
+.build-monitor #job-views .build-time>.elapsed:after { content:"|"; margin-left:0.1em; font-weight: normal; }
 
 .build-monitor footer {
-    padding:0.7em 1.5em 0 0;
+    padding:0.7em 1.0% 0 0;
     text-align: right;
     color: #ddd;
 }
 
 
-.build-monitor ul.culprits {
+.build-monitor ul.culprits, .build-monitor ol {
     list-style-type: none;
     margin: 0 0 0.25em 1em; padding: 0;
     font-size: 1.2em;
 }
 
-.build-monitor ul.culprits li { display: inline-block; }
-.build-monitor ul.culprits li:after { content: ","; }
-.build-monitor ul.culprits li:last-child:after { content: ""; }
+.build-monitor .meta li { display: inline-block; }
+.build-monitor .meta .culprits li { margin-right:0.5em; }
+.build-monitor .meta .culprits li:after { content: ","; }
+.build-monitor .meta .culprits li:last-child:after { content: ""; }
 
 .build-monitor .failing ul.culprits li:first-child:before {
     content: "Possible Culprits: ";
@@ -192,10 +197,11 @@ h2 {
 
 .build-monitor ul#job-views {
     list-style-type: none;
-    margin:0; padding:0;
+    margin: 0.5%;
+    padding:0;
 }
 
-.build-monitor ul#job-views li {
+.build-monitor ul#job-views>li {
     margin:0.5%;
 }
 .build-monitor ul#job-views.columns-1 li {
@@ -226,27 +232,33 @@ h2 {
     align-items:center;
 }
 
-.build-monitor ul#job-views .meta h2 {
-    -webkit-flex: 4;
-    flex: 4;
-
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-flow: column;
-    flex-flow: column;
-    -webkit-justify-content: space-around;
-    justify-content: space-around;
+.build-monitor ul#job-views .meta .latest-results {
+    width:90%;
+}
+.build-monitor ul#job-views .meta .latest-results * {
+    text-align: center;
 }
 
-.build-monitor ul#job-views .meta .culprits {
-    -webkit-flex: 1 ;
-    flex: 1;
-    width:75%;
+.build-monitor ul#job-views .meta ul,
+.build-monitor ul#job-views .meta ol {
+    margin:0;
     overflow: hidden;
 }
-.build-monitor ul#job-views .meta .culprits li {
+.build-monitor ul#job-views .meta ul li,
+.build-monitor ul#job-views .meta ol li {
     border-radius: 0;
 }
+
+.build-monitor #job-views .build-time,
+.build-monitor #job-views .build-name {
+    display:block;
+    position:absolute;
+}
+.build-monitor #job-views .build-time {
+    vertical-align: middle;
+}
+.build-monitor #job-views .build-name { bottom:0; left:0.2em; }
+.build-monitor #job-views .build-time { bottom:0;  right:0.3em; }
 
 /*
  *   Job meta-data
@@ -262,10 +274,12 @@ h2 {
  *   Progress bar
  */
 
-.build-monitor ul#job-views li {
+.build-monitor ul#job-views>li {
     position:relative;
     border-radius:10px;
     overflow: hidden;
+    -webkit-box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
 }
 
 .build-monitor ul#job-views .progress {
@@ -332,7 +346,7 @@ h2 {
     z-index: 999;
     position:absolute;
     top:12px;
-    right:0.5%;
+    right:1.0%;
     width:32px;
     overflow: hidden;
     margin: 0;  padding: 0.5em;
@@ -404,7 +418,6 @@ slider {
  * Inspired by WittySparks - (c) Sravan Kumar, WittySparks.com
  */
 .build-monitor nav input[type='checkbox']{opacity:0;position:absolute;filter:alpha(opacity=0);margin:5px 0 0 5px}
-.build-monitor nav input[type='checkbox']:focus+label{color:#C30}
 .build-monitor nav input[type='checkbox']+label {
     background:url("industrial/glyphs.png") left top no-repeat;
     background-size:32px 32px;

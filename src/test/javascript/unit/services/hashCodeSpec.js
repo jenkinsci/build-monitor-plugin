@@ -2,22 +2,22 @@
 
 describe('buildMonitor', function () {
     describe('buildMonitor.services', function () {
-        describe('hashCodeOf', function () {
+        describe('hashCode', function () {
 
             beforeEach(module('buildMonitor.services'));
 
-            it('produces a hash code uniquely identifying a string of text', inject(function (hashCodeOf) {
-                expect(hashCodeOf('')).toEqual(0);
-                expect(hashCodeOf('name')).toEqual(3373707)
-                expect(hashCodeOf('Name')).toEqual(2420395);
+            it('produces a hash code uniquely identifying a string of text', inject(function (hashCode) {
+                expect(hashCode('')).toEqual(0);
+                expect(hashCode('name')).toEqual(3373707)
+                expect(hashCode('Name')).toEqual(2420395);
             }));
 
-            it('should treat "undefined" the same way as empty string', inject(function (hashCodeOf) {
-                expect(hashCodeOf()).toEqual(hashCodeOf(''));
+            it('should treat "undefined" the same way as empty string', inject(function (hashCode) {
+                expect(hashCode()).toEqual(hashCode(''));
             }));
 
-            it('should treat "null" the same way as empty string', inject(function (hashCodeOf) {
-                expect(hashCodeOf(null)).toEqual(hashCodeOf(''));
+            it('should treat "null" the same way as empty string', inject(function (hashCode) {
+                expect(hashCode(null)).toEqual(hashCode(''));
             }));
         });
     });
