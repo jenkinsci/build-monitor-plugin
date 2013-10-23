@@ -20,9 +20,11 @@
 
         <l:main-panel>
             <div class="build-monitor dashboard" data-ng-app="buildMonitor" data-ng-controller="JobViews">
+                <!--
                 <header>
                     <h1><a href="configure" title="Configure the '${it.displayName}' view">${it.displayName}</a></h1>
                 </header>
+                -->
 
                 <st:include page="main-config.jelly"/>
 
@@ -34,10 +36,11 @@
                         <st:include page="main-jobViews.jelly"/>
                     </j:otherwise>
                 </j:choose>
-
+                <!--
                 <footer>
                     Brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a>
                 </footer>
+                -->
             </div>
 
             <script>

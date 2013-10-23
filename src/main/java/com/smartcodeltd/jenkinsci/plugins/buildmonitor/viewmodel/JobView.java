@@ -4,6 +4,8 @@ import hudson.model.*;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.*;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 import static hudson.model.Result.SUCCESS;
 
@@ -36,10 +38,22 @@ public class JobView {
 
     @JsonProperty
     public String status() {
+        String status;
         // todo: consider introducing a BuildResultJudge to keep this logic in one place
-        String status = lastCompletedBuild().result() == SUCCESS
-                ? "successful"
-                : "failing";
+        switch (lastCompletedBuild().result().ordinal) {
+            case 0:
+                status = "successful";
+                break;
+            case 1:
+                status = "unstable";
+                break;
+            case 2:
+                status = "failing";
+                break;
+            default:
+                status = "aborted";
+                break;
+        }
 
         if (lastBuild().isRunning()) {
             status += " running";
@@ -97,7 +111,7 @@ public class JobView {
             }
 
             build = build.previousBuild();
-        };
+        }
 
         return culprits;
     }
