@@ -71,7 +71,7 @@
             <st:bind var="window.bindings['buildMonitor']" value="${it}" />
             <script>
                 window.makeStaplerProxy = window.originalMakeStaplerProxy;
-                delete window.originalMakeSteplerProxy;
+                delete window.originalMakeStaplerProxy;
             </script>
 
             <script src="${resourcesURL}/scripts/app.js"></script>
