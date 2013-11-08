@@ -139,6 +139,10 @@ h2 {
 /*
  *   Layout
  */
+.no-flexbox .build-monitor.dashboard * {
+    display:none;
+}
+
 .dashboard { background: url('industrial/background.png'); }
 
 .build-monitor.dashboard {

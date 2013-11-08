@@ -1,14 +1,28 @@
 'use strict';
 
 angular.
-    module('buildMonitor.services', ['ui.bootstrap.dialog', 'template/dialog/message.html']).
+    module('buildMonitor.services', ['ui.bootstrap.dialog', 'buildMonitor.templates', 'template/dialog/message.html']).
 
     value('YahooCookie', YAHOO.util.Cookie).
 
     service('notifyUser',function ($dialog, $window) {
+        this.aboutInsufficientSupportOfCSS3 = function(feature) {
+            $dialog.dialog({
+                templateUrl: 'template/dialog/insufficient-css3-support.html',
+                controller: function($scope, dialog, model) {
+                    $scope.feature = model.feature;
+                },
+                resolve: { model: function() {
+                    return { feature: feature };
+                }},
+                keyboard: false,
+                backdrop: false
+            }).open().then();
+        }
+
         this.about = function (problemStatus) {
 
-            var title = "Sorry to bother you, but there is a slight issue ..."
+            var title = "Sorry to bother you, but there is a slight issue ...";
             var message = "Jenkins returned a \"" + problemStatus + "\" response " +
                 "causing the last request to fail. " +
                 "This usually means a network connection problem " +
