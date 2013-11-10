@@ -1,5 +1,8 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.Augmentation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.BuildStateRecipe;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.JobStateRecipe;
 import hudson.model.Job;
@@ -9,8 +12,7 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Loops.asFollows;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.assumeThat;
@@ -18,7 +20,8 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacti
 import static hudson.model.Result.*;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -292,7 +295,17 @@ public class JobViewTest {
 
         assertThat(view.status(), containsString("failing"));
     }
-    
+
+    @Test
+    public void should_describe_the_job_as_claimed_if_someone_claimed_last_build_failures() {
+        view = JobView.of(
+                a(job().whereTheLast(build().finishedWith(FAILURE).andWasClaimedBy("Adam", "sorry, I broke it, fixing now"))),
+                augmentedWith(Claim.class)
+               );
+
+        assertThat(view.status(), containsString("claimed"));
+    }
+
     /*
      * Should produce some basic build statistics
      */
@@ -370,6 +383,25 @@ public class JobViewTest {
 //        }
     }
 
+    /*
+     * Should know who claimed a broken build
+     */
+
+    @Test
+    public void should_know_if_a_failing_build_has_been_claimed() throws Exception {
+        String ourPotentialHero = "Adam",
+               theReason        = "I broke it, sorry, fixing now";
+
+        view = JobView.of(
+                a(job().whereTheLast(build().finishedWith(FAILURE).andWasClaimedBy(ourPotentialHero, theReason))),
+                augmentedWith(Claim.class)
+        );
+
+        assertThat(view.isClaimed(),      is(true));
+        assertThat(view.claimAuthor(),       is(ourPotentialHero));
+        assertThat(view.claimReason(), is(theReason));
+    }
+
     @Test
     public void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() throws Exception {
         view = JobView.of(a(job().thatHasNeverRun()));
@@ -381,6 +413,7 @@ public class JobViewTest {
         assertThat(view.progress(),          is(0));
         assertThat(view.culprits(),          hasSize(0));
         assertThat(view.status(),            is("failing"));
+        assertThat(view.isClaimed(), is(false));
     }
 
     /*
@@ -407,4 +440,14 @@ public class JobViewTest {
 
         return systemTime;
     }
+
+    private <T extends Augmentation> BuildAugmentor augmentedWith(Class<T>... augmentationsToSupport) {
+        BuildAugmentor augmentor = new BuildAugmentor();
+
+        for (Class<T> augmentation : augmentationsToSupport) {
+            augmentor.support(augmentation);
+        }
+
+        return augmentor;
+    }    
 }

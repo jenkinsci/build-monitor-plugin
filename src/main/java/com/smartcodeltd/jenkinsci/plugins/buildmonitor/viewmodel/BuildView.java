@@ -1,5 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import hudson.model.AbstractBuild;
 import hudson.model.Result;
 import hudson.model.Run;
@@ -13,13 +15,14 @@ public class BuildView implements BuildViewModel {
 
     private final Run<?,?> build;
     private final Date systemTime;
+    private final BuildAugmentor augmentor;
 
     public static BuildView of(Run<?, ?> build) {
-        return new BuildView(build, new Date());
+        return new BuildView(build, new BuildAugmentor(), new Date());
     }
 
-    public static BuildView of(Run<?, ?> build, Date systemTime) {
-        return new BuildView(build, systemTime);
+    public static BuildView of(Run<?, ?> build, BuildAugmentor augmentor, Date systemTime) {
+        return new BuildView(build, augmentor, systemTime);
     }
 
 
@@ -93,7 +96,7 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public BuildViewModel previousBuild() {
-        return new BuildView(build.getPreviousBuild(), systemTime);
+        return new BuildView(build.getPreviousBuild(), augmentor, systemTime);
     }
 
     @Override
@@ -113,6 +116,25 @@ public class BuildView implements BuildViewModel {
         return culprits;
     }
 
+    @Override
+    public boolean isClaimed() {
+        return claim().wasMade();
+    }
+
+    @Override
+    public String claimant() {
+        return claim().author();
+    }
+
+    @Override
+    public String reasonForClaim() {
+        return claim().reason();
+    }
+
+    private Claim claim() {
+        return augmentor.detailsOf(build, Claim.class);
+    }
+
     public String toString() {
         return name();
     }
@@ -127,8 +149,9 @@ public class BuildView implements BuildViewModel {
     }
 
 
-    private BuildView(Run<?, ?> build, Date systemTime) {
+    private BuildView(Run<?, ?> build, BuildAugmentor augmentor, Date systemTime) {
         this.build = build;
         this.systemTime = systemTime;
+        this.augmentor = augmentor;
     }
 }

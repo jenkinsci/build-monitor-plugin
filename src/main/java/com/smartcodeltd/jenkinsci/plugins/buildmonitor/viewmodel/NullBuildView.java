@@ -61,4 +61,19 @@ public class NullBuildView implements BuildViewModel {
     public Set<String> culprits() {
         return new HashSet<String>();
     }
+
+    @Override
+    public boolean isClaimed() {
+        return false;
+    }
+
+    @Override
+    public String claimant() {
+        return null;
+    }
+
+    @Override
+    public String reasonForClaim() {
+        return null;
+    }
 }

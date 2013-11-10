@@ -24,11 +24,10 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import hudson.Extension;
-import hudson.model.AbstractProject;
-import hudson.model.ListView;
-import hudson.model.TopLevelItem;
-import hudson.model.ViewDescriptor;
+import hudson.model.*;
 import hudson.util.FormValidation;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
@@ -110,11 +109,21 @@ public class BuildMonitorView extends ListView {
             if (item instanceof AbstractProject) {
                 AbstractProject project = (AbstractProject) item;
                 if (! project.isDisabled()) {
-                    jobs.add(JobView.of(project));
+                    jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
                 }
             }
         }
 
         return jobs;
+    }
+
+    private BuildAugmentor withAugmentationsIfTheyArePresent() {
+        BuildAugmentor augmentor = new BuildAugmentor();
+
+        if (Hudson.getInstance().getPlugin("claim") != null) {
+            augmentor.support(Claim.class);
+        }
+
+        return augmentor;
     }
 }

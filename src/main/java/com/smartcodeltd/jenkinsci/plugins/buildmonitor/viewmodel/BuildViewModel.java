@@ -19,4 +19,8 @@ public interface BuildViewModel {
     public BuildViewModel previousBuild();
 
     public Set<String> culprits();
+
+    boolean isClaimed();
+    String claimant();
+    String reasonForClaim();
 }

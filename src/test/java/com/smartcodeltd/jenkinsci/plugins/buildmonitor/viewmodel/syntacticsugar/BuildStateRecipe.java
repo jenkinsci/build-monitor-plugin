@@ -3,6 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar
 import hudson.model.AbstractBuild;
 import hudson.model.Result;
 import hudson.model.User;
+import hudson.plugins.claim.ClaimBuildAction;
 import hudson.scm.ChangeLogSet;
 
 import java.text.SimpleDateFormat;
@@ -114,6 +115,18 @@ public class BuildStateRecipe {
         long duration = (long) minutes * 60 * 1000;
 
         when(build.getEstimatedDuration()).thenReturn(duration);
+
+        return this;
+    }
+
+    public BuildStateRecipe andWasClaimedBy(String aPotentialHero, String reason) {
+        final ClaimBuildAction claim = mock(ClaimBuildAction.class);
+
+        when(claim.isClaimed()).thenReturn(true);
+        when(claim.getClaimedByName()).thenReturn(aPotentialHero);
+        when(claim.getReason()).thenReturn(reason);
+
+        when(build.getAction(ClaimBuildAction.class)).thenReturn(claim);
 
         return this;
     }

@@ -97,7 +97,8 @@ h2 {
 }
 
 .build-monitor .successful { background-color:darkgreen; }
-.build-monitor .failing { background-color:darkred; }
+.build-monitor .failing    { background-color:darkred; }
+.build-monitor .claimed    { background-color: #fe5e00; }
 
 .build-monitor #job-views .build-time,
 .build-monitor #job-views .build-name {
@@ -121,10 +122,15 @@ h2 {
 }
 
 
-.build-monitor ul.culprits, .build-monitor ol {
+.build-monitor .latest-results ul,
+.build-monitor .latest-results ol {
     list-style-type: none;
     margin: 0 0 0.25em 1em; padding: 0;
     font-size: 1.2em;
+}
+.build-monitor ul#job-views .claimed .meta ul.culprits li {
+    font-size: 1em;
+    margin-top:0.5em;
 }
 
 .build-monitor .meta li { display: inline-block; }
@@ -303,8 +309,14 @@ h2 {
     background-color: firebrick;
 }
 
+.build-monitor ul#job-views .claimed > .progress {
+    -webkit-animation: forClaimed 2.25s 2 alternate;
+    background-color: #fe7600;
+}
+
 @-webkit-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: limegreen;} }
 @-webkit-keyframes forFailing { 0% {background-color: firebrick;} 100% {background-color: red;} }
+@-webkit-keyframes forClaimed { 0% {background-color: #fe7600; } 100% { background-color: orange; } }
 
 /*
  *   Modal

@@ -13,6 +13,9 @@
                     <a title="{{job.name}}"
                        href="{{job.url}}">{{job.name}}</a>
                 </h2>
+                <ul class="description">
+                    <li data-ng-show="job.claimed">Claimed by <strong>{{ job.claimAuthor }}</strong>: {{ job.claimReason }}</li>
+                </ul>
                 <ul data-ng-show="job.culprits.size() > 0" class="culprits">
                     <li data-ng-repeat="name in job.culprits">
                         {{name}}

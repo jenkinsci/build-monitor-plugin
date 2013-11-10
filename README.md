@@ -32,6 +32,7 @@ All the features I'm hoping to add in the near future are listed in the "Roadmap
 ![Adding jobs](.README/1_Adding_jobs.png)
 ![Two columns view](.README/2_Two_columns_view.png)
 ![Three columns view](.README/3_Three_columns_view.png)
+![Supports Jenkins Claim Plugin](.README/4_Supports_Claim_Plugin.png)
 
 ## TDD
 
@@ -54,7 +55,7 @@ in the [near future](http://caniuse.com/flexbox).
 
 1. Display what triggered the build (SCM change, another job, manual)
 1. Display how long has a given job been failing for
-1. Support for [Claim Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Claim+plugin)
+1. ~~Support for [Claim Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Claim+plugin)~~
 1. Support for [Gravatar](http://gravatar.com)
 1. Display parameters of parametrized jobs
 1. ~~Persist layout configuration changes in a long-lived cookie.~~
