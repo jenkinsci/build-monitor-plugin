@@ -414,6 +414,7 @@ public class JobViewTest {
         assertThat(view.culprits(),          hasSize(0));
         assertThat(view.status(),            is("failing"));
         assertThat(view.isClaimed(), is(false));
+        assertThat(view.failureCount(),      is(0));
     }
 
     /*

@@ -48,6 +48,11 @@ public class NullBuildView implements BuildViewModel {
     }
 
     @Override
+    public int failureCount() {
+        return 0;
+    }
+
+    @Override
     public boolean hasPreviousBuild() {
         return false;
     }

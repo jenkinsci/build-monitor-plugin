@@ -127,6 +127,11 @@ public class JobView {
         return lastCompletedBuild().reasonForClaim();
     }
 
+    @JsonProperty
+    public int failureCount() {
+        return lastCompletedBuild().failureCount();
+    }
+
     public String toString() {
         return name();
     }

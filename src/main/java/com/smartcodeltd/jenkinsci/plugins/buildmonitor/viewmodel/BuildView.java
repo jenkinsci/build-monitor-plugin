@@ -85,6 +85,17 @@ public class BuildView implements BuildViewModel {
         return 100;
     }
 
+    @Override
+    public int failureCount() {
+        if (build instanceof AbstractBuild<?, ?>) {
+            AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+            if (jenkinsBuild.getTestResultAction() == null)
+                return 0;
+            return jenkinsBuild.getTestResultAction().getFailCount();
+        }
+        return 0;
+    }
+
     private boolean isTakingLongerThanUsual() {
         return elapsedTime().greaterThan(estimatedDuration());
     }

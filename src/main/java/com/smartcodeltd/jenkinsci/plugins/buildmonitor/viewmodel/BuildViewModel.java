@@ -14,6 +14,7 @@ public interface BuildViewModel {
     public Duration duration();
     public Duration estimatedDuration();
     public int progress();
+    public int failureCount();
 
     public boolean hasPreviousBuild();
     public BuildViewModel previousBuild();
