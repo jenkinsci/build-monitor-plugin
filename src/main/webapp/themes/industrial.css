@@ -206,6 +206,9 @@ h2 {
     padding:0;
 }
 
+/*
+ * Grid
+ */
 .build-monitor ul#job-views>li {
     margin:0.5%;
 }
@@ -224,6 +227,22 @@ h2 {
 .build-monitor ul#job-views.columns-4 li {
     -webkit-flex: 1 24%;
     flex: 1 24%;
+}
+.build-monitor ul#job-views.columns-5 li {
+    -webkit-flex: 1 19%;
+    flex: 1 19%;
+}
+.build-monitor ul#job-views.columns-6 li {
+    -webkit-flex: 1 15.5%;
+    flex: 1 15.5%;
+}
+.build-monitor ul#job-views.columns-7 li {
+    -webkit-flex: 1 13%;
+    flex: 1 13%;
+}
+.build-monitor ul#job-views.columns-8 li {
+    -webkit-flex: 1 11.5%;
+    flex: 1 11.5%;
 }
 
 .build-monitor ul#job-views .meta {

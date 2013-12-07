@@ -10,7 +10,7 @@
         </li>
         <li>
             <span class="slider-label">Columns</span>
-            <slider floor="1" ceiling="4" step="1" precision="0" data-ng-model="numberOfColumns"></slider>
+            <slider floor="1" ceiling="8" step="1" precision="0" data-ng-model="numberOfColumns"></slider>
         </li>
         <li>
             <a class="btn"
