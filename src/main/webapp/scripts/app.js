@@ -6,8 +6,4 @@ angular.
         if (! Modernizr.flexbox) {
             notifyUser.aboutInsufficientSupportOfCSS3('flexbox');
         }
-
-        $rootScope.$on('communication-error', function(event, error) {
-            notifyUser.about(error.status);
-        });
     });

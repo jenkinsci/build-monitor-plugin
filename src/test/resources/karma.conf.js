@@ -20,6 +20,7 @@ module.exports = function(config) {
             'src/main/webapp/vendor/ui-*.js',
             'src/test/resources/vendor/angular-mocks.js',
             'src/test/resources/vendor/sinon-1.7.3.js',
+            'src/test/resources/vendor/jasmine-sinon-0.3.1.js',
             'src/test/resources/vendor/yahoo-2.9.0.min.js',
             'src/test/resources/vendor/yahoo-cookie-2.9.0.min.js',
             'src/main/webapp/scripts/**/*.js',
