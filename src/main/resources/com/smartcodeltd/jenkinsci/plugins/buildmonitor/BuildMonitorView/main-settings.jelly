@@ -1,4 +1,4 @@
-<nav data-ng-class="{ showSettings:toggleSettings }">
+<nav data-ng-class="{ showSettings:toggleSettings }" data-ng-controller="controlPanel">
     <input id="toggleSettings" type="checkbox" class="settings" data-ng-model="toggleSettings" />
     <label for="toggleSettings" title="Configure Build Monitor Settings">Settings</label>
 
@@ -6,11 +6,11 @@
     <ul>
         <li>
             <span class="slider-label">Font size</span>
-            <slider floor="0.5" ceiling="2" step="0.1" precision="1" data-ng-model="fontSize"></slider>
+            <slider floor="0.5" ceiling="2" step="0.1" precision="1" data-ng-model="settings.fontSize"></slider>
         </li>
         <li>
             <span class="slider-label">Columns</span>
-            <slider floor="1" ceiling="8" step="1" precision="0" data-ng-model="numberOfColumns"></slider>
+            <slider floor="1" ceiling="8" step="1" precision="0" data-ng-model="settings.numberOfColumns"></slider>
         </li>
         <li>
             <a class="btn"

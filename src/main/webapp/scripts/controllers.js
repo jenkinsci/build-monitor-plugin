@@ -1,28 +1,14 @@
 'use strict';
 
 angular.
-    module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'uiSlider']).
+    module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'uiSlider', 'jenkins']).
 
     controller('JobViews', ['$scope', '$rootScope', 'proxy', 'cookieJar', 'every', 'connectionErrorHandler',
         function ($scope, $rootScope, proxy, cookieJar, every, connectionErrorHandler) {
-
-            // todo: consider extracting a Configuration Controller
-            $scope.fontSize = cookieJar.get('fontSize', 1);
-            $scope.numberOfColumns = cookieJar.get('numberOfColumns', 2);
-
-            $scope.$watch('fontSize', function (currentFontSize) {
-                cookieJar.put('fontSize', currentFontSize);
-            });
-            $scope.$watch('numberOfColumns', function (currentNumberOfColumns) {
-                cookieJar.put('numberOfColumns', currentNumberOfColumns);
-            });
-
-            //
-
             var handleErrorAndDecideOnNext = connectionErrorHandler.handleErrorAndNotify,
                 fetchJobViews              = proxy.buildMonitor.fetchJobViews;
 
-            $scope.jobs = {};
+            $scope.jobs     = {};
 
             every(5000, function (step) {
 

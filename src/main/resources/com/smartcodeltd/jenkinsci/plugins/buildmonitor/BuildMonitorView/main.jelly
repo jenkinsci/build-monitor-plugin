@@ -27,7 +27,7 @@
                     <h1><a href="configure" title="Configure the '${it.displayName}' view">${it.displayName}</a></h1>
                 </header>
 
-                <st:include page="main-config.jelly"/>
+                <st:include page="main-settings.jelly"/>
 
                 <j:choose>
                     <j:when test="${it.isEmpty()}">
@@ -83,6 +83,7 @@
             <script src="${resourcesURL}/scripts/jenkins.js"></script>
             <script src="${resourcesURL}/scripts/controllers.js"></script>
             <script src="${resourcesURL}/scripts/templates.js"></script>
+            <script src="${resourcesURL}/scripts/settings.js"></script>
             <script>
                 'use strict';
 

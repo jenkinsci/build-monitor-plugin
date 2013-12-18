@@ -1,6 +1,6 @@
 <ul id="job-views"
-    style="font-size: {{fontSize}}em"
-    class="columns-{{ numberOfColumns }}">
+    style="font-size: {{ settings.fontSize }}em"
+    class="columns-{{ settings.numberOfColumns }}">
 
     <li ng-repeat="job in jobs" class="{{job.status}}">
         <div class="progress" style="width: {{job.progress}}%">
