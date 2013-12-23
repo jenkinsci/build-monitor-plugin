@@ -2,6 +2,8 @@
 
 angular.module('jenkins', []).
 
+    constant('STAPLER_CONTENT_TYPE', 'application/x-stapler-method-invocation;charset=UTF-8').
+
     provider('proxy', function() {
         this.bindings = {};
 
@@ -32,7 +34,7 @@ angular.module('jenkins', []).
         };
     }).
 
-    factory('proxyFrom', ['$http', 'stringified', function($http, stringified) {
+    factory('proxyFrom', ['$http', 'stringified', 'STAPLER_CONTENT_TYPE', function($http, stringified, STAPLER_CONTENT_TYPE) {
         return function(binding) {
             var url = binding.url + '/',
                 proxy = {};
@@ -46,7 +48,7 @@ angular.module('jenkins', []).
                         method:  'POST',
                         data:    stringified(parameters),
                         headers: {
-                            'Content-Type': 'application/x-stapler-method-invocation;charset=UTF-8',
+                            'Content-Type': STAPLER_CONTENT_TYPE,
                             'Crumb': binding.crumb
                         }
                     });
@@ -55,4 +57,30 @@ angular.module('jenkins', []).
 
             return proxy;
         }
-    }]);
+    }]).
+
+    factory('responseCodeStandardsIntroducer', ['$q', 'STAPLER_CONTENT_TYPE', function($q, STAPLER_CONTENT_TYPE) {
+        function isAStapler(response) {
+            return (response.config.headers
+                && response.config.headers['Content-Type'] === STAPLER_CONTENT_TYPE);
+        }
+
+        return {
+            'response': function(response) {
+                if (isAStapler(response) && response.data.stackTrace) {
+                    // this is required to patch the incorrect behaviour of Stapler
+                    // see https://issues.jenkins-ci.org/browse/JENKINS-21132
+                    var augmentedResponse = angular.copy(response);
+                    augmentedResponse.status = 500;
+
+                    return $q.reject(augmentedResponse);
+                }
+
+                return response;
+            }
+        };
+    }]).
+
+    config(function ($httpProvider) {
+        $httpProvider.interceptors.push('responseCodeStandardsIntroducer');
+    });

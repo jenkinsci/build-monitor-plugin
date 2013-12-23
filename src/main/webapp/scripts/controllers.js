@@ -3,58 +3,109 @@
 angular.
     module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'uiSlider', 'jenkins']).
 
-    controller('JobViews', ['$scope', '$rootScope', 'proxy', 'cookieJar', 'every', 'connectionErrorHandler',
-        function ($scope, $rootScope, proxy, cookieJar, every, connectionErrorHandler) {
-            var handleErrorAndDecideOnNext = connectionErrorHandler.handleErrorAndNotify,
-                fetchJobViews              = proxy.buildMonitor.fetchJobViews;
+    controller('JobViews', ['$scope', '$rootScope', 'proxy', 'cookieJar', 'every', 'connectivityStrategist',
+        function ($scope, $rootScope, proxy, cookieJar, every, connectivityStrategist) {
+            var tryToRecover  = connectivityStrategist.decideOnStrategy,
+                fetchJobViews = proxy.buildMonitor.fetchJobViews;
 
-            $scope.jobs     = {};
+            $scope.jobs = {};
 
-            every(5000, function (step) {
+            every(5000, function () {
 
-                fetchJobViews().then(function (response) {
+                return fetchJobViews().then(function (response) {
 
                     $scope.jobs = response.data.jobs
-                    step.resolve();
 
-                }, handleErrorAndDecideOnNext(step));
+                    $rootScope.$broadcast('jenkins:data-fetched', {});
+
+                }, tryToRecover());
             });
         }]).
 
-    service('connectionErrorHandler', ['$rootScope',
-        function ($rootScope) {
-            this.handleErrorAndNotify = function (deferred) {
+    service('connectivityStrategist', ['$rootScope', '$q', 'counter',
+        function ($rootScope, $q, counter) {
+
+            var lostConnectionsCount = counter;
+
+            this.resetErrorCounter = function () {
+                if (lostConnectionsCount.value() > 0) {
+                    $rootScope.$broadcast("jenkins:connection-reestablished", {});
+                }
+
+                lostConnectionsCount.reset();
+            }
+
+            this.decideOnStrategy = function () {
 
                 function handleLostConnection(error) {
-                    deferred.resolve();
+                    lostConnectionsCount.increase();
+
                     $rootScope.$broadcast("jenkins:connection-lost", error);
+
+                    return $q.when(error);
                 }
 
                 function handleJenkinsRestart(error) {
-                    deferred.reject();
                     $rootScope.$broadcast("jenkins:restarted", error);
+                    return $q.reject(error);
+                }
+
+                function handleInternalJenkins(error) {
+                    $rootScope.$broadcast("jenkins:internal-error", error);
+                    return $q.reject(error);
                 }
 
                 function handleUnknown(error) {
-                    deferred.reject();
                     $rootScope.$broadcast("jenkins:unknown-communication-error", error);
+                    return $q.reject(error);
                 }
 
                 return function (error) {
                     switch (error.status) {
-                        case 0:   handleLostConnection(error); break;
-                        case 404: handleJenkinsRestart(error); break;
-                        default:  handleUnknown(error);        break;
+                        case 0:   return handleLostConnection(error);
+                        case 404: return handleJenkinsRestart(error);
+                        case 500: return handleInternalJenkins(error);
+                        default:  return handleUnknown(error);
                     }
                 }
             }
         }]).
 
-    run(['$rootScope', '$window', '$log', 'notifyUser',
-        function ($rootScope, $window, $log, notifyUser) {
-            $rootScope.$on('jenkins:connection-lost', function (event, error) {
-                // todo: notify the user about the problem and what we're doing in order to resolve it
-                $log.info('Connection with Jenkins mother ship is lost. I\'ll try to reconnect in a couple of seconds and see if we have more luck...');
+    directive('notifier', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'E',
+            controller: function ($scope) {
+                $scope.message = '';
+
+                $scope.$on('jenkins:connection-lost', function () {
+                    $scope.message = 'Communication with Jenkins mother ship is lost. Trying to reconnect...';
+                });
+
+                $scope.$on('jenkins:connection-reestablished', function () {
+                    $scope.message = "... and we're back online, yay! :-)";
+
+                    $timeout(function () {
+                        $scope.message = "";
+                    }, 3000);
+                });
+            },
+            replace: true,
+            template: '<span class="notifier" ' +
+                'ng-show="message"' +
+                'ng-animate="\'fade\'">' +
+                    '{{ message }}' +
+                "</span>\n"
+        }
+    }]).
+
+    run(['$rootScope', '$window', '$log', 'notifyUser', 'connectivityStrategist',
+        function ($rootScope, $window, $log, notifyUser, connectivityStrategist) {
+            $rootScope.$on('jenkins:data-fetched', function (event) {
+                connectivityStrategist.resetErrorCounter();
+            });
+
+            $rootScope.$on('jenkins:internal-error', function (event, error) {
+                notifyUser.aboutInternalJenkins(error);
             });
 
             $rootScope.$on('jenkins:restarted', function (event, error) {

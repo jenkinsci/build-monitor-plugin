@@ -120,12 +120,10 @@ describe('buildMonitor', function () {
                 it('progresses the loop if the current step resolves the promise of the next step', inject(function (every, $rootScope, $timeout, $q) {
                     var task = sinon.spy();
 
-                    every(interval, function (deferred) {
+                    every(interval, function () {
                         task();
 
-                        deferred.resolve();
-
-                        return deferred;
+                        return $q.when({});
                     });
 
 
@@ -137,15 +135,13 @@ describe('buildMonitor', function () {
                     expect(task.callCount).toBe(2);
                 }));
 
-                it('stops the loop if the current step brakes the promise of a next step', inject(function (every, $rootScope, $timeout) {
+                it('stops the loop if the current step brakes the promise of a next step', inject(function (every, $rootScope, $timeout, $q) {
                     var task = sinon.spy();
 
-                    every(interval, function (deferred) {
+                    every(interval, function () {
                         task();
 
-                        deferred.reject();
-
-                        return deferred;
+                        return $q.reject({});
                     });
 
                     $timeout.flush(interval)
@@ -154,35 +150,34 @@ describe('buildMonitor', function () {
                 }));
 
 
-                it('calls $apply after the step is completed', inject(function (every, $rootScope) {
+                it('calls $apply after the step is completed', inject(function (every, $rootScope, $q) {
                     var apply = sinon.spy($rootScope, '$apply');
 
-                    every(interval, function (deferred) {
-                        deferred.resolve();
-
-                        return deferred;
+                    every(interval, function () {
+                        return $q.when({});
                     });
 
                     expect(apply.callCount).toBe(1);
                 }));
 
-                it("won't run the next step until the previous step has completed", inject(function (every, $q, $timeout, $rootScope) {
+                it("won't run the next step until the previous step has completed", inject(function (every, $q, $timeout, $q) {
                     var syncTask = sinon.spy(),
 
                         asyncTask = sinon.spy(),
                         asyncTaskLength = 2 * interval;
 
-                    every(interval, function (deferred) {
+                    every(interval, function () {
                         syncTask();
+
+                        var deferred = $q.defer();
 
                         $timeout(function () {
                             asyncTask();
 
-                            deferred.resolve();
-
+                            deferred.resolve({});
                         }, asyncTaskLength);
 
-                        return deferred;
+                        return deferred.promise;
                     });
 
                     // straight after invoking 'every':

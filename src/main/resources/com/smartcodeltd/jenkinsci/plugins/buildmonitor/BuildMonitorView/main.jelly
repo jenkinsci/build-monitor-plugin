@@ -39,7 +39,8 @@
                 </j:choose>
 
                 <footer>
-                    Brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a>
+                    <notifier />
+                    <span class="plugin-author">Brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a></span>
                 </footer>
             </div>
 

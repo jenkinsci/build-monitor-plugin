@@ -6,30 +6,25 @@ angular.
             function ($rootScope, $window, $q, $timeout) {
 
                 function every(interval, command) {
-                    var applyRootScope = function() {
+                    var isDefined  = angular.isDefined,
+                        isFunction = angular.isFunction,
+                        isDeferred = function (result) {
+                            return (isDefined(result) && isFunction(result.then));
+                        },
+                        applyRootScope = function () {
                             $rootScope.$$phase || $rootScope.$apply();
                         };
 
-                    function synchronous(command) {
-                        command();
-                        $timeout(step, interval);
-                    }
-
-                    function asynchronous(command) {
-                        var deferred = $q.defer(),
-                            promise  = deferred.promise;
-
-                        promise.then(function() {
-                            $timeout(step, interval);
-                        });
-
-                        command(deferred);
-                    }
-
                     function step() {
-                        (command.length == 0)
-                            ? synchronous(command)
-                            : asynchronous(command);
+                        var result = command();
+
+                        if (isDeferred(result)) {
+                            result.then(function () {
+                                $timeout(step, interval);
+                            })
+                        } else {
+                            $timeout(step, interval);
+                        }
 
                         applyRootScope();
                     }
