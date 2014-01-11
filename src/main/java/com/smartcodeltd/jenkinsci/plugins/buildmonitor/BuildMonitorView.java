@@ -41,6 +41,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import static hudson.Util.filter;
+
 /**
  * @author Jan Molak
  */
@@ -103,14 +105,12 @@ public class BuildMonitorView extends ListView {
     }
 
     private List<JobView> jobViews() {
+        List<AbstractProject> projects = filter(super.getItems(), AbstractProject.class);
         List<JobView> jobs = new ArrayList<JobView>();
 
-        for (TopLevelItem item : super.getItems()) {
-            if (item instanceof AbstractProject) {
-                AbstractProject project = (AbstractProject) item;
-                if (! project.isDisabled()) {
-                    jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
-                }
+        for (AbstractProject project : projects) {
+            if (! project.isDisabled()) {
+                jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
             }
         }
 
