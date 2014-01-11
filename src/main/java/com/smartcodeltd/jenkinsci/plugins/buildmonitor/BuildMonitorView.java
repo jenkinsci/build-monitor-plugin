@@ -23,20 +23,27 @@
  */
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import hudson.Extension;
 import hudson.model.*;
+import hudson.model.Descriptor.FormException;
 import hudson.util.FormValidation;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -80,6 +87,31 @@ public class BuildMonitorView extends ListView {
         }
     }
 
+    @Override
+    protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
+        super.submit(req);
+
+        String requestedOrdering = req.getParameter("order");
+
+        try {
+            order = orderBy(requestedOrdering);
+        } catch (Exception e) {
+            throw new FormException("Can't order projects by " + requestedOrdering, "order");
+        }
+    }
+
+    public String currentOrder() {
+        return order.getClass().getSimpleName();
+    }
+
+    private Comparator<AbstractProject> order = new ByName();
+
+    private Comparator<AbstractProject> orderBy(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        String packageName = this.getClass().getPackage().getName() + ".order.";
+
+        return (Comparator<AbstractProject>) Class.forName(packageName + requestedOrdering).newInstance();
+    }
+
     /**
      * Because of how org.kohsuke.stapler.HttpResponseRenderer is implemented
      * it can only work with net.sf.JSONObject in order to produce correct application/json
@@ -107,6 +139,8 @@ public class BuildMonitorView extends ListView {
     private List<JobView> jobViews() {
         List<AbstractProject> projects = filter(super.getItems(), AbstractProject.class);
         List<JobView> jobs = new ArrayList<JobView>();
+
+        Collections.sort(projects, order);
 
         for (AbstractProject project : projects) {
             if (! project.isDisabled()) {

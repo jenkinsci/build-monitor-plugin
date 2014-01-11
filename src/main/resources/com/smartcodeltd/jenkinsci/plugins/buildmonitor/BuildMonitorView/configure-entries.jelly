@@ -7,6 +7,13 @@
         </j:forEach>
     </f:entry>
 
+    <f:entry title="${%Ordered by}">
+        <select name="order" class="setting-input">
+            <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
+            <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
+        </select>
+    </f:entry>
+
     <f:optionalBlock name="useincluderegex"
                      title="${%Use a regular expression to include jobs into the view}" checked="${it.includeRegex != null}"
                      help="/help/view-config/includeregex.html">
