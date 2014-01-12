@@ -94,7 +94,7 @@ public class BuildMonitorView extends ListView {
         String requestedOrdering = req.getParameter("order");
 
         try {
-            order = orderBy(requestedOrdering);
+            order = orderIn(requestedOrdering);
         } catch (Exception e) {
             throw new FormException("Can't order projects by " + requestedOrdering, "order");
         }
@@ -106,7 +106,7 @@ public class BuildMonitorView extends ListView {
 
     private Comparator<AbstractProject> order = new ByName();
 
-    private Comparator<AbstractProject> orderBy(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    private Comparator<AbstractProject> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
         return (Comparator<AbstractProject>) Class.forName(packageName + requestedOrdering).newInstance();
@@ -122,9 +122,7 @@ public class BuildMonitorView extends ListView {
      */
     @JavaScriptMethod
     public JSONObject fetchJobViews() throws Exception {
-        ObjectMapper m = new ObjectMapper();
-
-        return asJsonObject("{jobs:" + m.writeValueAsString(jobViews()) + "}");
+        return jsonFrom(jobViews());
     }
 
     public boolean isEmpty() {
@@ -132,8 +130,10 @@ public class BuildMonitorView extends ListView {
     }
 
 
-    private JSONObject asJsonObject(String jsonString) {
-        return (JSONObject) JSONSerializer.toJSON(jsonString);
+    private JSONObject jsonFrom(List<JobView> jobViews) throws IOException {
+        ObjectMapper m = new ObjectMapper();
+
+        return (JSONObject) JSONSerializer.toJSON("{jobs:" + m.writeValueAsString(jobViews) + "}");
     }
 
     private List<JobView> jobViews() {
