@@ -73,18 +73,6 @@ public class BuildMonitorView extends ListView {
         public String getDisplayName() {
             return "Build Monitor View";
         }
-
-        public FormValidation doCheckIncludeRegex(@QueryParameter String value) {
-            if(value != null && value.length() > 0) {
-                try {
-                    Pattern.compile(value);
-                } catch (PatternSyntaxException e) {
-                    return FormValidation.error(e.getMessage());
-                }
-            }
-
-            return FormValidation.ok();
-        }
     }
 
     @Override
@@ -143,9 +131,7 @@ public class BuildMonitorView extends ListView {
         Collections.sort(projects, order);
 
         for (AbstractProject project : projects) {
-            if (! project.isDisabled()) {
-                jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
-            }
+            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
         }
 
         return jobs;
