@@ -28,8 +28,12 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import hudson.Extension;
-import hudson.model.*;
+import hudson.Util;
+import hudson.model.AbstractProject;
 import hudson.model.Descriptor.FormException;
+import hudson.model.Hudson;
+import hudson.model.ListView;
+import hudson.model.ViewDescriptor;
 import hudson.util.FormValidation;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
@@ -72,6 +76,21 @@ public class BuildMonitorView extends ListView {
         @Override
         public String getDisplayName() {
             return "Build Monitor View";
+        }
+
+        /**
+         * Cut-n-paste from ListView$Descriptor as we cannot inherit from that class
+         */
+        public FormValidation doCheckIncludeRegex(@QueryParameter String value) {
+            String v = Util.fixEmpty(value);
+            if (v != null) {
+                try {
+                    Pattern.compile(v);
+                } catch (PatternSyntaxException pse) {
+                    return FormValidation.error(pse.getMessage());
+                }
+            }
+            return FormValidation.ok();
         }
     }
 

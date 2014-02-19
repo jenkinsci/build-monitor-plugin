@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.535</version>
+        <version>1.480</version>
     </parent>
 
     <groupId>org.jenkins-ci.plugins</groupId>
@@ -51,7 +51,8 @@
     </scm>
 
     <properties>
-        <maven-hpi-plugin.version>1.106</maven-hpi-plugin.version>
+        <!-- using 1.74 as 1.95 doesn't seem to be compatible with 1.480 core -->
+        <maven-hpi-plugin.version>1.74</maven-hpi-plugin.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -146,7 +147,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
+                <version>3.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
