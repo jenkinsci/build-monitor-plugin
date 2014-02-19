@@ -1,24 +1,56 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-    <f:entry title="${%Jobs}">
-        <j:forEach var="job" items="${app.items}">
-            <f:checkbox name="${job.name}" checked="${it.contains(job)}" />
-            ${job.name}
-            <br/>
-        </j:forEach>
-    </f:entry>
 
-    <f:entry title="${%Ordered by}">
-        <select name="order" class="setting-input">
-            <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
-            <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
-        </select>
-    </f:entry>
+  <!-- BEGIN cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.480/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
 
-    <f:optionalBlock name="useincluderegex"
-                     title="${%Use a regular expression to include jobs into the view}" checked="${it.includeRegex != null}"
-                     help="/help/view-config/includeregex.html">
-        <f:entry title="${%Regular expression}">
-            <f:textbox name="includeRegex" field="includeRegex" />
-        </f:entry>
-    </f:optionalBlock>
+  <f:section title="${%Job Filters}">
+
+  <f:entry title="${%Status Filter}" help="/help/view-config/statusFilter.html">
+    <select name="statusFilter" class="setting-input">
+      <f:option value="" selected="${it.statusFilter==null}">${%All selected jobs}</f:option>
+      <f:option value="1" selected="${it.statusFilter==true}">${%Enabled jobs only}</f:option>
+      <f:option value="2" selected="${it.statusFilter==false}">${%Disabled jobs only}</f:option>
+    </select>
+  </f:entry>
+
+  <f:entry title="${%Jobs}">
+    <div class="listview-jobs">
+      <j:forEach var="job" items="${it.ownerItemGroup.items}">
+        <f:checkbox name="${job.name}" checked="${it.contains(job)}" title="${job.name}" />
+        <br/>
+      </j:forEach>
+    </div>
+  </f:entry>
+
+  <f:optionalBlock name="useincluderegex" title="${%Use a regular expression to include jobs into the view}"
+                   checked="${it.includeRegex != null}" help="/help/view-config/includeregex.html">
+    <f:entry title="${%Regular expression}">
+      <f:textbox name="includeRegex" field="includeRegex" />
+    </f:entry>
+  </f:optionalBlock>
+
+  <j:if test="${it.hasJobFilterExtensions()}">
+   <j:invokeStatic var="allJobFilters" className="hudson.views.ViewJobFilter" method="all"/>
+   <f:block>
+      <f:hetero-list name="jobFilters" hasHeader="true"
+      	descriptors="${allJobFilters}"
+        items="${it.jobFilters}"
+        addCaption="${%Add Job Filter}" />
+   </f:block>
+  </j:if>
+
+  </f:section>
+
+  <!-- END cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.480/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
+
+  <f:section title="${%Build Monitor Settings}">
+
+  <f:entry title="${%Ordered by}">
+    <select name="order" class="setting-input">
+      <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
+      <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
+    </select>
+  </f:entry>
+
+  </f:section>
+
 </j:jelly>
