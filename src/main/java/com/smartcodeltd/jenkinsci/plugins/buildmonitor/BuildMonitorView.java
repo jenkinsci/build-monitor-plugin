@@ -107,8 +107,14 @@ public class BuildMonitorView extends ListView {
         }
     }
 
+    // defensive coding to avoid issues when Jenkins instantiates the plugin without populating its fields
+    // https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/43
+    private Comparator<AbstractProject> currentOrderOrDefault() {
+        return order == null ? new ByName() : order;
+    }
+
     public String currentOrder() {
-        return order.getClass().getSimpleName();
+        return currentOrderOrDefault().getClass().getSimpleName();
     }
 
     private Comparator<AbstractProject> order = new ByName();
@@ -147,7 +153,7 @@ public class BuildMonitorView extends ListView {
         List<AbstractProject> projects = filter(super.getItems(), AbstractProject.class);
         List<JobView> jobs = new ArrayList<JobView>();
 
-        Collections.sort(projects, order);
+        Collections.sort(projects, currentOrderOrDefault());
 
         for (AbstractProject project : projects) {
             jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
