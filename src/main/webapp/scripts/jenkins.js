@@ -49,7 +49,8 @@ angular.module('jenkins', []).
                         data:    stringified(parameters),
                         headers: {
                             'Content-Type': STAPLER_CONTENT_TYPE,
-                            'Crumb': binding.crumb
+                            'Crumb':  binding.crumb,  // Crumb header is needed to get past Stapler
+                            '.crumb': binding.crumb   // .crumb header is needed to support CSRF protection (#46)
                         }
                     });
                 }

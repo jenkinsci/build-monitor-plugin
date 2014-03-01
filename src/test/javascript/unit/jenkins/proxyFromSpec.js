@@ -90,7 +90,8 @@ describe('buildMonitor', function () {
                     headers: {
                         'Accept':       'application/json, text/plain, */*',
                         'Content-Type': 'application/x-stapler-method-invocation;charset=UTF-8',
-                        'Crumb':        crumb
+                        'Crumb':        crumb,
+                        '.crumb':       crumb
                     }
                 };
 
