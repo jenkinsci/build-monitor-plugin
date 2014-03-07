@@ -163,12 +163,8 @@ public class BuildMonitorView extends ListView {
     }
 
     private BuildAugmentor withAugmentationsIfTheyArePresent() {
-        BuildAugmentor augmentor = new BuildAugmentor();
-
-        if (Hudson.getInstance().getPlugin("claim") != null) {
-            augmentor.support(Claim.class);
-        }
-
-        return augmentor;
+        return BuildAugmentor.fromDetectedPlugins();
     }
+
+
 }
