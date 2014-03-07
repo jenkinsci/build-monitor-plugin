@@ -1,8 +1,12 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.Analysed;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.Analysis;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.NotAnalysed;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claimed;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.NotClaimed;
+import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import hudson.model.Hudson;
 import hudson.model.Run;
 import hudson.plugins.claim.ClaimBuildAction;
@@ -15,12 +19,16 @@ import java.util.Set;
 public class BuildAugmentor {
 
     public static String CLAIM_PLUGIN = "claim";
+    public static String ANALYSER_PLUGIN = "build-failure-analyzer";
 
     public static BuildAugmentor fromDetectedPlugins() {
         BuildAugmentor augmentor = new BuildAugmentor();
 
         if (isInstalled(CLAIM_PLUGIN)) {
             augmentor.support(Claim.class);
+        }
+        if (isInstalled(ANALYSER_PLUGIN)) {
+            augmentor.support(Analysis.class);
         }
         return augmentor;
     }
@@ -29,21 +37,23 @@ public class BuildAugmentor {
         return Hudson.getInstance().getPlugin(plugin) != null;
     }
 
-
     private Set<Class<? extends Augmentation>> recognisedAugmentations = new HashSet<Class<? extends Augmentation>>();
 
     @SuppressWarnings("unchecked")
     public <T extends Augmentation> T detailsOf(Run<?, ?> build, Class<T> augmentation) {
-        //if (augmentation.isAssignableFrom(Claim.class)) {
-        return (T) detailsOf(build);
-        //}
+        if (augmentation.isAssignableFrom(Claim.class)) {
+            return (T) detailsOfClaim(build);
+        } else {
+            assert augmentation.isAssignableFrom(Analysis.class) : "Unknown augmentation should never happen outside of development";
+            return (T) detailsOfAnalysis(build);
+        }
     }
 
     private <T extends Augmentation> boolean isSupported(Class<T> augmentation) {
         return recognisedAugmentations.contains(augmentation);
     }
 
-    private Claim detailsOf(Run<?, ?> build) {
+    private Claim detailsOfClaim(Run<?, ?> build) {
         if (isSupported(Claim.class)) {
             ClaimBuildAction action = build.getAction(ClaimBuildAction.class);
 
@@ -52,6 +62,18 @@ public class BuildAugmentor {
             }
         }
         return new NotClaimed();
+    }
+
+    private Analysis detailsOfAnalysis(Run<?, ?> build) {
+        if (isSupported(Analysis.class)) {
+            FailureCauseBuildAction action = build.getAction(FailureCauseBuildAction.class);
+
+            if (action != null) {
+                // Should we also check if failures were found? is it "Analysed" or "HasKnownFailures"
+                return new Analysed(action);
+            }
+        }
+        return new NotAnalysed();
     }
 
     public void support(Class<? extends Augmentation> typeOfAugmentation) {

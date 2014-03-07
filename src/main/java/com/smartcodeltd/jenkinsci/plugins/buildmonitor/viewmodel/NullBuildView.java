@@ -3,6 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 import hudson.model.Result;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class NullBuildView implements BuildViewModel {
@@ -74,6 +75,16 @@ public class NullBuildView implements BuildViewModel {
 
     @Override
     public String reasonForClaim() {
+        return null;
+    }
+
+    @Override
+    public boolean hasKnownFailures() {
+        return false;
+    }
+
+    @Override
+    public List<String> knownFailures() {
         return null;
     }
 }

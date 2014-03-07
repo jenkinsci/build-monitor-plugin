@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.Analysis;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import hudson.model.AbstractBuild;
 import hudson.model.Result;
@@ -9,6 +10,7 @@ import hudson.model.User;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class BuildView implements BuildViewModel {
@@ -133,6 +135,20 @@ public class BuildView implements BuildViewModel {
 
     private Claim claim() {
         return augmentor.detailsOf(build, Claim.class);
+    }
+
+    @Override
+    public boolean hasKnownFailures() {
+        return analysis().foundKnownFailures();
+    }
+
+    @Override
+    public List<String> knownFailures() {
+        return  analysis().failures();
+    }
+
+    private Analysis analysis() {
+        return augmentor.detailsOf(build, Analysis.class);
     }
 
     public String toString() {
