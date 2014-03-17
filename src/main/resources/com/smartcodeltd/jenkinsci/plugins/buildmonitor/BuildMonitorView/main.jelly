@@ -23,7 +23,7 @@
             <div class="build-monitor dashboard"
                  data-ng-app="buildMonitor"
                  data-ng-controller="JobViews">
-                <header>
+                <header ng-show="settings.showHeader">
                     <h1><a href="configure" title="Configure the '${it.displayName}' view">${it.displayName}</a></h1>
                 </header>
 
@@ -38,7 +38,7 @@
                     </j:otherwise>
                 </j:choose>
 
-                <footer>
+                <footer ng-show="settings.showHeader">
                     <notifier />
                     <span class="plugin-author">Brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a></span>
                 </footer>

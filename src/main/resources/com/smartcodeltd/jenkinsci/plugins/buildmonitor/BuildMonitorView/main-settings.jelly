@@ -13,6 +13,13 @@
             <slider floor="1" ceiling="8" step="1" precision="0" data-ng-model="settings.numberOfColumns"></slider>
         </li>
         <li>
+            <input data-ng-model="settings.showHeader"
+                   data-ng-false-value="0"
+                   data-ng-true-value="1"
+                   id="settings-colour-blind" type="checkbox" />
+            <label for="settings-show-header" title="Show page header and footer">Show Header and Footer?</label>
+        </li>
+        <li>
             <input data-ng-model="settings.colourBlind"
                    data-ng-false-value="0"
                    data-ng-true-value="1"
