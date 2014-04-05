@@ -42,20 +42,20 @@ feel free to have a look at the [tests that drove the design](/src/test/java/com
 
 ## Known Limitations
 
-### Browser support - Google Chrome and Opera only.
+### Browser support - Modern web browsers only
 
 To avoid unnecessary complexity when implementing the view layer I decided to use CSS 3 flexbox.
-Regretfully, the standard is only [properly supported](http://caniuse.com/flexbox) by the
-[Google Chrome](https://www.google.com/intl/en/chrome/browser/) and [Opera](http://www.opera.com/download/‎).
+The standard is currently supported by [most modern web browsers](http://caniuse.com/flexbox),
+so if your browser doesn't support this feature - [consider upgrading](http://browsehappy.com/) :)
 
-What this means to you is that if you'd like to use the Build Monitor plugin, please make sure
-that you're using Chrome or Opera to display it. Safari 7 and Internet Explorer 11 will be supporting this functionality
-in the [near future](http://caniuse.com/flexbox).
+## Project Backlog
+
+[![Stories in Ready](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=ready&title=Ready)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
 
 ## Roadmap
 
 1. Display what triggered the build (SCM change, another job, manual)
-1. Display how long has a given job been failing for
+1. Display how long a given job has been failing for
 1. ~~Support for [Claim Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Claim+plugin)~~
 1. Support for [Gravatar](http://gravatar.com)
 1. Display parameters of parametrized jobs
