@@ -1,6 +1,6 @@
 <nav data-ng-class="{ showSettings:toggleSettings }" data-ng-controller="controlPanel">
-    <input id="toggleSettings" type="checkbox" class="settings" data-ng-model="toggleSettings" />
-    <label for="toggleSettings" title="Configure Build Monitor Settings">Settings</label>
+    <input id="settings-toggle" type="checkbox" class="settings" data-ng-model="toggleSettings" />
+    <label for="settings-toggle" title="Configure Build Monitor Settings">Settings</label>
 
     <!-- workaround for angular-slider not working when initialised within a hidden element -->
     <ul>
@@ -11,6 +11,13 @@
         <li>
             <span class="slider-label">Columns</span>
             <slider floor="1" ceiling="8" step="1" precision="0" data-ng-model="settings.numberOfColumns"></slider>
+        </li>
+        <li>
+            <input data-ng-model="settings.colourBlind"
+                   data-ng-false-value="0"
+                   data-ng-true-value="1"
+                   id="settings-colour-blind" type="checkbox" />
+            <label for="settings-colour-blind" title="Colour blind-friendly colour scheme">Colour blind mode?</label>
         </li>
         <li>
             <a class="btn"

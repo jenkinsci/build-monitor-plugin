@@ -100,6 +100,70 @@ h2 {
 .build-monitor .failing    { background-color:darkred; }
 .build-monitor .claimed    { background-color: #fe5e00; }
 
+
+/*
+ * Striped background patterns inspired by Lea Verou
+ * http://lea.verou.me/2010/12/checkered-stripes-other-background-patterns-with-css3-gradients/
+ */
+.build-monitor .colour-blind-mode .successful,
+.build-monitor .colour-blind-mode .failing,
+.build-monitor .colour-blind-mode .claimed {
+    -webkit-background-size: 50px 50px;
+    -moz-background-size:    50px 50px;
+    background-size:         50px 50px; /* Controls the size of the stripes */
+}
+
+.build-monitor .colour-blind-mode .successful { }
+
+.build-monitor .colour-blind-mode .failing {
+    background-image: -webkit-gradient(linear, 0 100%, 100% 0,
+        color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
+        color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
+        color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent),
+        to(transparent));
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: -ms-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+}
+.build-monitor .colour-blind-mode .claimed {
+    background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), to(transparent)),
+        -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), to(transparent)),
+        -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, rgba(255, 255, 255, .2))),
+        -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, transparent), color-stop(.75, rgba(255, 255, 255, .2)));
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+        -webkit-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+        -webkit-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
+        -webkit-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
+    background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+        -moz-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+        -moz-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
+        -moz-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
+    background-image: -ms-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+        -ms-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+        -ms-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
+        -ms-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+        -o-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+        -o-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
+        -o-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+        linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+        linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
+}
+
 .build-monitor #job-views .build-time,
 .build-monitor #job-views .build-name {
     font-weight: bold;
@@ -425,11 +489,11 @@ h2 {
     width:100%;
 }
 .build-monitor nav li:nth-child(1),
-.build-monitor nav li:nth-child(3) {
+.build-monitor nav li:nth-child(4) {
     margin-top:2em;
 }
 .build-monitor nav li:last-child {
-    padding:1em 0 0.5em 0;
+    padding:1em 0 1em 0;
 }
 
 .build-monitor nav li .slider-label {
@@ -456,8 +520,8 @@ slider {
 /*
  * Inspired by WittySparks - (c) Sravan Kumar, WittySparks.com
  */
-.build-monitor nav input[type='checkbox']{opacity:0;position:absolute;filter:alpha(opacity=0);margin:5px 0 0 5px}
-.build-monitor nav input[type='checkbox']+label {
+.build-monitor nav input[type='checkbox']#settings-toggle{opacity:0;position:absolute;filter:alpha(opacity=0);margin:5px 0 0 5px}
+.build-monitor nav input[type='checkbox']#settings-toggle+label {
     background:url("industrial/glyphs.png") left top no-repeat;
     background-size:32px 32px;
     position:relative;
@@ -469,10 +533,14 @@ slider {
     z-index:0;
     font-weight:bold;
 }
-.build-monitor nav input[type='checkbox']+label { background-position:0 0}
-.build-monitor nav input[type='checkbox']:checked+label  { }
-.build-monitor nav input[type='checkbox']:disabled+label { }
-.build-monitor nav input[type='checkbox']:disabled:checked+label{ }
+
+.build-monitor nav input[type='checkbox']#settings-toggle+label { background-position:0 0}
+.build-monitor nav input[type='checkbox']#settings-toggle:checked+label  { }
+.build-monitor nav input[type='checkbox']#settings-toggle:disabled+label { }
+.build-monitor nav input[type='checkbox']#settings-toggle:disabled:checked+label{ }
+
+.build-monitor nav label { font-size: 1em; }
+.build-monitor nav li input[type='checkbox'] { margin-right:0.5em; }
 
 
 /*

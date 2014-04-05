@@ -1,4 +1,5 @@
 <ul id="job-views"
+    data-ng-class="{ 'colour-blind-mode': settings.colourBlind == 1 }"
     style="font-size: {{ settings.fontSize }}em"
     class="columns-{{ settings.numberOfColumns }}">
 
