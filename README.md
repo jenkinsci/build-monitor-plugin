@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=ready&title=Ready)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
 # Jenkins CI Build Monitor Plugin
 
 Build Monitor Plugin provides a highly visible view of the status of selected Jenkins jobs.
