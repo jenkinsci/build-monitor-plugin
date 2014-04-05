@@ -2,6 +2,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.Augmentation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.Analysis;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.BuildStateRecipe;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.JobStateRecipe;
@@ -20,6 +21,7 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacti
 import static hudson.model.Result.*;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -403,6 +405,18 @@ public class JobViewTest {
     }
 
     @Test
+    public void should_describe_known_failures() {
+        String rogueAi = "Pod bay doors didn't open";
+
+        view = JobView.of(
+                a(job().whereTheLast(build().finishedWith(FAILURE).andKnownFailures(rogueAi))),
+                augmentedWith(Analysis.class));
+
+        assertThat(view.hasKnownFailures(), is(true));
+        assertThat(view.knownFailures(), contains(rogueAi));
+    }
+
+    @Test
     public void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() throws Exception {
         view = JobView.of(a(job().thatHasNeverRun()));
 
@@ -413,7 +427,8 @@ public class JobViewTest {
         assertThat(view.progress(),          is(0));
         assertThat(view.culprits(),          hasSize(0));
         assertThat(view.status(),            is("failing"));
-        assertThat(view.isClaimed(), is(false));
+        assertThat(view.isClaimed(),         is(false));
+        assertThat(view.hasKnownFailures(),  is(false));
     }
 
     /*
@@ -441,10 +456,10 @@ public class JobViewTest {
         return systemTime;
     }
 
-    private <T extends Augmentation> BuildAugmentor augmentedWith(Class<T>... augmentationsToSupport) {
+    private BuildAugmentor augmentedWith(Class<? extends Augmentation>... augmentationsToSupport) {
         BuildAugmentor augmentor = new BuildAugmentor();
 
-        for (Class<T> augmentation : augmentationsToSupport) {
+        for (Class<? extends Augmentation> augmentation : augmentationsToSupport) {
             augmentor.support(augmentation);
         }
 

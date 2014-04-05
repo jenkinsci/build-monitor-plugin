@@ -2,6 +2,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import hudson.model.Result;
 
+import java.util.List;
 import java.util.Set;
 
 public interface BuildViewModel {
@@ -23,4 +24,8 @@ public interface BuildViewModel {
     boolean isClaimed();
     String claimant();
     String reasonForClaim();
+
+    boolean hasKnownFailures();
+
+    List<String> knownFailures();
 }

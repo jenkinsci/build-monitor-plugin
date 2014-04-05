@@ -15,7 +15,7 @@ public class ClaimedTest {
 
     @Test
     public void should_be_a_simple_proxy_to_the_claim_build_action() throws Exception {
-        Claim claim = new Claimed(action());
+        Claim claim = new Claimed(claimBuildAction(AUTHOR, REASON));
 
         assertThat(claim.wasMade(),  is(true));
         assertThat(claim.author(),   is(AUTHOR));
@@ -24,11 +24,11 @@ public class ClaimedTest {
         assertThat(claim.toString(), is(EXPECTED_STRING_REPRESENTATION));
     }
 
-    private ClaimBuildAction action() {
+    public static ClaimBuildAction claimBuildAction(String author, String reason) {
         ClaimBuildAction action = mock(ClaimBuildAction.class);
         when(action.isClaimed()).thenReturn(true);
-        when(action.getClaimedByName()).thenReturn(AUTHOR);
-        when(action.getReason()).thenReturn(REASON);
+        when(action.getClaimedByName()).thenReturn(author);
+        when(action.getReason()).thenReturn(reason);
 
         return action;
     }

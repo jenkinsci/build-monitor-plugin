@@ -1,5 +1,8 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.AnalysedTest;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.ClaimedTest;
+import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import hudson.model.AbstractBuild;
 import hudson.model.Result;
 import hudson.model.User;
@@ -9,6 +12,8 @@ import hudson.scm.ChangeLogSet;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.AnalysedTest.failureCauseBuildAction;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.ClaimedTest.claimBuildAction;
 import static org.mockito.Mockito.*;
 
 /**
@@ -120,13 +125,15 @@ public class BuildStateRecipe {
     }
 
     public BuildStateRecipe andWasClaimedBy(String aPotentialHero, String reason) {
-        final ClaimBuildAction claim = mock(ClaimBuildAction.class);
+        final ClaimBuildAction action = claimBuildAction(aPotentialHero, reason);
+        when(build.getAction(ClaimBuildAction.class)).thenReturn(action);
 
-        when(claim.isClaimed()).thenReturn(true);
-        when(claim.getClaimedByName()).thenReturn(aPotentialHero);
-        when(claim.getReason()).thenReturn(reason);
+        return this;
+    }
 
-        when(build.getAction(ClaimBuildAction.class)).thenReturn(claim);
+    public BuildStateRecipe andKnownFailures(String... failures) {
+        final FailureCauseBuildAction action = failureCauseBuildAction(failures);
+        when(build.getAction(FailureCauseBuildAction.class)).thenReturn(action);
 
         return this;
     }

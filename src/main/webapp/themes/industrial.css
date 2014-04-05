@@ -222,6 +222,15 @@ h2 {
     content: "Possible Culprits: ";
 }
 
+.build-monitor .meta .failures li { margin-right:0.5em; }
+.build-monitor .meta .failures li:after { content: ","; }
+.build-monitor .meta .failures li:last-child:after { content: ""; }
+
+.build-monitor .failing ul.failures li:first-child:before {
+    content: "Identified Problems: ";
+}
+
+
 /*
  *   Layout
  */
