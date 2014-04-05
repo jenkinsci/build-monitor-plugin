@@ -1,4 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=ready&title=Ready)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
+[![Stories in Backlog](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=backlog&title=Backlog)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
 # Jenkins CI Build Monitor Plugin
 
 Build Monitor Plugin provides a highly visible view of the status of selected Jenkins jobs.
@@ -49,8 +49,7 @@ The standard is currently supported by [most modern web browsers](http://caniuse
 so if your browser doesn't support this feature - [consider upgrading](http://browsehappy.com/) :)
 
 ## Project Backlog
-
-[![Stories in Ready](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=ready&title=Ready)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
+[![Stories in Backlog](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=backlog&title=Backlog)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
 
 ## Roadmap
 
