@@ -97,16 +97,19 @@ h2 {
 }
 
 .build-monitor .successful { background-color:darkgreen; }
-.build-monitor .failing    { background-color:darkred; }
+.build-monitor .failing    { background-color:red; }
+.build-monitor .unstable    { background-color:Orange; }
+.build-monitor .not_build    { background-color:grey; }
+.build-monitor .aborted    { background-color:darkgrey; }
 .build-monitor .claimed    { background-color: #fe5e00; }
-
+.build-monitor .unknown    { background-color:darkred; }
 
 /*
  * Striped background patterns inspired by Lea Verou
  * http://lea.verou.me/2010/12/checkered-stripes-other-background-patterns-with-css3-gradients/
  */
-.build-monitor .colour-blind-mode .successful,
 .build-monitor .colour-blind-mode .failing,
+.build-monitor .colour-blind-mode .unknown,
 .build-monitor .colour-blind-mode .claimed {
     -webkit-background-size: 50px 50px;
     -moz-background-size:    50px 50px;
@@ -115,6 +118,7 @@ h2 {
 
 .build-monitor .colour-blind-mode .successful { }
 
+.build-monitor .colour-blind-mode .unknown,
 .build-monitor .colour-blind-mode .failing {
     background-image: -webkit-gradient(linear, 0 100%, 100% 0,
         color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
@@ -389,10 +393,10 @@ h2 {
 
 .build-monitor ul#job-views>li {
     position:relative;
-    border-radius:10px;
+    /*border-radius:10px;*/
     overflow: hidden;
-    -webkit-box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
-    box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+    /*-webkit-box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 1px rgba(0,0,0,0.5);*/
 }
 
 .build-monitor ul#job-views .progress {
