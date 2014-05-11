@@ -3,7 +3,7 @@
     style="font-size: {{ settings.fontSize }}em"
     class="columns-{{ settings.numberOfColumns }}">
 
-    <li ng-repeat="job in jobs" class="{{job.status}}">
+    <li ng-repeat="job in jobs" class="{{job.status}}" id="{{ job.name | slugify }}">
         <div class="progress" style="width: {{job.progress}}%">
             <span>{{job.progress}}%</span>
         </div>

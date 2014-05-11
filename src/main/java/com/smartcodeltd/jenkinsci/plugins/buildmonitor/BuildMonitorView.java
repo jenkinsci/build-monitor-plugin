@@ -119,6 +119,7 @@ public class BuildMonitorView extends ListView {
 
     private Comparator<AbstractProject> order = new ByName();
 
+    @SuppressWarnings("unchecked")
     private Comparator<AbstractProject> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
@@ -165,6 +166,4 @@ public class BuildMonitorView extends ListView {
     private BuildAugmentor withAugmentationsIfTheyArePresent() {
         return BuildAugmentor.fromDetectedPlugins();
     }
-
-
 }

@@ -3,8 +3,8 @@
 angular.
     module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'uiSlider', 'jenkins']).
 
-    controller('JobViews', ['$scope', '$rootScope', 'proxy', 'cookieJar', 'every', 'connectivityStrategist',
-        function ($scope, $rootScope, proxy, cookieJar, every, connectivityStrategist) {
+    controller('JobViews', ['$scope', '$rootScope', 'proxy', 'every', 'connectivityStrategist',
+        function ($scope, $rootScope, proxy, every, connectivityStrategist) {
             var tryToRecover  = connectivityStrategist.decideOnStrategy,
                 fetchJobViews = proxy.buildMonitor.fetchJobViews;
 

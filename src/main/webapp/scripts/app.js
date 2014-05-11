@@ -1,7 +1,7 @@
 'use strict';
 
 angular.
-    module('buildMonitor', [ 'buildMonitor.controllers', 'buildMonitor.settings' ]).
+    module('buildMonitor', [ 'buildMonitor.controllers', 'buildMonitor.settings', 'slugifier' ]).
     run(['$rootScope', 'notifyUser', function($rootScope, notifyUser) {
         $rootScope.settings = { };
 
