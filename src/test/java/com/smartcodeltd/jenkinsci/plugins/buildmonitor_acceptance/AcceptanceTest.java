@@ -2,15 +2,17 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 
 import com.saucelabs.common.SauceOnDemandAuthentication;
 import hudson.model.FreeStyleProject;
-import org.junit.runner.Description;
 import hudson.tasks.Shell;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.rules.TestName;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -23,13 +25,18 @@ abstract public class AcceptanceTest {
     @Rule
     public final JenkinsRule j = new JenkinsRule();
 
+    @Rule
+    public TestName testName = new TestName();
+
     protected WebDriver browser;
 
-    private final SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication();
+    public SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication();
 
     @Before
     public void setUp() throws Exception {
-        browser = browser();
+        browser = shouldUseRemoteBrowser() ?
+                sauceLabsBrowser() :
+                localChromeBrowser();
     }
 
     @After
@@ -53,40 +60,29 @@ abstract public class AcceptanceTest {
         return j.getURL().toString() + path;
     }
 
-    private WebDriver browser() throws MalformedURLException {
-        return shouldUseRemoteBrowser() ?
-                sauceLabsBrowser() :
-                localChromeBrowser();
-    }
-
     protected boolean shouldUseRemoteBrowser() {
-        return ! (authentication.getUsername().isEmpty() || authentication.getAccessKey().isEmpty());
+        return StringUtils.isNotBlank(authentication.getUsername()) && StringUtils.isNotBlank(authentication.getAccessKey());
     }
 
     private WebDriver sauceLabsBrowser() throws MalformedURLException {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability("platform", Platform.MAC);
-        capabilities.setCapability("name", currentTestCaseName());
+
+        capabilities.setCapability("version",     readPropertyOrEnv("SELENIUM_VERSION", "34"));
+        capabilities.setCapability("platform",    readPropertyOrEnv("SELENIUM_PLATFORM", "mac"));
+        capabilities.setCapability("browserName", readPropertyOrEnv("SELENIUM_BROWSER", BrowserType.CHROME));
+
+        // @TODO: this should include both the test class and the method name in a human-readable format
+        capabilities.setCapability("name",     testName.getMethodName().replaceAll("_", " "));
 
         return new RemoteWebDriver(
-            new URL("http://" + authentication.getUsername() + ":" + authentication.getAccessKey() + "@localhost:4445/wd/hub"),
+            new URL(String.format("http://%s:%s@%s:%s/wd/hub",
+                    authentication.getUsername(),
+                    authentication.getAccessKey(),
+                    readPropertyOrEnv("SELENIUM_HOST", "localhost"),
+                    readPropertyOrEnv("SELENIUM_PORT", "4445"))
+            ),
             capabilities
-        );
-    }
-
-    private String currentTestCaseName() {
-        String testCaseName = "";
-
-        try {
-            Description desc = j.getTestDescription();
-            testCaseName = desc.getTestClass().getMethod(desc.getMethodName()).getName().toString();
-        } catch (NoSuchMethodException e) {
-            testCaseName = this.getClass().getSimpleName();
-        }
-
-        return testCaseName.replaceAll(
-                "_",
-                " "
         );
     }
 
@@ -95,5 +91,17 @@ abstract public class AcceptanceTest {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         return driver;
+    }
+
+    public String readPropertyOrEnv(String key, String defaultValue) {
+        String v = System.getProperty(key);
+        if (v == null) {
+            v = System.getenv(key);
+        }
+        if (v == null) {
+            v = defaultValue;
+        }
+
+        return v;
     }
 }
