@@ -2,6 +2,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.BuildMonitor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.recipes.With;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.jvnet.hudson.test.recipes.LocalData;
 import org.openqa.selenium.By;
@@ -14,6 +15,7 @@ public class OutOfTheBoxBehaviourTest extends AcceptanceTest {
     @Test
     @LocalData
     @With(plugins = { "git-1.5.0.hpi", "git-client-1.8.0.jpi", "ssh-credentials-1.6.1.jpi", "credentials-1.10.jpi" })
+    @Ignore
     public void correctly_displays_successful_and_failing_jobs() throws Exception {
 //      Given 'example-build' job finished with 'success'
 //        and 'example-acceptance' job finished with 'failure'
