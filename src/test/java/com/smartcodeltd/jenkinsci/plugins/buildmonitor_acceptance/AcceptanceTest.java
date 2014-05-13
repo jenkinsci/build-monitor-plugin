@@ -1,6 +1,9 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 
 import com.saucelabs.common.SauceOnDemandAuthentication;
+import com.saucelabs.common.SauceOnDemandSessionIdProvider;
+import com.saucelabs.junit.SauceOnDemandTestWatcher;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.utils.Typograph;
 import hudson.model.FreeStyleProject;
 import hudson.tasks.Shell;
 import org.apache.commons.lang3.StringUtils;
@@ -21,22 +24,32 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-abstract public class AcceptanceTest {
+abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
+    public SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication();
+
+    protected WebDriver browser;
+
+    private String sessionId;
+
     @Rule
     public final JenkinsRule j = new JenkinsRule();
 
     @Rule
     public TestName testName = new TestName();
 
-    protected WebDriver browser;
+    @Rule
+    public SauceOnDemandTestWatcher resultReportingTestWatcher = new SauceOnDemandTestWatcher(this, authentication);
 
-    public SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication();
 
     @Before
     public void setUp() throws Exception {
-        browser = shouldUseRemoteBrowser() ?
-                sauceLabsBrowser() :
-                localChromeBrowser();
+        if (shouldUseRemoteBrowser()) {
+            browser   = sauceLabsBrowser();
+            sessionId = (((RemoteWebDriver) browser).getSessionId()).toString();
+        } else {
+            browser   = localChromeBrowser();
+            sessionId = null;                 // so that SauceOnDemandTestWatcher doesn't try to report back to SauceLabs
+        }
     }
 
     @After
@@ -60,7 +73,7 @@ abstract public class AcceptanceTest {
         return j.getURL().toString() + path;
     }
 
-    protected boolean shouldUseRemoteBrowser() {
+    private boolean shouldUseRemoteBrowser() {
         return StringUtils.isNotBlank(authentication.getUsername()) && StringUtils.isNotBlank(authentication.getAccessKey());
     }
 
@@ -72,8 +85,7 @@ abstract public class AcceptanceTest {
         capabilities.setCapability("platform",    readPropertyOrEnv("SELENIUM_PLATFORM", "mac"));
         capabilities.setCapability("browserName", readPropertyOrEnv("SELENIUM_BROWSER", BrowserType.CHROME));
 
-        // @TODO: this should include both the test class and the method name in a human-readable format
-        capabilities.setCapability("name",     testName.getMethodName().replaceAll("_", " "));
+        capabilities.setCapability("name",        fullTestName());
 
         return new RemoteWebDriver(
             new URL(String.format("http://%s:%s@%s:%s/wd/hub",
@@ -93,6 +105,13 @@ abstract public class AcceptanceTest {
         return driver;
     }
 
+    private String fullTestName() {
+        return String.format("%s: %s",
+                Typograph.deCamelCase(this.getClass().getSimpleName()),
+                Typograph.de_snake_case(testName.getMethodName())
+        );
+    }
+
     public String readPropertyOrEnv(String key, String defaultValue) {
         String v = System.getProperty(key);
         if (v == null) {
@@ -103,5 +122,10 @@ abstract public class AcceptanceTest {
         }
 
         return v;
+    }
+
+    @Override
+    public String getSessionId() {
+        return sessionId;
     }
 }
