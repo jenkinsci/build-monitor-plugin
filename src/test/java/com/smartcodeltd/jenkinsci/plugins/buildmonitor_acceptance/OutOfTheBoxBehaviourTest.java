@@ -15,7 +15,6 @@ public class OutOfTheBoxBehaviourTest extends AcceptanceTest {
     @Test
     @LocalData
     @With(plugins = { "git-1.5.0.hpi", "git-client-1.8.0.jpi", "ssh-credentials-1.6.1.jpi", "credentials-1.10.jpi" })
-    @Ignore
     public void correctly_displays_successful_and_failing_jobs() throws Exception {
 //      Given 'example-build' job finished with 'success'
 //        and 'example-acceptance' job finished with 'failure'
