@@ -9,6 +9,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.bu
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.jenkins.HomePage;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.jenkins.NewView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.recipes.With;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -23,6 +24,7 @@ public class BehaviourWithBuildFailureAnalyserTest extends AcceptanceTest {
 
     @Test
     @With(plugins = { "build-failure-analyzer-1.7.0.jpi", "git-1.5.0.hpi", "git-client-1.8.0.jpi", "ssh-credentials-1.6.1.jpi", "credentials-1.10.jpi", "scm-api-0.2.jpi" })
+    @Ignore
     public void displays_potential_failure_cause_when_it_is_known() throws Exception {
         // Given that Build Failure Analyzer knows what a 'shell script failure' looks like
         //  and a "Build Monitor" view exists showing all the jobs
