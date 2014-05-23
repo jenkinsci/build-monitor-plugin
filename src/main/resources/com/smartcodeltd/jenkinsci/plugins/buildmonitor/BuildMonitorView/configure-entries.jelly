@@ -21,6 +21,10 @@
     </div>
   </f:entry>
 
+  <f:entry title="${%Show jobs for multi-configuration projects}">
+    <f:checkbox name="showmatrixjobs" checked="${it.showMatrixJobs()}" help="/help/view-config/showmatrixjobs.html"/>
+  </f:entry>
+
   <f:optionalBlock name="useincluderegex" title="${%Use a regular expression to include jobs into the view}"
                    checked="${it.includeRegex != null}" help="/help/view-config/includeregex.html">
     <f:entry title="${%Regular expression}">

@@ -53,6 +53,8 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import static hudson.Util.filter;
+import hudson.model.TopLevelItem;
+import java.util.Iterator;
 
 /**
  * @author Jan Molak
@@ -99,6 +101,8 @@ public class BuildMonitorView extends ListView {
         super.submit(req);
 
         String requestedOrdering = req.getParameter("order");
+        
+        showMatrixJobs = "on".equalsIgnoreCase(req.getParameter("showmatrixjobs"));
 
         try {
             order = orderIn(requestedOrdering);
@@ -116,7 +120,7 @@ public class BuildMonitorView extends ListView {
     public String currentOrder() {
         return currentOrderOrDefault().getClass().getSimpleName();
     }
-
+    
     private Comparator<AbstractProject> order = new ByName();
 
     @SuppressWarnings("unchecked")
@@ -124,6 +128,12 @@ public class BuildMonitorView extends ListView {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
         return (Comparator<AbstractProject>) Class.forName(packageName + requestedOrdering).newInstance();
+    }
+
+    private boolean showMatrixJobs = false;
+
+    public boolean showMatrixJobs() {
+        return showMatrixJobs;
     }
 
     /**
@@ -151,7 +161,16 @@ public class BuildMonitorView extends ListView {
     }
 
     private List<JobView> jobViews() {
-        List<AbstractProject> projects = filter(super.getItems(), AbstractProject.class);
+        List<AbstractProject> projects = new ArrayList<AbstractProject>();
+        List<TopLevelItem> items = super.getItems();
+        if (showMatrixJobs) {
+            for (Iterator<TopLevelItem> it = items.iterator(); it.hasNext();) {
+                TopLevelItem topLevelItem = it.next();
+                projects.addAll(filter(topLevelItem.getAllJobs(), AbstractProject.class));
+            }
+        } else {
+            projects.addAll(filter(items, AbstractProject.class));
+        }
         List<JobView> jobs = new ArrayList<JobView>();
 
         Collections.sort(projects, currentOrderOrDefault());

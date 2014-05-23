@@ -30,9 +30,14 @@ public class JobView {
 
     @JsonProperty
     public String name() {
-        return (null != job.getDisplayNameOrNull())
-                ? job.getDisplayName()
-                : job.getName();
+        if (job instanceof hudson.matrix.MatrixConfiguration) {
+            return ((hudson.matrix.MatrixProject) job.getParent()).getDisplayName() + ' ' 
+                    + job.getDisplayName();
+        } else {
+            return (null != job.getDisplayNameOrNull())
+                 ? job.getDisplayName()
+                 : job.getName();
+        }
     }
 
     @JsonProperty
