@@ -50,6 +50,8 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
             browser   = localChromeBrowser();
             sessionId = null;                 // so that SauceOnDemandTestWatcher doesn't try to report back to SauceLabs
         }
+
+        browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @After
@@ -100,7 +102,6 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
 
     private WebDriver localChromeBrowser() {
         WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         return driver;
     }
