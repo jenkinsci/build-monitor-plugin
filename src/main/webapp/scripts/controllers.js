@@ -14,7 +14,7 @@ angular.
 
                 return fetchJobViews().then(function (response) {
 
-                    $scope.jobs = response.data.jobs
+                    $scope.jobs = response.data.jobs;
 
                     $rootScope.$broadcast('jenkins:data-fetched', {});
 

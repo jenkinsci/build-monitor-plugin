@@ -94,6 +94,11 @@ public class JobView {
     }
 
     @JsonProperty
+    public boolean shouldIndicateCulprits() {
+        return ! isClaimed() && culprits().size() > 0;
+    }
+
+    @JsonProperty
     public Set<String> culprits() {
         Set<String> culprits = new HashSet<String>();
 

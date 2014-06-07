@@ -17,7 +17,7 @@
                 <ul class="description">
                     <li data-ng-show="job.claimed">Claimed by <strong>{{ job.claimAuthor }}</strong>: {{ job.claimReason }}</li>
                 </ul>
-                <ul ng-if="!job.claimed" data-ng-show="job.culprits.size() > 0" class="culprits">
+                <ul ng-if="job.shouldIndicateCulprits" class="culprits">
                     <li data-ng-repeat="name in job.culprits">
                         {{name}}
                     </li>
