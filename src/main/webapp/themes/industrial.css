@@ -208,17 +208,13 @@ h2 {
     margin: 0 0 0.25em 1em; padding: 0;
     font-size: 1.2em;
 }
-.build-monitor ul#job-views .claimed .meta ul.culprits li {
-    font-size: 1em;
-    margin-top:0.5em;
-}
 
 .build-monitor .meta li { display: inline-block; }
 .build-monitor .meta .culprits li { margin-right:0.5em; }
 .build-monitor .meta .culprits li:after { content: ","; }
 .build-monitor .meta .culprits li:last-child:after { content: ""; }
 
-.build-monitor .failing ul.culprits li:first-child:before {
+.build-monitor ul.culprits li:first-child:before {
     content: "Possible Culprits: ";
 }
 
