@@ -33,7 +33,7 @@ All the features I'm hoping to add in the near future are listed in the "Roadmap
 ![A place to start](.README/0_A_place_to_start.png)
 ![Adding jobs](.README/1_Adding_jobs.png)
 ![Three columns view](.README/2_Three_columns_view.png)
-![Supports Claim and Build Failure Analyzer plugins](.README/3_Two_columns_view_with_claim_and_build_failure_analyser_plugins.png)
+![Supports Claim and Build Failure Analyzer plugins](.README/3_Two_columns_view_with_claim_and_build_failure_analyzer_plugins.png)
 ![Colour-blind mode](.README/4_Colour_blind_mode.png)
 
 ## FAQ
