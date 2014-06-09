@@ -371,6 +371,26 @@ public class JobViewTest {
     }
 
     @Test
+    public void should_indicate_culprits_if_the_build_is_failing_and_not_claimed() {
+        view = JobView.of(a(job().
+                        whereTheLast(build().wasBrokenBy("Adam"))),
+                augmentedWith(Claim.class));
+
+        assertThat(view.shouldIndicateCulprits(), is(true));
+        assertThat(view.culprits(), hasSize(1));
+    }
+
+    @Test
+    public void should_not_indicate_any_culprits_if_the_build_was_failing_but_is_now_claimed() {
+        view = JobView.of(a(job().
+                whereTheLast(build().wasBrokenBy("Adam").andWasClaimedBy("Ben", "Helping out Adam"))),
+                augmentedWith(Claim.class));
+
+        assertThat(view.shouldIndicateCulprits(), is(false));
+        assertThat(view.culprits(), hasSize(1));
+    }
+
+    @Test
     @Ignore
     public void should_know_the_authors_of_commits_that_made_it_into_the_build() {
         //TODO implement shouldKnowTheAuthorsOfCommitsThatMadeItIntoTheBuild
@@ -420,15 +440,16 @@ public class JobViewTest {
     public void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() throws Exception {
         view = JobView.of(a(job().thatHasNeverRun()));
 
-        assertThat(view.lastBuildName(),     is(""));
-        assertThat(view.lastBuildUrl(),      is(""));
-        assertThat(view.lastBuildDuration(), is(""));
-        assertThat(view.estimatedDuration(), is(""));
-        assertThat(view.progress(),          is(0));
-        assertThat(view.culprits(),          hasSize(0));
-        assertThat(view.status(),            is("failing"));
-        assertThat(view.isClaimed(),         is(false));
-        assertThat(view.hasKnownFailures(),  is(false));
+        assertThat(view.lastBuildName(),          is(""));
+        assertThat(view.lastBuildUrl(),           is(""));
+        assertThat(view.lastBuildDuration(),      is(""));
+        assertThat(view.estimatedDuration(),      is(""));
+        assertThat(view.progress(),               is(0));
+        assertThat(view.shouldIndicateCulprits(), is(false));
+        assertThat(view.culprits(),               hasSize(0));
+        assertThat(view.status(),                 is("failing"));
+        assertThat(view.isClaimed(),              is(false));
+        assertThat(view.hasKnownFailures(),       is(false));
     }
 
     /*

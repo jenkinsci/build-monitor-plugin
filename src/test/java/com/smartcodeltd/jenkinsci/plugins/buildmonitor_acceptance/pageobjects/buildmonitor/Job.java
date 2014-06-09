@@ -1,4 +1,4 @@
-package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects;
+package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -16,5 +16,9 @@ public class Job {
 
     public String status() {
         return root.getAttribute("class");
+    }
+
+    public String possibleFailureCause() {
+        return root.findElement(By.className("failures")).getText();
     }
 }

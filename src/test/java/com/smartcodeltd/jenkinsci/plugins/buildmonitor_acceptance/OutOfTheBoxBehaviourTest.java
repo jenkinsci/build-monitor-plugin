@@ -1,8 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.BuildMonitor;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.BuildMonitor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.recipes.With;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.jvnet.hudson.test.recipes.LocalData;
 import org.openqa.selenium.By;
@@ -10,6 +9,7 @@ import org.openqa.selenium.By;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+// @TODO: Work in progress
 public class OutOfTheBoxBehaviourTest extends AcceptanceTest {
 
     @Test

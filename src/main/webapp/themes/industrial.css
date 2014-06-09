@@ -174,7 +174,7 @@ h2 {
     font-weight: bold;
     color:rgba(255,255,255, 0.5);
 }
-.build-monitor #job-views .build-name { font-size: 3em;  }
+.build-monitor #job-views .build-name { font-size: 2em; line-height: 1.75em; }
 .build-monitor #job-views .build-time { font-size: 2em; line-height: 1.75em; }
 .build-monitor #job-views .build-time>.elapsed       { font-size: 1.0em; color:rgba(255,255,255,0.7); }
 .build-monitor #job-views .build-time>.elapsed:after { content:"|"; margin-left:0.1em; font-weight: normal; }
@@ -206,19 +206,15 @@ h2 {
 .build-monitor .latest-results ol {
     list-style-type: none;
     margin: 0 0 0.25em 1em; padding: 0;
-    font-size: 1.2em;
-}
-.build-monitor ul#job-views .claimed .meta ul.culprits li {
-    font-size: 1em;
-    margin-top:0.5em;
+    font-size: 1.3em;
 }
 
 .build-monitor .meta li { display: inline-block; }
-.build-monitor .meta .culprits li { margin-right:0.5em; }
+.build-monitor .meta .culprits li { padding-right:0; margin-right:0.5em; }
 .build-monitor .meta .culprits li:after { content: ","; }
 .build-monitor .meta .culprits li:last-child:after { content: ""; }
 
-.build-monitor .failing ul.culprits li:first-child:before {
+.build-monitor ul.culprits li:first-child:before {
     content: "Possible Culprits: ";
 }
 
@@ -370,8 +366,8 @@ h2 {
 .build-monitor #job-views .build-time {
     vertical-align: middle;
 }
-.build-monitor #job-views .build-name { bottom:0; left:0.2em; }
-.build-monitor #job-views .build-time { bottom:0;  right:0.3em; }
+.build-monitor #job-views .build-name { bottom:0; left:0.3em; }
+.build-monitor #job-views .build-time { bottom:0; right:0.3em; }
 
 /*
  *   Job meta-data
