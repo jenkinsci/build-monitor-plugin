@@ -9,7 +9,7 @@
 
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>build-monitor-plugin</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.4-SNAPSHOT</version>
     <packaging>hpi</packaging>
 
     <name>Build Monitor View</name>
@@ -52,11 +52,25 @@
 
     <properties>
         <!-- using 1.74 as 1.95 doesn't seem to be compatible with 1.480 core -->
-        <maven-hpi-plugin.version>1.74</maven-hpi-plugin.version>
+        <!--<maven-hpi-plugin.version>1.74</maven-hpi-plugin.version>-->
+
+        <!--
+            Build Monitor has an optional dependency on the Build Failure Analyzer (BFA) plugin:
+            https://wiki.jenkins-ci.org/display/JENKINS/Build+Failure+Analyzer
+
+            Since BFA doesn't specify its dependency on the git plugin correctly:
+            https://issues.jenkins-ci.org/browse/JENKINS-18544,
+            the automatically generated test fails with NPE...
+
+            To work around this issue Build Monitor comes with other integration tests
+            you can find in com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptancetest package
+        -->
+        <maven-hpi-plugin.disabledTestInjection>true</maven-hpi-plugin.disabledTestInjection>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <npm-executable>npm</npm-executable>
+        <selenium.version>2.37.0</selenium.version>
     </properties>
 
     <profiles>
@@ -78,6 +92,16 @@
         <repository>
             <id>repo.jenkins-ci.org</id>
             <url>http://repo.jenkins-ci.org/public/</url>
+        </repository>
+        <repository>
+            <id>saucelabs-repository</id>
+            <url>http://repository-saucelabs.forge.cloudbees.com/release</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
@@ -103,6 +127,24 @@
         </dependency>
 
         <dependency>
+            <groupId>com.sonyericsson.jenkins.plugins.bfa</groupId>
+            <artifactId>build-failure-analyzer</artifactId>
+            <version>1.7.0</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>claim</artifactId>
+            <version>2.1</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>view-job-filters</artifactId>
+            <version>1.26</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
@@ -126,26 +168,49 @@
             <version>2.6</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.sonyericsson.jenkins.plugins.bfa</groupId>
-            <artifactId>build-failure-analyzer</artifactId>
-            <version>1.5.1</version>
-            <optional>true</optional>
+            <groupId>com.github.detro.ghostdriver</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>1.1.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>claim</artifactId>
-            <version>2.1</version>
-            <optional>true</optional>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>view-job-filters</artifactId>
-            <version>1.26</version>
-            <optional>true</optional>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-support</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.saucelabs</groupId>
+            <artifactId>sauce_junit</artifactId>
+            <version>1.0.19</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- similar issue to https://code.google.com/p/selenium/issues/detail?id=5245 -->
+        <dependency>
+            <groupId>org.jenkins-ci.main</groupId>
+            <artifactId>jenkins-test-harness</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>xml-apis</artifactId>
+                    <groupId>xml-apis</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -157,6 +222,14 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jenkins-ci.tools</groupId>
+                <artifactId>maven-hpi-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <disabledTestInjection>true</disabledTestInjection>
                 </configuration>
             </plugin>
             <plugin>

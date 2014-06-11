@@ -32,31 +32,9 @@ All the features I'm hoping to add in the near future are listed in the "Roadmap
 
 ![A place to start](.README/0_A_place_to_start.png)
 ![Adding jobs](.README/1_Adding_jobs.png)
-![Two columns view](.README/2_Two_columns_view.png)
-![Three columns view](.README/3_Three_columns_view.png)
-![Supports Jenkins Claim Plugin](.README/4_Supports_Claim_Plugin.png)
-
-## TDD
-
-If you'd like to understand more about the logic behind the Build Monitor Plugin, 
-feel free to have a look at the [tests that drove the design](/src/test/java/com/smartcodeltd/jenkinsci/plugins/buildmonitor/viewmodel/JobViewTest.java).
-
-## Known Limitations
-
-### Browser support - Modern web browsers only
-
-To avoid unnecessary complexity when implementing the view layer I decided to use CSS 3 flexbox.
-The standard is currently supported by [most modern web browsers](http://caniuse.com/flexbox),
-so if your browser doesn't support this feature - [consider upgrading](http://browsehappy.com/) :)
-
-## Roadmap
-
-1. Display what triggered the build (SCM change, another job, manual)
-1. Display how long a given job has been failing for
-1. ~~Support for [Claim Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Claim+plugin)~~
-1. Support for [Gravatar](http://gravatar.com)
-1. Display parameters of parametrized jobs
-1. ~~Persist layout configuration changes in a long-lived cookie.~~
+![Three columns view](.README/2_Three_columns_view.png)
+![Supports Claim and Build Failure Analyzer plugins](.README/3_Two_columns_view_with_claim_and_build_failure_analyzer_plugins.png)
+![Colour-blind mode](.README/4_Colour_blind_mode.png)
 
 ## FAQ
 
@@ -80,6 +58,28 @@ You have several options here:
 
 ### Red and green colours are lovely, but I'm colour blind ...
 There's a colour blind mode you can [enable in the Settings](https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/30#issuecomment-35849019)
+
+## TDD
+
+If you'd like to understand more about the logic behind the Build Monitor Plugin, 
+feel free to have a look at the [tests that drove the design](/src/test/java/com/smartcodeltd/jenkinsci/plugins/buildmonitor/viewmodel/JobViewTest.java).
+
+## Known Limitations
+
+### Browser support - Modern web browsers only
+
+To avoid unnecessary complexity when implementing the view layer I decided to use CSS 3 flexbox.
+The standard is currently supported by [most modern web browsers](http://caniuse.com/flexbox),
+so if your browser doesn't support this feature - [consider upgrading](http://browsehappy.com/) :)
+
+## Roadmap
+
+1. Display what triggered the build (SCM change, another job, manual)
+1. Display how long a given job has been failing for
+1. ~~Support for [Claim Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Claim+plugin)~~
+1. Support for [Gravatar](http://gravatar.com)
+1. Display parameters of parametrized jobs
+1. ~~Persist layout configuration changes in a long-lived cookie.~~
 
 ## License: MIT
 

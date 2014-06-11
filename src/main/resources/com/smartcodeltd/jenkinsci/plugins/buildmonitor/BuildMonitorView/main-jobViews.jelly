@@ -3,7 +3,7 @@
     style="font-size: {{ settings.fontSize }}em"
     class="columns-{{ settings.numberOfColumns }}">
 
-    <li ng-repeat="job in jobs" class="{{job.status}}">
+    <li ng-repeat="job in jobs" class="{{job.status}}" id="{{ job.name | slugify }}">
         <div class="progress" style="width: {{job.progress}}%">
             <span>{{job.progress}}%</span>
         </div>
@@ -17,15 +17,11 @@
                 <ul class="description">
                     <li data-ng-show="job.claimed">Claimed by <strong>{{ job.claimAuthor }}</strong>: {{ job.claimReason }}</li>
                 </ul>
-                <ul data-ng-show="job.culprits.size() > 0" class="culprits">
-                    <li data-ng-repeat="name in job.culprits">
-                        {{name}}
-                    </li>
+                <ul ng-if="job.shouldIndicateCulprits" class="culprits">
+                    <li data-ng-repeat="name in job.culprits">{{name}}</li>
                 </ul>
                 <ul ng-if="job.hasKnownFailures" class="failures">
-                    <li data-ng-repeat="name in job.knownFailures">
-                        {{name}}
-                    </li>
+                    <li data-ng-repeat="name in job.knownFailures">{{name}}</li>
                 </ul>
             </div>
 

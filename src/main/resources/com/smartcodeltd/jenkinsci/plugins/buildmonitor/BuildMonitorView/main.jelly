@@ -17,6 +17,7 @@
             <script src="${resourcesURL}/vendor/angular-${angularVersion}.min.js"></script>
             <script src="${resourcesURL}/vendor/ui-bootstrap-custom-tpls-0.4.0.js"></script>
             <script src="${resourcesURL}/vendor/angular-slider-0.1.6.js"></script>
+            <script src="${resourcesURL}/vendor/angular-slugify-1.0.0.js"></script>
         </l:header>
 
         <l:main-panel>
