@@ -2,8 +2,8 @@
 
   <!-- BEGIN cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.480/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
 
-  <f:section title="${%Job Filters}">
-
+ <f:section title="${%Job Filters}">
+  
   <f:entry title="${%Status Filter}" help="/help/view-config/statusFilter.html">
     <select name="statusFilter" class="setting-input">
       <f:option value="" selected="${it.statusFilter==null}">${%All selected jobs}</f:option>
@@ -11,12 +11,24 @@
       <f:option value="2" selected="${it.statusFilter==false}">${%Disabled jobs only}</f:option>
     </select>
   </f:entry>
+  
+  <f:entry title="${%Recurse in subfolders}" field="recurse">
+    <f:checkbox id="recurse"/>
+  </f:entry>
 
   <f:entry title="${%Jobs}">
     <div class="listview-jobs">
-      <j:forEach var="job" items="${it.ownerItemGroup.items}">
-        <f:checkbox name="${job.name}" checked="${it.contains(job)}" title="${job.name}" />
-        <br/>
+      <j:forEach var="job" items="${h.getAllTopLevelItems(it.ownerItemGroup)}">
+        <j:set var="spanClass" value=""/>
+        <j:set var="spanStyle" value=""/>
+        <j:if test="${job.parent!=it.ownerItemGroup}">
+          <j:set var="spanClass" value="nested"/>
+          <j:set var="spanStyle" value="${it.recurse?'':'display:none'}"/>
+        </j:if>
+        <span class="${spanClass}" style="${spanStyle}">
+          <f:checkbox name="${job.getRelativeNameFromGroup(it.ownerItemGroup)}" checked="${it.jobNamesContains(job)}" title="${h.getRelativeDisplayNameFrom(job,it.ownerItemGroup)}" tooltip="${job.fullName}" />
+          <br/>
+        </span>
       </j:forEach>
     </div>
   </f:entry>
@@ -29,17 +41,12 @@
   </f:optionalBlock>
 
   <j:if test="${it.hasJobFilterExtensions()}">
-   <j:invokeStatic var="allJobFilters" className="hudson.views.ViewJobFilter" method="all"/>
    <f:block>
-      <f:hetero-list name="jobFilters" hasHeader="true"
-      	descriptors="${allJobFilters}"
-        items="${it.jobFilters}"
-        addCaption="${%Add Job Filter}" />
+      <f:repeatableHeteroProperty field="jobFilters" hasHeader="true" addCaption="${%Add Job Filter}" />
    </f:block>
   </j:if>
 
-  </f:section>
-
+ </f:section>
   <!-- END cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.480/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
 
   <f:section title="${%Build Monitor Settings}">
@@ -53,4 +60,16 @@
 
   </f:section>
 
+  <script>
+    (function() {
+      Behaviour.specify("#recurse", 'ListView', 0, function(e) {
+        var nestedElements = $$('SPAN.nested')
+        e.onclick = function() {
+          nestedElements.each(function(el) {
+            e.checked ? el.show() : el.hide();
+          }); 
+        }   
+      }); 
+    }());          
+  </script>
 </j:jelly>
