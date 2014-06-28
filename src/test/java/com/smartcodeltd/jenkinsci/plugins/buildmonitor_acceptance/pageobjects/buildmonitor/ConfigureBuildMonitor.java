@@ -8,8 +8,14 @@ import org.openqa.selenium.By;
  */
 public class ConfigureBuildMonitor implements Screen {
     public static ConfigureBuildMonitor screen() {
-        return new ConfigureBuildMonitor();
+        return new ConfigureBuildMonitor("Build Monitor");
     }
+
+    public static ConfigureBuildMonitor screen(String name) {
+        return new ConfigureBuildMonitor(name);
+    }
+
+    public By recurseInSubfolders() { return By.id("recurse"); }
 
     public By useRegularExpressionToIncludeJobsIntoTheView() {
         return By.name("useincluderegex");
@@ -25,6 +31,14 @@ public class ConfigureBuildMonitor implements Screen {
 
     @Override
     public String path() {
-        return "view/Build Monitor/configure";
+        return "view/" + name + "/configure";
     }
+
+
+    private final String name;
+
+    private ConfigureBuildMonitor(String name) {
+        this.name = name;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.Augmentation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.Analysis;
@@ -27,8 +28,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Jan Molak
@@ -37,33 +37,34 @@ public class JobViewTest {
 
     private static final String theName     = "some-TLAs-followed-by-a-project-name";
     private static final String displayName = "Pretty name that has some actual meaning";
+
+    private RelativeLocation relative = mock(RelativeLocation.class);
     private JobView view;
 
-    @Test
-    public void should_know_the_name_of_the_job_its_based_on() {
-        view = JobView.of(a(job().withName(theName)));
-
-        assertThat(view.name(), is(theName));
-        assertThat(view.toString(), is(theName));
-    }
-
     /*
-     * If you were not aware of this, the configuration page of each job has an "Advanced Project Options"
+     * By the way, if you were not aware of this: the configuration page of each job has an "Advanced Project Options"
      * section, where you can set a user-friendly "Display Name"
      */
     @Test
-    public void should_prefer_the_display_name_over_actual_name() {
-        view = JobView.of(a(job().withName(theName).withDisplayName(displayName)));
+    public void delegates_the_process_of_determining_the_relative_job_name() {
+        when(relative.name()).thenReturn(theName);
 
-        assertThat(view.name(), is(displayName));
-        assertThat(view.toString(), is(displayName));
+        view = JobView.of(a(job().withName(theName)), relative);
+
+        assertThat(view.name(), is(theName));
+        assertThat(view.toString(), is(theName));
+        verify(relative, times(2)).name();
     }
 
     @Test
-    public void should_know_the_url_of_the_job() {
-        view = JobView.of(a(job().withName(theName).withDisplayName(displayName)));
+    public void delegates_the_process_of_determining_the_relative_url() {
+        String expectedUrl = "job/" + theName;
+        when(relative.url()).thenReturn(expectedUrl);
 
-        assertThat(view.url(), is("job/" + theName));
+        view = JobView.of(a(job().withName(theName).withDisplayName(displayName)), relative);
+
+        assertThat(view.url(), is(expectedUrl));
+        verify(relative, times(1)).url();
     }
 
     @Test
@@ -475,6 +476,15 @@ public class JobViewTest {
         when(systemTime.getTime()).thenReturn(currentDate.getTime());
 
         return systemTime;
+    }
+
+    private RelativeLocation locatedAtTheTopLevel() {
+
+        RelativeLocation location = mock(RelativeLocation.class);
+        when(location.name()).thenReturn("a");
+        when(location.url()).thenReturn("b");
+
+        return location;
     }
 
     private BuildAugmentor augmentedWith(Class<? extends Augmentation>... augmentationsToSupport) {

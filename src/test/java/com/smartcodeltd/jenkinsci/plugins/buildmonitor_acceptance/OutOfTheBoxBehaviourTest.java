@@ -3,32 +3,33 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.BuildMonitor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.recipes.With;
 import org.junit.Test;
-import org.jvnet.hudson.test.recipes.LocalData;
-import org.openqa.selenium.By;
 
-import static org.hamcrest.CoreMatchers.is;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.prerequisites.FreestyleProjectExists.aFreestyleProject;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.tasks.ConfigureJobFilters.includesAllTheJobs;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.tasks.CreateBuildMonitorView.createABuildMonitorView;
 import static org.junit.Assert.assertThat;
 
 // @TODO: Work in progress
 public class OutOfTheBoxBehaviourTest extends AcceptanceTest {
 
+    private BuildMonitor buildMonitor;
+
     @Test
-    @LocalData
-    @With(plugins = { "git-1.5.0.hpi", "git-client-1.8.0.jpi", "ssh-credentials-1.6.1.jpi", "credentials-1.10.jpi" })
+    @With(plugins = { "buildgraph-view-1.0.hpi", "git-1.5.0.hpi", "git-client-1.8.0.jpi" })
     public void correctly_displays_successful_and_failing_jobs() throws Exception {
-//      Given 'example-build' job finished with 'success'
-//        and 'example-acceptance' job finished with 'failure'
-//       Then the Build Monitor presents the following:
-//         * 'example-build' job is displayed as 'successful'
-//         * 'acceptance' job is displayed as 'failed'
 
-        givenFollowingProjectRunHasSucceeded("example-build");
-        givenFollowingProjectRunHasFailed("example-acceptance");
+        given.IHave(
+            aFreestyleProject("example-build").configuredToRun(aPassingShellScript()).executed(),
+            aFreestyleProject("example-acceptance").configuredToRun(aFailingShellScript()).executed()
+        ).
 
-        browser.get(urlFor("view/Build Monitor"));
-        BuildMonitor bm = new BuildMonitor(browser.findElement(By.className("build-monitor")));
+        WhenI(createABuildMonitorView("Build Monitor").that(includesAllTheJobs()));
 
-        assertThat(bm.job("example-build").status(), is("successful"));
-        assertThat(bm.job("example-acceptance").status(), is("failing"));
+        // then ...
+
+        buildMonitor = buildMonitorView("Build Monitor");
+
+        assertThat(buildMonitor.job("example-build"), isSuccessful());
+        assertThat(buildMonitor.job("example-acceptance"), isFailing());
     }
 }

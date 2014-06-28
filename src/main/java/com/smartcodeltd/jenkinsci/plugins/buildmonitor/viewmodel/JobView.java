@@ -1,8 +1,14 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
+import hudson.Functions;
 import hudson.model.*;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.kohsuke.stapler.Ancestor;
+import org.kohsuke.stapler.Stapler;
+import org.kohsuke.stapler.StaplerRequest;
 
 import java.util.*;
 
@@ -15,29 +21,32 @@ public class JobView {
     private final Date systemTime;
     private final Job<?, ?> job;
     private final BuildAugmentor augmentor;
+    private final RelativeLocation relative;
 
     public static JobView of(Job<?, ?> job) {
-        return new JobView(job, new BuildAugmentor(), new Date());
+        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), new Date());
     }
 
     public static JobView of(Job<?, ?> job, BuildAugmentor augmentor) {
-        return new JobView(job, augmentor, new Date());
+        return new JobView(job, augmentor, RelativeLocation.of(job), new Date());
+    }
+
+    public static JobView of(Job<?, ?> job, RelativeLocation location) {
+        return new JobView(job, new BuildAugmentor(), location, new Date());
     }
 
     public static JobView of(Job<?, ?> job, Date systemTime) {
-        return new JobView(job, new BuildAugmentor(), systemTime);
+        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), systemTime);
     }
 
     @JsonProperty
     public String name() {
-        return (null != job.getDisplayNameOrNull())
-                ? job.getDisplayName()
-                : job.getName();
+        return relative.name();
     }
 
     @JsonProperty
     public String url() {
-        return job.getUrl();
+        return relative.url();
     }
 
     @JsonProperty
@@ -147,10 +156,11 @@ public class JobView {
     }
 
 
-    private JobView(Job<?, ?> job, BuildAugmentor augmentor, Date systemTime) {
+    private JobView(Job<?, ?> job, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
         this.job        = job;
         this.augmentor  = augmentor;
         this.systemTime = systemTime;
+        this.relative   = relative;
     }
 
     private BuildViewModel lastBuild() {
