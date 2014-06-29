@@ -7,9 +7,9 @@
         "url": "https://github.com/jan-molak/build-monitor.git"
     },
     "devDependencies": {
-        "karma": "~0.10",
-        "karma-coverage": "0.1.0",
-        "karma-junit-reporter": "~0.1"
+        "karma": "0.12.16",
+        "karma-coverage": "0.2.4",
+        "karma-junit-reporter": "0.2.2"
     },
     "engines": {
         "node": ">=0.10"
