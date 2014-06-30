@@ -4,12 +4,12 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.480</version>
+        <version>1.532</version>
     </parent>
 
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>build-monitor-plugin</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.5-SNAPSHOT</version>
     <packaging>hpi</packaging>
 
     <name>Build Monitor View</name>
@@ -51,9 +51,6 @@
     </scm>
 
     <properties>
-        <!-- using 1.74 as 1.95 doesn't seem to be compatible with 1.480 core -->
-        <!--<maven-hpi-plugin.version>1.74</maven-hpi-plugin.version>-->
-
         <!--
             Build Monitor has an optional dependency on the Build Failure Analyzer (BFA) plugin:
             https://wiki.jenkins-ci.org/display/JENKINS/Build+Failure+Analyzer
@@ -127,9 +124,21 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>cloudbees-folder</artifactId>
+            <version>4.2.3</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>credentials</artifactId>
+            <version>1.14</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>com.sonyericsson.jenkins.plugins.bfa</groupId>
             <artifactId>build-failure-analyzer</artifactId>
-            <version>1.7.0</version>
+            <version>1.9.0</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -184,6 +193,12 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
             <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -254,7 +269,7 @@
             <plugin>
                 <groupId>com.kelveden</groupId>
                 <artifactId>maven-karma-plugin</artifactId>
-                <version>1.1</version>
+                <version>1.8</version>
                 <executions>
                     <execution>
                         <goals>
@@ -264,6 +279,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <karmaExecutable>${project.basedir}/node_modules/karma/bin/karma</karmaExecutable>
                     <configFile>src/test/resources/karma.conf.js</configFile>
                 </configuration>
             </plugin>

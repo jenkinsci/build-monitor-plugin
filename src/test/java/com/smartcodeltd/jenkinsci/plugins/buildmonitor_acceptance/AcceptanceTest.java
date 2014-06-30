@@ -3,15 +3,23 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 import com.saucelabs.common.SauceOnDemandAuthentication;
 import com.saucelabs.common.SauceOnDemandSessionIdProvider;
 import com.saucelabs.junit.SauceOnDemandTestWatcher;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.BuildMonitor;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.Job;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.Scenario;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.utils.Typograph;
 import hudson.model.FreeStyleProject;
+import hudson.tasks.Builder;
 import hudson.tasks.Shell;
 import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -31,15 +39,16 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
 
     private String sessionId;
 
+    protected Scenario given;
+
     @Rule
-    public final JenkinsRule j = new JenkinsRule();
+    public final JenkinsRule jenkins = new JenkinsRule();
 
     @Rule
     public TestName testName = new TestName();
 
     @Rule
     public SauceOnDemandTestWatcher resultReportingTestWatcher = new SauceOnDemandTestWatcher(this, authentication);
-
 
     @Before
     public void setUp() throws Exception {
@@ -52,6 +61,8 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
         }
 
         browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        given = Scenario.using(jenkins, browser);
     }
 
     @After
@@ -59,21 +70,25 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
         browser.quit();
     }
 
-    protected void givenFollowingProjectRunHasSucceeded(String projectName) throws IOException {
-        FreeStyleProject exampleAcceptanceProject = j.createFreeStyleProject(projectName);
-        exampleAcceptanceProject.getBuildersList().add(new Shell("exit 0"));
-        exampleAcceptanceProject.scheduleBuild2(0);
+
+    protected BuildMonitor buildMonitorView(String name) throws IOException {
+        browser.get(urlFor("view/" + name));
+
+        return new BuildMonitor(browser.findElement(By.className("build-monitor")));
     }
 
-    protected void givenFollowingProjectRunHasFailed(String projectName) throws IOException {
-        FreeStyleProject exampleBuildProject = j.createFreeStyleProject(projectName);
-        exampleBuildProject.getBuildersList().add(new Shell("exit 1"));
-        exampleBuildProject.scheduleBuild2(0);
+    protected Builder aPassingShellScript() {
+        return new Shell("exit 0");
+    }
+
+    protected Builder aFailingShellScript() {
+        return new Shell("exit 1");
     }
 
     protected String urlFor(String path) throws IOException {
-        return j.getURL().toString() + path;
+        return jenkins.getURL().toString() + path;
     }
+
 
     private boolean shouldUseRemoteBrowser() {
         return StringUtils.isNotBlank(authentication.getUsername()) && StringUtils.isNotBlank(authentication.getAccessKey());
@@ -128,5 +143,49 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
     @Override
     public String getSessionId() {
         return sessionId;
+    }
+
+    protected Matcher<? super Job> isSuccessful() {
+        return new TypeSafeDiagnosingMatcher<Job>() {
+            @Override
+            public void describeTo(final Description description) {
+                description.appendText("status should be 'successful'");
+            }
+
+            @Override
+            protected boolean matchesSafely(final Job job, final Description mismatchDescription) {
+                mismatchDescription.appendText(" was ").appendValue(job.status());
+                return "successful".equalsIgnoreCase(job.status());
+            }
+        };
+    }
+
+    protected Matcher<? super Job> isFailing() {
+        return new TypeSafeDiagnosingMatcher<Job>() {
+            @Override
+            public void describeTo(final Description description) {
+                description.appendText("status should be 'failing'");
+            }
+
+            @Override
+            protected boolean matchesSafely(final Job job, final Description mismatchDescription) {
+                mismatchDescription.appendText(" was ").appendValue(job.status());
+                return "failing".equalsIgnoreCase(job.status());
+            }
+        };
+    }
+
+    protected Matcher<? super Job> isDisplayed() {
+        return new TypeSafeDiagnosingMatcher<Job>() {
+            @Override
+            public void describeTo(final Description description) {
+                description.appendText("should be displayed");
+            }
+
+            @Override
+            protected boolean matchesSafely(final Job job, final Description mismatchDescription) {
+                return null != job;
+            }
+        };
     }
 }
