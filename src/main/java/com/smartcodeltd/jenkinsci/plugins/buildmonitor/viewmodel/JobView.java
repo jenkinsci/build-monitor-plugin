@@ -54,25 +54,17 @@ public class JobView {
         // todo: consider introducing a BuildResultJudge to keep this logic in one place
         String status = "unknown";
 
-        if(lastCompletedBuild().result() == SUCCESS) {
-        	status = "successful";
-        } else {
-        	if(lastCompletedBuild().result() == FAILURE) {
-        		status = "failing";
-        	} else {
-        		if(lastCompletedBuild().result() == NOT_BUILT) {
-        			status = "not_build";
-        		} else {
-        			if(lastCompletedBuild().result() == ABORTED) {
-        				status = "aborted";
-        			} else {
-        				if(lastCompletedBuild().result() == UNSTABLE) {
-        					status = "unstable";
-        				}
-        			}
-        		}
-        	}
-        }
+        if (lastCompletedBuild().result() == SUCCESS) {
+			status = "successful";
+		} else if (lastCompletedBuild().result() == FAILURE) {
+			status = "failing";
+		} else if (lastCompletedBuild().result() == NOT_BUILT) {
+			status = "not_build";
+		} else if (lastCompletedBuild().result() == ABORTED) {
+			status = "aborted";
+		} else if (lastCompletedBuild().result() == UNSTABLE) {
+			status = "unstable";
+		}
         
         if (lastBuild().isRunning()) {
             status += " running";
