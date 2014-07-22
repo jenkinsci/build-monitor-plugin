@@ -5,5 +5,7 @@ target
 work*
 
 node_modules
-/bin
+bin/
+*.prefs
+.classpath
 .project
