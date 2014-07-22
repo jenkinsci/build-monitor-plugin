@@ -531,3 +531,7 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+a.ng-binding {
+	color:white !important;
+}
