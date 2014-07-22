@@ -279,7 +279,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <karmaExecutable>${project.basedir}/node_modules/karma/bin/karma</karmaExecutable>
+                    <karmaExecutable>karma</karmaExecutable>
                     <configFile>src/test/resources/karma.conf.js</configFile>
                 </configuration>
             </plugin>
