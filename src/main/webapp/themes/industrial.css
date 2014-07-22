@@ -242,7 +242,8 @@ h2 {
 
 .build-monitor.dashboard {
     overflow: hidden;
-    position: absolute; left:0px; top:0px;
+    position: fixed; left:0px; top:0px;
+    z-index:  9999;
     height:   100%;
     width:    100%;
     margin:0; padding: 0;
