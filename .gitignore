@@ -5,3 +5,5 @@ target
 work*
 
 node_modules
+/bin
+.project
