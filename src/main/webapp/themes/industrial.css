@@ -26,11 +26,6 @@
  * THE SOFTWARE.
  */
 
-/*
- *   Hide Jenkins UI
- */
-
-#header, #side-panel, #view-message { display: none; }
 
 /*
  *   Colours & Typography
