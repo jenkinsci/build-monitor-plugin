@@ -13,6 +13,7 @@ import org.kohsuke.stapler.StaplerRequest;
 import java.util.*;
 
 import static hudson.model.Result.SUCCESS;
+import static hudson.model.Result.UNSTABLE;
 
 /**
  * @author Jan Molak
@@ -54,7 +55,9 @@ public class JobView {
         // todo: consider introducing a BuildResultJudge to keep this logic in one place
         String status = lastCompletedBuild().result() == SUCCESS
                 ? "successful"
-                : "failing";
+                : lastCompletedBuild().result() == UNSTABLE ? 
+                		"unstable" 
+                		: "failing";
 
         if (lastBuild().isRunning()) {
             status += " running";

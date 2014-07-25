@@ -98,6 +98,7 @@ h2 {
 
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .failing    { background-color:darkred; }
+.build-monitor .unstable   { background-color:goldenrod; }
 .build-monitor .claimed    { background-color: #fe5e00; }
 
 
@@ -107,6 +108,7 @@ h2 {
  */
 .build-monitor .colour-blind-mode .successful,
 .build-monitor .colour-blind-mode .failing,
+.build-monitor .colour-blind-mode .unstable,
 .build-monitor .colour-blind-mode .claimed {
     -webkit-background-size: 50px 50px;
     -moz-background-size:    50px 50px;
@@ -115,7 +117,8 @@ h2 {
 
 .build-monitor .colour-blind-mode .successful { }
 
-.build-monitor .colour-blind-mode .failing {
+.build-monitor .colour-blind-mode .failing,
+.build-monitor .colour-blind-mode .unstable {
     background-image: -webkit-gradient(linear, 0 100%, 100% 0,
         color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
         color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
@@ -222,7 +225,8 @@ h2 {
 .build-monitor .meta .failures li:after { content: ","; }
 .build-monitor .meta .failures li:last-child:after { content: ""; }
 
-.build-monitor .failing ul.failures li:first-child:before {
+.build-monitor .failing ul.failures li:first-child:before,
+.build-monitor .unstable ul.failures li:first-child:before {
     content: "Identified Problems: ";
 }
 
@@ -414,6 +418,11 @@ h2 {
     background-color: firebrick;
 }
 
+.build-monitor ul#job-views .unstable > .progress {
+    -webkit-animation: forUnstable 2.25s 2 alternate;
+    background-color: gold;
+}
+
 .build-monitor ul#job-views .claimed > .progress {
     -webkit-animation: forClaimed 2.25s 2 alternate;
     background-color: #fe7600;
@@ -421,6 +430,7 @@ h2 {
 
 @-webkit-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: limegreen;} }
 @-webkit-keyframes forFailing { 0% {background-color: firebrick;} 100% {background-color: red;} }
+@-webkit-keyframes forUnstable { 0% {background-color: gold;} 100% {background-color: yellow;} }
 @-webkit-keyframes forClaimed { 0% {background-color: #fe7600; } 100% { background-color: orange; } }
 
 /*
