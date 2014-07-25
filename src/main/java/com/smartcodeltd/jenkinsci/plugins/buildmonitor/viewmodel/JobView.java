@@ -23,21 +23,26 @@ public class JobView {
     private final Job<?, ?> job;
     private final BuildAugmentor augmentor;
     private final RelativeLocation relative;
+    private final boolean showUnstable;
 
     public static JobView of(Job<?, ?> job) {
-        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), new Date());
+        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), new Date(), false);
     }
 
     public static JobView of(Job<?, ?> job, BuildAugmentor augmentor) {
-        return new JobView(job, augmentor, RelativeLocation.of(job), new Date());
+        return new JobView(job, augmentor, RelativeLocation.of(job), new Date(), false);
+    }
+
+    public static JobView of(Job<?, ?> job, BuildAugmentor augmentor, boolean showUnstable) {
+        return new JobView(job, augmentor, RelativeLocation.of(job), new Date(), showUnstable);
     }
 
     public static JobView of(Job<?, ?> job, RelativeLocation location) {
-        return new JobView(job, new BuildAugmentor(), location, new Date());
+        return new JobView(job, new BuildAugmentor(), location, new Date(), false);
     }
 
     public static JobView of(Job<?, ?> job, Date systemTime) {
-        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), systemTime);
+        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), systemTime, false);
     }
 
     @JsonProperty
@@ -55,9 +60,9 @@ public class JobView {
         // todo: consider introducing a BuildResultJudge to keep this logic in one place
         String status = lastCompletedBuild().result() == SUCCESS
                 ? "successful"
-                : lastCompletedBuild().result() == UNSTABLE ? 
-                		"unstable" 
-                		: "failing";
+                : showUnstable && lastCompletedBuild().result() == UNSTABLE ?
+                        "unstable" 
+                        : "failing";
 
         if (lastBuild().isRunning()) {
             status += " running";
@@ -159,11 +164,12 @@ public class JobView {
     }
 
 
-    private JobView(Job<?, ?> job, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
-        this.job        = job;
-        this.augmentor  = augmentor;
-        this.systemTime = systemTime;
-        this.relative   = relative;
+    private JobView(Job<?, ?> job, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime, boolean showUnstable) {
+        this.job          = job;
+        this.augmentor    = augmentor;
+        this.systemTime   = systemTime;
+        this.relative     = relative;
+        this.showUnstable = showUnstable;
     }
 
     private BuildViewModel lastBuild() {

@@ -59,6 +59,10 @@
     </select>
   </f:entry>
 
+  <f:entry title="${%Show Unstable Jobs}">
+    <f:checkbox name="showUnstable" checked="${it.showUnstable}"/>
+  </f:entry>
+
   </f:section>
 
   <script>

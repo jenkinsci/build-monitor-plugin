@@ -59,6 +59,8 @@ import static hudson.Util.filter;
  */
 public class BuildMonitorView extends ListView {
 
+    private boolean showUnstable;
+
     /**
      * @param name  Name of the view
      */
@@ -99,6 +101,7 @@ public class BuildMonitorView extends ListView {
         super.submit(req);
 
         String requestedOrdering = req.getParameter("order");
+        showUnstable = req.getParameter("showUnstable") != null;
 
         try {
             order = orderIn(requestedOrdering);
@@ -115,6 +118,10 @@ public class BuildMonitorView extends ListView {
 
     public String currentOrder() {
         return currentOrderOrDefault().getClass().getSimpleName();
+    }
+
+    public boolean getShowUnstable() {
+        return showUnstable;
     }
 
     private Comparator<AbstractProject> order = new ByName();
@@ -157,7 +164,7 @@ public class BuildMonitorView extends ListView {
         Collections.sort(projects, currentOrderOrDefault());
 
         for (AbstractProject project : projects) {
-            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
+            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent(), showUnstable));
         }
 
         return jobs;
