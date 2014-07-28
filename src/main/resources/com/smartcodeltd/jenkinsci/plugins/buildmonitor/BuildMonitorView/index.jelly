@@ -13,6 +13,7 @@
 
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
 
+            <script src="${resourcesURL}/vendor/yahoo-cookie-2.9.0.min.js"></script>
             <script src="${resourcesURL}/vendor/modernizr.custom.27682.js"></script>
             <script src="${resourcesURL}/vendor/angular-${angularVersion}.min.js"></script>
             <script src="${resourcesURL}/vendor/ui-bootstrap-custom-tpls-0.4.0.js"></script>
