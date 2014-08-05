@@ -25,6 +25,7 @@
                  data-ng-app="buildMonitor"
                  data-ng-controller="JobViews">
                 <header>
+                    <a class="home-link" href="${rootURL}/">Jenkins</a>
                     <h1><a href="configure" title="Configure the '${it.displayName}' view">${it.displayName}</a></h1>
                 </header>
 
