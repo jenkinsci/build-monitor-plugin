@@ -59,6 +59,12 @@ import static hudson.Util.filter;
  */
 public class BuildMonitorView extends ListView {
 
+    private boolean displayRelativeName = true;
+
+    public boolean isDisplayRelativeName() {
+        return displayRelativeName;
+    }
+
     /**
      * @param name  Name of the view
      */
@@ -104,6 +110,13 @@ public class BuildMonitorView extends ListView {
             order = orderIn(requestedOrdering);
         } catch (Exception e) {
             throw new FormException("Can't order projects by " + requestedOrdering, "order");
+        }
+
+        String requestedNameWithFolders = req.getParameter("displayRelativeName");
+        if (requestedNameWithFolders != null && requestedNameWithFolders.equals("on")) {
+            displayRelativeName = true;
+        } else {
+            displayRelativeName = false;
         }
     }
 
@@ -157,7 +170,7 @@ public class BuildMonitorView extends ListView {
         Collections.sort(projects, currentOrderOrDefault());
 
         for (AbstractProject project : projects) {
-            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
+            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent(), displayRelativeName));
         }
 
         return jobs;
