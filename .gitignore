@@ -5,3 +5,7 @@ target
 work*
 
 node_modules
+
+.classpath
+.project
+.settings/
