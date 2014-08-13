@@ -253,6 +253,7 @@ h2 {
             flex: 8;
 
     min-height:6em;
+    max-height:6em;
 
     display: -webkit-flex;
     display: flex;
@@ -278,6 +279,9 @@ h2 {
 }
 
 .build-monitor footer {
+    min-height:3em;
+    max-height:3em;
+
     -webkit-flex: 4;
             flex: 4;
 }
