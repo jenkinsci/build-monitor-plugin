@@ -52,6 +52,7 @@ h1,h2,h3,h4,h5,h6 {
 h1,h2,h3,h4,h5,h6, li, a {
     font-family: 'Open sans', Verdana, Helvetica, sans serif;
 }
+.build-monitor { color:#fff; }
 .build-monitor header>h1 {
     text-shadow: 2px 2px rgba(0,0,0,0.5);
 }
@@ -338,7 +339,7 @@ h2 {
 }
 
 .build-monitor ul#job-views .meta .latest-results {
-    width:90%;
+    width:90%; margin:0 auto;
 }
 .build-monitor ul#job-views .meta .latest-results * {
     text-align: center;
@@ -515,7 +516,7 @@ h2 {
  *   Angular slider
  */
 slider {
-    width: 120px;
+    width: 180px;
 }
 
 /*
