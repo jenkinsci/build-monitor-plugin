@@ -82,9 +82,11 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_know_the_url_of_the_build() {
-        // setting url on the stub is far from ideal, but hudson.model.Run is not particularly easy to test ...
-        view = JobView.of(a(job().whereTheLast(build().urlIs("job/project-name/22/"))));
+    public void should_know_the_url_of_the_last_build() {
+        view = JobView.of(
+                a(job().whereTheLast(build().numberIs(22))),
+                locatedAt("job/project-name")
+        );
 
         assertThat(view.lastBuildUrl(), is("job/project-name/22/"));
     }
@@ -478,11 +480,10 @@ public class JobViewTest {
         return systemTime;
     }
 
-    private RelativeLocation locatedAtTheTopLevel() {
+    private RelativeLocation locatedAt(String url) {
 
         RelativeLocation location = mock(RelativeLocation.class);
-        when(location.name()).thenReturn("a");
-        when(location.url()).thenReturn("b");
+        when(location.url()).thenReturn(url);
 
         return location;
     }

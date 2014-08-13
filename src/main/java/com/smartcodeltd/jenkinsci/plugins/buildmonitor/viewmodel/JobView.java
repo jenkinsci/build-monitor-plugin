@@ -1,16 +1,15 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
-import hudson.Functions;
-import hudson.model.*;
+import hudson.model.Job;
+import hudson.model.Run;
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.kohsuke.stapler.Ancestor;
-import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static hudson.model.Result.SUCCESS;
 
@@ -181,6 +180,6 @@ public class JobView {
             return new NullBuildView();
         }
 
-        return BuildView.of(job.getLastBuild(), augmentor, systemTime);
+        return BuildView.of(job.getLastBuild(), augmentor, relative, systemTime);
     }
 }

@@ -3,9 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.AnalysedTest;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.ClaimedTest;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
-import hudson.model.AbstractBuild;
-import hudson.model.Result;
-import hudson.model.User;
+import hudson.model.*;
 import hudson.plugins.claim.ClaimBuildAction;
 import hudson.scm.ChangeLogSet;
 
@@ -25,9 +23,14 @@ public class BuildStateRecipe {
 
     public BuildStateRecipe() {
         build = mock(AbstractBuild.class);
+
+        AbstractProject parent = mock(AbstractProject.class);
+        when(build.getParent()).thenReturn(parent);
     }
 
     public BuildStateRecipe numberIs(int number) {
+        when(build.getNumber()).thenReturn(number);
+
         // see hudson.model.Run::getDisplayName
         return nameIs("#" + number);
     }
@@ -44,12 +47,6 @@ public class BuildStateRecipe {
 
     public BuildStateRecipe finishedWith(Result result) {
         when(build.getResult()).thenReturn(result);
-
-        return this;
-    }
-
-    public BuildStateRecipe urlIs(String url) {
-        when(build.getUrl()).thenReturn(url);
 
         return this;
     }
