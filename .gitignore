@@ -1,11 +1,13 @@
+# IntelliJ
 .idea
 *.iml
+
+# Eclipse
+.classpath
+.project
+.settings/
 
 target
 work*
 
 node_modules
-
-.classpath
-.project
-.settings/
