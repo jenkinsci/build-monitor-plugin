@@ -13,6 +13,8 @@
 
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
 
+            <script src="${resURL}/scripts/yui/cookie/cookie-min.js"></script>
+
             <script src="${resourcesURL}/vendor/modernizr.custom.27682.js"></script>
             <script src="${resourcesURL}/vendor/angular-${angularVersion}.min.js"></script>
             <script src="${resourcesURL}/vendor/ui-bootstrap-custom-tpls-0.4.0.js"></script>
