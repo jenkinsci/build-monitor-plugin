@@ -82,6 +82,19 @@ h2 {
 
 }
 
+.build-monitor header a.home-link {
+    position: absolute;
+    top: 12px;
+    left: 1%;
+    background: url(industrial/logo.png) no-repeat;
+    background-size: 100%;
+    width: 160px;
+    height: 40px;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .build-monitor h2 {
     font-size: 3.5em;
     margin-bottom: 0.1em;
