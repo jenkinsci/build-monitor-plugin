@@ -83,8 +83,8 @@ h2 {
 
 .build-monitor header a.home-link {
     position: absolute;
-    top:  6px;
-    left: 1%;
+    top:  5px;
+    left: 8px;
     z-index:2;
     background: url('industrial/jenkins-logo.png') no-repeat;
     background-size: 100%;
@@ -190,7 +190,7 @@ h2 {
 .build-monitor #job-views .build-time>.elapsed:after { content:"|"; margin-left:0.1em; font-weight: normal; }
 
 .build-monitor footer {
-    padding: 0 1.0%;
+    padding: 0 8px;
     color: #ddd;
     clear: both;
 }
@@ -294,12 +294,12 @@ h2 {
 }
 
 .build-monitor footer {
-    height:30px;
+    height:24px;
 }
 
 .build-monitor ul#job-views {
     list-style-type: none;
-    margin: 0.5%;
+    margin: 4px;
     padding:0;
 }
 
@@ -307,7 +307,7 @@ h2 {
  * Grid
  */
 .build-monitor ul#job-views>li {
-    margin:0.5%;
+    margin: 4px;
 }
 .build-monitor ul#job-views.columns-1 li {
     -webkit-flex: 1 99%;
@@ -465,8 +465,8 @@ h2 {
     border:1px solid white;
     z-index: 999;
     position:absolute;
-    top:12px;
-    right:1.0%;
+    top:10px;
+    right:8px;
     width:32px;
     overflow: hidden;
     margin: 0;  padding: 0.5em;
