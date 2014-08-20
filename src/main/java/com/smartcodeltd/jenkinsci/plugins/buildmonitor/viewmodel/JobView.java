@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static hudson.model.Result.SUCCESS;
+import static hudson.model.Result.*;
 
 /**
  * @author Jan Molak
@@ -51,10 +51,20 @@ public class JobView {
     @JsonProperty
     public String status() {
         // todo: consider introducing a BuildResultJudge to keep this logic in one place
-        String status = lastCompletedBuild().result() == SUCCESS
-                ? "successful"
-                : "failing";
+        String status = "unknown";
 
+        if (lastCompletedBuild().result() == SUCCESS) {
+			status = "successful";
+		} else if (lastCompletedBuild().result() == FAILURE) {
+			status = "failing";
+		} else if (lastCompletedBuild().result() == NOT_BUILT) {
+			status = "not_build";
+		} else if (lastCompletedBuild().result() == ABORTED) {
+			status = "aborted";
+		} else if (lastCompletedBuild().result() == UNSTABLE) {
+			status = "unstable";
+		}
+        
         if (lastBuild().isRunning()) {
             status += " running";
         }

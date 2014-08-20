@@ -11,7 +11,13 @@
       <f:option value="2" selected="${it.statusFilter==false}">${%Disabled jobs only}</f:option>
     </select>
   </f:entry>
-
+  
+  <f:entry title="${%Hide statuses older than}:">
+		<st:nbsp />
+		<f:textbox name="hideDays" field="hideDays" value="${it.hideDays}"/> days
+		<st:nbsp />
+  </f:entry>
+  
   <f:entry title="${%Recurse in subfolders}" field="recurse">
     <f:checkbox id="recurse"/>
   </f:entry>

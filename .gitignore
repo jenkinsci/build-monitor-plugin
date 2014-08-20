@@ -11,3 +11,7 @@ target
 work*
 
 node_modules
+bin/
+*.prefs
+.classpath
+.project

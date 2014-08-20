@@ -48,6 +48,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -58,6 +59,8 @@ import static hudson.Util.filter;
  * @author Jan Molak
  */
 public class BuildMonitorView extends ListView {
+
+	private long hideDays = 20;
 
     /**
      * @param name  Name of the view
@@ -92,6 +95,18 @@ public class BuildMonitorView extends ListView {
             }
             return FormValidation.ok();
         }
+
+		public FormValidation doCheckHideDays(@QueryParameter String value) {
+			String v = Util.fixEmpty(value);
+			if (v != null) {
+				try {
+					Long.parseLong(v);
+				} catch (NumberFormatException pse) {
+					return FormValidation.error(pse.getMessage());
+				}
+			}
+			return FormValidation.ok();
+		}
     }
 
     @Override
@@ -101,10 +116,13 @@ public class BuildMonitorView extends ListView {
         String requestedOrdering = req.getParameter("order");
 
         try {
-            order = orderIn(requestedOrdering);
-        } catch (Exception e) {
-            throw new FormException("Can't order projects by " + requestedOrdering, "order");
-        }
+			long requestedHideDays = Long.parseLong(req.getParameter("hideDays"));
+			order = orderIn(requestedOrdering);
+			hideDays = requestedHideDays;
+		} catch (Exception e) {
+			throw new FormException("Can't order projects by "
+					+ requestedOrdering, "order");
+		}
     }
 
     // defensive coding to avoid issues when Jenkins instantiates the plugin without populating its fields
@@ -156,9 +174,16 @@ public class BuildMonitorView extends ListView {
 
         Collections.sort(projects, currentOrderOrDefault());
 
-        for (AbstractProject project : projects) {
-            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
-        }
+        Date dateNow = new Date();
+		dateNow.setTime(dateNow.getTime() - (long) hideDays * 1000 * 60 * 60 * 24);
+		
+		for (AbstractProject project : projects) {
+			if ((hideDays == 0)
+					|| ((project.getLastBuild() != null) && (project
+							.getLastBuild().getTime().after(dateNow)))) {
+				jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
+			}
+		}
 
         return jobs;
     }
@@ -166,4 +191,9 @@ public class BuildMonitorView extends ListView {
     private BuildAugmentor withAugmentationsIfTheyArePresent() {
         return BuildAugmentor.fromDetectedPlugins();
     }
+
+
+	public long getHideDays() {
+		return this.hideDays;
+	}
 }
