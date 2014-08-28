@@ -3,6 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.model.Job;
+import hudson.model.Result;
 import hudson.model.Run;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -11,7 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static hudson.model.Result.ABORTED;
 import static hudson.model.Result.SUCCESS;
+import static hudson.model.Result.UNSTABLE;
 
 /**
  * @author Jan Molak
@@ -51,9 +54,11 @@ public class JobView {
     @JsonProperty
     public String status() {
         // todo: consider introducing a BuildResultJudge to keep this logic in one place
-        String status = lastCompletedBuild().result() == SUCCESS
-                ? "successful"
-                : "failing";
+        Result result = lastCompletedBuild().result();
+        String status = "failing";
+        if (result == ABORTED) status = "aborted";
+        if (result == UNSTABLE) status = "unstable";
+        if (result == SUCCESS) status = "successful";
 
         if (lastBuild().isRunning()) {
             status += " running";

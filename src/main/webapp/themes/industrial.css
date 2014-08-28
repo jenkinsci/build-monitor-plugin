@@ -108,7 +108,10 @@ h2 {
 
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .failing    { background-color:darkred; }
-.build-monitor .claimed    { background-color: #fe5e00; }
+.build-monitor .unstable    { background-color: #fe5e00; }
+.build-monitor .claimed    { background-color: #990BA1; }
+.build-monitor .aborted    { background-color: #5E5C5E; }
+
 
 
 /*
@@ -117,7 +120,9 @@ h2 {
  */
 .build-monitor .colour-blind-mode .successful,
 .build-monitor .colour-blind-mode .failing,
-.build-monitor .colour-blind-mode .claimed {
+.build-monitor .colour-blind-mode .unstable,
+.build-monitor .colour-blind-mode .claimed,
+.build-monitor .colour-blind-mode .aborted {
     -webkit-background-size: 50px 50px;
     -moz-background-size:    50px 50px;
     background-size:         50px 50px; /* Controls the size of the stripes */
@@ -127,51 +132,51 @@ h2 {
 
 .build-monitor .colour-blind-mode .failing {
     background-image: -webkit-gradient(linear, 0 100%, 100% 0,
-        color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
-        color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
-        color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent),
-        to(transparent));
+    color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
+    color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
+    color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent),
+    to(transparent));
     background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-        transparent 75%, transparent);
+    transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+    transparent 75%, transparent);
     background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-        transparent 75%, transparent);
+    transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+    transparent 75%, transparent);
     background-image: -ms-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-        transparent 75%, transparent);
+    transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+    transparent 75%, transparent);
     background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-        transparent 75%, transparent);
+    transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+    transparent 75%, transparent);
     background-image: linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-        transparent 75%, transparent);
+    transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+    transparent 75%, transparent);
 }
-.build-monitor .colour-blind-mode .claimed {
+.build-monitor .colour-blind-mode .unstable {
     background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), to(transparent)),
-        -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), to(transparent)),
-        -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, rgba(255, 255, 255, .2))),
-        -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, transparent), color-stop(.75, rgba(255, 255, 255, .2)));
+    -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), to(transparent)),
+    -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, rgba(255, 255, 255, .2))),
+    -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, transparent), color-stop(.75, rgba(255, 255, 255, .2)));
     background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
-        -webkit-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
-        -webkit-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
-        -webkit-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
+    -webkit-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+    -webkit-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
+    -webkit-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
     background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
-        -moz-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
-        -moz-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
-        -moz-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
+    -moz-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+    -moz-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
+    -moz-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
     background-image: -ms-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
-        -ms-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
-        -ms-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
-        -ms-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
+    -ms-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+    -ms-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
+    -ms-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
     background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
-        -o-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
-        -o-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
-        -o-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
+    -o-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+    -o-linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
+    -o-linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
     background-image: linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
-        linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
-        linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
-        linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
+    linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, .2) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
 }
 
 .build-monitor #job-views .build-time,
@@ -256,15 +261,15 @@ h2 {
 
     display: -webkit-flex;
     display: flex;
-            flex-flow: column;
+    flex-flow: column;
     -webkit-flex-flow: column;
     -webkit-justify-content: space-around;
-            justify-content: space-around;
+    justify-content: space-around;
 }
 
 .build-monitor header {
     /*-webkit-flex: 8;*/
-            /*flex: 8;*/
+    /*flex: 8;*/
 
     /*min-height:4em;*/
     /*max-height:4em;*/
@@ -279,14 +284,14 @@ h2 {
 
 .build-monitor #job-views {
     -webkit-flex: 88;
-            flex: 88;
+    flex: 88;
 
     display: -webkit-flex;
     display: flex;
     -webkit-flex-flow: row wrap;
-            flex-flow: row wrap;
+    flex-flow: row wrap;
     -webkit-justify-content: space-around;
-            justify-content: space-around;
+    justify-content: space-around;
 }
 
 .build-monitor #job-views.empty em {
@@ -346,9 +351,9 @@ h2 {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-flow: column;
-            flex-flow: column;
+    flex-flow: column;
     -webkit-justify-content: space-around;
-            justify-content: space-around;
+    justify-content: space-around;
     align-content: center;
     align-items:center;
 }
@@ -420,19 +425,30 @@ h2 {
     background-color: green;
 }
 
+.build-monitor ul#job-views .aborted > .progress {
+    -webkit-animation: forAborted 2.25s 2 alternate;
+    background-color: #BFBFBF;
+}
 .build-monitor ul#job-views .failing > .progress {
     -webkit-animation: forFailing 2.25s 2 alternate;
     background-color: firebrick;
 }
 
-.build-monitor ul#job-views .claimed > .progress {
-    -webkit-animation: forClaimed 2.25s 2 alternate;
+.build-monitor ul#job-views .unstable > .progress {
+    -webkit-animation: forUnstable 2.25s 2 alternate;
     background-color: #fe7600;
 }
+.build-monitor ul#job-views .claimed > .progress {
+    -webkit-animation: forClaimed 2.25s 2 alternate;
+    background-color: #F59DFA;
+}
+
 
 @-webkit-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: limegreen;} }
 @-webkit-keyframes forFailing { 0% {background-color: firebrick;} 100% {background-color: red;} }
-@-webkit-keyframes forClaimed { 0% {background-color: #fe7600; } 100% { background-color: orange; } }
+@-webkit-keyframes forUnstable { 0% {background-color: #fe7600; } 100% { background-color: orange; } }
+@-webkit-keyframes forClaimed { 0% {background-color: #B021B8; } 100% { background-color: #F59DFA; } }
+@-webkit-keyframes forAborted { 0% {background-color: #7F7E80; } 100% { background-color: #BFBFBF; } }
 
 /*
  *   Modal
@@ -565,9 +581,9 @@ slider {
  */
 .fade-hide, .fade-show {
     -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.75s;
-       -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.75s;
-         -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.75s;
-            transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.75s;
+    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.75s;
+    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.75s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.75s;
 }
 
 .fade-hide { opacity:1; }
