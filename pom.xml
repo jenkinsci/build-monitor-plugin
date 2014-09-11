@@ -7,7 +7,6 @@
         <version>1.532</version>
     </parent>
 
-    <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>build-monitor-plugin</artifactId>
     <version>1.5-SNAPSHOT</version>
     <packaging>hpi</packaging>
