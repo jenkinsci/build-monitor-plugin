@@ -208,11 +208,25 @@ public class JobViewTest {
 
     @Test
     public void should_describe_the_job_as_failing_if_the_last_build_failed() {
-        for (Result result : asFollows(FAILURE, ABORTED, NOT_BUILT, UNSTABLE)) {
+        for (Result result : asFollows(FAILURE, ABORTED)) {
             view = JobView.of(a(job().whereTheLast(build().finishedWith(result))));
 
             assertThat(view.status(), containsString("failing"));
         }
+    }
+
+    @Test
+    public void should_describe_the_job_as_unstable_if_the_last_build_is_unstable() {
+        view = JobView.of(a(job().whereTheLast(build().finishedWith(UNSTABLE))));
+
+        assertThat(view.status(), containsString("unstable"));
+    }
+
+    @Test
+    public void should_describe_the_state_of_the_job_as_unknown_when_it_is_yet_to_be_determined() {
+        view = JobView.of(a(job()));
+
+        assertThat(view.status(), containsString("unknown"));
     }
 
     @Test
@@ -312,16 +326,6 @@ public class JobViewTest {
     }
 
     /*
-     * Should produce some basic build statistics
-     */
-
-    @Test
-    @Ignore
-    public void should_know_how_long_the_job_has_been_failing_for() {
-        // TODO Implement missing feature
-    }
-
-    /*
      * Should know who broke the build
      */
 
@@ -393,21 +397,6 @@ public class JobViewTest {
         assertThat(view.culprits(), hasSize(1));
     }
 
-    @Test
-    @Ignore
-    public void should_know_the_authors_of_commits_that_made_it_into_the_build() {
-        //TODO implement shouldKnowTheAuthorsOfCommitsThatMadeItIntoTheBuild
-//        List<JobView> views = asFollows(
-//            JobView.of(a(job().whereTheLast(build().succeededThanksTo("Adam")))),
-//            JobView.of(a(job().whereTheLast(build().wasBrokenBy("Adam"))))
-//        );
-//
-//        for (JobView view : views) {
-//            assertThat(view.authors(), hasSize(1));
-//            assertThat(view.authors(), hasItems("Adam"));
-//        }
-    }
-
     /*
      * Should know who claimed a broken build
      */
@@ -450,7 +439,7 @@ public class JobViewTest {
         assertThat(view.progress(),               is(0));
         assertThat(view.shouldIndicateCulprits(), is(false));
         assertThat(view.culprits(),               hasSize(0));
-        assertThat(view.status(),                 is("failing"));
+        assertThat(view.status(),                 is("unknown"));
         assertThat(view.isClaimed(),              is(false));
         assertThat(view.hasKnownFailures(),       is(false));
     }
