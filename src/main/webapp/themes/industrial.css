@@ -123,7 +123,6 @@ h2 {
     background-size:         50px 50px; /* Controls the size of the stripes */
 }
 
-
 .build-monitor .colour-blind-mode .unstable {
     /* diamonds */
     background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), to(transparent)),
@@ -414,7 +413,7 @@ h2 {
 }
 .build-monitor #job-views .build-name { bottom:0; left:0.3em; }
 .build-monitor #job-views .build-time { bottom:0; right:0.3em; }
-.build-monitor #job-views .build-cl { bottom:5; left:0.3em; }
+.build-monitor #job-views .build-cl { top:0; left:0.3em; }
 
 /*
  *   Job meta-data
