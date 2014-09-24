@@ -49,6 +49,26 @@ public class NullBuildView implements BuildViewModel {
     }
 
     @Override
+    public int failureCount() {
+    	return 0;
+    }
+    
+    @Override
+    public String changeNumber() {
+    	return "";
+    }
+    
+    @Override
+    public int changeSetCount() {
+    	return 0;
+    }
+    
+    @Override
+    public String changeString() {
+    	return "";
+    }
+    
+    @Override
     public boolean hasPreviousBuild() {
         return false;
     }
@@ -87,4 +107,10 @@ public class NullBuildView implements BuildViewModel {
     public List<String> knownFailures() {
         return null;
     }
+
+	@Override
+	public boolean isEmptyChangeSet() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

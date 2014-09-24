@@ -26,6 +26,8 @@ Current functionality of the Build Monitor plugin:
 * The number of columns and size of the font used is easily customisable, making it trivial to accommodate screens of different sizes.
 * UI configuration is stored in a cookie, making it possible to display different number of columns and using different font size on each of the screens at your office.
 * Can work in a colour-blind-friendly mode; [learn more](https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/30#issuecomment-35849019)
+* Displays number of failing tests if the build has NUnit test results
+* Displays a changelist number (Perforce only) if the build had a sync step.
 
 All the previous releases together with their change logs are [listed here](https://bitly.com/JBMReleases).
 

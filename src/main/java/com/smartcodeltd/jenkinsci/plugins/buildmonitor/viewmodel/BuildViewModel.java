@@ -28,4 +28,12 @@ public interface BuildViewModel {
     boolean hasKnownFailures();
 
     List<String> knownFailures();
+    
+
+    public int failureCount();
+    
+    public String changeNumber();
+    public boolean isEmptyChangeSet();
+	public int changeSetCount();
+	public String changeString();
 }

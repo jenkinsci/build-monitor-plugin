@@ -8,9 +8,14 @@ import hudson.model.AbstractBuild;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.User;
+import hudson.plugins.perforce.PerforceChangeLogEntry;
+import hudson.plugins.perforce.PerforceChangeLogSet;
+import hudson.scm.ChangeLogSet;
+import hudson.tasks.junit.TestResultAction;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -91,6 +96,69 @@ public class BuildView implements BuildViewModel {
         }
 
         return 100;
+    }
+    
+    @Override
+    public int failureCount() {
+    	if(build instanceof AbstractBuild<?, ?>){
+    		AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+    		if(jenkinsBuild.getAction(TestResultAction.class) == null)
+    			return 0;
+    		return jenkinsBuild.getAction(TestResultAction.class).getFailCount();
+    	}
+    	return 0;
+    }
+    
+    @Override
+    public String changeNumber() {
+    	if(build instanceof AbstractBuild<?, ?>){
+    		AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+    		if( jenkinsBuild.getChangeSet().isEmptySet())
+    			return "N/A";
+    		PerforceChangeLogSet set = ((PerforceChangeLogSet) jenkinsBuild.getChangeSet());
+    		String output = "" + set.iterator().next().getChange().getChangeNumber(); 
+    		return output;    		
+    	}
+    	return "N/A";
+    }
+    
+    @Override
+    public int changeSetCount() {
+    	if(build instanceof AbstractBuild<?, ?>){
+    		AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+    		if(jenkinsBuild.getChangeSet().isEmptySet() )
+    			return 0;
+    		return ((PerforceChangeLogSet) jenkinsBuild.getChangeSet()).getItems().length;
+    	}
+    	return 0;
+    }
+    
+    @Override
+	public boolean isEmptyChangeSet() {
+    	if(build instanceof AbstractBuild<?, ?>){
+    		AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+    		return jenkinsBuild.getChangeSet().isEmptySet();
+    	}
+    	return true;
+	}
+    
+    @Override
+    public String changeString() {
+    	if(build instanceof AbstractBuild<?, ?>){
+    		AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+    		
+    		if(jenkinsBuild.getChangeSet().isEmptySet())
+    			return "N/A";
+    		
+    		PerforceChangeLogSet set = (PerforceChangeLogSet) jenkinsBuild.getChangeSet();
+    		String output = "";
+    		for(Iterator<PerforceChangeLogEntry> it = set.iterator(); it.hasNext();){
+    			PerforceChangeLogEntry entry = it.next();
+    			output += "#: " + entry.getChange().getChangeNumber() + " by: " + entry.getChange().getUser() + " on: " + entry.getChange().getDate() + " " + entry.getChange().getDescription() + " | ";
+    		}
+    		return output;
+    	}
+    	return "N/A";
     }
 
     private boolean isTakingLongerThanUsual() {
@@ -177,4 +245,6 @@ public class BuildView implements BuildViewModel {
         this.parentJobLocation = parentJobLocation;
         this.systemTime = systemTime;
     }
+
+	
 }
