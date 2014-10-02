@@ -5,8 +5,6 @@ Build Monitor Plugin provides a highly visible view of the status of selected Je
 It easily accommodates different computer screen sizes and is ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
 (Inspired by the no longer maintained [RadiatorView](https://wiki.jenkins-ci.org/display/JENKINS/Radiator+View+Plugin) plugin).
 
-[![Codeship Status for jan-molak/jenkins-build-monitor-plugin](https://www.codeship.io/projects/6dc221c0-2c61-0132-3d66-1ec76901cc27/status)](https://www.codeship.io/projects/38836)
-
 [![Build Status](https://smartcode.ci.cloudbees.com/buildStatus/icon?job=jenkins-build-monitor-plugin)](https://smartcode.ci.cloudbees.com/job/jenkins-build-monitor-plugin/)
 [![Acceptance Tests Status](https://saucelabs.com/buildstatus/build-monitor)](https://saucelabs.com/u/build-monitor)
 [![Stories in Backlog](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=backlog&title=Backlog)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
