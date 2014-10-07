@@ -1,6 +1,6 @@
 <ul id="job-views"
     data-ng-class="{ 'colour-blind-mode': settings.colourBlind == 1 }"
-    style="font-size: {{ settings.fontSize }}em"
+    data-ng-style="{'font-size': settings.fontSize + 'em'}"
     class="columns-{{ settings.numberOfColumns }}">
 
     <li ng-repeat="job in jobs" class="{{job.status}}" id="{{ job.name | slugify }}">
