@@ -5,7 +5,7 @@ Build Monitor Plugin provides a highly visible view of the status of selected Je
 It easily accommodates different computer screen sizes and is ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
 (Inspired by the no longer maintained [RadiatorView](https://wiki.jenkins-ci.org/display/JENKINS/Radiator+View+Plugin) plugin).
 
-[![Build Status](https://smartcode.ci.cloudbees.com/buildStatus/icon?job=jenkins-build-monitor-plugin)](https://smartcode.ci.cloudbees.com/job/jenkins-build-monitor-plugin/)
+[![Build Status](https://smartcode-opensource.ci.cloudbees.com/buildStatus/icon?job=jenkins-build-monitor-plugin)](https://smartcode-opensource.ci.cloudbees.com/job/jenkins-build-monitor-plugin/)
 [![Acceptance Tests Status](https://saucelabs.com/buildstatus/build-monitor)](https://saucelabs.com/u/build-monitor)
 [![Stories in Backlog](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=backlog&title=Backlog)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
 
@@ -55,6 +55,8 @@ Simple, right? :-) You can have as many Build Monitor Views as you want - the mo
 
 ## Roadmap and work in progress
 
+To stay up-to-date with the project news - [follow @JanMolak on twitter](https://twitter.com/JanMolak).
+
 If you'd like to know what's coming next - have a look at the project's [kanban board](https://waffle.io/jan-molak/jenkins-build-monitor-plugin).
 Here's how the columns work:
 
@@ -63,7 +65,11 @@ Here's how the columns work:
 * In progress - stuff I'm currently working on and will make it into the next release.
 * Done - done and deployed. Grab the latest version from your Jenkins Update Centre or the [Releases](https://bitly.com/JBMReleases) page.
 
-If you want to stay up-to-date with the project news - [follow me on twitter](https://twitter.com/JanMolak).
+If you'd like to get hold of the latest and greatest build of the Build Monitor Plugin
+before it's available in the Jenkins Update Centre, you can [download it](http://bit.ly/JBMLatestBuild) from the [SmartCode Open-Source](http://bit.ly/SmartCodeOSCI) Jenkins CI server,
+kindly hosted by [CloudBees](http://bit.ly/JBMFOSS).
+
+[![built on dev@cloud](http://cloudbees.prod.acquia-sites.com/sites/default/files/styles/large/public/Button-Built-on-CB-1.png?itok=3Tnkun-C)](http://bit.ly/JBMFOSS)
 
 ## (A)TDD
 
