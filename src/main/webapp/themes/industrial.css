@@ -515,7 +515,7 @@ h2 {
     right:8px;
     width:32px;
     overflow: hidden;
-    margin: 0;  padding: 0.5em;
+    margin: 0;  padding: 5px;
     background: rgba(57, 57, 57, 0.9);
     border-radius: 5px;
     opacity:0.5;
