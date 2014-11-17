@@ -522,6 +522,7 @@ h2 {
 
     -webkit-transition: all 0.25 ease-in;
     transition: all 0.25s ease-in;
+    min-width: 48px;
 }
 .build-monitor nav:hover {
     opacity:1.0;
