@@ -23,6 +23,40 @@
                 <ul ng-if="job.hasKnownFailures" class="failures">
                     <li data-ng-repeat="name in job.knownFailures">{{name}}</li>
                 </ul>
+
+                <div class="downstream-job-views" ng-if="job.showDownstreamJobs">
+                    <ul id="job-views" class="columns-{{ settings.numberOfNestedColumns }}"
+                        data-ng-class="{ 'colour-blind-mode': settings.colourBlind == 1 }"
+                        style="font-size: {{ settings.fontSize }}em;">
+
+                        <li ng-repeat="subjob in job.downstreamJobs" class="{{subjob.status}}" id="{{ subjob.name | slugify }}">
+                            <div class="progress" style="width: {{subjob.progress}}%">
+                                <span>{{subjob.progress}}%</span>
+                            </div>
+
+                            <div class="meta">
+                                <div class="latest-results">
+                                    <h3>
+                                        <a title="{{subjob.name}}"
+                                           href="{{subjob.url}}">{{subjob.name}}</a>
+                                    </h3>
+                                    <ul ng-if="subjob.hasKnownFailures" class="failures">
+                                        <li data-ng-repeat="name in subjob.knownFailures">{{name}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <a data-ng-show="!!subjob.lastBuildName" class="build-name"
+                               title="Details of {{subjob.name}}, build {{subjob.lastBuildName}}"
+                               href="{{subjob.lastBuildUrl}}">{{subjob.lastBuildName}}</a>
+
+                            <div data-ng-show="!!subjob.estimatedDuration" class="build-time">
+                                <span class="elapsed" data-ng-show="subjob.progress > 0">{{subjob.lastBuildDuration}}</span>
+                                <span class="estimated">{{subjob.estimatedDuration}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <a data-ng-show="!!job.lastBuildName" class="build-name"

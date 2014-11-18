@@ -59,6 +59,9 @@
     </select>
   </f:entry>
 
+  <f:entry title="${%Show Downstream Jobs?}" field="showDownstreamJobs">
+    <f:checkbox name="showDownstreamJobs" default="false"/>
+  </f:entry>
   </f:section>
 
   <script>
