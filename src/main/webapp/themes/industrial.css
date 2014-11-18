@@ -107,6 +107,7 @@ h2 {
 }
 
 .build-monitor .unknown    { background-color:#474747; }
+.build-monitor .not-built  { background-color:#686868; }
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .unstable   { background-color:#f59400; }
 .build-monitor .failing    { background-color:darkred; }
@@ -414,6 +415,85 @@ h2 {
     position:absolute; left:0; top:0;
     width:100%; height:100%;
 }
+
+/*
+ *   Downstream Sub Jobs
+ */
+
+.build-monitor ul#job-views .meta .latest-results div.downstream-job-views {
+    margin-top: 10px;
+    background: #222222;
+    display: -webkit-flex;
+    display: flex;
+            flex-flow: column;
+    -webkit-flex-flow: column;
+    -webkit-justify-content: space-around;
+            justify-content: space-around;
+
+    border-radius:10px;
+    padding: 3px;
+}
+
+.build-monitor ul#job-views .meta .latest-results div.downstream-job-views ul {
+    list-stype-type: none;
+
+    -webkit-flex: 88;
+            flex: 88;
+
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+            flex-flow: row wrap;
+    -webkit-justify-content: space-around;
+            justify-content: space-around;
+}
+
+.build-monitor ul#job-views .meta .latest-results div.downstream-job-views ul li .meta {
+    z-index: 20;
+    position:relative; left:0; top:0;
+    width:100%; height:100%;
+}
+
+.build-monitor ul#job-views .meta .latest-results div.downstream-job-views ul>li {
+    border:1px solid #223355;
+    position:relative;
+    border-radius:10px;
+    overflow: hidden;
+    margin: 4px;
+    -webkit-box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+    padding: 0 0 30px;
+}
+
+.build-monitor ul#job-views .meta .latest-results div.downstream-job-views ul h3 {
+    font-size: 2.3em;
+    margin-bottom: 0.1em;
+}
+
+.build-monitor ul#job-views .meta .latest-results div.downstream-job-views ul .build-name,
+.build-monitor ul#job-views .meta .latest-results div.downstream-job-views ul .build-time {
+    font-size: 1.5em;
+    line-height: 1em;
+    margin-bottom: 4px;
+}
+
+.build-monitor ul#job-views div.downstream-job-views .columns-1 li {
+    -webkit-flex: 1 99%;
+    flex: 1 99%;
+}
+.build-monitor ul#job-views div.downstream-job-views .columns-2 li {
+    -webkit-flex: 1 46%;
+    flex: 1 46%;
+}
+.build-monitor ul#job-views div.downstream-job-views .columns-3 li {
+    -webkit-flex: 1 30%;
+    flex: 1 30%;
+}
+.build-monitor ul#job-views div.downstream-job-views .columns-4 li {
+    -webkit-flex: 1 21%;
+    flex: 1 21%;
+}
+
 
 /*
  *   Progress bar

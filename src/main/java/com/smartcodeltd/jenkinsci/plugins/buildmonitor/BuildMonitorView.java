@@ -30,6 +30,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.C
 import hudson.Extension;
 import hudson.Util;
 import hudson.model.AbstractProject;
+import hudson.model.DependencyGraph;
 import hudson.model.Descriptor.FormException;
 import hudson.model.Hudson;
 import hudson.model.ListView;
@@ -58,6 +59,12 @@ import static hudson.Util.filter;
  * @author Jan Molak
  */
 public class BuildMonitorView extends ListView {
+
+    private boolean showDownstreamJobs = false;
+
+    public boolean isShowDownstreamJobs() {
+        return showDownstreamJobs;
+    }
 
     /**
      * @param name  Name of the view
@@ -105,6 +112,13 @@ public class BuildMonitorView extends ListView {
         } catch (Exception e) {
             throw new FormException("Can't order projects by " + requestedOrdering, "order");
         }
+
+        String requestedShowDownstream = req.getParameter("showDownstreamJobs");
+        if (requestedShowDownstream != null && requestedShowDownstream.equals("on")) {
+            showDownstreamJobs = true;
+        } else {
+            showDownstreamJobs = false;
+        }
     }
 
     // defensive coding to avoid issues when Jenkins instantiates the plugin without populating its fields
@@ -146,7 +160,6 @@ public class BuildMonitorView extends ListView {
 
     private JSONObject jsonFrom(List<JobView> jobViews) throws IOException {
         ObjectMapper m = new ObjectMapper();
-
         return (JSONObject) JSONSerializer.toJSON("{jobs:" + m.writeValueAsString(jobViews) + "}");
     }
 
@@ -157,7 +170,15 @@ public class BuildMonitorView extends ListView {
         Collections.sort(projects, currentOrderOrDefault());
 
         for (AbstractProject project : projects) {
-            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
+            JobView curJob = JobView.of(project, withAugmentationsIfTheyArePresent(), showDownstreamJobs);
+            
+            DependencyGraph myDependencyGraph = Hudson.getInstance().getDependencyGraph();
+
+            for (final AbstractProject<?, ?> downProj : myDependencyGraph.getDownstream(project)) {
+                curJob.addDownstreamJob(JobView.of(downProj, withAugmentationsIfTheyArePresent(), project));
+            }
+
+            jobs.add(curJob);
         }
 
         return jobs;
