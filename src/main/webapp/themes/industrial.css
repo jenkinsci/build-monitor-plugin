@@ -213,6 +213,7 @@ h2 {
 }
 
 .build-monitor footer span {
+    height:24px;
     line-height: 150%;
 }
 
@@ -295,10 +296,6 @@ h2 {
 
 .build-monitor #job-views.empty em {
     padding:5em 0 0 0;
-}
-
-.build-monitor footer {
-    height:24px;
 }
 
 .build-monitor ul#job-views {
