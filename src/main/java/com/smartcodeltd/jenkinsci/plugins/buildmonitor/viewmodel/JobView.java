@@ -3,15 +3,13 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.model.Job;
+import hudson.model.Result;
 import hudson.model.Run;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import static hudson.model.Result.SUCCESS;
+import static hudson.model.Result.*;
 
 /**
  * @author Jan Molak
@@ -21,6 +19,13 @@ public class JobView {
     private final Job<?, ?> job;
     private final BuildAugmentor augmentor;
     private final RelativeLocation relative;
+
+    private final static Map<Result, String> statuses = new HashMap<Result, String>() {{
+        put(SUCCESS,   "successful");
+        put(UNSTABLE,  "unstable");
+        put(FAILURE,   "failing");
+        put(ABORTED,   "failing");  // if someone has aborted it then something is clearly not right, right? :)
+    }};
 
     public static JobView of(Job<?, ?> job) {
         return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), new Date());
@@ -48,12 +53,13 @@ public class JobView {
         return relative.url();
     }
 
+    private String statusOf(Result result) {
+        return statuses.containsKey(result) ? statuses.get(result) : "unknown";
+    }
+
     @JsonProperty
     public String status() {
-        // todo: consider introducing a BuildResultJudge to keep this logic in one place
-        String status = lastCompletedBuild().result() == SUCCESS
-                ? "successful"
-                : "failing";
+        String status = statusOf(lastCompletedBuild().result());
 
         if (lastBuild().isRunning()) {
             status += " running";

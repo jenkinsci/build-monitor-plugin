@@ -8,7 +8,7 @@
     </parent>
 
     <artifactId>build-monitor-plugin</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.6-SNAPSHOT</version>
     <packaging>hpi</packaging>
 
     <name>Build Monitor View</name>
