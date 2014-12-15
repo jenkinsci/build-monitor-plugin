@@ -66,6 +66,7 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <npm-executable>npm</npm-executable>
         <selenium.version>2.37.0</selenium.version>
     </properties>
@@ -124,6 +125,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.sommeri</groupId>
+            <artifactId>less4j</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+
+        <!-- Jenkins CI plugins supported by the Build Monitor -->
+        <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>cloudbees-folder</artifactId>
             <version>4.2.3</version>
@@ -153,6 +161,8 @@
             <version>1.26</version>
             <optional>true</optional>
         </dependency>
+        <!-- /Jenkins CI plugins supported by the Build Monitor -->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
