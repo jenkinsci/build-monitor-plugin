@@ -12,6 +12,7 @@
             <link rel="stylesheet" href="${resourcesURL}/styles/angular-slider.css"/>
 
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
+            <link rel="stylesheet" href="${rootURL}/build-monitor-plugin/style.css"/>
 
             <script src="${resURL}/scripts/yui/cookie/cookie-min.js"></script>
 
