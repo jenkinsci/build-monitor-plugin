@@ -94,6 +94,10 @@ public class BuildMonitorView extends ListView {
         }
     }
 
+    public String getCustomDisplayName() {
+        return "My own Title";
+    }
+
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
