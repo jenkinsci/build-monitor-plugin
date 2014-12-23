@@ -53,7 +53,7 @@
   <f:section title="${%Build Monitor Settings}">
 
   <f:entry title="${%Title}">
-    <f:textbox name="port" value="${it.customDisplayName}"/>
+    <f:textbox name="customDisplayName" value="${it.customDisplayName}"/>
   </f:entry>
   <f:entry title="${%Ordered by}">
     <select name="order" class="setting-input">

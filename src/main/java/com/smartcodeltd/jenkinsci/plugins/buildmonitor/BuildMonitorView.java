@@ -26,12 +26,10 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import hudson.Extension;
 import hudson.Util;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor.FormException;
-import hudson.model.Hudson;
 import hudson.model.ListView;
 import hudson.model.ViewDescriptor;
 import hudson.util.FormValidation;
@@ -59,12 +57,19 @@ import static hudson.Util.filter;
  */
 public class BuildMonitorView extends ListView {
 
+    private String customDisplayName;
+
     /**
      * @param name  Name of the view
      */
     @DataBoundConstructor
-    public BuildMonitorView(String name) {
+    public BuildMonitorView(String name, String customDisplayName) {
         super(name);
+        this.customDisplayName = customDisplayName;
+    }
+
+    public String getCustomDisplayName() {
+        return customDisplayName.equals("") ? getDisplayName() : customDisplayName;
     }
 
     @Extension
@@ -94,15 +99,13 @@ public class BuildMonitorView extends ListView {
         }
     }
 
-    public String getCustomDisplayName() {
-        return "My own Title";
-    }
-
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
 
         String requestedOrdering = req.getParameter("order");
+
+        customDisplayName = req.getParameter("customDisplayName");
 
         try {
             order = orderIn(requestedOrdering);
