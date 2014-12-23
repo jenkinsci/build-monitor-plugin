@@ -52,6 +52,9 @@
 
   <f:section title="${%Build Monitor Settings}">
 
+  <f:entry title="${%Title}">
+    <f:textbox name="customDisplayName" value="${it.customDisplayName}"/>
+  </f:entry>
   <f:entry title="${%Ordered by}">
     <select name="order" class="setting-input">
       <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
