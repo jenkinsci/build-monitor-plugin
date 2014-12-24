@@ -2,9 +2,8 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
-import hudson.model.Job;
-import hudson.model.Result;
-import hudson.model.Run;
+import hudson.model.*;
+import hudson.util.RunList;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.*;
@@ -169,7 +168,22 @@ public class JobView {
     }
 
     private BuildViewModel lastBuild() {
-        return buildViewOf(job.getLastBuild());
+
+
+        return buildViewOf(GetLastSuitableBuild("okotovic"));
+    }
+
+    private Run<?,?> GetLastSuitableBuild(String user) {
+        RunList builds =  job.getBuilds();
+
+        for (Object build : builds) {
+            Run<?,?> run = (Run<?,?>)build;
+            String userId = run.getCause(Cause.UserIdCause.class).getUserId();
+            if(userId != null && userId.equals(user)) {
+                return run;
+            }
+        }
+        return null;
     }
 
     private BuildViewModel lastCompletedBuild() {
@@ -186,6 +200,6 @@ public class JobView {
             return new NullBuildView();
         }
 
-        return BuildView.of(job.getLastBuild(), augmentor, relative, systemTime);
+        return BuildView.of(GetLastSuitableBuild("okotovic"), augmentor, relative, systemTime);
     }
 }
