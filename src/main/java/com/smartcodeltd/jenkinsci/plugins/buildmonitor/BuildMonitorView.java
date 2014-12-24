@@ -97,6 +97,7 @@ public class BuildMonitorView extends ListView {
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
+        username = req.getParameter("username");
 
         String requestedOrdering = req.getParameter("order");
 
@@ -117,7 +118,12 @@ public class BuildMonitorView extends ListView {
         return currentOrderOrDefault().getClass().getSimpleName();
     }
 
+    public String username() {
+        return username;
+    }
+
     private Comparator<AbstractProject> order = new ByName();
+    private String username = null;
 
     @SuppressWarnings("unchecked")
     private Comparator<AbstractProject> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
@@ -155,9 +161,8 @@ public class BuildMonitorView extends ListView {
         List<JobView> jobs = new ArrayList<JobView>();
 
         Collections.sort(projects, currentOrderOrDefault());
-
         for (AbstractProject project : projects) {
-            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
+            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent(), username));
         }
 
         return jobs;

@@ -25,21 +25,26 @@ public class JobView {
         put(FAILURE,   "failing");
         put(ABORTED,   "failing");  // if someone has aborted it then something is clearly not right, right? :)
     }};
+    private final String usernameForRunsFiltering;
 
     public static JobView of(Job<?, ?> job) {
-        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), new Date());
+        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), new Date(), "");
     }
 
     public static JobView of(Job<?, ?> job, BuildAugmentor augmentor) {
-        return new JobView(job, augmentor, RelativeLocation.of(job), new Date());
+        return new JobView(job, augmentor, RelativeLocation.of(job), new Date(), "");
     }
 
     public static JobView of(Job<?, ?> job, RelativeLocation location) {
-        return new JobView(job, new BuildAugmentor(), location, new Date());
+        return new JobView(job, new BuildAugmentor(), location, new Date(), "");
     }
 
     public static JobView of(Job<?, ?> job, Date systemTime) {
-        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), systemTime);
+        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), systemTime, "");
+    }
+
+    public static JobView of(Job<?, ?> job, BuildAugmentor augmentor, String usernameForRunsFiltering) {
+        return new JobView(job, augmentor, RelativeLocation.of(job), new Date(), usernameForRunsFiltering);
     }
 
     @JsonProperty
@@ -160,26 +165,29 @@ public class JobView {
     }
 
 
-    private JobView(Job<?, ?> job, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
+    private JobView(Job<?, ?> job, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime, String usernameForRunsFiltering) {
         this.job        = job;
         this.augmentor  = augmentor;
         this.systemTime = systemTime;
         this.relative   = relative;
+        this.usernameForRunsFiltering = usernameForRunsFiltering;
     }
 
     private BuildViewModel lastBuild() {
-
-
-        return buildViewOf(GetLastSuitableBuild("okotovic"));
+        return buildViewOf(GetLastSuitableBuild(usernameForRunsFiltering));
     }
 
-    private Run<?,?> GetLastSuitableBuild(String user) {
+    private Run<?,?> GetLastSuitableBuild(String usernameForRunsFiltering) {
+        if (usernameForRunsFiltering == null || usernameForRunsFiltering.length() == 0) {
+            return job.getLastBuild();
+        }
+
         RunList builds =  job.getBuilds();
 
         for (Object build : builds) {
             Run<?,?> run = (Run<?,?>)build;
             String userId = run.getCause(Cause.UserIdCause.class).getUserId();
-            if(userId != null && userId.equals(user)) {
+            if(userId != null && userId.equals(usernameForRunsFiltering)) {
                 return run;
             }
         }
@@ -200,6 +208,6 @@ public class JobView {
             return new NullBuildView();
         }
 
-        return BuildView.of(GetLastSuitableBuild("okotovic"), augmentor, relative, systemTime);
+        return BuildView.of(GetLastSuitableBuild(usernameForRunsFiltering), augmentor, relative, systemTime);
     }
 }
