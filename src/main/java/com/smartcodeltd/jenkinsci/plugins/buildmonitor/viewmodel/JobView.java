@@ -3,6 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.model.*;
+import hudson.triggers.TimerTrigger;
 import hudson.util.RunList;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -186,9 +187,19 @@ public class JobView {
 
         for (Object build : builds) {
             Run<?,?> run = (Run<?,?>)build;
-            String userId = run.getCause(Cause.UserIdCause.class).getUserId();
-            if(userId != null && userId.equals(usernameForRunsFiltering)) {
-                return run;
+            List<Cause> causes = run.getCauses();
+            for (Cause cause:causes) {
+                if (cause.getClass() == TimerTrigger.TimerTriggerCause.class) {
+                    return run;
+                }
+
+                if (cause.getClass() == Cause.UserIdCause.class) {
+                    Cause.UserIdCause userIdCause = ((Cause.UserIdCause) cause);
+                    String userId = userIdCause.getUserId();
+                    if(userId != null && userId.equals(usernameForRunsFiltering)) {
+                        return run;
+                    }
+                }
             }
         }
         return null;
