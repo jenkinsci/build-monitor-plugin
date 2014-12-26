@@ -20,6 +20,13 @@
             <label for="settings-colour-blind" title="Colour blind-friendly colour scheme">Colour blind mode?</label>
         </li>
         <li>
+            <input data-ng-model="settings.hideCulprits"
+                   data-ng-false-value="0"
+                   data-ng-true-value="1"
+                   id="settings-hide-culprits" type="checkbox" />
+            <label for="settings-hide-culprits" title="Hide culprits on unstable/failed jobs">Hide culprits?</label>
+        </li>
+        <li>
             <a class="btn"
                href="configure"
                title="Configure the '${it.displayName}' view">Add/Remove Jobs</a>
