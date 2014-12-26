@@ -21,7 +21,7 @@
                     <li data-ng-repeat="name in job.culprits">{{name}}</li>
                 </ul>
                 <ul ng-if="job.hasKnownFailures" class="failures">
-                    <li data-ng-repeat="name in job.knownFailures">{{name}}</li>
+                    Identified problems ({{job.knownFailures.length}}): <li data-ng-repeat="name in job.knownFailures">{{name}}</li>
                 </ul>
             </div>
 

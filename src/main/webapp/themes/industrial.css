@@ -258,10 +258,6 @@ h2 {
 .build-monitor .meta .failures li:after { content: ","; }
 .build-monitor .meta .failures li:last-child:after { content: ""; }
 
-.build-monitor .failing ul.failures li:first-child:before {
-    content: "Identified Problems: ";
-}
-
 
 /*
  *   Layout
