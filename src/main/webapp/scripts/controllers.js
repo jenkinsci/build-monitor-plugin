@@ -41,23 +41,18 @@ angular.
                     lostConnectionsCount.increase();
 
                     $rootScope.$broadcast("jenkins:connection-lost", error);
-
-                    return $q.when(error);
                 }
 
                 function handleJenkinsRestart(error) {
                     $rootScope.$broadcast("jenkins:restarted", error);
-                    return $q.reject(error);
                 }
 
                 function handleInternalJenkins(error) {
                     $rootScope.$broadcast("jenkins:internal-error", error);
-                    return $q.reject(error);
                 }
 
                 function handleUnknown(error) {
                     $rootScope.$broadcast("jenkins:unknown-communication-error", error);
-                    return $q.reject(error);
                 }
 
                 return function (error) {
