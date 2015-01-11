@@ -26,14 +26,10 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import hudson.Extension;
 import hudson.Util;
-import hudson.model.AbstractProject;
+import hudson.model.*;
 import hudson.model.Descriptor.FormException;
-import hudson.model.Hudson;
-import hudson.model.ListView;
-import hudson.model.ViewDescriptor;
 import hudson.util.FormValidation;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
@@ -42,13 +38,9 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
-
 import javax.servlet.ServletException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -59,9 +51,26 @@ import static hudson.Util.filter;
  */
 public class BuildMonitorView extends ListView {
 
-    /**
-     * @param name  Name of the view
-     */
+    private BuildsFilteringSettings filteringSettings;
+    private Comparator<AbstractProject> order = new ByName();
+
+    public String getUsernames() {
+        StringBuilder sb = new StringBuilder();
+        for (String user : filteringSettings.getUsernames()) {
+            if (sb.length() > 0) sb.append(',');
+            sb.append(user);
+        }
+        return sb.toString();
+    }
+
+    public boolean getShowScheduledBuilds() {
+        return filteringSettings.isShowScheduledBuilds();
+    }
+
+    public boolean getShowAnonymousBuilds() {
+        return filteringSettings.isShowAnonymousBuilds();
+    }
+
     @DataBoundConstructor
     public BuildMonitorView(String name) {
         super(name);
@@ -92,12 +101,40 @@ public class BuildMonitorView extends ListView {
             }
             return FormValidation.ok();
         }
+
+        /*public AutoCompletionCandidates doAutoCompleteUsernames(@QueryParameter String value) {
+            AutoCompletionCandidates candidates = new AutoCompletionCandidates();
+            String[] usersFromSettings = value.split(",");
+            String usersExceptLastAsString = value.replace(usersFromSettings[usersFromSettings.length - 1] + ",", "");
+            candidates.add(usersExceptLastAsString);
+            Collection<User> allSystemUsers = User.getAll();
+
+
+            for (User user : allSystemUsers)
+                if (user.getId().toLowerCase().startsWith(users[users.length - 1].toLowerCase().trim())) {
+                    for (String savedUser : users) {
+                        candidates.add(savedUser);
+                    }
+                    candidates.add(user.getId());
+                }
+            return candidates;
+        }*/
     }
 
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
-        username = req.getParameter("username");
+
+        String usernamesParam = req.getParameter("usernames");
+        if (usernamesParam != null || usernamesParam.length() > 0) {
+            filteringSettings.setUsernames(usernamesParam.split(","));
+        }
+
+        String showScheduledBuildsParameter = req.getParameter("showScheduledBuilds");
+        filteringSettings.setShowScheduledBuilds(showScheduledBuildsParameter != null && showScheduledBuildsParameter.equals("on"));
+
+        String showAnonymousBuildsParameter = req.getParameter("showAnonymousBuilds");
+        filteringSettings.setShowAnonymousBuilds(showAnonymousBuildsParameter != null && showAnonymousBuildsParameter.equals("on"));
 
         String requestedOrdering = req.getParameter("order");
 
@@ -117,13 +154,6 @@ public class BuildMonitorView extends ListView {
     public String currentOrder() {
         return currentOrderOrDefault().getClass().getSimpleName();
     }
-
-    public String username() {
-        return username;
-    }
-
-    private Comparator<AbstractProject> order = new ByName();
-    private String username = null;
 
     @SuppressWarnings("unchecked")
     private Comparator<AbstractProject> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
@@ -149,7 +179,6 @@ public class BuildMonitorView extends ListView {
         return jobViews().isEmpty();
     }
 
-
     private JSONObject jsonFrom(List<JobView> jobViews) throws IOException {
         ObjectMapper m = new ObjectMapper();
 
@@ -162,7 +191,7 @@ public class BuildMonitorView extends ListView {
 
         Collections.sort(projects, currentOrderOrDefault());
         for (AbstractProject project : projects) {
-            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent(), username));
+            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent(), filteringSettings));
         }
 
         return jobs;
