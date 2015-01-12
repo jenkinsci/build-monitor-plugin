@@ -74,6 +74,7 @@ public class BuildMonitorView extends ListView {
     @DataBoundConstructor
     public BuildMonitorView(String name) {
         super(name);
+        filteringSettings = new BuildsFilteringSettings();
     }
 
     @Extension
@@ -101,33 +102,21 @@ public class BuildMonitorView extends ListView {
             }
             return FormValidation.ok();
         }
-
-        /*public AutoCompletionCandidates doAutoCompleteUsernames(@QueryParameter String value) {
-            AutoCompletionCandidates candidates = new AutoCompletionCandidates();
-            String[] usersFromSettings = value.split(",");
-            String usersExceptLastAsString = value.replace(usersFromSettings[usersFromSettings.length - 1] + ",", "");
-            candidates.add(usersExceptLastAsString);
-            Collection<User> allSystemUsers = User.getAll();
-
-
-            for (User user : allSystemUsers)
-                if (user.getId().toLowerCase().startsWith(users[users.length - 1].toLowerCase().trim())) {
-                    for (String savedUser : users) {
-                        candidates.add(savedUser);
-                    }
-                    candidates.add(user.getId());
-                }
-            return candidates;
-        }*/
     }
 
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
 
+        if(filteringSettings == null) {
+            filteringSettings = new BuildsFilteringSettings();
+        }
+
         String usernamesParam = req.getParameter("usernames");
-        if (usernamesParam != null || usernamesParam.length() > 0) {
+        if (usernamesParam != null && usernamesParam.length() > 0) {
             filteringSettings.setUsernames(usernamesParam.split(","));
+        } else {
+            filteringSettings.setUsernames(new String[0]);
         }
 
         String showScheduledBuildsParameter = req.getParameter("showScheduledBuilds");
