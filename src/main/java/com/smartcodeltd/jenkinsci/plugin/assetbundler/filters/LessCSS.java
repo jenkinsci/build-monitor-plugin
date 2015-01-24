@@ -36,8 +36,9 @@ public class LessCSS implements Filter {
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String path = ((HttpServletRequest)  request).getPathInfo();
+        if (path == null) path = ((HttpServletRequest)  request).getServletPath()
 
-        if (path.matches(pathToCSS)) {
+        if (path != null && path.matches(pathToCSS)) {
             sendCSS(response);
         } else {
             chain.doFilter(request, response);
