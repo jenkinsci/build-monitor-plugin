@@ -69,7 +69,7 @@ If you'd like to get hold of the latest and greatest build of the Build Monitor 
 before it's available in the Jenkins Update Centre, you can [download it](http://bit.ly/JBMLatestBuild) from the [SmartCode Open-Source](http://bit.ly/SmartCodeOSCI) Jenkins CI server,
 kindly hosted by [CloudBees](http://bit.ly/JBMFOSS).
 
-[![built on dev@cloud](http://cloudbees.prod.acquia-sites.com/sites/default/files/styles/large/public/Button-Built-on-CB-1.png?itok=3Tnkun-C)](http://bit.ly/JBMFOSS)
+[![built on dev@cloud](https://www.cloudbees.com/sites/default/files/styles/large/public/Button-Built-on-CB-1.png?itok=3Tnkun-C)](http://bit.ly/JBMFOSS)
 
 ## (A)TDD
 
