@@ -11,6 +11,9 @@
         <div class="meta">
             <div class="latest-results">
                 <h2>
+                    Case Result: {{job.testCount}}/{{job.testFailCount}}
+                </h2>
+                <h2>
                     <a title="{{job.name}}"
                        href="{{job.url}}">{{job.name}}</a>
                 </h2>

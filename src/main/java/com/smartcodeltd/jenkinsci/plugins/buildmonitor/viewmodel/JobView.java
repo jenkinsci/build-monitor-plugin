@@ -5,6 +5,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAu
 import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.Run;
+import hudson.tasks.test.AbstractTestResultAction;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.*;
@@ -154,6 +155,26 @@ public class JobView {
     @JsonProperty
     public List<String> knownFailures() {
         return lastCompletedBuild().knownFailures();
+    }
+
+    @JsonProperty
+    public int testCount() {
+        Run<?, ?> run = job.getLastBuild();
+        if (run != null) {
+            AbstractTestResultAction<?> tests = run.getAction(AbstractTestResultAction.class);
+            return tests != null ? tests.getTotalCount() : 0;
+        }
+        return 0;
+    }
+
+    @JsonProperty
+    public int testFailCount() {
+        Run<?, ?> run = job.getLastBuild();
+        if (run != null) {
+            AbstractTestResultAction<?> tests = run.getAction(AbstractTestResultAction.class);
+            return tests != null ? tests.getFailCount() : 0;
+        }
+        return 0;
     }
 
     public String toString() {
