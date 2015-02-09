@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.model.Job;
 import hudson.model.Result;
@@ -94,6 +95,11 @@ public class JobView {
     @JsonProperty
     public String estimatedDuration() {
         return formatted(lastBuild().estimatedDuration());
+    }
+
+    @JsonProperty
+    public String timeElapsedSinceLastBuild() {
+        return formatted(lastCompletedBuild().timeElapsedSince());
     }
 
     private String formatted(Duration duration) {

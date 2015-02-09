@@ -1,34 +1,29 @@
-package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
+package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration;
 
-class Duration {//todo: extract the Duration class, or move it to a BuildView class
-
-    private final long duration;
-
+// todo: is this still needed? backend could pass the duration in milliseconds to the frontend, which in turn could make it human-readable
+public class HumanReadableDuration extends Duration {
     private final static long MILLISECOND = 1;
     private final static long SECONDS = 1000 * MILLISECOND;
     private final static long MINUTES = 60 * SECONDS;
     private final static long HOURS = 60 * MINUTES;
 
-    public Duration(long milliseconds) {
-        this.duration = milliseconds;
+    public HumanReadableDuration(long milliseconds) {
+        super(milliseconds);
     }
 
-    public long hours() {
+    private long hours() {
         return duration / HOURS;
     }
 
-    public long minutes() {
+    private long minutes() {
         return (duration - (hours() * HOURS)) / MINUTES;
     }
 
-    public long seconds() {
+    private long seconds() {
         return (duration - (hours() * HOURS) - (minutes() * MINUTES)) / SECONDS;
     }
 
-    public boolean greaterThan(Duration otherDuration) {
-        return duration > otherDuration.toLong();
-    }
-
+    @Override
     public String toString() {
         String formatted;
 
@@ -37,10 +32,5 @@ class Duration {//todo: extract the Duration class, or move it to a BuildView cl
         formatted += seconds() + "s";
 
         return formatted;
-    }
-
-
-    private long toLong() {
-        return duration;
     }
 }

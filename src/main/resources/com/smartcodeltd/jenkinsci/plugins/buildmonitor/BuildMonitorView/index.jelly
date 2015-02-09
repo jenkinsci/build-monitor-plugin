@@ -85,6 +85,7 @@
 
             <script src="${resourcesURL}/scripts/app.js"></script>
             <script src="${resourcesURL}/scripts/cron.js"></script>
+            <script src="${resourcesURL}/scripts/filters.js"></script>
             <script src="${resourcesURL}/scripts/services.js"></script>
             <script src="${resourcesURL}/scripts/jenkins.js"></script>
             <script src="${resourcesURL}/scripts/controllers.js"></script>
