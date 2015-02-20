@@ -9,7 +9,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.JobStateRecipe;
 import hudson.model.Job;
 import hudson.model.Result;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -40,7 +39,6 @@ public class JobViewTest {
 
     private RelativeLocation relative = mock(RelativeLocation.class);
     private JobView view;
-
     /*
      * By the way, if you were not aware of this: the configuration page of each job has an "Advanced Project Options"
      * section, where you can set a user-friendly "Display Name"
@@ -82,9 +80,11 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_know_the_url_of_the_build() {
-        // setting url on the stub is far from ideal, but hudson.model.Run is not particularly easy to test ...
-        view = JobView.of(a(job().whereTheLast(build().urlIs("job/project-name/22/"))));
+    public void should_know_the_url_of_the_last_build() {
+        view = JobView.of(
+                a(job().whereTheLast(build().numberIs(22))),
+                locatedAt("job/project-name")
+        );
 
         assertThat(view.lastBuildUrl(), is("job/project-name/22/"));
     }
@@ -192,7 +192,21 @@ public class JobViewTest {
 
         assertThat(view.estimatedDuration(), is(""));
     }
-    
+
+    /*
+     * Last build, last success and last failure (ISO 8601)
+     */
+    @Test
+    public void should_know_how_long_since_the_last_build_happened() throws Exception {
+        String tenMinutesInMilliseconds = String.format("%d", 10 * 60 * 1000);
+
+        view = JobView.of(a(job().whereTheLast(build().startedAt("18:05:00").andTook(5))),
+                assumingThatCurrentTimeIs("18:20:00")
+        );
+
+        assertThat(view.timeElapsedSinceLastBuild(), is(tenMinutesInMilliseconds));
+    }
+
     /*
      * Should produce a meaningful status description that can be used in the CSS
      */
@@ -206,11 +220,25 @@ public class JobViewTest {
 
     @Test
     public void should_describe_the_job_as_failing_if_the_last_build_failed() {
-        for (Result result : asFollows(FAILURE, ABORTED, NOT_BUILT, UNSTABLE)) {
+        for (Result result : asFollows(FAILURE, ABORTED)) {
             view = JobView.of(a(job().whereTheLast(build().finishedWith(result))));
 
             assertThat(view.status(), containsString("failing"));
         }
+    }
+
+    @Test
+    public void should_describe_the_job_as_unstable_if_the_last_build_is_unstable() {
+        view = JobView.of(a(job().whereTheLast(build().finishedWith(UNSTABLE))));
+
+        assertThat(view.status(), containsString("unstable"));
+    }
+
+    @Test
+    public void should_describe_the_state_of_the_job_as_unknown_when_it_is_yet_to_be_determined() {
+        view = JobView.of(a(job()));
+
+        assertThat(view.status(), containsString("unknown"));
     }
 
     @Test
@@ -310,16 +338,6 @@ public class JobViewTest {
     }
 
     /*
-     * Should produce some basic build statistics
-     */
-
-    @Test
-    @Ignore
-    public void should_know_how_long_the_job_has_been_failing_for() {
-        // TODO Implement missing feature
-    }
-
-    /*
      * Should know who broke the build
      */
 
@@ -391,21 +409,6 @@ public class JobViewTest {
         assertThat(view.culprits(), hasSize(1));
     }
 
-    @Test
-    @Ignore
-    public void should_know_the_authors_of_commits_that_made_it_into_the_build() {
-        //TODO implement shouldKnowTheAuthorsOfCommitsThatMadeItIntoTheBuild
-//        List<JobView> views = asFollows(
-//            JobView.of(a(job().whereTheLast(build().succeededThanksTo("Adam")))),
-//            JobView.of(a(job().whereTheLast(build().wasBrokenBy("Adam"))))
-//        );
-//
-//        for (JobView view : views) {
-//            assertThat(view.authors(), hasSize(1));
-//            assertThat(view.authors(), hasItems("Adam"));
-//        }
-    }
-
     /*
      * Should know who claimed a broken build
      */
@@ -448,7 +451,7 @@ public class JobViewTest {
         assertThat(view.progress(),               is(0));
         assertThat(view.shouldIndicateCulprits(), is(false));
         assertThat(view.culprits(),               hasSize(0));
-        assertThat(view.status(),                 is("failing"));
+        assertThat(view.status(),                 is("unknown"));
         assertThat(view.isClaimed(),              is(false));
         assertThat(view.hasKnownFailures(),       is(false));
     }
@@ -478,11 +481,10 @@ public class JobViewTest {
         return systemTime;
     }
 
-    private RelativeLocation locatedAtTheTopLevel() {
+    private RelativeLocation locatedAt(String url) {
 
         RelativeLocation location = mock(RelativeLocation.class);
-        when(location.name()).thenReturn("a");
-        when(location.url()).thenReturn("b");
+        when(location.url()).thenReturn(url);
 
         return location;
     }

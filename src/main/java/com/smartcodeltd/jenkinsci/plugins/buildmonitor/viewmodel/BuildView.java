@@ -1,5 +1,9 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.HumanReadableDuration;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.DurationInMilliseconds;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.Analysis;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
@@ -16,15 +20,20 @@ import java.util.Set;
 public class BuildView implements BuildViewModel {
 
     private final Run<?,?> build;
+    private final RelativeLocation parentJobLocation;
     private final Date systemTime;
     private final BuildAugmentor augmentor;
 
     public static BuildView of(Run<?, ?> build) {
-        return new BuildView(build, new BuildAugmentor(), new Date());
+        return new BuildView(build, new BuildAugmentor(), RelativeLocation.of(build.getParent()), new Date());
     }
 
     public static BuildView of(Run<?, ?> build, BuildAugmentor augmentor, Date systemTime) {
-        return new BuildView(build, augmentor, systemTime);
+        return new BuildView(build, augmentor, RelativeLocation.of(build.getParent()), systemTime);
+    }
+
+    public static BuildView of(Run<?, ?> build, BuildAugmentor augmentor, RelativeLocation parentJobLocation, Date systemTime) {
+        return new BuildView(build, augmentor, parentJobLocation, systemTime);
     }
 
 
@@ -35,7 +44,7 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public String url() {
-        return build.getUrl();
+        return parentJobLocation.url() + "/" + build.getNumber() + "/";
     }
 
     @Override
@@ -54,17 +63,22 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public Duration elapsedTime() {
-        return new Duration(now() - whenTheBuildStarted());
+        return new HumanReadableDuration(now() - whenTheBuildStarted());
+    }
+
+    @Override
+    public Duration timeElapsedSince() {
+        return new DurationInMilliseconds(now() - (whenTheBuildStarted() + build.getDuration()));
     }
 
     @Override
     public Duration duration() {
-        return new Duration(build.getDuration());
+        return new HumanReadableDuration(build.getDuration());
     }
 
     @Override
     public Duration estimatedDuration() {
-        return new Duration(build.getEstimatedDuration());
+        return new HumanReadableDuration(build.getEstimatedDuration());
     }
 
     @Override
@@ -98,7 +112,7 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public BuildViewModel previousBuild() {
-        return new BuildView(build.getPreviousBuild(), augmentor, systemTime);
+        return new BuildView(build.getPreviousBuild(), augmentor, this.parentJobLocation, systemTime);
     }
 
     @Override
@@ -165,9 +179,10 @@ public class BuildView implements BuildViewModel {
     }
 
 
-    private BuildView(Run<?, ?> build, BuildAugmentor augmentor, Date systemTime) {
+    private BuildView(Run<?, ?> build, BuildAugmentor augmentor, RelativeLocation parentJobLocation, Date systemTime) {
         this.build = build;
-        this.systemTime = systemTime;
         this.augmentor = augmentor;
+        this.parentJobLocation = parentJobLocation;
+        this.systemTime = systemTime;
     }
 }

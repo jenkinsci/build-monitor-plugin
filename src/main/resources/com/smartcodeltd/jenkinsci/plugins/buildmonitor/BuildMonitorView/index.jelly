@@ -12,6 +12,9 @@
             <link rel="stylesheet" href="${resourcesURL}/styles/angular-slider.css"/>
 
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
+            <link rel="stylesheet" href="${rootURL}/build-monitor-plugin/style.css"/>
+
+            <script src="${resURL}/scripts/yui/cookie/cookie-min.js"></script>
 
             <script src="${resourcesURL}/vendor/modernizr.custom.27682.js"></script>
             <script src="${resourcesURL}/vendor/angular-${angularVersion}.min.js"></script>
@@ -25,6 +28,7 @@
                  data-ng-app="buildMonitor"
                  data-ng-controller="JobViews">
                 <header>
+                    <a class="home-link" href="${rootURL}/" title="Jenkins">Jenkins</a>
                     <h1><a href="configure" title="Configure the '${it.displayName}' view">${it.displayName}</a></h1>
                 </header>
 
@@ -81,6 +85,7 @@
 
             <script src="${resourcesURL}/scripts/app.js"></script>
             <script src="${resourcesURL}/scripts/cron.js"></script>
+            <script src="${resourcesURL}/scripts/filters.js"></script>
             <script src="${resourcesURL}/scripts/services.js"></script>
             <script src="${resourcesURL}/scripts/jenkins.js"></script>
             <script src="${resourcesURL}/scripts/controllers.js"></script>

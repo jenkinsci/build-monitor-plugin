@@ -5,7 +5,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2013, Jan Molak, SmartCode Ltd http://smartcodeltd.co.uk
+ * Copyright (c) 2014, Jan Molak, SmartCode Ltd http://smartcodeltd.co.uk
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,6 +52,7 @@ h1,h2,h3,h4,h5,h6 {
 h1,h2,h3,h4,h5,h6, li, a {
     font-family: 'Open sans', Verdana, Helvetica, sans serif;
 }
+.build-monitor { color:#fff; }
 .build-monitor header>h1 {
     text-shadow: 2px 2px rgba(0,0,0,0.5);
 }
@@ -74,11 +75,25 @@ h2 {
 }
 
 .build-monitor header h1 {
-    margin:auto;
-    font-size: 4em;
+    margin:12px auto 0 auto;
+    font-size: 3em;
     letter-spacing: 0.1em;
     display:block;
+}
 
+.build-monitor header a.home-link {
+    position: absolute;
+    top:  5px;
+    left: 8px;
+    z-index:2;
+    background: url('industrial/jenkins-logo.png') no-repeat;
+    background-size: 100%;
+    width: 50px;  /* 100 */
+    height: 69px; /* 138 */
+    text-indent: -100%;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .build-monitor h2 {
@@ -91,48 +106,26 @@ h2 {
     margin: 0 0 0.5em 0;
 }
 
+.build-monitor .unknown    { background-color:#474747; }
 .build-monitor .successful { background-color:darkgreen; }
+.build-monitor .unstable   { background-color:#f59400; }
 .build-monitor .failing    { background-color:darkred; }
-.build-monitor .claimed    { background-color: #fe5e00; }
-
 
 /*
  * Striped background patterns inspired by Lea Verou
  * http://lea.verou.me/2010/12/checkered-stripes-other-background-patterns-with-css3-gradients/
  */
-.build-monitor .colour-blind-mode .successful,
-.build-monitor .colour-blind-mode .failing,
-.build-monitor .colour-blind-mode .claimed {
+.build-monitor .successful,
+.build-monitor .unstable,
+.build-monitor .failing {
     -webkit-background-size: 50px 50px;
     -moz-background-size:    50px 50px;
     background-size:         50px 50px; /* Controls the size of the stripes */
 }
 
-.build-monitor .colour-blind-mode .successful { }
 
-.build-monitor .colour-blind-mode .failing {
-    background-image: -webkit-gradient(linear, 0 100%, 100% 0,
-        color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
-        color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
-        color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent),
-        to(transparent));
-    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-        transparent 75%, transparent);
-    background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-        transparent 75%, transparent);
-    background-image: -ms-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-        transparent 75%, transparent);
-    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-        transparent 75%, transparent);
-    background-image: linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-        transparent 75%, transparent);
-}
-.build-monitor .colour-blind-mode .claimed {
+.build-monitor .colour-blind-mode .unstable {
+    /* diamonds */
     background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), to(transparent)),
         -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), to(transparent)),
         -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, rgba(255, 255, 255, .2))),
@@ -159,6 +152,54 @@ h2 {
         linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
 }
 
+.build-monitor .colour-blind-mode .failing {
+    background-image: -webkit-gradient(linear, 0 100%, 100% 0,
+        color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
+        color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
+        color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent),
+        to(transparent));
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: -ms-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+}
+
+.build-monitor .unstable.claimed,
+.build-monitor .failing.claimed {
+    background-image: -webkit-gradient(linear, 0 0, 100% 100%,
+        color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
+        color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
+        color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent),
+        to(transparent));
+    background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: -ms-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+    background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+        transparent 75%, transparent);
+}
+
+
 .build-monitor #job-views .build-time,
 .build-monitor #job-views .build-name {
     font-weight: bold;
@@ -175,13 +216,13 @@ h2 {
 .build-monitor #job-views .build-time>.elapsed:after { content:"|"; margin-left:0.1em; font-weight: normal; }
 
 .build-monitor footer {
-    padding: 0 1.0%;
+    padding: 0 8px;
     color: #ddd;
     clear: both;
 }
 
 .build-monitor footer span {
-    line-height: 200%;
+    line-height: 150%;
 }
 
 .build-monitor footer .notifier {
@@ -248,10 +289,12 @@ h2 {
 }
 
 .build-monitor header {
-    -webkit-flex: 8;
-            flex: 8;
+    /*-webkit-flex: 8;*/
+            /*flex: 8;*/
 
-    min-height:6em;
+    /*min-height:4em;*/
+    /*max-height:4em;*/
+    height:56px;
 
     display: -webkit-flex;
     display: flex;
@@ -277,13 +320,12 @@ h2 {
 }
 
 .build-monitor footer {
-    -webkit-flex: 4;
-            flex: 4;
+    height:24px;
 }
 
 .build-monitor ul#job-views {
     list-style-type: none;
-    margin: 0.5%;
+    margin: 4px;
     padding:0;
 }
 
@@ -291,7 +333,7 @@ h2 {
  * Grid
  */
 .build-monitor ul#job-views>li {
-    margin:0.5%;
+    margin: 4px;
 }
 .build-monitor ul#job-views.columns-1 li {
     -webkit-flex: 1 99%;
@@ -329,8 +371,6 @@ h2 {
 .build-monitor ul#job-views .meta {
     display: -webkit-flex;
     display: flex;
-    -webkit-flex-flow: column;
-            flex-flow: column;
     -webkit-justify-content: space-around;
             justify-content: space-around;
     align-content: center;
@@ -338,7 +378,7 @@ h2 {
 }
 
 .build-monitor ul#job-views .meta .latest-results {
-    width:90%;
+    width:90%; margin:0 auto;
 }
 .build-monitor ul#job-views .meta .latest-results * {
     text-align: center;
@@ -399,24 +439,46 @@ h2 {
     display:none;
 }
 
+.build-monitor ul#job-views .unknown > .progress {
+    -webkit-animation: forUnknown 2.25s 2 alternate;
+    -moz-animation: forUnknown 2.25s 2 alternate;
+	animation: forUnknown 2.25s 2 alternate;
+    background-color: #9D9D9D;
+}
+
 .build-monitor ul#job-views .successful > .progress {
     -webkit-animation: forSuccessful 2.25s 2 alternate;
+    -moz-animation: forSuccessful 2.25s 2 alternate;
+    animation: forSuccessful 2.25s 2 alternate;
     background-color: green;
+}
+
+.build-monitor ul#job-views .unstable > .progress {
+    -webkit-animation: forUnstable 2.25s 2 alternate;
+    -moz-animation: forUnstable 2.25s 2 alternate;
+	animation: forUnstable 2.25s 2 alternate;
+    background-color: #f9aa1c;
 }
 
 .build-monitor ul#job-views .failing > .progress {
     -webkit-animation: forFailing 2.25s 2 alternate;
+    -moz-animation: forFailing 2.25s 2 alternate;
+    animation: forFailing 2.25s 2 alternate;
     background-color: firebrick;
 }
 
-.build-monitor ul#job-views .claimed > .progress {
-    -webkit-animation: forClaimed 2.25s 2 alternate;
-    background-color: #fe7600;
-}
-
+@-webkit-keyframes forUnknown { 0% {background-color: #9d9d9d;} 100% {background-color: grey;} }
+@-moz-keyframes forUnknown { 0% {background-color: #9d9d9d;} 100% {background-color: grey;} }
+@-keyframes forUnknown { 0% {background-color: #9d9d9d;} 100% {background-color: grey;} }
 @-webkit-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: limegreen;} }
+@-moz-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: limegreen;} }
+@-keyframes forSuccessful { 0% {background-color: green;} 100% {background-color: limegreen;} }
+@-webkit-keyframes forUnstable { 0% {background-color: #f9aa1c;} 100% {background-color: #ffc500;} }
+@-moz-keyframes forUnstable { 0% {background-color: #f9aa1c;} 100% {background-color: #ffc500;} }
+@-keyframes forUnstable { 0% {background-color: #f9aa1c;} 100% {background-color: #ffc500;} }
 @-webkit-keyframes forFailing { 0% {background-color: firebrick;} 100% {background-color: red;} }
-@-webkit-keyframes forClaimed { 0% {background-color: #fe7600; } 100% { background-color: orange; } }
+@-moz-keyframes forFailing { 0% {background-color: firebrick;} 100% {background-color: red;} }
+@-keyframes forFailing { 0% {background-color: firebrick;} 100% {background-color: red;} }
 
 /*
  *   Modal
@@ -449,12 +511,12 @@ h2 {
     border:1px solid white;
     z-index: 999;
     position:absolute;
-    top:12px;
-    right:1.0%;
+    top:10px;
+    right:8px;
     width:32px;
     overflow: hidden;
-    margin: 0;  padding: 0.5em;
-    background: rgba(57, 57, 57, 0.7);
+    margin: 0;  padding: 5px;
+    background: rgba(57, 57, 57, 0.9);
     border-radius: 5px;
     opacity:0.5;
 
@@ -515,7 +577,7 @@ h2 {
  *   Angular slider
  */
 slider {
-    width: 120px;
+    width: 180px;
 }
 
 /*

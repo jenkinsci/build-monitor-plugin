@@ -1,18 +1,16 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
-import hudson.Functions;
-import hudson.model.*;
+import hudson.model.Job;
+import hudson.model.Result;
+import hudson.model.Run;
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.kohsuke.stapler.Ancestor;
-import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest;
 
 import java.util.*;
 
-import static hudson.model.Result.SUCCESS;
+import static hudson.model.Result.*;
 
 /**
  * @author Jan Molak
@@ -23,6 +21,13 @@ public class JobView {
     private final BuildAugmentor augmentor;
     private final RelativeLocation relative;
     private final boolean displayRelativeName;
+
+    private final static Map<Result, String> statuses = new HashMap<Result, String>() {{
+        put(SUCCESS,   "successful");
+        put(UNSTABLE,  "unstable");
+        put(FAILURE,   "failing");
+        put(ABORTED,   "failing");  // if someone has aborted it then something is clearly not right, right? :)
+    }};
 
     public static JobView of(Job<?, ?> job) {
         return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), new Date(), true);
@@ -58,12 +63,13 @@ public class JobView {
         return relative.url();
     }
 
+    private String statusOf(Result result) {
+        return statuses.containsKey(result) ? statuses.get(result) : "unknown";
+    }
+
     @JsonProperty
     public String status() {
-        // todo: consider introducing a BuildResultJudge to keep this logic in one place
-        String status = lastCompletedBuild().result() == SUCCESS
-                ? "successful"
-                : "failing";
+        String status = statusOf(lastCompletedBuild().result());
 
         if (lastBuild().isRunning()) {
             status += " running";
@@ -98,6 +104,11 @@ public class JobView {
     @JsonProperty
     public String estimatedDuration() {
         return formatted(lastBuild().estimatedDuration());
+    }
+
+    @JsonProperty
+    public String timeElapsedSinceLastBuild() {
+        return formatted(lastCompletedBuild().timeElapsedSince());
     }
 
     private String formatted(Duration duration) {
@@ -191,6 +202,6 @@ public class JobView {
             return new NullBuildView();
         }
 
-        return BuildView.of(job.getLastBuild(), augmentor, systemTime);
+        return BuildView.of(job.getLastBuild(), augmentor, relative, systemTime);
     }
 }

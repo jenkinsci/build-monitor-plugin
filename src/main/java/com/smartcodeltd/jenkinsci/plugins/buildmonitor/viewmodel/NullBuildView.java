@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import hudson.model.Result;
 
 import java.util.HashSet;
@@ -30,6 +31,11 @@ public class NullBuildView implements BuildViewModel {
 
     @Override
     public Duration elapsedTime() {
+        return null;
+    }
+
+    @Override
+    public Duration timeElapsedSince() {
         return null;
     }
 
