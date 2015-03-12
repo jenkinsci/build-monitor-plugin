@@ -11,6 +11,15 @@
       <f:option value="2" selected="${it.statusFilter==false}">${%Disabled jobs only}</f:option>
     </select>
   </f:entry>
+  <f:entry title="${%Show builds are being run by timer}">
+    <f:checkbox id="showScheduledBuilds" name="showScheduledBuilds" field="showScheduledBuilds" checked="${it.showScheduledBuilds}"/>
+  </f:entry>
+  <f:entry title="${%Show builds are being run by anonymous}">
+    <f:checkbox id="showAnonymousBuilds" name="showAnonymousBuilds" field="showAnonymousBuilds" checked="${it.showAnonymousBuilds}"/>
+  </f:entry>
+  <f:entry title="${%Username}" >
+    <f:textbox name="usernames" field="usernames" value="${it.usernames}"/>
+  </f:entry>
 
   <f:entry title="${%Recurse in subfolders}" field="recurse">
     <f:checkbox id="recurse"/>
