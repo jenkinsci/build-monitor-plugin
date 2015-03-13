@@ -9,13 +9,12 @@ angular.
                 fetchJobViews = proxy.buildMonitor.fetchJobViews;
 
             $scope.jobs = {};
-
-            every(5000, function () {
+            every(1000, function () {
 
                 return fetchJobViews().then(function (response) {
 
                     $scope.jobs = response.data.jobs;
-
+					
                     $rootScope.$broadcast('jenkins:data-fetched', {});
 
                 }, tryToRecover());

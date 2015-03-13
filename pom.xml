@@ -144,6 +144,11 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+			<groupId>org.jvnet.hudson.plugins</groupId>
+			<artifactId>perforce</artifactId>
+			<version>1.0.27</version>
+		</dependency>
+        <dependency>
             <groupId>com.sonyericsson.jenkins.plugins.bfa</groupId>
             <artifactId>build-failure-analyzer</artifactId>
             <version>1.9.0</version>
@@ -274,23 +279,6 @@
                     <arguments>
                         <argument>install</argument>
                     </arguments>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.kelveden</groupId>
-                <artifactId>maven-karma-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                        <phase>test</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <karmaExecutable>${project.basedir}/node_modules/karma/bin/karma</karmaExecutable>
-                    <configFile>src/test/resources/karma.conf.js</configFile>
                 </configuration>
             </plugin>
             <plugin>

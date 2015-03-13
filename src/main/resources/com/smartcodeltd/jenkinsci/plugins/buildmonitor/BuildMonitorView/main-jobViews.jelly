@@ -14,7 +14,9 @@
                     <a title="{{job.name}}"
                        href="{{job.url}}">{{job.name}}</a>
                 </h2>
+                
                 <ul class="description">
+                	<li data-ng-show="job.failureCount > 0"><strong>{{job.failureCount}}</strong> failed tests</li>
                     <li data-ng-show="job.claimed">Claimed by <strong>{{ job.claimAuthor }}</strong>: {{ job.claimReason }}</li>
                 </ul>
                 <ul ng-if="job.shouldIndicateCulprits" class="culprits">
@@ -27,7 +29,12 @@
 
             <a data-ng-show="!!job.lastBuildName" class="build-name"
                title="Details of {{job.name}}, build {{job.lastBuildName}}"
-               href="{{job.lastBuildUrl}}">{{job.lastBuildName}}</a>
+               href="{{job.lastBuildUrl}}">{{job.lastBuildName}}</a> 
+            <div ng-show="settings.verbose == 1">
+	            <a ng-if="job.changeSetCount > 0" class="build-cl"
+	            	title="Details: {{job.changeString}}"
+	            	href="{{job.lastBuildUrl}}/changes">CL# {{job.changeNumber}}</a>
+	        </div>
 
             <div data-ng-show="!!job.estimatedDuration &amp;&amp; job.progress > 0" class="build-time">
                 <span class="elapsed">{{job.lastBuildDuration}}</span>

@@ -454,6 +454,7 @@ public class JobViewTest {
         assertThat(view.status(),                 is("unknown"));
         assertThat(view.isClaimed(),              is(false));
         assertThat(view.hasKnownFailures(),       is(false));
+        assertThat(view.failureCount(),      	  is(0));
     }
 
     /*

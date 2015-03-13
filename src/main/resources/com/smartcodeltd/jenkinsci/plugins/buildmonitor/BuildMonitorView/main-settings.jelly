@@ -20,6 +20,13 @@
             <label for="settings-colour-blind" title="Colour blind-friendly colour scheme">Colour blind mode?</label>
         </li>
         <li>
+            <input data-ng-model="settings.verbose"
+                   data-ng-false-value="0"
+                   data-ng-true-value="1"
+                   id="settings-verbose" type="checkbox" />
+            <label for="settings-verbose" title="Add details about changes and failing tests">Verbose Information?</label>
+        </li>
+        <li>
             <a class="btn"
                href="configure"
                title="Configure the '${it.displayName}' view">Add/Remove Jobs</a>
