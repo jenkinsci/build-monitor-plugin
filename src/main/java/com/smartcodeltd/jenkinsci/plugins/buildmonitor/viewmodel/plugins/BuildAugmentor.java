@@ -7,9 +7,9 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.C
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claimed;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.NotClaimed;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
-import hudson.model.Hudson;
 import hudson.model.Run;
 import hudson.plugins.claim.ClaimBuildAction;
+import jenkins.model.Jenkins;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +34,7 @@ public class BuildAugmentor {
     }
 
     private static boolean isInstalled(String plugin) {
-        return Hudson.getInstance().getPlugin(plugin) != null;
+        return Jenkins.getInstance().getPlugin(plugin) != null;
     }
 
     private Set<Class<? extends Augmentation>> recognisedAugmentations = new HashSet<Class<? extends Augmentation>>();
@@ -79,5 +79,4 @@ public class BuildAugmentor {
     public void support(Class<? extends Augmentation> typeOfAugmentation) {
         recognisedAugmentations.add(typeOfAugmentation);
     }
-
 }
