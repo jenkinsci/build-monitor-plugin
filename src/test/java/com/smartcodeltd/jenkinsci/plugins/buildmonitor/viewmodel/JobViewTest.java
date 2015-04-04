@@ -212,6 +212,17 @@ public class JobViewTest {
      */
 
     @Test
+    public void should_describe_the_job_as_disabled_if_not_buildable_or_never_run() {
+        view = JobView.of(a(job().thatHasNeverRun()));
+
+        assertThat(view.status(), containsString("disabled"));
+
+        view = JobView.of(a(job().thatIsNotBuildable()));
+
+        assertThat(view.status(), containsString("disabled"));
+    }
+
+    @Test
     public void should_describe_the_job_as_successful_if_the_last_build_succeeded() {
         view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS))));
 

@@ -25,6 +25,7 @@ public class JobView {
         put(SUCCESS,   "successful");
         put(UNSTABLE,  "unstable");
         put(FAILURE,   "failing");
+        put(NOT_BUILT, "disabled");
         put(ABORTED,   "failing");  // if someone has aborted it then something is clearly not right, right? :)
     }};
 
@@ -60,6 +61,9 @@ public class JobView {
 
     @JsonProperty
     public String status() {
+        if (!job.isBuildable()) {
+            return "disabled";
+        }
         String status = statusOf(lastCompletedBuild().result());
 
         if (lastBuild().isRunning()) {
