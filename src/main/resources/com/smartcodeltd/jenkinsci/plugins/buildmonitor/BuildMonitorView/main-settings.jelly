@@ -17,14 +17,14 @@
                    data-ng-false-value="0"
                    data-ng-true-value="1"
                    id="settings-colour-blind" type="checkbox" />
-            <label for="settings-colour-blind" title="Colour blind-friendly colour scheme">Colour blind mode?</label>
+            <label for="settings-colour-blind" title="Applies a colour blind-friendly colour scheme">Colour blind mode?</label>
         </li>
         <li>
-            <input data-ng-model="settings.hideCulprits"
+            <input data-ng-model="settings.showCulprits"
                    data-ng-false-value="0"
                    data-ng-true-value="1"
-                   id="settings-hide-culprits" type="checkbox" />
-            <label for="settings-hide-culprits" title="Hide culprits on unstable/failed jobs">Hide culprits?</label>
+                   id="settings-show-culprits" type="checkbox" />
+            <label for="settings-show-culprits" title="Shows authors who either broke or committed on a broken/unstable build">Show possible culprits?</label>
         </li>
         <li>
             <a class="btn"
