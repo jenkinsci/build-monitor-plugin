@@ -19,55 +19,6 @@ angular.
                 backdrop: false
             }).open().then();
         }
-
-        this.aboutInternalJenkins = function(error) {
-            function stackTraceOf(error) {
-                var stackTrace = "";
-
-                if (! (error.data && angular.isArray(error.data.stackTrace))) {
-                    return stackTrace;
-                }
-
-                angular.forEach(error.data.stackTrace, function(entry) {
-                    stackTrace += "at " + entry.className + "(" + entry.fileName + ":" + entry.lineNumber + ")\n";
-                });
-
-                return stackTrace;
-            }
-
-            $dialog.dialog({
-                templateUrl: 'template/dialog/internal-jenkins-error.html',
-                controller: function($scope, dialog, model) {
-                    $scope.error      = model.error;
-                    $scope.stackTrace = model.stackTrace;
-                },
-                resolve: { model: function() {
-                    return {
-                        error: JSON.stringify(error.data, undefined, 2),
-                        stackTrace: stackTraceOf(error)
-                    };
-                }},
-                keyboard: false,
-                backdrop: true,
-                backdropClick: false
-            }).open().then();
-        }
-
-        this.about = function (problemStatus) {
-
-            var title = "Sorry to bother you, but there is a slight issue ...";
-            var message = "Jenkins returned a \"" + problemStatus + "\" response " +
-                "causing the last request to fail. " +
-                "This usually means a network connection problem " +
-                "or that Jenkins is being restarted. " +
-                "Don't worry, reloading the page should help :-)";
-
-            $dialog.messageBox(title, message, [
-                    { result: "reload", label: "Reload the page"}
-                ]).open().then(function (result) {
-                    $window.location.reload();
-                });
-        }
     }).
 
     provider('cookieJar',function () {
