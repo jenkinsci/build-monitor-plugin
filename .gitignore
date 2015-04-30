@@ -7,6 +7,9 @@
 .project
 .settings/
 
+#JEnv
+.java-version
+
 target
 work*
 

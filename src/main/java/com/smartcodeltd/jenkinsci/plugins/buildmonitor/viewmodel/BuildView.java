@@ -1,6 +1,9 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.HumanReadableDuration;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.DurationInMilliseconds;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.Analysis;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
@@ -60,17 +63,22 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public Duration elapsedTime() {
-        return new Duration(now() - whenTheBuildStarted());
+        return new HumanReadableDuration(now() - whenTheBuildStarted());
+    }
+
+    @Override
+    public Duration timeElapsedSince() {
+        return new DurationInMilliseconds(now() - (whenTheBuildStarted() + build.getDuration()));
     }
 
     @Override
     public Duration duration() {
-        return new Duration(build.getDuration());
+        return new HumanReadableDuration(build.getDuration());
     }
 
     @Override
     public Duration estimatedDuration() {
-        return new Duration(build.getEstimatedDuration());
+        return new HumanReadableDuration(build.getEstimatedDuration());
     }
 
     @Override

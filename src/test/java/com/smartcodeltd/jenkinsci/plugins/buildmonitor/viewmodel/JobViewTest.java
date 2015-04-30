@@ -9,7 +9,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.JobStateRecipe;
 import hudson.model.Job;
 import hudson.model.Result;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -40,7 +39,6 @@ public class JobViewTest {
 
     private RelativeLocation relative = mock(RelativeLocation.class);
     private JobView view;
-
     /*
      * By the way, if you were not aware of this: the configuration page of each job has an "Advanced Project Options"
      * section, where you can set a user-friendly "Display Name"
@@ -194,7 +192,21 @@ public class JobViewTest {
 
         assertThat(view.estimatedDuration(), is(""));
     }
-    
+
+    /*
+     * Last build, last success and last failure (ISO 8601)
+     */
+    @Test
+    public void should_know_how_long_since_the_last_build_happened() throws Exception {
+        String tenMinutesInMilliseconds = String.format("%d", 10 * 60 * 1000);
+
+        view = JobView.of(a(job().whereTheLast(build().startedAt("18:05:00").andTook(5))),
+                assumingThatCurrentTimeIs("18:20:00")
+        );
+
+        assertThat(view.timeElapsedSinceLastBuild(), is(tenMinutesInMilliseconds));
+    }
+
     /*
      * Should produce a meaningful status description that can be used in the CSS
      */
