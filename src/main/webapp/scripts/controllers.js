@@ -41,31 +41,19 @@ angular.
                     lostConnectionsCount.increase();
 
                     $rootScope.$broadcast("jenkins:connection-lost", error);
-
-                    return $q.when(error);
                 }
 
                 function handleJenkinsRestart(error) {
                     $rootScope.$broadcast("jenkins:restarted", error);
-                    return $q.reject(error);
-                }
-
-                function handleInternalJenkins(error) {
-                    $rootScope.$broadcast("jenkins:internal-error", error);
-                    return $q.reject(error);
-                }
-
-                function handleUnknown(error) {
-                    $rootScope.$broadcast("jenkins:unknown-communication-error", error);
-                    return $q.reject(error);
                 }
 
                 return function (error) {
                     switch (error.status) {
-                        case 0:   return handleLostConnection(error);
-                        case 404: return handleJenkinsRestart(error);
-                        case 500: return handleInternalJenkins(error);
-                        default:  return handleUnknown(error);
+                        case 404:
+                            // this generally means the ID in the plugin's
+                            // HTTP path has changed and we need to reload
+                            return handleJenkinsRestart(error);
+                        default:  return handleLostConnection(error);
                     }
                 }
             }
@@ -77,8 +65,12 @@ angular.
             controller: function ($scope) {
                 $scope.message = '';
 
-                $scope.$on('jenkins:connection-lost', function () {
-                    $scope.message = 'Communication with Jenkins mother ship is lost. Trying to reconnect...';
+                $scope.$on('jenkins:connection-lost', function (event, error) {
+                    if (error.status == 0) {
+                        $scope.message = 'Communication with Jenkins mother ship is lost. Trying to reconnect...';
+                    } else {
+                        $scope.message = 'Jenkins returned HTTP status '+error.status+'. Retrying...';
+                    }
                 });
 
                 $scope.$on('jenkins:connection-reestablished', function () {
@@ -103,16 +95,7 @@ angular.
             $rootScope.$on('jenkins:data-fetched', function (event) {
                 connectivityStrategist.resetErrorCounter();
             });
-
-            $rootScope.$on('jenkins:internal-error', function (event, error) {
-                notifyUser.aboutInternalJenkins(error);
-            });
-
             $rootScope.$on('jenkins:restarted', function (event, error) {
                 $window.location.reload();
-            });
-
-            $rootScope.$on('jenkins:unknown-communication-error', function (event, error) {
-                notifyUser.about(error.status);
             });
         }]);
