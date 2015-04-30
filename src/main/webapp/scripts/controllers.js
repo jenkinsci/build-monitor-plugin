@@ -49,7 +49,10 @@ angular.
 
                 return function (error) {
                     switch (error.status) {
-                        case 404: return handleJenkinsRestart(error);
+                        case 404:
+                            // this generally means the ID in the plugin's
+                            // HTTP path has changed and we need to reload
+                            return handleJenkinsRestart(error);
                         default:  return handleLostConnection(error);
                     }
                 }
