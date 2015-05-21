@@ -22,7 +22,7 @@ public class Analysed implements Analysis {
     public List<String> failures() {
         List<String> failures = new ArrayList<String>(action.getFoundFailureCauses().size());
         for (FoundFailureCause failure : action.getFoundFailureCauses()) {
-            failures.add(failure.getName());
+            failures.add(failure.getDescription());
         }
         return failures;
     }
