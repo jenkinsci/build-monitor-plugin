@@ -30,6 +30,6 @@ public class BehaviourWithBuildFailureAnalyserTest extends AcceptanceTest {
 
         // then ...
 
-        assertThat(buildMonitorView("Build Monitor").job("example-acceptance").possibleFailureCause(), is("Shell script failure"));
+        assertThat(buildMonitorView("Build Monitor").job("example-acceptance").possibleFailureCause(), is("Identified problem: Shell script failure"));
     }
 }
