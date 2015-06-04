@@ -1,18 +1,23 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.AnalysedTest;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.ClaimedTest;
-import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
-import hudson.model.*;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.AnalysedTest.failureCauseBuildAction;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.ClaimedTest.claimBuildAction;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import hudson.model.Result;
+import hudson.model.AbstractBuild;
+import hudson.model.AbstractProject;
+import hudson.model.User;
 import hudson.plugins.claim.ClaimBuildAction;
 import hudson.scm.ChangeLogSet;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.AnalysedTest.failureCauseBuildAction;
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.ClaimedTest.claimBuildAction;
-import static org.mockito.Mockito.*;
+import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 
 /**
  * @author Jan Molak
@@ -25,7 +30,7 @@ public class BuildStateRecipe {
         build = mock(AbstractBuild.class);
 
         AbstractProject parent = mock(AbstractProject.class);
-        when(build.getParent()).thenReturn(parent);
+        when((AbstractProject) build.getParent()).thenReturn(parent);
     }
 
     public BuildStateRecipe numberIs(int number) {

@@ -3,12 +3,25 @@
 angular.
     module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'uiSlider', 'jenkins']).
 
-    controller('JobViews', ['$scope', '$rootScope', 'proxy', 'every', 'connectivityStrategist',
-        function ($scope, $rootScope, proxy, every, connectivityStrategist) {
+    controller('JobViews', ['$scope', '$rootScope', '$http', 'proxy', 'every', 'connectivityStrategist',
+        function ($scope, $rootScope, $http, proxy, every, connectivityStrategist) {
             var tryToRecover  = connectivityStrategist.decideOnStrategy,
                 fetchJobViews = proxy.buildMonitor.fetchJobViews;
 
             $scope.jobs = {};
+
+            $scope.runJob = function(job) {
+                
+                $http.post('/' + job.url + "build?delay=0sec", {}).
+                    success(function(data, status, headers, config) {
+                        if (console)
+                            console.log("Success", data);
+                    }).
+                    error(function(data, status, headers, config) {
+                        if (console)   
+                            console.log("Error", data);
+                    });
+            };
 
             every(5000, function () {
 

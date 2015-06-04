@@ -1,11 +1,12 @@
 package com.smartcodeltd.jenkinsci.plugin.assetbundler;
 
-import com.smartcodeltd.jenkinsci.plugin.assetbundler.filters.LessCSS;
 import hudson.Extension;
 import hudson.Plugin;
 import hudson.util.PluginServletFilter;
 
 import java.net.URISyntaxException;
+
+import com.smartcodeltd.jenkinsci.plugin.assetbundler.filters.LessCSS;
 
 /*
  *   Based on:
@@ -18,16 +19,18 @@ import java.net.URISyntaxException;
 @Extension
 public class Dispatcher extends Plugin {
 
-    @Override
-    public void postInitialize() throws Exception {
-        super.postInitialize();
+	@Override
+	public void postInitialize() throws Exception {
 
-        PluginServletFilter.addFilter(new LessCSS("/build-monitor-plugin/style.css", pathToIndexLess()));
-    }
+		super.postInitialize();
 
-    private String pathToIndexLess() throws URISyntaxException {
-        String base = getWrapper().parent.getPlugin("build-monitor-plugin").baseResourceURL.toURI().toString();
+		PluginServletFilter.addFilter(new LessCSS("/build-monitor-plugin/style.css", pathToIndexLess()));
+	}
 
-        return (base + "/less/index.less").replaceAll("/+", "/");
-    }
+	private String pathToIndexLess() throws URISyntaxException {
+
+		String base = getWrapper().parent.getPlugin("build-monitor-plugin").baseResourceURL.toURI().toString();
+
+		return (base + "/less/index.less").replaceAll("/+", "/");
+	}
 }

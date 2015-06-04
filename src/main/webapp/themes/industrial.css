@@ -201,17 +201,21 @@ h2 {
 
 
 .build-monitor #job-views .build-time,
+.build-monitor #job-views .build-it,
 .build-monitor #job-views .build-name {
     font-weight: bold;
     color:rgba(255,255,255, 0.3);
 }
 .build-monitor #job-views .running .build-time,
+.build-monitor #job-views .running .build-it,
 .build-monitor #job-views .running .build-name {
     font-weight: bold;
     color:rgba(255,255,255, 0.5);
 }
 .build-monitor #job-views .build-name { font-size: 2em; line-height: 1.75em; }
+.build-monitor #job-views .build-it { cursor:pointer; font-size: 2em; line-height: 1.75em; }
 .build-monitor #job-views .build-time { font-size: 2em; line-height: 1.75em; }
+
 .build-monitor #job-views .build-time>.elapsed       { font-size: 1.0em; color:rgba(255,255,255,0.7); }
 .build-monitor #job-views .build-time>.elapsed:after { content:"|"; margin-left:0.1em; font-weight: normal; }
 
@@ -395,6 +399,7 @@ h2 {
 }
 
 .build-monitor #job-views .build-time,
+.build-monitor #job-views .build-it,
 .build-monitor #job-views .build-name {
     display:block;
     position:absolute;
@@ -403,6 +408,7 @@ h2 {
     vertical-align: middle;
 }
 .build-monitor #job-views .build-name { bottom:0; left:0.3em; }
+.build-monitor #job-views .build-it { bottom:0; left:4.3em; }
 .build-monitor #job-views .build-time { bottom:0; right:0.3em; }
 
 /*
