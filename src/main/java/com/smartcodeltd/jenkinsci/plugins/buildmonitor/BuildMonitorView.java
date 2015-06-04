@@ -23,9 +23,7 @@
  */
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
+import static hudson.Util.filter;
 import hudson.Extension;
 import hudson.Util;
 import hudson.model.AbstractProject;
@@ -33,15 +31,7 @@ import hudson.model.Descriptor.FormException;
 import hudson.model.ListView;
 import hudson.model.ViewDescriptor;
 import hudson.util.FormValidation;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.bind.JavaScriptMethod;
 
-import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,118 +40,145 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import static hudson.Util.filter;
+import javax.servlet.ServletException;
+
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.bind.JavaScriptMethod;
+
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 
 /**
  * @author Jan Molak
  */
 public class BuildMonitorView extends ListView {
 
-    /**
-     * @param name  Name of the view
-     */
-    @DataBoundConstructor
-    public BuildMonitorView(String name) {
-        super(name);
-    }
+	/**
+	 * @param name Name of the view
+	 */
+	@DataBoundConstructor
+	public BuildMonitorView(String name) {
 
-    @Extension
-    public static final class Descriptor extends ViewDescriptor {
-        public Descriptor() {
-            super(BuildMonitorView.class);
-        }
+		super(name);
+	}
 
-        @Override
-        public String getDisplayName() {
-            return "Build Monitor View";
-        }
+	@Extension
+	public static final class Descriptor extends ViewDescriptor {
 
-        /**
-         * Cut-n-paste from ListView$Descriptor as we cannot inherit from that class
-         */
-        public FormValidation doCheckIncludeRegex(@QueryParameter String value) {
-            String v = Util.fixEmpty(value);
-            if (v != null) {
-                try {
-                    Pattern.compile(v);
-                } catch (PatternSyntaxException pse) {
-                    return FormValidation.error(pse.getMessage());
-                }
-            }
-            return FormValidation.ok();
-        }
-    }
+		public Descriptor() {
 
-    @Override
-    protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
-        super.submit(req);
+			super(BuildMonitorView.class);
+		}
 
-        String requestedOrdering = req.getParameter("order");
+		@Override
+		public String getDisplayName() {
 
-        try {
-            order = orderIn(requestedOrdering);
-        } catch (Exception e) {
-            throw new FormException("Can't order projects by " + requestedOrdering, "order");
-        }
-    }
+			return "Build Monitor View";
+		}
 
-    // defensive coding to avoid issues when Jenkins instantiates the plugin without populating its fields
-    // https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/43
-    private Comparator<AbstractProject> currentOrderOrDefault() {
-        return order == null ? new ByName() : order;
-    }
+		/**
+		 * Cut-n-paste from ListView$Descriptor as we cannot inherit from that class
+		 */
+		public FormValidation doCheckIncludeRegex(@QueryParameter String value) {
 
-    public String currentOrder() {
-        return currentOrderOrDefault().getClass().getSimpleName();
-    }
+			String v = Util.fixEmpty(value);
+			if (v != null) {
+				try {
+					Pattern.compile(v);
+				} catch (PatternSyntaxException pse) {
+					return FormValidation.error(pse.getMessage());
+				}
+			}
+			return FormValidation.ok();
+		}
+	}
 
-    private Comparator<AbstractProject> order = new ByName();
+	@Override
+	protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
 
-    @SuppressWarnings("unchecked")
-    private Comparator<AbstractProject> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        String packageName = this.getClass().getPackage().getName() + ".order.";
+		super.submit(req);
 
-        return (Comparator<AbstractProject>) Class.forName(packageName + requestedOrdering).newInstance();
-    }
+		String requestedOrdering = req.getParameter("order");
 
-    /**
-     * Because of how org.kohsuke.stapler.HttpResponseRenderer is implemented
-     * it can only work with net.sf.JSONObject in order to produce correct application/json
-     * output
-     *
-     * @return
-     * @throws Exception
-     */
-    @JavaScriptMethod
-    public JSONObject fetchJobViews() throws Exception {
-        return jsonFrom(jobViews());
-    }
+		try {
+			order = orderIn(requestedOrdering);
+		} catch (Exception e) {
+			throw new FormException("Can't order projects by " + requestedOrdering, "order");
+		}
+	}
 
-    public boolean isEmpty() {
-        return jobViews().isEmpty();
-    }
+	// defensive coding to avoid issues when Jenkins instantiates the plugin without populating its fields
+	// https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/43
+	private Comparator<AbstractProject> currentOrderOrDefault() {
 
+		return order == null ? new ByName() : order;
+	}
 
-    private JSONObject jsonFrom(List<JobView> jobViews) throws IOException {
-        ObjectMapper m = new ObjectMapper();
+	public String currentOrder() {
 
-        return (JSONObject) JSONSerializer.toJSON("{jobs:" + m.writeValueAsString(jobViews) + "}");
-    }
+		return currentOrderOrDefault().getClass().getSimpleName();
+	}
 
-    private List<JobView> jobViews() {
-        List<AbstractProject> projects = filter(super.getItems(), AbstractProject.class);
-        List<JobView> jobs = new ArrayList<JobView>();
+	private Comparator<AbstractProject> order = new ByName();
 
-        Collections.sort(projects, currentOrderOrDefault());
+	@SuppressWarnings("unchecked")
+	private Comparator<AbstractProject> orderIn(String requestedOrdering) throws ClassNotFoundException,
+			IllegalAccessException, InstantiationException {
 
-        for (AbstractProject project : projects) {
-            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
-        }
+		String packageName = this.getClass().getPackage().getName() + ".order.";
 
-        return jobs;
-    }
+		return (Comparator<AbstractProject>) Class.forName(packageName + requestedOrdering).newInstance();
+	}
 
-    private BuildAugmentor withAugmentationsIfTheyArePresent() {
-        return BuildAugmentor.fromDetectedPlugins();
-    }
+	/**
+	 * Because of how org.kohsuke.stapler.HttpResponseRenderer is implemented
+	 * it can only work with net.sf.JSONObject in order to produce correct application/json
+	 * output
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	@JavaScriptMethod
+	public JSONObject fetchJobViews() throws Exception {
+
+		return jsonFrom(jobViews());
+	}
+
+	public boolean isEmpty() {
+
+		return jobViews().isEmpty();
+	}
+
+	private JSONObject jsonFrom(List<JobView> jobViews) throws IOException {
+
+		ObjectMapper m = new ObjectMapper();
+
+		return (JSONObject) JSONSerializer.toJSON("{jobs:" + m.writeValueAsString(jobViews) + "}");
+	}
+
+	private List<JobView> jobViews() {
+
+		List<AbstractProject> projects = filter(super.getItems(), AbstractProject.class);
+		List<JobView> jobs = new ArrayList<JobView>();
+
+		Collections.sort(projects, currentOrderOrDefault());
+
+		for (AbstractProject project : projects) {
+			jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
+		}
+
+		return jobs;
+	}
+
+	private BuildAugmentor withAugmentationsIfTheyArePresent() {
+
+		return BuildAugmentor.fromDetectedPlugins();
+	}
 }

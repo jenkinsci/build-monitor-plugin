@@ -1,42 +1,46 @@
-<ul id="job-views"
-    data-ng-class="{ 'colour-blind-mode': settings.colourBlind == 1 }"
-    style="font-size: {{ settings.fontSize }}em"
-    class="columns-{{ settings.numberOfColumns }}">
-
-    <li ng-repeat="job in jobs" class="{{job.status}}" id="{{ job.name | slugify }}">
-        <div class="progress" style="width: {{job.progress}}%">
-            <span>{{job.progress}}%</span>
-        </div>
-
-        <div class="meta">
-            <div class="latest-results">
-                <h2>
-                    <a title="{{job.name}}"
-                       href="{{job.url}}">{{job.name}}</a>
-                </h2>
-                <ul class="description">
-                    <li data-ng-show="job.claimed">Claimed by <strong>{{ job.claimAuthor }}</strong>: {{ job.claimReason }}</li>
-                </ul>
-                <ul ng-if="job.shouldIndicateCulprits &amp;&amp; settings.showCulprits" class="culprits">
-                    <li data-ng-repeat="name in job.culprits">{{name}}</li>
-                </ul>
-                <ul ng-if="job.hasKnownFailures" class="failures">
-                    <li data-ng-repeat="name in job.knownFailures">{{name}}</li>
-                </ul>
-            </div>
-
-            <a data-ng-show="!!job.lastBuildName" class="build-name"
-               title="Details of {{job.name}}, build {{job.lastBuildName}}"
-               href="{{job.lastBuildUrl}}">{{job.lastBuildName}}</a>
-
-            <div data-ng-show="!!job.estimatedDuration &amp;&amp; job.progress > 0" class="build-time">
-                <span class="elapsed">{{job.lastBuildDuration}}</span>
-                <span class="estimated">{{job.estimatedDuration}}</span>
-            </div>
-
-            <div data-ng-show="!!job.timeElapsedSinceLastBuild &amp;&amp; job.progress == 0" class="build-time">
-                <span class="estimated">{{job.timeElapsedSinceLastBuild | estimatedTimeElapsedSince}}</span>
-            </div>
-        </div>
-    </li>
-</ul>
+<j:jelly xmlns:j="jelly:core">
+	<ul id="job-views"
+	    data-ng-class="{ 'colour-blind-mode': settings.colourBlind == 1 }"
+	    style="font-size: {{ settings.fontSize }}em"
+	    class="columns-{{ settings.numberOfColumns }}">
+	
+	    <li ng-repeat="job in jobs" class="{{job.status}}" id="{{ job.name | slugify }}">
+	        <div class="progress" style="width: {{job.progress}}%">
+	            <span>{{job.progress}}%</span>
+	        </div>
+	
+	        <div class="meta">
+	            <div class="latest-results">
+	                <h2>
+	                    <a title="{{job.name}}" href="{{job.url}}">{{job.name}}</a>
+	                </h2>
+	                <ul class="description">
+	                    <li data-ng-show="job.claimed">Claimed by <strong>{{ job.claimAuthor }}</strong>: {{ job.claimReason }}</li>
+	                </ul>
+	                <ul ng-if="job.shouldIndicateCulprits &amp;&amp; settings.showCulprits" class="culprits">
+	                    <li data-ng-repeat="name in job.culprits">{{name}}</li>
+	                </ul>
+	                <ul ng-if="job.hasKnownFailures" class="failures">
+	                    <li data-ng-repeat="name in job.knownFailures">{{name}}</li>
+	                </ul>
+	            </div>
+	
+	            <a data-ng-show="!!job.lastBuildName" class="build-name" title="Details of {{job.name}}, build {{job.lastBuildName}}"
+	               href="{{job.lastBuildUrl}}">{{job.lastBuildName}}</a>
+	
+				<j:if test="${h.hasPermission(app.ADMINISTER)}">
+		            <a class="build-it" title="Run {{job.name}}" ng-click="runJob(job)" ng-href="">run job</a>
+				</j:if>
+	
+	            <div data-ng-show="!!job.estimatedDuration &amp;&amp; job.progress > 0" class="build-time">
+	                <span class="elapsed">{{job.lastBuildDuration}}</span>
+	                <span class="estimated">{{job.estimatedDuration}}</span>
+	            </div>
+	
+	            <div data-ng-show="!!job.timeElapsedSinceLastBuild &amp;&amp; job.progress == 0" class="build-time">
+	                <span class="estimated">{{job.timeElapsedSinceLastBuild | estimatedTimeElapsedSince}}</span>
+	            </div>
+	        </div>
+	    </li>
+	</ul>
+</j:jelly>
