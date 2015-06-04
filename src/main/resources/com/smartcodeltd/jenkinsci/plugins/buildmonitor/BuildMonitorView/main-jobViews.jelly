@@ -21,7 +21,10 @@
                     <li data-ng-repeat="name in job.culprits">{{name}}</li>
                 </ul>
                 <ul ng-if="job.hasKnownFailures" class="failures">
-                    Identified problems ({{job.knownFailures.length}}): <li data-ng-repeat="name in job.knownFailures">{{name}}</li>
+                    <ng-pluralize
+                      count="job.knownFailures.length"
+                      when="{'1': 'Identified problem: ', 'other': '{{ job.knownFailures.length }} identified problems: '}"></ng-pluralize>
+                    <li data-ng-repeat="name in job.knownFailures">{{name}}</li>
                 </ul>
             </div>
 
