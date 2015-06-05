@@ -6,7 +6,7 @@
     <ul>
         <li>
             <span class="slider-label">Font size</span>
-            <slider floor="0.5" ceiling="2" step="0.1" precision="1" data-ng-model="settings.fontSize"></slider>
+            <slider floor="0.25" ceiling="2" step="0.1" precision="1" data-ng-model="settings.fontSize"></slider>
         </li>
         <li>
             <span class="slider-label">Columns</span>
