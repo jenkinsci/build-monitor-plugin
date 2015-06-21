@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.Augmentation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
@@ -39,6 +40,8 @@ public class JobViewTest {
 
     private RelativeLocation relative = mock(RelativeLocation.class);
     private JobView view;
+    private Config config = spy(Config.defaultConfig());
+
     /*
      * By the way, if you were not aware of this: the configuration page of each job has an "Advanced Project Options"
      * section, where you can set a user-friendly "Display Name"
@@ -47,7 +50,7 @@ public class JobViewTest {
     public void delegates_the_process_of_determining_the_relative_job_name() {
         when(relative.name()).thenReturn(theName);
 
-        view = JobView.of(a(job().withName(theName)), relative);
+        view = JobView.of(a(job().withName(theName)), config, relative);
 
         assertThat(view.name(), is(theName));
         assertThat(view.toString(), is(theName));
@@ -59,7 +62,7 @@ public class JobViewTest {
         String expectedUrl = "job/" + theName;
         when(relative.url()).thenReturn(expectedUrl);
 
-        view = JobView.of(a(job().withName(theName).withDisplayName(displayName)), relative);
+        view = JobView.of(a(job().withName(theName).withDisplayName(displayName)), config, relative);
 
         assertThat(view.url(), is(expectedUrl));
         verify(relative, times(1)).url();
@@ -67,14 +70,14 @@ public class JobViewTest {
 
     @Test
     public void should_know_current_build_number() {
-        view = JobView.of(a(job().whereTheLast(build().numberIs(5))));
+        view = JobView.of(a(job().whereTheLast(build().numberIs(5))), config);
 
         assertThat(view.lastBuildName(), is("#5"));
     }
 
     @Test
     public void should_use_build_name_if_its_known() {
-        view = JobView.of(a(job().whereTheLast(build().nameIs("1.3.4+build.15"))));
+        view = JobView.of(a(job().whereTheLast(build().nameIs("1.3.4+build.15"))), config);
 
         assertThat(view.lastBuildName(), is("1.3.4+build.15"));
     }
@@ -83,7 +86,7 @@ public class JobViewTest {
     public void should_know_the_url_of_the_last_build() {
         view = JobView.of(
                 a(job().whereTheLast(build().numberIs(22))),
-                locatedAt("job/project-name")
+            config, locatedAt("job/project-name")
         );
 
         assertThat(view.lastBuildUrl(), is("job/project-name/22/"));
@@ -95,14 +98,14 @@ public class JobViewTest {
 
     @Test
     public void progress_of_a_not_started_job_should_be_zero() {
-        view = JobView.of(a(job()));
+        view = JobView.of(a(job()), config);
 
         assertThat(view.progress(), is(0));
     }
 
     @Test
     public void progress_of_a_finished_job_should_be_zero() {
-        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS))));
+        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS))), config);
 
         assertThat(view.progress(), is(0));
     }
@@ -111,7 +114,7 @@ public class JobViewTest {
     public void progress_of_a_nearly_finished_job_should_be_100() throws Exception {
         view = JobView.of(
                     a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andUsuallyTakes(0))),
-                    assumingThatCurrentTimeIs("12:00:00")
+            config, assumingThatCurrentTimeIs("12:00:00")
         );
 
         assertThat(view.progress(), is(100));
@@ -121,7 +124,7 @@ public class JobViewTest {
     public void progress_of_a_job_thats_taking_longer_than_expected_should_be_100() throws Exception {
         view = JobView.of(
                 a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andUsuallyTakes(5))),
-                assumingThatCurrentTimeIs("12:20:00")
+            config, assumingThatCurrentTimeIs("12:20:00")
         );
 
         assertThat(view.progress(), is(100));
@@ -131,7 +134,7 @@ public class JobViewTest {
     public void should_calculate_the_progress_of_a_running_job() throws Exception {
         view = JobView.of(
                 a(job().whereTheLast(build().isStillBuilding().startedAt("13:10:00").andUsuallyTakes(5))),
-                assumingThatCurrentTimeIs("13:11:00")
+            config, assumingThatCurrentTimeIs("13:11:00")
         );
 
         assertThat(view.progress(), is(20));
@@ -152,7 +155,7 @@ public class JobViewTest {
 
         view = JobView.of(
                 a(job().whereTheLast(build().startedAt(startTime).isStillBuilding())),
-                currentTime
+            config, currentTime
         );
 
         assumeThat(currentTime).is(sixSecondsLater);
@@ -167,28 +170,28 @@ public class JobViewTest {
 
     @Test
     public void should_know_how_long_the_last_build_took_once_its_finished() throws Exception {
-        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS).andTook(3))));
+        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS).andTook(3))), config);
 
         assertThat(view.lastBuildDuration(), is("3m 0s"));
     }
 
     @Test
     public void should_not_say_anything_about_the_duration_if_the_build_hasnt_run_yet() throws Exception {
-        view = JobView.of(a(job()));
+        view = JobView.of(a(job()), config);
 
         assertThat(view.lastBuildDuration(), is(""));
     }
 
     @Test
     public void should_know_how_long_the_next_build_is_supposed_to_take() throws Exception {
-        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS).andUsuallyTakes(5))));
+        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS).andUsuallyTakes(5))), config);
 
         assertThat(view.estimatedDuration(), is("5m 0s"));
     }
 
     @Test
     public void should_not_say_anything_if_it_doesnt_know_how_long_the_next_build_is_supposed_to_take() throws Exception {
-        view = JobView.of(a(job()));
+        view = JobView.of(a(job()), config);
 
         assertThat(view.estimatedDuration(), is(""));
     }
@@ -201,7 +204,7 @@ public class JobViewTest {
         String tenMinutesInMilliseconds = String.format("%d", 10 * 60 * 1000);
 
         view = JobView.of(a(job().whereTheLast(build().startedAt("18:05:00").andTook(5))),
-                assumingThatCurrentTimeIs("18:20:00")
+            config, assumingThatCurrentTimeIs("18:20:00")
         );
 
         assertThat(view.timeElapsedSinceLastBuild(), is(tenMinutesInMilliseconds));
@@ -213,7 +216,7 @@ public class JobViewTest {
 
     @Test
     public void should_describe_the_job_as_successful_if_the_last_build_succeeded() {
-        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS))));
+        view = JobView.of(a(job().whereTheLast(build().finishedWith(SUCCESS))), config);
 
         assertThat(view.status(), containsString("successful"));
     }
@@ -221,7 +224,7 @@ public class JobViewTest {
     @Test
     public void should_describe_the_job_as_failing_if_the_last_build_failed() {
         for (Result result : asFollows(FAILURE, ABORTED)) {
-            view = JobView.of(a(job().whereTheLast(build().finishedWith(result))));
+            view = JobView.of(a(job().whereTheLast(build().finishedWith(result))), config);
 
             assertThat(view.status(), containsString("failing"));
         }
@@ -229,14 +232,14 @@ public class JobViewTest {
 
     @Test
     public void should_describe_the_job_as_unstable_if_the_last_build_is_unstable() {
-        view = JobView.of(a(job().whereTheLast(build().finishedWith(UNSTABLE))));
+        view = JobView.of(a(job().whereTheLast(build().finishedWith(UNSTABLE))), config);
 
         assertThat(view.status(), containsString("unstable"));
     }
 
     @Test
     public void should_describe_the_state_of_the_job_as_unknown_when_it_is_yet_to_be_determined() {
-        view = JobView.of(a(job()));
+        view = JobView.of(a(job()), config);
 
         assertThat(view.status(), containsString("unknown"));
     }
@@ -244,9 +247,9 @@ public class JobViewTest {
     @Test
     public void should_describe_the_job_as_running_if_it_is_running() {
         List<JobView> views = asFollows(
-                JobView.of(a(job().whereTheLast(build().hasntStartedYet()))),
-                JobView.of(a(job().whereTheLast(build().isStillBuilding()))),
-                JobView.of(a(job().whereTheLast(build().isStillUpdatingTheLog())))
+                JobView.of(a(job().whereTheLast(build().hasntStartedYet())), config),
+                JobView.of(a(job().whereTheLast(build().isStillBuilding())), config),
+                JobView.of(a(job().whereTheLast(build().isStillUpdatingTheLog())), config)
         );
 
         for (JobView view : views) {
@@ -259,15 +262,15 @@ public class JobViewTest {
         List<JobView> views = asFollows(
                 JobView.of(a(job().
                         whereTheLast(build().hasntStartedYet()).
-                        andThePrevious(build().finishedWith(SUCCESS)))),
+                        andThePrevious(build().finishedWith(SUCCESS))), config),
 
                 JobView.of(a(job().
                         whereTheLast(build().isStillBuilding()).
-                        andThePrevious(build().finishedWith(SUCCESS)))),
+                        andThePrevious(build().finishedWith(SUCCESS))), config),
 
                 JobView.of(a(job().
                         whereTheLast(build().isStillUpdatingTheLog()).
-                        andThePrevious(build().finishedWith(SUCCESS))))
+                        andThePrevious(build().finishedWith(SUCCESS))), config)
         );
 
 
@@ -286,15 +289,15 @@ public class JobViewTest {
         List<JobView> views = asFollows(
                 JobView.of(a(job().
                         whereTheLast(build().hasntStartedYet()).
-                        andThePrevious(build().finishedWith(FAILURE)))),
+                        andThePrevious(build().finishedWith(FAILURE))), config),
 
                 JobView.of(a(job().
                         whereTheLast(build().isStillBuilding()).
-                        andThePrevious(build().finishedWith(FAILURE)))),
+                        andThePrevious(build().finishedWith(FAILURE))), config),
 
                 JobView.of(a(job().
                         whereTheLast(build().isStillUpdatingTheLog()).
-                        andThePrevious(build().finishedWith(FAILURE))))
+                        andThePrevious(build().finishedWith(FAILURE))), config)
         );
 
         for (JobView view : views) {
@@ -312,7 +315,7 @@ public class JobViewTest {
         view = JobView.of(a(job().
                         whereTheLast(build().isStillBuilding()).
                         andThePrevious(build().isStillBuilding()).
-                        andThePrevious(build().finishedWith(SUCCESS))));
+                        andThePrevious(build().finishedWith(SUCCESS))), config);
 
         assertThat(view.status(), containsString("successful"));
     }
@@ -322,7 +325,7 @@ public class JobViewTest {
         view = JobView.of(a(job().
                 whereTheLast(build().isStillBuilding()).
                 andThePrevious(build().isStillBuilding()).
-                andThePrevious(build().finishedWith(FAILURE))));
+                andThePrevious(build().finishedWith(FAILURE))), config);
 
         assertThat(view.status(), containsString("failing"));
     }
@@ -331,7 +334,7 @@ public class JobViewTest {
     public void should_describe_the_job_as_claimed_if_someone_claimed_last_build_failures() {
         view = JobView.of(
                 a(job().whereTheLast(build().finishedWith(FAILURE).andWasClaimedBy("Adam", "sorry, I broke it, fixing now"))),
-                augmentedWith(Claim.class)
+            config, augmentedWith(Claim.class)
                );
 
         assertThat(view.status(), containsString("claimed"));
@@ -343,7 +346,7 @@ public class JobViewTest {
 
     @Test
     public void should_know_who_broke_the_build() {
-        view = JobView.of(a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben"))));
+        view = JobView.of(a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben"))), config);
 
         assertThat(view.culprits(), hasSize(2));
         assertThat(view.culprits(), hasItems("Adam", "Ben"));
@@ -355,7 +358,7 @@ public class JobViewTest {
                 whereTheLast(build().wasBrokenBy("Adam")).
                 andThePrevious(build().wasBrokenBy("Ben", "Connor")).
                 andThePrevious(build().wasBrokenBy("Daniel")).
-                andThePrevious(build().succeededThanksTo("Errol"))));
+                andThePrevious(build().succeededThanksTo("Errol"))), config);
 
         assertThat(view.culprits(), hasSize(4));
         assertThat(view.culprits(), hasItems("Adam", "Ben", "Connor", "Daniel"));
@@ -367,7 +370,7 @@ public class JobViewTest {
         view = JobView.of(a(job().
                 whereTheLast(build().wasBrokenBy("Adam")).
                 andThePrevious(build().wasBrokenBy("Adam", "Ben")).
-                andThePrevious(build().wasBrokenBy("Ben", "Connor"))));
+                andThePrevious(build().wasBrokenBy("Ben", "Connor"))), config);
 
         assertThat(view.culprits(), hasSize(3));
         assertThat(view.culprits(), hasItems("Adam", "Ben", "Connor"));
@@ -375,7 +378,7 @@ public class JobViewTest {
 
     @Test
     public void should_not_mention_any_culprits_if_the_build_was_successful() {
-        view = JobView.of(a(job().whereTheLast(build().succeededThanksTo("Adam"))));
+        view = JobView.of(a(job().whereTheLast(build().succeededThanksTo("Adam"))), config);
 
         assertThat(view.culprits(), hasSize(0));
     }
@@ -384,7 +387,7 @@ public class JobViewTest {
     public void should_not_mention_any_culprits_if_the_build_was_successful_and_is_still_running() {
         view = JobView.of(a(job().
                 whereTheLast(build().isStillBuilding()).
-                andThePrevious(build().succeededThanksTo("Adam"))));
+                andThePrevious(build().succeededThanksTo("Adam"))), config);
 
         assertThat(view.culprits(), hasSize(0));
     }
@@ -393,7 +396,7 @@ public class JobViewTest {
     public void should_indicate_culprits_if_the_build_is_failing_and_not_claimed() {
         view = JobView.of(a(job().
                         whereTheLast(build().wasBrokenBy("Adam"))),
-                augmentedWith(Claim.class));
+            config, augmentedWith(Claim.class));
 
         assertThat(view.shouldIndicateCulprits(), is(true));
         assertThat(view.culprits(), hasSize(1));
@@ -403,7 +406,7 @@ public class JobViewTest {
     public void should_not_indicate_any_culprits_if_the_build_was_failing_but_is_now_claimed() {
         view = JobView.of(a(job().
                 whereTheLast(build().wasBrokenBy("Adam").andWasClaimedBy("Ben", "Helping out Adam"))),
-                augmentedWith(Claim.class));
+            config, augmentedWith(Claim.class));
 
         assertThat(view.shouldIndicateCulprits(), is(false));
         assertThat(view.culprits(), hasSize(1));
@@ -420,7 +423,7 @@ public class JobViewTest {
 
         view = JobView.of(
                 a(job().whereTheLast(build().finishedWith(FAILURE).andWasClaimedBy(ourPotentialHero, theReason))),
-                augmentedWith(Claim.class)
+            config, augmentedWith(Claim.class)
         );
 
         assertThat(view.isClaimed(),      is(true));
@@ -434,7 +437,7 @@ public class JobViewTest {
 
         view = JobView.of(
                 a(job().whereTheLast(build().finishedWith(FAILURE).andKnownFailures(rogueAi))),
-                augmentedWith(Analysis.class));
+            config, augmentedWith(Analysis.class));
 
         assertThat(view.hasKnownFailures(), is(true));
         assertThat(view.knownFailures(), contains(rogueAi));
@@ -442,7 +445,7 @@ public class JobViewTest {
 
     @Test
     public void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() throws Exception {
-        view = JobView.of(a(job().thatHasNeverRun()));
+        view = JobView.of(a(job().thatHasNeverRun()), config);
 
         assertThat(view.lastBuildName(),          is(""));
         assertThat(view.lastBuildUrl(),           is(""));
