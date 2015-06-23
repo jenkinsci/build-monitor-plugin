@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 public class TimeMachine {
     private Date systemTime;
 
-    public static TimeMachine assumeThatCurrentTime() {
+    public static TimeMachine assumingThatCurrentTime() {
         return new TimeMachine(mock(Date.class));
     }
 

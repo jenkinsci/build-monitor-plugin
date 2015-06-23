@@ -1,26 +1,18 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.Augmentation;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.Analysis;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.BuildStateRecipe;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.ConfigStateRecipe;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.JobStateRecipe;
-import hudson.model.Job;
 import hudson.model.Result;
 import org.junit.Test;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Loops.asFollows;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.assumeThat;
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.assumeThatCurrentTime;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.assumingThatCurrentTime;
 import static hudson.model.Result.ABORTED;
 import static hudson.model.Result.FAILURE;
 import static hudson.model.Result.SUCCESS;
@@ -84,7 +76,7 @@ public class JobViewTest {
     @Test
     public void should_know_current_build_number() {
         view = JobView.of(
-                a(job().whereTheLast(build().numberIs(5))),
+                a(job().whereTheLast(build().hasNumber(5))),
                 withDefaultConfig());
 
         assertThat(view.lastBuildName(), is("#5"));
@@ -93,7 +85,7 @@ public class JobViewTest {
     @Test
     public void should_use_build_name_if_its_known() {
         view = JobView.of(
-                a(job().whereTheLast(build().nameIs("1.3.4+build.15"))),
+                a(job().whereTheLast(build().hasName("1.3.4+build.15"))),
                 withDefaultConfig());
 
         assertThat(view.lastBuildName(), is("1.3.4+build.15"));
@@ -102,7 +94,7 @@ public class JobViewTest {
     @Test
     public void should_know_the_url_of_the_last_build() {
         view = JobView.of(
-                a(job().whereTheLast(build().numberIs(22))),
+                a(job().whereTheLast(build().hasNumber(22))),
                 withDefaultConfig(),
                 locatedAt("job/project-name"));
 
@@ -134,7 +126,7 @@ public class JobViewTest {
         view = JobView.of(
                 a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andUsuallyTakes(0))),
                 withDefaultConfig(),
-                assumingThatCurrentTimeIs("12:00:00"));
+                assumingThatCurrentTime().is("12:00:00"));
 
         assertThat(view.progress(), is(100));
     }
@@ -144,7 +136,7 @@ public class JobViewTest {
         view = JobView.of(
                 a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").andUsuallyTakes(5))),
                 withDefaultConfig(),
-                assumingThatCurrentTimeIs("12:20:00"));
+                assumingThatCurrentTime().is("12:20:00"));
 
         assertThat(view.progress(), is(100));
     }
@@ -154,7 +146,7 @@ public class JobViewTest {
         view = JobView.of(
                 a(job().whereTheLast(build().isStillBuilding().startedAt("13:10:00").andUsuallyTakes(5))),
                 withDefaultConfig(),
-                assumingThatCurrentTimeIs("13:11:00"));
+                assumingThatCurrentTime().is("13:11:00"));
 
         assertThat(view.progress(), is(20));
     }
@@ -170,7 +162,7 @@ public class JobViewTest {
                 sixSecondsLater = "13:10:06",
                 twoAndHalfMinutesLater = "13:12:30",
                 anHourAndHalfLater = "14:40:00";
-        Date currentTime = assumeThatCurrentTime().is(startTime);
+        Date currentTime = assumingThatCurrentTime().is(startTime);
 
         view = JobView.of(
                 a(job().whereTheLast(build().startedAt(startTime).isStillBuilding())),
@@ -229,7 +221,7 @@ public class JobViewTest {
         view = JobView.of(
                 a(job().whereTheLast(build().startedAt("18:05:00").andTook(5))),
                 withDefaultConfig(),
-                assumingThatCurrentTimeIs("18:20:00"));
+                assumingThatCurrentTime().is("18:20:00"));
 
         assertThat(view.timeElapsedSinceLastBuild(), is(tenMinutesInMilliseconds));
     }
@@ -511,54 +503,4 @@ public class JobViewTest {
         assertThat(view.hasKnownFailures(), is(false));
     }
 
-    /*
-     * Syntactic sugar
-     */
-
-    private JobStateRecipe job() {
-        return new JobStateRecipe();
-    }
-
-    private Job<?, ?> a(JobStateRecipe recipe) {
-        return recipe.execute();
-    }
-
-    private BuildStateRecipe build() {
-        return new BuildStateRecipe();
-    }
-
-    private Date assumingThatCurrentTimeIs(String currentTime) throws ParseException {
-        Date currentDate = new SimpleDateFormat("H:m:s").parse(currentTime);
-
-        Date systemTime = mock(Date.class);
-        when(systemTime.getTime()).thenReturn(currentDate.getTime());
-
-        return systemTime;
-    }
-
-    private RelativeLocation locatedAt(String url) {
-
-        RelativeLocation location = mock(RelativeLocation.class);
-        when(location.url()).thenReturn(url);
-
-        return location;
-    }
-
-    private BuildAugmentor augmentedWith(Class<? extends Augmentation>... augmentationsToSupport) {
-        BuildAugmentor augmentor = new BuildAugmentor();
-
-        for (Class<? extends Augmentation> augmentation : augmentationsToSupport) {
-            augmentor.support(augmentation);
-        }
-
-        return augmentor;
-    }
-
-    private Config withDefaultConfig() {
-        return new ConfigStateRecipe().execute();
-    }
-
-    private Config configuredTo(ConfigStateRecipe recipe) {
-        return recipe.execute();
-    }
 }

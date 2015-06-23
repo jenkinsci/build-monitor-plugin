@@ -1,7 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.AnalysedTest;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.ClaimedTest;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import hudson.model.*;
 import hudson.plugins.claim.ClaimBuildAction;
@@ -28,21 +26,21 @@ public class BuildStateRecipe {
         when(build.getParent()).thenReturn(parent);
     }
 
-    public BuildStateRecipe numberIs(int number) {
+    public BuildStateRecipe hasNumber(int number) {
         when(build.getNumber()).thenReturn(number);
 
         // see hudson.model.Run::getDisplayName
-        return nameIs("#" + number);
+        return hasName("#" + number);
     }
 
-    public BuildStateRecipe nameIs(String name) {
+    public BuildStateRecipe hasName(String name) {
         when(build.getDisplayName()).thenReturn(name);
 
         return this;
     }
 
     public BuildStateRecipe whichNumberIs(int number) {
-        return numberIs(number);
+        return hasNumber(number);
     }
 
     public BuildStateRecipe finishedWith(Result result) {
