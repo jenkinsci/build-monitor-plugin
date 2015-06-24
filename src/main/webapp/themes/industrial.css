@@ -44,13 +44,10 @@
     src: local('Open Sans Bold'), local('OpenSans-Bold'), url("industrial/open-sans-bold.woff") format('woff');
 }
 
-html{color:#fff;font-family:'Open sans',sans-serif;font-size:16px;line-height:1.4;}
+html{color:#fff;}
 h1,h2,h3,h4,h5,h6 {
     text-align:center;
     margin:0; padding:0;
-}
-h1,h2,h3,h4,h5,h6, li, a {
-    font-family: 'Open sans', Verdana, Helvetica, sans serif;
 }
 .build-monitor { color:#fff; }
 .build-monitor header>h1 {
@@ -76,8 +73,6 @@ h2 {
 
 .build-monitor header h1 {
     margin:12px auto 0 auto;
-    font-size: 3em;
-    letter-spacing: 0.1em;
     display:block;
 }
 
@@ -97,12 +92,10 @@ h2 {
 }
 
 .build-monitor h2 {
-    font-size: 3.5em;
     margin-bottom: 0.1em;
 }
 
 .build-monitor p {
-    font-size: 1.2em;
     margin: 0 0 0.5em 0;
 }
 
@@ -202,18 +195,14 @@ h2 {
 
 .build-monitor #job-views .build-time,
 .build-monitor #job-views .build-name {
-    font-weight: bold;
     color:rgba(255,255,255, 0.3);
 }
 .build-monitor #job-views .running .build-time,
 .build-monitor #job-views .running .build-name {
-    font-weight: bold;
     color:rgba(255,255,255, 0.5);
 }
-.build-monitor #job-views .build-name { font-size: 2em; line-height: 1.75em; }
-.build-monitor #job-views .build-time { font-size: 2em; line-height: 1.75em; }
-.build-monitor #job-views .build-time>.elapsed       { font-size: 1.0em; color:rgba(255,255,255,0.7); }
-.build-monitor #job-views .build-time>.elapsed:after { content:"|"; margin-left:0.1em; font-weight: normal; }
+.build-monitor #job-views .build-time>.elapsed       { color:rgba(255,255,255,0.7); }
+.build-monitor #job-views .build-time>.elapsed:after { content:"|"; margin-left:0.1em; }
 
 .build-monitor footer {
     padding: 0 8px;
@@ -242,7 +231,6 @@ h2 {
 .build-monitor .latest-results ol {
     list-style-type: none;
     margin: 0 0 0.25em 1em; padding: 0;
-    font-size: 1.3em;
 }
 
 .build-monitor .meta li { display: inline-block; }
@@ -487,14 +475,9 @@ h2 {
 }
 .modal-header h1 {
     text-align: left;
-    font-size:2.5em;
-}
-.modal-body p {
-    font-size:1.2em;
 }
 
 .modal textarea {
-    font-family: "Consolas", "Menlo", "Courier", monospace;
     width: 100%;
 }
 
@@ -598,7 +581,6 @@ slider {
 .build-monitor nav input[type='checkbox']#settings-toggle:disabled+label { }
 .build-monitor nav input[type='checkbox']#settings-toggle:disabled:checked+label{ }
 
-.build-monitor nav label { font-size: 1em; }
 .build-monitor nav li input[type='checkbox'] { margin-right:0.5em; }
 
 

@@ -1,0 +1,35 @@
+body {
+  font-size:100%;
+  font-family: 'Open sans', Verdana, Helvetica, sans serif;
+}
+
+.build-monitor {
+  &.dashboard { font-size:0.6875em; }
+
+  header h1 { font-size: 3em; letter-spacing: 0.1em; }
+
+  nav label { font-size: 1em; }
+
+  #job-views {
+    h2 { font-size: 3.5em; }
+
+    .build-time,
+    .build-name,
+    .running .build-time,
+    .running .build-name { font-weight: bold; }
+
+    .build-name,
+    .build-time { font-size: 2em; line-height: 1.75em; }
+
+    .build-time>.elapsed       { font-size: 1.0em; }
+    .build-time>.elapsed:after { font-weight: normal; }
+
+    .latest-results ul,
+    .latest-results ol { font-size: 1.3em; }
+  }
+}
+
+.modal-header h1 { font-size:2.5em; }
+.modal-body p    { font-size:1.2em; }
+
+.modal textarea { font-family: "Consolas", "Menlo", "Courier", monospace; }
