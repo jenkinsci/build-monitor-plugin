@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
+import com.google.common.base.Supplier;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import hudson.model.*;
 import hudson.plugins.claim.ClaimBuildAction;
@@ -15,7 +16,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Jan Molak
  */
-public class BuildStateRecipe {
+public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
 
     private AbstractBuild<?, ?> build;
 
@@ -103,7 +104,7 @@ public class BuildStateRecipe {
         return this;
     }
 
-    public BuildStateRecipe andTook(int minutes) throws Exception{
+    public BuildStateRecipe took(int minutes) throws Exception{
         long duration = (long) minutes * 60 * 1000;
 
         when(build.getDuration()).thenReturn(duration);
@@ -111,7 +112,7 @@ public class BuildStateRecipe {
         return this;
     }
 
-    public BuildStateRecipe andUsuallyTakes(int minutes) throws Exception{
+    public BuildStateRecipe usuallyTakes(int minutes) throws Exception{
         long duration = (long) minutes * 60 * 1000;
 
         when(build.getEstimatedDuration()).thenReturn(duration);
@@ -119,24 +120,28 @@ public class BuildStateRecipe {
         return this;
     }
 
-    public BuildStateRecipe andWasClaimedBy(String aPotentialHero, String reason) {
+    public BuildStateRecipe wasClaimedBy(String aPotentialHero, String reason) {
         final ClaimBuildAction action = claimBuildAction(aPotentialHero, reason);
         when(build.getAction(ClaimBuildAction.class)).thenReturn(action);
 
         return this;
     }
 
-    public BuildStateRecipe andKnownFailures(String... failures) {
+    public BuildStateRecipe knownFailures(String... failures) {
         final FailureCauseBuildAction action = failureCauseBuildAction(failures);
         when(build.getAction(FailureCauseBuildAction.class)).thenReturn(action);
 
         return this;
     }
 
-    public AbstractBuild execute() {
-        return build;
+    public BuildStateRecipe and() {
+        return this;
     }
 
+    @Override
+    public AbstractBuild get() {
+        return build;
+    }
 
     private List<ChangeLogSet.Entry> entriesBy(String... authors) {
         List<ChangeLogSet.Entry> entries = new ArrayList<ChangeLogSet.Entry>();

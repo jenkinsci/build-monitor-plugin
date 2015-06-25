@@ -30,20 +30,8 @@ public class JobView {
         put(ABORTED,   "failing");  // if someone has aborted it then something is clearly not right, right? :)
     }};
 
-    public static JobView of(Job<?, ?> job, Config config) {
-        return new JobView(job, config, new BuildAugmentor(), RelativeLocation.of(job), new Date());
-    }
-
     public static JobView of(Job<?, ?> job, Config config, BuildAugmentor augmentor) {
-        return  new JobView(job, config, augmentor, RelativeLocation.of(job), new Date());
-    }
-
-    public static JobView of(Job<?, ?> job, Config config, RelativeLocation location) {
-        return new JobView(job, config, new BuildAugmentor(), location, new Date());
-    }
-
-    public static JobView of(Job<?, ?> job, Config config, Date systemTime) {
-        return new JobView(job, config, new BuildAugmentor(), RelativeLocation.of(job), systemTime);
+        return new JobView(job, config, augmentor, RelativeLocation.of(job), new Date());
     }
 
     @JsonProperty
@@ -168,8 +156,7 @@ public class JobView {
         return name();
     }
 
-
-    private JobView(Job<?, ?> job, Config config, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
+    public JobView(Job<?, ?> job, Config config, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
         this.job        = job;
         this.augmentor  = augmentor;
         this.systemTime = systemTime;

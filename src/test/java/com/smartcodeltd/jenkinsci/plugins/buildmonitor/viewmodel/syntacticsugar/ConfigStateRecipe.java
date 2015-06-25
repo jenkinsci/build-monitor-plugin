@@ -1,11 +1,12 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
+import com.google.common.base.Supplier;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import hudson.model.AbstractProject;
 
 import java.util.Comparator;
 
-public class ConfigStateRecipe {
+public class ConfigStateRecipe implements Supplier<Config> {
 
     private Config config = Config.defaultConfig();
 
@@ -14,7 +15,8 @@ public class ConfigStateRecipe {
         return this;
     }
 
-    public Config execute() {
+    @Override
+    public Config get() {
         return config;
     }
 }

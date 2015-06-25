@@ -1,32 +1,37 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
+import com.google.common.base.Supplier;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.Augmentation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
-import hudson.model.AbstractBuild;
-import hudson.model.Job;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class Sugar {
 
-    public static JobStateRecipe job() {
-        return new JobStateRecipe();
+    public static JobViewRecipe jobView() {
+        return new JobViewRecipe();
     }
 
-    public static Job<?, ?> a(JobStateRecipe recipe) {
-        return recipe.execute();
+    public static JobStateRecipe job() {
+        return new JobStateRecipe();
     }
 
     public static BuildStateRecipe build() {
         return new BuildStateRecipe();
     }
 
-    public static AbstractBuild a(BuildStateRecipe recipe) {
-        return recipe.execute();
+    public static <X> X a(Supplier<X> recipe) {
+        return recipe.get();
     }
+
+    public static <X> X with(Supplier<X> recipe) {
+        return recipe.get();
+    }
+
+    // Recipes needed as these get more complex..
 
     public static RelativeLocation locatedAt(String url) {
 
@@ -36,7 +41,7 @@ public class Sugar {
         return location;
     }
 
-    public static BuildAugmentor augmentedWith(Class<? extends Augmentation>... augmentationsToSupport) {
+    public static BuildAugmentor with(Class<? extends Augmentation>... augmentationsToSupport) {
         BuildAugmentor augmentor = new BuildAugmentor();
 
         for (Class<? extends Augmentation> augmentation : augmentationsToSupport) {
@@ -47,10 +52,7 @@ public class Sugar {
     }
 
     public static Config withDefaultConfig() {
-        return new ConfigStateRecipe().execute();
+        return new ConfigStateRecipe().get();
     }
 
-    public static Config configuredTo(ConfigStateRecipe recipe) {
-        return recipe.execute();
-    }
 }

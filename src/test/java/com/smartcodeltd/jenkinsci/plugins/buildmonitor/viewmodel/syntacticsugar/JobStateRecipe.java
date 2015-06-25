@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
+import com.google.common.base.Supplier;
 import hudson.model.AbstractBuild;
 import hudson.model.ItemGroup;
 import hudson.model.Job;
@@ -11,7 +12,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Jan Molak
  */
-public class JobStateRecipe {
+public class JobStateRecipe implements Supplier<Job<?,?>> {
     private Job<?, ?> job;
     private Stack<AbstractBuild> buildHistory = new Stack<AbstractBuild>();
 
@@ -55,15 +56,16 @@ public class JobStateRecipe {
     }
 
     public JobStateRecipe whereTheLast(BuildStateRecipe recipe) {
-        return updatedWithOnlyOneHistoryEntryFor(recipe.execute());
+        return updatedWithOnlyOneHistoryEntryFor(recipe.get());
     }
 
     public JobStateRecipe andThePrevious(BuildStateRecipe recipe) {
-        return updatedWithEarliestHistoryEntryFor(recipe.execute());
+        return updatedWithEarliestHistoryEntryFor(recipe.get());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
-    public Job<?, ?> execute() {
+    public Job<?, ?> get() {
         AbstractBuild earlierBuild, earliestBuild;
 
         // link "previous" builds ...
