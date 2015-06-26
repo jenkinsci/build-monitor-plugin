@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.HumanReadableDuration;
@@ -23,17 +24,18 @@ public class BuildView implements BuildViewModel {
     private final RelativeLocation parentJobLocation;
     private final Date systemTime;
     private final BuildAugmentor augmentor;
+    private final Config config;
 
-    public static BuildView of(Run<?, ?> build) {
-        return new BuildView(build, new BuildAugmentor(), RelativeLocation.of(build.getParent()), new Date());
+    public static BuildView of(Run<?, ?> build, Config config) {
+        return new BuildView(build, config, new BuildAugmentor(), RelativeLocation.of(build.getParent()), new Date());
     }
 
-    public static BuildView of(Run<?, ?> build, BuildAugmentor augmentor, Date systemTime) {
-        return new BuildView(build, augmentor, RelativeLocation.of(build.getParent()), systemTime);
+    public static BuildView of(Run<?, ?> build, Config config, BuildAugmentor augmentor, Date systemTime) {
+        return new BuildView(build, config, augmentor, RelativeLocation.of(build.getParent()), systemTime);
     }
 
-    public static BuildView of(Run<?, ?> build, BuildAugmentor augmentor, RelativeLocation parentJobLocation, Date systemTime) {
-        return new BuildView(build, augmentor, parentJobLocation, systemTime);
+    public static BuildView of(Run<?, ?> build, Config config, BuildAugmentor augmentor, RelativeLocation parentJobLocation, Date systemTime) {
+        return new BuildView(build, config, augmentor, parentJobLocation, systemTime);
     }
 
 
@@ -112,7 +114,7 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public BuildViewModel previousBuild() {
-        return new BuildView(build.getPreviousBuild(), augmentor, this.parentJobLocation, systemTime);
+        return new BuildView(build.getPreviousBuild(), config, augmentor, this.parentJobLocation, systemTime);
     }
 
     @Override
@@ -179,8 +181,9 @@ public class BuildView implements BuildViewModel {
     }
 
 
-    private BuildView(Run<?, ?> build, BuildAugmentor augmentor, RelativeLocation parentJobLocation, Date systemTime) {
+    private BuildView(Run<?, ?> build, Config config, BuildAugmentor augmentor, RelativeLocation parentJobLocation, Date systemTime) {
         this.build = build;
+        this.config = config;
         this.augmentor = augmentor;
         this.parentJobLocation = parentJobLocation;
         this.systemTime = systemTime;

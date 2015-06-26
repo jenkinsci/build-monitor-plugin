@@ -23,7 +23,6 @@
  */
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.Extension;
@@ -56,6 +55,8 @@ import static hudson.Util.filter;
  * @author Jan Molak
  */
 public class BuildMonitorView extends ListView {
+
+    private Config config = Config.defaultConfig();
 
     /**
      * @param name  Name of the view
@@ -99,23 +100,15 @@ public class BuildMonitorView extends ListView {
         String requestedOrdering = req.getParameter("order");
 
         try {
-            order = orderIn(requestedOrdering);
+            config.setOrder(orderIn(requestedOrdering));
         } catch (Exception e) {
             throw new FormException("Can't order projects by " + requestedOrdering, "order");
         }
     }
 
-    // defensive coding to avoid issues when Jenkins instantiates the plugin without populating its fields
-    // https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/43
-    private Comparator<AbstractProject> currentOrderOrDefault() {
-        return order == null ? new ByName() : order;
-    }
-
     public String currentOrder() {
-        return currentOrderOrDefault().getClass().getSimpleName();
+        return config.getOrder().getClass().getSimpleName();
     }
-
-    private Comparator<AbstractProject> order = new ByName();
 
     @SuppressWarnings("unchecked")
     private Comparator<AbstractProject> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
@@ -152,10 +145,10 @@ public class BuildMonitorView extends ListView {
         List<AbstractProject> projects = filter(super.getItems(), AbstractProject.class);
         List<JobView> jobs = new ArrayList<JobView>();
 
-        Collections.sort(projects, currentOrderOrDefault());
+        Collections.sort(projects, config.getOrder());
 
         for (AbstractProject project : projects) {
-            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
+            jobs.add(JobView.of(project, config, withAugmentationsIfTheyArePresent()));
         }
 
         return jobs;

@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
@@ -20,6 +21,7 @@ public class JobView {
     private final Job<?, ?> job;
     private final BuildAugmentor augmentor;
     private final RelativeLocation relative;
+    private final Config config;
 
     private final static Map<Result, String> statuses = new HashMap<Result, String>() {{
         put(SUCCESS,   "successful");
@@ -28,20 +30,8 @@ public class JobView {
         put(ABORTED,   "failing");  // if someone has aborted it then something is clearly not right, right? :)
     }};
 
-    public static JobView of(Job<?, ?> job) {
-        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), new Date());
-    }
-
-    public static JobView of(Job<?, ?> job, BuildAugmentor augmentor) {
-        return new JobView(job, augmentor, RelativeLocation.of(job), new Date());
-    }
-
-    public static JobView of(Job<?, ?> job, RelativeLocation location) {
-        return new JobView(job, new BuildAugmentor(), location, new Date());
-    }
-
-    public static JobView of(Job<?, ?> job, Date systemTime) {
-        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), systemTime);
+    public static JobView of(Job<?, ?> job, Config config, BuildAugmentor augmentor) {
+        return new JobView(job, config, augmentor, RelativeLocation.of(job), new Date());
     }
 
     @JsonProperty
@@ -166,12 +156,12 @@ public class JobView {
         return name();
     }
 
-
-    private JobView(Job<?, ?> job, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
+    public JobView(Job<?, ?> job, Config config, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
         this.job        = job;
         this.augmentor  = augmentor;
         this.systemTime = systemTime;
         this.relative   = relative;
+        this.config = config;
     }
 
     private BuildViewModel lastBuild() {
@@ -192,6 +182,6 @@ public class JobView {
             return new NullBuildView();
         }
 
-        return BuildView.of(job.getLastBuild(), augmentor, relative, systemTime);
+        return BuildView.of(job.getLastBuild(), config, augmentor, relative, systemTime);
     }
 }
