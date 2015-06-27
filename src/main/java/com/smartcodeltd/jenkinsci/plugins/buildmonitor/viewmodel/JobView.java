@@ -20,6 +20,7 @@ public class JobView {
     private final Job<?, ?> job;
     private final BuildAugmentor augmentor;
     private final RelativeLocation relative;
+    private final boolean displayRelativeName;
 
     private final static Map<Result, String> statuses = new HashMap<Result, String>() {{
         put(SUCCESS,   "successful");
@@ -29,24 +30,32 @@ public class JobView {
     }};
 
     public static JobView of(Job<?, ?> job) {
-        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), new Date());
+        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), new Date(), true);
     }
 
     public static JobView of(Job<?, ?> job, BuildAugmentor augmentor) {
-        return new JobView(job, augmentor, RelativeLocation.of(job), new Date());
+        return new JobView(job, augmentor, RelativeLocation.of(job), new Date(), true);
+    }
+    
+    public static JobView of(Job<?, ?> job, BuildAugmentor augmentor, boolean displayRelativeName) {
+        return new JobView(job, augmentor, RelativeLocation.of(job), new Date(), displayRelativeName);
     }
 
     public static JobView of(Job<?, ?> job, RelativeLocation location) {
-        return new JobView(job, new BuildAugmentor(), location, new Date());
+        return new JobView(job, new BuildAugmentor(), location, new Date(), true);
     }
 
     public static JobView of(Job<?, ?> job, Date systemTime) {
-        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), systemTime);
+        return new JobView(job, new BuildAugmentor(), RelativeLocation.of(job), systemTime, true);
     }
 
     @JsonProperty
     public String name() {
-        return relative.name();
+        if (displayRelativeName){
+            return relative.name();
+        } else {
+            return job.getDisplayName();
+        }
     }
 
     @JsonProperty
@@ -167,11 +176,12 @@ public class JobView {
     }
 
 
-    private JobView(Job<?, ?> job, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
+    private JobView(Job<?, ?> job, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime, Boolean displayRelativeName) {
         this.job        = job;
         this.augmentor  = augmentor;
         this.systemTime = systemTime;
         this.relative   = relative;
+        this.displayRelativeName = displayRelativeName;
     }
 
     private BuildViewModel lastBuild() {
