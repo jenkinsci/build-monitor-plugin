@@ -451,5 +451,4 @@ public class JobViewTest {
         assertThat(view.isClaimed(), is(false));
         assertThat(view.hasKnownFailures(), is(false));
     }
-
 }

@@ -158,10 +158,10 @@ public class JobView {
 
     public JobView(Job<?, ?> job, Config config, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
         this.job        = job;
+        this.config     = config;
         this.augmentor  = augmentor;
-        this.systemTime = systemTime;
         this.relative   = relative;
-        this.config = config;
+        this.systemTime = systemTime;
     }
 
     private BuildViewModel lastBuild() {

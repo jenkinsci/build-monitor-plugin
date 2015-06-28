@@ -16,10 +16,9 @@ public class BuildViewTest {
 
     @Test
     public void should_know_the_name_of_the_job_its_based_on() {
-        view = BuildView.of(a(build().hasName(theName)), withDefaultConfig());
+        view = BuildView.of(a(build().hasName(theName)));
 
         assertThat(view.name(), is(theName));
         assertThat(view.toString(), is(theName));
     }
-
 }

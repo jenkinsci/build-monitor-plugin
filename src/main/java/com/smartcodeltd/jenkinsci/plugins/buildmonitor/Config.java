@@ -8,25 +8,16 @@ import java.util.Comparator;
 
 public class Config {
 
-    private Comparator<AbstractProject> order;
+    public static Config defaultConfig() {
+        return new Config();
+    }
 
     public Comparator<AbstractProject> getOrder() {
-        return order;
+        return getOrElse(order, new ByName());
     }
 
     public void setOrder(Comparator<AbstractProject> order) {
         this.order = order;
-    }
-
-    public static Config defaultConfig() {
-        // To avoid issues when Jenkins instantiates the plugin without populating its fields
-        // Ensure there is a dafult for every value
-        // https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/43
-        Config config = new Config();
-
-        config.order = new ByName();
-
-        return config;
     }
 
     @Override
@@ -36,4 +27,23 @@ public class Config {
                 .toString();
     }
 
+    // --
+
+    /**
+     * Jenkins unmarshals objects from config.xml by setting their private fields directly and without invoking their constructors.
+     * In order to retrieve a potentially already persisted field try to first get the field, if that didn't work - use defaults.
+     *
+     * This is defensive coding to avoid issues such as this one:
+     *  https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/43
+     *
+     * @param value         a potentially already persisted field to be returned
+     * @param defaultValue  a default value to be used in case the requested valued was not available
+     *
+     * @return either value or defaultValue
+     */
+    private <T> T getOrElse(T value, T defaultValue) {
+        return value != null ? value : defaultValue;
+    }
+
+    private Comparator<AbstractProject> order;
 }

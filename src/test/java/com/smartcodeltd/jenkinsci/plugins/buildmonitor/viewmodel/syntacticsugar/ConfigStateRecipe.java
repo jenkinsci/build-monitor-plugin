@@ -12,6 +12,7 @@ public class ConfigStateRecipe implements Supplier<Config> {
 
     public ConfigStateRecipe order(Comparator<AbstractProject> order) {
         config.setOrder(order);
+
         return this;
     }
 

@@ -26,6 +26,10 @@ public class BuildView implements BuildViewModel {
     private final BuildAugmentor augmentor;
     private final Config config;
 
+    public static BuildView of(Run<?, ?> build) {
+        return new BuildView(build, Config.defaultConfig(), new BuildAugmentor(), RelativeLocation.of(build.getParent()), new Date());
+    }
+
     public static BuildView of(Run<?, ?> build, Config config) {
         return new BuildView(build, config, new BuildAugmentor(), RelativeLocation.of(build.getParent()), new Date());
     }
