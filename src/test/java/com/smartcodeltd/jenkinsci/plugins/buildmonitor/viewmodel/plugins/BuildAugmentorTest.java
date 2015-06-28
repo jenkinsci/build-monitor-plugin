@@ -6,12 +6,13 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.Not
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claimed;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.NotClaimed;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.BuildStateRecipe;
 import hudson.model.Result;
 import hudson.model.Run;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.a;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.build;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -25,8 +26,8 @@ public class BuildAugmentorTest {
     private BuildAugmentor augmentor = new BuildAugmentor();
 
     private Run<?, ?> plainBuild = a(build());
-    private Run<?, ?> claimedBuild = a(build().finishedWith(Result.FAILURE).andWasClaimedBy(AUTHOR, REASON));
-    private Run<?, ?> failedBuild = a(build().finishedWith(Result.FAILURE).andKnownFailures(FLUX_CAPACITOR_FAILED_AGAIN));
+    private Run<?, ?> claimedBuild = a(build().finishedWith(Result.FAILURE).and().wasClaimedBy(AUTHOR, REASON));
+    private Run<?, ?> failedBuild = a(build().finishedWith(Result.FAILURE).and().knownFailures(FLUX_CAPACITOR_FAILED_AGAIN));
 
     /*
      * Claim tests
@@ -72,15 +73,4 @@ public class BuildAugmentorTest {
         assertThat(analysis.failures(),  Matchers.contains(FLUX_CAPACITOR_FAILED_AGAIN));
     }
 
-    /*
-     * Syntactic sugar
-     */
-
-    private Run<?, ?> a(BuildStateRecipe recipe) {
-        return recipe.execute();
-    }
-
-    private BuildStateRecipe build() {
-        return new BuildStateRecipe();
-    }
 }

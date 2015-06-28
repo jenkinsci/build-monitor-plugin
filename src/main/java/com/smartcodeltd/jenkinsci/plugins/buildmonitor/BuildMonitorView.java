@@ -23,7 +23,6 @@
  */
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.Extension;
@@ -99,35 +98,15 @@ public class BuildMonitorView extends ListView {
         String requestedOrdering = req.getParameter("order");
 
         try {
-            order = orderIn(requestedOrdering);
+            currentConfig().setOrder(orderIn(requestedOrdering));
         } catch (Exception e) {
             throw new FormException("Can't order projects by " + requestedOrdering, "order");
         }
     }
 
-    // defensive coding to avoid issues when Jenkins instantiates the plugin without populating its fields
-    // https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/43
-    private Comparator<AbstractProject> currentOrderOrDefault() {
-        return order == null ? new ByName() : order;
-    }
-
-    public String currentOrder() {
-        return currentOrderOrDefault().getClass().getSimpleName();
-    }
-
-    private Comparator<AbstractProject> order = new ByName();
-
-    @SuppressWarnings("unchecked")
-    private Comparator<AbstractProject> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        String packageName = this.getClass().getPackage().getName() + ".order.";
-
-        return (Comparator<AbstractProject>) Class.forName(packageName + requestedOrdering).newInstance();
-    }
-
     /**
      * Because of how org.kohsuke.stapler.HttpResponseRenderer is implemented
-     * it can only work with net.sf.JSONObject in order to produce correct application/json
-     * output
+     * it can only work with net.sf.JSONObject in order to produce correct application/json output
      *
      * @return
      * @throws Exception
@@ -141,6 +120,12 @@ public class BuildMonitorView extends ListView {
         return jobViews().isEmpty();
     }
 
+    // used in the configure-entries.jelly form
+    public String currentOrder() {
+        return currentConfig().getOrder().getClass().getSimpleName();
+    }
+
+    // --
 
     private JSONObject jsonFrom(List<JobView> jobViews) throws IOException {
         ObjectMapper m = new ObjectMapper();
@@ -152,10 +137,10 @@ public class BuildMonitorView extends ListView {
         List<AbstractProject> projects = filter(super.getItems(), AbstractProject.class);
         List<JobView> jobs = new ArrayList<JobView>();
 
-        Collections.sort(projects, currentOrderOrDefault());
+        Collections.sort(projects, currentConfig().getOrder());
 
         for (AbstractProject project : projects) {
-            jobs.add(JobView.of(project, withAugmentationsIfTheyArePresent()));
+            jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent()));
         }
 
         return jobs;
@@ -164,4 +149,55 @@ public class BuildMonitorView extends ListView {
     private BuildAugmentor withAugmentationsIfTheyArePresent() {
         return BuildAugmentor.fromDetectedPlugins();
     }
+
+    /**
+     * When Jenkins is started up, Jenkins::loadTasks is called.
+     * At that point config.xml file is unmarshaled into a Jenkins object containing a list of Views, including BuildMonitorView objects.
+     *
+     * The unmarshaling process sets private fields on BuildMonitorView objects directly, ignoring their constructors.
+     * This means that if there's a private field added to this class (say "config"), the previously persisted versions of this class can no longer
+     * be correctly un-marshaled into the new version as they don't define the new field and the object ends up in an inconsistent state.
+     *
+     * @return the previously persisted version of the config object, default config, or the deprecated "order" object, converted to a "config" object.
+     */
+    private Config currentConfig() {
+        if (creatingAFreshView()) {
+            config = Config.defaultConfig();
+        }
+        else if (deserailisingFromAnOlderFormat()) {
+            migrateFromOldToNewConfigFormat();
+        }
+
+        return config;
+    }
+
+    private boolean creatingAFreshView() {
+        return config == null && order == null;
+    }
+
+    // Is config.xml saved in a format prior to version 1.6+build.150 of Build Monitor?
+    private boolean deserailisingFromAnOlderFormat() {
+        return config == null && order != null;
+    }
+
+    // If an older version of config.xml is loaded, "config" field is missing, but "order" is present
+    private void migrateFromOldToNewConfigFormat() {
+        Config c = new Config();
+        c.setOrder(order);
+
+        config = c;
+        order = null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Comparator<AbstractProject> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        String packageName = this.getClass().getPackage().getName() + ".order.";
+
+        return (Comparator<AbstractProject>) Class.forName(packageName + requestedOrdering).newInstance();
+    }
+
+    private Config config;
+
+    @Deprecated // use Config instead
+    private Comparator<AbstractProject> order;      // note: this field can be removed when people stop using versions prior to 1.6+build.150
 }
