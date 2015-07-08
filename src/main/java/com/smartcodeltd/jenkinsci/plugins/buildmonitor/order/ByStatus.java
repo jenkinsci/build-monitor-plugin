@@ -2,13 +2,15 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.order;
 
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
+import hudson.model.Job;
 import hudson.model.Result;
+import hudson.model.Run;
 
 import java.util.Comparator;
 
-public class ByStatus implements Comparator<AbstractProject> {
+public class ByStatus implements Comparator<Job<?, ?>> {
     @Override
-    public int compare(AbstractProject a, AbstractProject b) {
+    public int compare(Job<?, ?> a, Job<?, ?> b) {
         return bothProjectsHaveBuildHistory(a, b) ?
             compareLastBuilds(a, b) :
             compareProjects(a, b);
@@ -16,13 +18,13 @@ public class ByStatus implements Comparator<AbstractProject> {
 
     // --
 
-    private boolean bothProjectsHaveBuildHistory(AbstractProject a, AbstractProject b) {
+    private boolean bothProjectsHaveBuildHistory(Job<?, ?> a, Job<?, ?> b) {
         return a.getLastBuild() != null && b.getLastBuild() != null;
     }
 
-    private int compareProjects(AbstractProject a, AbstractProject b) {
-        AbstractBuild lastBuildOfA = a.getLastBuild();
-        AbstractBuild lastBuildOfB = b.getLastBuild();
+    private int compareProjects(Job<?, ?> a, Job<?, ?> b) {
+        Run<?, ?> lastBuildOfA = a.getLastBuild();
+        Run<?, ?> lastBuildOfB = b.getLastBuild();
 
         if (lastBuildOfA == null && lastBuildOfB != null) {
             return -1;
@@ -33,7 +35,7 @@ public class ByStatus implements Comparator<AbstractProject> {
         }
     }
 
-    private int compareLastBuilds(AbstractProject a, AbstractProject b) {
+    private int compareLastBuilds(Job<?, ?> a, Job<?, ?> b) {
         Result lastResultOfA = a.getLastBuild().getResult();
         Result lastResultOfB = b.getLastBuild().getResult();
 

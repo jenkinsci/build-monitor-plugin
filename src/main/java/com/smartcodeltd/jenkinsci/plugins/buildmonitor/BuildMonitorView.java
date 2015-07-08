@@ -29,7 +29,9 @@ import hudson.Extension;
 import hudson.Util;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor.FormException;
+import hudson.model.Job;
 import hudson.model.ListView;
+import hudson.model.Run;
 import hudson.model.ViewDescriptor;
 import hudson.util.FormValidation;
 import net.sf.json.JSONObject;
@@ -149,12 +151,14 @@ public class BuildMonitorView extends ListView {
     }
 
     private List<JobView> jobViews() {
-        List<AbstractProject> projects = filter(super.getItems(), AbstractProject.class);
+        //A little bit of evil to make the type system happy.
+        @SuppressWarnings("unchecked")
+        List<Job<?, ?>> projects = new ArrayList(filter(super.getItems(), Job.class));
         List<JobView> jobs = new ArrayList<JobView>();
 
         Collections.sort(projects, currentConfig().getOrder());
 
-        for (AbstractProject project : projects) {
+        for (Job project : projects) {
             jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent()));
         }
 
@@ -205,14 +209,14 @@ public class BuildMonitorView extends ListView {
     }
 
     @SuppressWarnings("unchecked")
-    private Comparator<AbstractProject> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    private Comparator<Job<?, ?>> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
-        return (Comparator<AbstractProject>) Class.forName(packageName + requestedOrdering).newInstance();
+        return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).newInstance();
     }
 
     private Config config;
 
     @Deprecated // use Config instead
-    private Comparator<AbstractProject> order;      // note: this field can be removed when people stop using versions prior to 1.6+build.150
+    private Comparator<Job<?, ?>> order;      // note: this field can be removed when people stop using versions prior to 1.6+build.150
 }

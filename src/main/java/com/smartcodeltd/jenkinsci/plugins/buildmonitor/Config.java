@@ -3,6 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 import com.google.common.base.Objects;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
 import hudson.model.AbstractProject;
+import hudson.model.Job;
 
 import java.util.Comparator;
 
@@ -12,11 +13,11 @@ public class Config {
         return new Config();
     }
 
-    public Comparator<AbstractProject> getOrder() {
+    public Comparator<Job<?, ?>> getOrder() {
         return getOrElse(order, new ByName());
     }
 
-    public void setOrder(Comparator<AbstractProject> order) {
+    public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
     }
 
@@ -45,5 +46,5 @@ public class Config {
         return value != null ? value : defaultValue;
     }
 
-    private Comparator<AbstractProject> order;
+    private Comparator<Job<?, ?>> order;
 }
