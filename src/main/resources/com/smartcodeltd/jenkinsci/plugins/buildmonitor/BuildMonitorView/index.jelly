@@ -57,7 +57,7 @@
                  data-ng-controller="JobViews">
                 <header>
                     <a class="home-link" href="${rootURL}/" title="Jenkins">Jenkins</a>
-                    <h1><a href="configure" title="Configure the '${it.customDisplayName}' view">${it.customDisplayName}</a></h1>
+                    <h1><a href="configure" title="Configure the '${it.title}' view">${it.title}</a></h1>
                 </header>
 
                 <st:include page="main-settings.jelly"/>

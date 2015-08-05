@@ -56,19 +56,21 @@ import static hudson.Util.filter;
  */
 public class BuildMonitorView extends ListView {
 
-    private String customDisplayName;
+    private String title;
 
     /**
-     * @param name  Name of the view
+     * @param name  Name of the view to be displayed on the Views tab
+     * @param title Title to be displayed on the Build Monitor; defaults to 'name' if not set
      */
     @DataBoundConstructor
-    public BuildMonitorView(String name, String customDisplayName) {
+    public BuildMonitorView(String name, String title) {
         super(name);
-        this.customDisplayName = customDisplayName;
+
+        this.title = title;
     }
 
-    public String getCustomDisplayName() {
-        return customDisplayName.equals("") ? getDisplayName() : customDisplayName;
+    public String getTitle() {
+        return isGiven(title) ? title : getDisplayName();
     }
 
     @Extension
@@ -104,7 +106,7 @@ public class BuildMonitorView extends ListView {
 
         String requestedOrdering = req.getParameter("order");
 
-        customDisplayName = req.getParameter("customDisplayName");
+        title = req.getParameter("title");
 
         try {
             currentConfig().setOrder(orderIn(requestedOrdering));
@@ -135,6 +137,10 @@ public class BuildMonitorView extends ListView {
     }
 
     // --
+
+    private boolean isGiven(String value) {
+        return ! (value == null || "".equals(value));
+    }
 
     private JSONObject jsonFrom(List<JobView> jobViews) throws IOException {
         ObjectMapper m = new ObjectMapper();
