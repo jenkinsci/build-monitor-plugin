@@ -56,12 +56,19 @@ import static hudson.Util.filter;
  */
 public class BuildMonitorView extends ListView {
 
+    private String customDisplayName;
+
     /**
      * @param name  Name of the view
      */
     @DataBoundConstructor
-    public BuildMonitorView(String name) {
+    public BuildMonitorView(String name, String customDisplayName) {
         super(name);
+        this.customDisplayName = customDisplayName;
+    }
+
+    public String getCustomDisplayName() {
+        return customDisplayName.equals("") ? getDisplayName() : customDisplayName;
     }
 
     @Extension
@@ -96,6 +103,8 @@ public class BuildMonitorView extends ListView {
         super.submit(req);
 
         String requestedOrdering = req.getParameter("order");
+
+        customDisplayName = req.getParameter("customDisplayName");
 
         try {
             currentConfig().setOrder(orderIn(requestedOrdering));
