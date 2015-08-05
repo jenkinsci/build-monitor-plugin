@@ -7,7 +7,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.bu
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.Job;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.Scenario;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.utils.Typograph;
-import hudson.model.FreeStyleProject;
 import hudson.tasks.Builder;
 import hudson.tasks.Shell;
 import org.apache.commons.lang3.StringUtils;
@@ -98,7 +97,7 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability("platform", Platform.MAC);
 
-        capabilities.setCapability("version",     readPropertyOrEnv("SELENIUM_VERSION", "34"));
+        capabilities.setCapability("version",     readPropertyOrEnv("SELENIUM_VERSION", "43"));
         capabilities.setCapability("platform",    readPropertyOrEnv("SELENIUM_PLATFORM", "mac"));
         capabilities.setCapability("browserName", readPropertyOrEnv("SELENIUM_BROWSER", BrowserType.CHROME));
 
