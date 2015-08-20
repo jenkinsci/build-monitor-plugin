@@ -14,6 +14,7 @@ import java.util.List;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.actions.Click.click;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.actions.Enter.enter;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.actions.Navigate.navigateTo;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.actions.Submit.submit;
 
 public class DefineBuildFailureCause implements Action {
 
@@ -52,7 +53,7 @@ public class DefineBuildFailureCause implements Action {
             add(click(failureCause.buildLogIndication()));
             add(enter(pattern, failureCause.pattern()));
 
-            add(click(failureCause.save()));
+            add(submit(failureCause.save()));
         }};
     }
 }
