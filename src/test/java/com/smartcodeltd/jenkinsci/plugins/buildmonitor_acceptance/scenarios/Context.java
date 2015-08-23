@@ -27,7 +27,11 @@ public class Context {
         project.getBuildersList().addAll(builders);
 
         if (shouldExecute) {
-            project.scheduleBuild2(0);
+            try {
+                project.scheduleBuild2(0).get();
+            } catch (Exception e) {
+                throw new RuntimeException("Scheduled build did not complete as expected", e);
+            }
         }
 
         return this;
