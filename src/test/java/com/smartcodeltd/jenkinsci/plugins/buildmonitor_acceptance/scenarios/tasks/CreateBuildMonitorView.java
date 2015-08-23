@@ -13,6 +13,7 @@ import java.util.List;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.actions.Click.click;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.actions.Enter.enter;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.actions.Navigate.navigateTo;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.actions.Submit.submit;
 
 public class CreateBuildMonitorView implements Action {
 
@@ -28,7 +29,7 @@ public class CreateBuildMonitorView implements Action {
 
     @Override
     public void executeUsing(JenkinsRule jenkins, WebDriver browser) throws Exception {
-        configurationPlan.add(click(ConfigureBuildMonitor.screen().OK()));
+        configurationPlan.add(submit(ConfigureBuildMonitor.screen().OK()));
 
         for(Action action : configurationPlan) {
             action.executeUsing(jenkins, browser);
@@ -45,7 +46,7 @@ public class CreateBuildMonitorView implements Action {
             add(navigateTo(newView));
             add(enter(name, newView.name()));
             add(click(newView.mode("Build Monitor View")));
-            add(click(newView.OK()));
+            add(submit(newView.OK()));
         }};
     }
 }
