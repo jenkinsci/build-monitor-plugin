@@ -18,6 +18,7 @@ public class Context {
 
     public Context createFolder(String name) throws IOException {
         Folder folder = currentRoot.createProject(Folder.class, name);
+
         return new Context(new FolderAdapter(folder));
     }
 
@@ -27,11 +28,7 @@ public class Context {
         project.getBuildersList().addAll(builders);
 
         if (shouldExecute) {
-            try {
-                project.scheduleBuild2(0).get();
-            } catch (Exception e) {
-                throw new RuntimeException("Scheduled build did not complete as expected", e);
-            }
+            project.scheduleBuild2(0);
         }
 
         return this;

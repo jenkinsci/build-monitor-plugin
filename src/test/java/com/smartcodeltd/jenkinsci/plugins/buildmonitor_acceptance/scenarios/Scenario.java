@@ -13,16 +13,18 @@ public class Scenario {
         return new Scenario(jenkins, browser);
     }
 
-    public Scenario WhenIHave(Prerequisite... prerequisites) throws IOException {
+    public Scenario WhenIHave(Prerequisite... prerequisites) throws Exception {
         return IHave(prerequisites);
     }
 
-    public Scenario IHave(Prerequisite... prerequisites) throws IOException {
+    public Scenario IHave(Prerequisite... prerequisites) throws Exception {
         Context currentContext = new Context(new JenkinsAdapter(jenkins.getInstance()));
 
         for(Prerequisite prerequisite : prerequisites) {
             currentContext = prerequisite.accept(currentContext);
         }
+
+        jenkins.waitUntilNoActivity();
 
         return this;
     }
