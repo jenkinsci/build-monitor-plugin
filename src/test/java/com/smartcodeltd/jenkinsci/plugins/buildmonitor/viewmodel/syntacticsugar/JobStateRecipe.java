@@ -55,6 +55,12 @@ public class JobStateRecipe implements Supplier<Job<?,?>> {
         return this;
     }
 
+    public JobStateRecipe thatIsNotBuildable() {
+        when(job.isBuildable()).thenReturn(Boolean.FALSE);
+
+        return this;
+    }
+
     public JobStateRecipe whereTheLast(BuildStateRecipe recipe) {
         return updatedWithOnlyOneHistoryEntryFor(recipe.get());
     }
