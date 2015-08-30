@@ -9,9 +9,12 @@ import hudson.model.Result;
 import hudson.model.Run;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import static hudson.model.Result.*;
+import static hudson.model.Result.SUCCESS;
 
 /**
  * @author Jan Molak
@@ -23,15 +26,16 @@ public class JobView {
     private final RelativeLocation relative;
     private final Config config;
 
-    private final static Map<Result, String> statuses = new HashMap<Result, String>() {{
-        put(SUCCESS,   "successful");
-        put(UNSTABLE,  "unstable");
-        put(FAILURE,   "failing");
-        put(ABORTED,   "failing");  // if someone has aborted it then something is clearly not right, right? :)
-    }};
-
     public static JobView of(Job<?, ?> job, Config config, BuildAugmentor augmentor) {
         return new JobView(job, config, augmentor, RelativeLocation.of(job), new Date());
+    }
+
+    public JobView(Job<?, ?> job, Config config, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
+        this.job        = job;
+        this.config     = config;
+        this.augmentor  = augmentor;
+        this.relative   = relative;
+        this.systemTime = systemTime;
     }
 
     @JsonProperty
@@ -44,23 +48,9 @@ public class JobView {
         return relative.url();
     }
 
-    private String statusOf(Result result) {
-        return statuses.containsKey(result) ? statuses.get(result) : "unknown";
-    }
-
     @JsonProperty
     public String status() {
-        String status = statusOf(lastCompletedBuild().result());
-
-        if (lastBuild().isRunning()) {
-            status += " running";
-        }
-
-        if (lastCompletedBuild().isClaimed()) {
-            status += " claimed";
-        }
-
-        return status;
+        return CssStatus.of(this);
     }
 
     @JsonProperty
@@ -127,6 +117,18 @@ public class JobView {
         return culprits;
     }
 
+    public boolean isDisabled() {
+        return ! job.isBuildable();
+    }
+
+    public boolean isRunning() {
+        return lastBuild().isRunning();
+    }
+
+    public Result lastResult() {
+        return lastCompletedBuild().result();
+    }
+
     @JsonProperty
     public boolean isClaimed() {
         return lastCompletedBuild().isClaimed();
@@ -156,13 +158,7 @@ public class JobView {
         return name();
     }
 
-    public JobView(Job<?, ?> job, Config config, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
-        this.job        = job;
-        this.config     = config;
-        this.augmentor  = augmentor;
-        this.relative   = relative;
-        this.systemTime = systemTime;
-    }
+    // --
 
     private BuildViewModel lastBuild() {
         return buildViewOf(job.getLastBuild());

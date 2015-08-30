@@ -103,11 +103,13 @@ h2 {
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .unstable   { background-color:#f59400; }
 .build-monitor .failing    { background-color:darkred; }
+.build-monitor .disabled   { background-color:gray; }
 
 /*
  * Striped background patterns inspired by Lea Verou
  * http://lea.verou.me/2010/12/checkered-stripes-other-background-patterns-with-css3-gradients/
  */
+.build-monitor .disabled,
 .build-monitor .successful,
 .build-monitor .unstable,
 .build-monitor .failing {

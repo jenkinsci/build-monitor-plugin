@@ -18,6 +18,8 @@ public class JobStateRecipe implements Supplier<Job<?,?>> {
 
     public JobStateRecipe() {
         job = mock(Job.class);
+
+        when(job.isBuildable()).thenReturn(Boolean.TRUE);
     }
 
     public JobStateRecipe withName(String name) {
@@ -51,6 +53,12 @@ public class JobStateRecipe implements Supplier<Job<?,?>> {
 
     public JobStateRecipe thatHasNeverRun() {
         buildHistory.clear();
+
+        return this;
+    }
+
+    public JobStateRecipe thatIsNotBuildable() {
+        when(job.isBuildable()).thenReturn(Boolean.FALSE);
 
         return this;
     }
