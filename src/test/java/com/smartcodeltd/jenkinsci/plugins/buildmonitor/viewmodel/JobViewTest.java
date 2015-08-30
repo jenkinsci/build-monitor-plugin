@@ -217,17 +217,6 @@ public class JobViewTest {
      */
 
     @Test
-    public void should_describe_the_job_as_disabled_if_not_buildable_or_never_run() {
-        view = JobView.of(a(job().thatHasNeverRun()));
-
-        assertThat(view.status(), containsString("disabled"));
-
-        view = JobView.of(a(job().thatIsNotBuildable()));
-
-        assertThat(view.status(), containsString("disabled"));
-    }
-
-    @Test
     public void should_describe_the_job_as_successful_if_the_last_build_succeeded() {
         view = a(jobView().of(
                 a(job().whereTheLast(build().finishedWith(SUCCESS)))));
@@ -270,6 +259,21 @@ public class JobViewTest {
         for (JobView view : views) {
             assertThat(view.status(), containsString("running"));
         }
+    }
+
+    @Test
+    public void should_describe_the_job_as_disabled_if_not_buildable() {
+        view = a(jobView().of(a(job().thatIsNotBuildable())));
+
+        assertThat(view.status(), containsString("disabled"));
+    }
+
+    @Test
+    public void should_describe_the_job_as_disabled_and_failing_if_the_last_build_failed_and_the_job_is_disabled() {
+        view = a(jobView().of(a(job().thatIsNotBuildable().whereTheLast(build().finishedWith(FAILURE)))));
+
+        assertThat(view.status(), containsString("disabled"));
+        assertThat(view.status(), containsString("failing"));
     }
 
     @Test

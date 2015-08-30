@@ -99,11 +99,11 @@ h2 {
     margin: 0 0 0.5em 0;
 }
 
-.build-monitor .disabled   { background-color:gray; }
 .build-monitor .unknown    { background-color:#474747; }
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .unstable   { background-color:#f59400; }
 .build-monitor .failing    { background-color:darkred; }
+.build-monitor .disabled   { background-color:gray; }
 
 /*
  * Striped background patterns inspired by Lea Verou

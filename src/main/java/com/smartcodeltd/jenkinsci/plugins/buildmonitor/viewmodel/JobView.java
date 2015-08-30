@@ -23,11 +23,12 @@ public class JobView {
     private final RelativeLocation relative;
     private final Config config;
 
+    // todo: extract
     private final static Map<Result, String> statuses = new HashMap<Result, String>() {{
         put(SUCCESS,   "successful");
         put(UNSTABLE,  "unstable");
         put(FAILURE,   "failing");
-        put(NOT_BUILT, "disabled");
+        put(NOT_BUILT, "unknown");
         put(ABORTED,   "failing");  // if someone has aborted it then something is clearly not right, right? :)
     }};
 
@@ -45,16 +46,19 @@ public class JobView {
         return relative.url();
     }
 
+    // todo: extract
     private String statusOf(Result result) {
         return statuses.containsKey(result) ? statuses.get(result) : "unknown";
     }
 
     @JsonProperty
     public String status() {
-        if (!job.isBuildable()) {
-            return "disabled";
-        }
+        // todo: extract
         String status = statusOf(lastCompletedBuild().result());
+
+        if (! job.isBuildable()) {
+            status += " disabled";
+        }
 
         if (lastBuild().isRunning()) {
             status += " running";
@@ -167,6 +171,8 @@ public class JobView {
         this.relative   = relative;
         this.systemTime = systemTime;
     }
+
+    // --
 
     private BuildViewModel lastBuild() {
         return buildViewOf(job.getLastBuild());
