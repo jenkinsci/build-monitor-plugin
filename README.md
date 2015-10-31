@@ -86,7 +86,7 @@ You might also be interested in a [script](https://wiki.jenkins-ci.org/display/J
 
 ### How do I know what broke the build?
 
-Wouldn't it be great to know _what_ made your build fail? Well of course it would. Build Monitor supports Jenkins [Buld Failure Analyzer Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Build+Failure+Analyzer) so get it, [teach it](https://wiki.jenkins-ci.org/display/JENKINS/Build+Failure+Analyzer#BuildFailureAnalyzer-Knowledgebase) and Build Monitor will tell you what the Failure Analyzer found out.
+Wouldn't it be great to know _what_ made your build fail? Well of course it would. Build Monitor supports Jenkins [Build Failure Analyzer Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Build+Failure+Analyzer) so get it, [teach it](https://wiki.jenkins-ci.org/display/JENKINS/Build+Failure+Analyzer#BuildFailureAnalyzer-Knowledgebase) and Build Monitor will tell you what the Failure Analyzer found out.
 
 ### I have too many jobs on one screen, what should I do?
 
