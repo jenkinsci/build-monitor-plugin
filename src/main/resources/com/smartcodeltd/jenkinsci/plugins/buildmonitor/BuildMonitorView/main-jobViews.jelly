@@ -33,12 +33,12 @@
                href="{{job.lastBuildUrl}}">{{job.lastBuildName}}</a>
 
             <div data-ng-show="!!job.estimatedDuration &amp;&amp; job.progress > 0" class="build-time">
-                <span class="elapsed">{{job.lastBuildDuration}}</span>
-                <span class="estimated">{{job.estimatedDuration}}</span>
+                <span class="elapsed" title="Elapsed time">{{job.lastBuildDuration}}</span>
+                <span class="estimated" title="Typical build time">{{job.estimatedDuration}}</span>
             </div>
 
             <div data-ng-show="!!job.timeElapsedSinceLastBuild &amp;&amp; job.progress == 0" class="build-time">
-                <span class="estimated">{{job.timeElapsedSinceLastBuild | estimatedTimeElapsedSince}}</span>
+                <span class="estimated" title="Last execution">{{job.timeElapsedSinceLastBuild | estimatedTimeElapsedSince}}</span>
             </div>
         </div>
     </li>
