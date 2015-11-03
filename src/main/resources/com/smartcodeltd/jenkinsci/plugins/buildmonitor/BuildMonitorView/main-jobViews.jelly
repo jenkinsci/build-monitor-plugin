@@ -1,9 +1,9 @@
 <ul id="job-views"
     data-ng-class="{ 'colour-blind-mode': settings.colourBlind == 1 }"
     data-ng-style="{'font-size': settings.fontSize + 'em'}"
-    class="columns-{{ settings.numberOfColumns }}">
+        >
 
-    <li ng-repeat="job in jobs" class="{{job.status}}" id="{{ job.name | slugify }}">
+    <li ng-repeat="job in jobs" class="columns-{{ settings.multijobLanes == 1 ? job.jobsinphase : settings.numberOfColumns }} {{job.status}}" id="{{ job.name | slugify }}">
         <div class="progress" style="width: {{job.progress}}%">
             <span>{{job.progress}}%</span>
         </div>

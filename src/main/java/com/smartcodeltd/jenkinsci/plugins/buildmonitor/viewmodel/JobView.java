@@ -4,6 +4,13 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
+import hudson.model.Hudson;
+import hudson.model.AbstractProject;
+import hudson.model.DependencyGraph;
+import com.tikal.jenkins.plugins.multijob.MultiJobProject;
+import hudson.model.AbstractBuild;
+import hudson.model.Cause;
+import hudson.model.CauseAction;
 import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.Run;
@@ -154,6 +161,21 @@ public class JobView {
         return lastCompletedBuild().knownFailures();
     }
 
+    @JsonProperty
+    public int phase() {
+        return lastCompletedBuild().phase();
+    }
+
+    @JsonProperty
+    public int jobsinphase() {
+        return lastCompletedBuild().jobsinphase();
+    }
+
+    @JsonProperty
+    public int numphases() {
+        return lastCompletedBuild().numphases();
+    }
+
     public String toString() {
         return name();
     }
@@ -161,6 +183,40 @@ public class JobView {
     // --
 
     private BuildViewModel lastBuild() {
+        // If we are used inside a multijob, we see the build attached to it.
+        DependencyGraph depsgraph = Hudson.getInstance().getDependencyGraph();
+        AbstractProject<?, ?> parent = null;
+        for (final AbstractProject<?, ?> p : depsgraph.getUpstream((AbstractProject<?, ?>) job)) {
+            if (p instanceof MultiJobProject) {
+                parent = p;
+                break;
+            }
+        }
+        if (parent != null) {
+            AbstractBuild<?, ?> upstreamBuild = (AbstractBuild) parent.getLastBuild();
+
+            if (parent.getLastBuild() != null) {
+
+                @SuppressWarnings("unchecked")
+                final List<AbstractBuild<?, ?>> thisBuilds = (List<AbstractBuild<?, ?>>) job.getBuilds();
+
+                for (final AbstractBuild<?, ?> innerBuild : thisBuilds) {
+                    for (final CauseAction action : innerBuild.getActions(CauseAction.class)) {
+                        for (final Cause cause : action.getCauses()) {
+                            if (cause instanceof Cause.UpstreamCause) {
+                                final Cause.UpstreamCause upstreamCause = (Cause.UpstreamCause) cause;
+                                if (upstreamCause.getUpstreamProject().equals(upstreamBuild.getProject().getFullName())
+                                        && (upstreamCause.getUpstreamBuild() == upstreamBuild.getNumber())) {
+                                    return buildViewOf(innerBuild);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return buildViewOf(job.getLastBuild(), false);
+        }
+
         return buildViewOf(job.getLastBuild());
     }
 
@@ -174,10 +230,14 @@ public class JobView {
     }
 
     private BuildViewModel buildViewOf(Run<?, ?> build) {
+        return buildViewOf(build, true);
+    }
+
+    private BuildViewModel buildViewOf(Run<?, ?> build, boolean current) {
         if (null == build) {
             return new NullBuildView();
         }
 
-        return BuildView.of(job.getLastBuild(), config, augmentor, relative, systemTime);
+        return BuildView.of(build, config, augmentor, relative, systemTime, current);
     }
 }

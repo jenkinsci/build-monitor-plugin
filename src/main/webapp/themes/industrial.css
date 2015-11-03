@@ -321,35 +321,35 @@ h2 {
 .build-monitor ul#job-views>li {
     margin: 4px;
 }
-.build-monitor ul#job-views.columns-1 li {
+.build-monitor ul#job-views>li.columns-1 {
     -webkit-flex: 1 99%;
     flex: 1 99%;
 }
-.build-monitor ul#job-views.columns-2 li {
+.build-monitor ul#job-views>li.columns-2 {
     -webkit-flex: 1 48%;
     flex: 1 48%;
 }
-.build-monitor ul#job-views.columns-3 li {
+.build-monitor ul#job-views>li.columns-3 {
     -webkit-flex: 1 32%;
     flex: 1 32%;
 }
-.build-monitor ul#job-views.columns-4 li {
+.build-monitor ul#job-views>li.columns-4 {
     -webkit-flex: 1 24%;
     flex: 1 24%;
 }
-.build-monitor ul#job-views.columns-5 li {
+.build-monitor ul#job-views>li.columns-5 {
     -webkit-flex: 1 19%;
     flex: 1 19%;
 }
-.build-monitor ul#job-views.columns-6 li {
+.build-monitor ul#job-views>li.columns-6 {
     -webkit-flex: 1 15.5%;
     flex: 1 15.5%;
 }
-.build-monitor ul#job-views.columns-7 li {
+.build-monitor ul#job-views>li.columns-7 {
     -webkit-flex: 1 13%;
     flex: 1 13%;
 }
-.build-monitor ul#job-views.columns-8 li {
+.build-monitor ul#job-views>li.columns-8 {
     -webkit-flex: 1 11.5%;
     flex: 1 11.5%;
 }
