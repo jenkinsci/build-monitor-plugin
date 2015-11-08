@@ -69,6 +69,7 @@
 
         <npm-executable>npm</npm-executable>
         <selenium.version>2.43.0</selenium.version>
+        <build.number>DEV</build.number>
     </properties>
 
     <profiles>
@@ -256,6 +257,32 @@
                 <configuration>
                     <disabledTestInjection>true</disabledTestInjection>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.smartcodeltd</groupId>
+                <artifactId>release-candidate-maven-plugin</artifactId>
+                <version>1.0.0-201508251955.0e1793b</version>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>updateVersion</goal>
+                        </goals>
+                        <configuration>
+                            <releaseVersionFormat>{{ api_version }}+build.${build.number}</releaseVersionFormat>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>version</goal>
+                        </goals>
+                        <configuration>
+                            <outputTemplate>version={{ version }}</outputTemplate>
+                            <outputUri>file://${project.basedir}/target/classes/build-monitor.properties</outputUri>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

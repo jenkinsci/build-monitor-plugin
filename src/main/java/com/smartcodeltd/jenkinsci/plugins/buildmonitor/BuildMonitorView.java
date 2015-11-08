@@ -23,15 +23,14 @@
  */
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.BuildMonitorInstallation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.Extension;
 import hudson.Util;
-import hudson.model.AbstractProject;
 import hudson.model.Descriptor.FormException;
 import hudson.model.Job;
 import hudson.model.ListView;
-import hudson.model.Run;
 import hudson.model.ViewDescriptor;
 import hudson.util.FormValidation;
 import net.sf.json.JSONObject;
@@ -57,6 +56,7 @@ import static hudson.Util.filter;
  * @author Jan Molak
  */
 public class BuildMonitorView extends ListView {
+    private static final BuildMonitorInstallation installation = new BuildMonitorInstallation();
 
     private String title;
 
@@ -71,8 +71,22 @@ public class BuildMonitorView extends ListView {
         this.title = title;
     }
 
+    @SuppressWarnings("unused") // used in .jelly
     public String getTitle() {
         return isGiven(title) ? title : getDisplayName();
+    }
+
+    @SuppressWarnings("unused") // used in .jelly
+    public String buildMonitorVersion() { return installation.buildMonitorVersion(); }
+
+    @SuppressWarnings("unused") // used in .jelly
+    public boolean isEmpty() {
+        return jobViews().isEmpty();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public String currentOrder() {
+        return currentConfig().getOrder().getClass().getSimpleName();
     }
 
     @Extension
@@ -121,21 +135,12 @@ public class BuildMonitorView extends ListView {
      * Because of how org.kohsuke.stapler.HttpResponseRenderer is implemented
      * it can only work with net.sf.JSONObject in order to produce correct application/json output
      *
-     * @return
+     * @return Json representation of JobViews
      * @throws Exception
      */
     @JavaScriptMethod
     public JSONObject fetchJobViews() throws Exception {
         return jsonFrom(jobViews());
-    }
-
-    public boolean isEmpty() {
-        return jobViews().isEmpty();
-    }
-
-    // used in the configure-entries.jelly form
-    public String currentOrder() {
-        return currentConfig().getOrder().getClass().getSimpleName();
     }
 
     // --
