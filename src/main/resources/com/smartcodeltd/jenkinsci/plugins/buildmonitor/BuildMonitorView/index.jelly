@@ -100,7 +100,7 @@
                 <footer>
                     <notifier />
                     <span class="plugin-author">
-                        Build Monitor <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin/releases" title="Is your Build Monitor up to date?" rel="external">${it.buildMonitorVersion()}</a>
+                        Build Monitor <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin/releases" title="Is your Build Monitor up to date?" rel="external">${it.installation.buildMonitorVersion()}</a>
                         brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a>
                     </span>
                 </footer>
