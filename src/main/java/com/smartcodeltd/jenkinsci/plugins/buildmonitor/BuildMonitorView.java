@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2013, Jan Molak, SmartCode Ltd http://smartcodeltd.co.uk
+ * Copyright (c) 2013-2015, Jan Molak, SmartCode Ltd http://smartcodeltd.co.uk
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,21 +23,16 @@
  */
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.BuildMonitorInstallation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.api.Respond;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation.BuildMonitorInstallation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.Extension;
-import hudson.Util;
 import hudson.model.Descriptor.FormException;
 import hudson.model.Job;
 import hudson.model.ListView;
-import hudson.model.ViewDescriptor;
-import hudson.util.FormValidation;
 import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 
@@ -47,8 +42,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import static hudson.Util.filter;
 
@@ -56,7 +49,8 @@ import static hudson.Util.filter;
  * @author Jan Molak
  */
 public class BuildMonitorView extends ListView {
-    private static final BuildMonitorInstallation installation = new BuildMonitorInstallation();
+    @Extension
+    public static final BuildMonitorDescriptor descriptor = new BuildMonitorDescriptor();
 
     private String title;
 
@@ -77,9 +71,6 @@ public class BuildMonitorView extends ListView {
     }
 
     @SuppressWarnings("unused") // used in .jelly
-    public String buildMonitorVersion() { return installation.buildMonitorVersion(); }
-
-    @SuppressWarnings("unused") // used in .jelly
     public boolean isEmpty() {
         return jobViews().isEmpty();
     }
@@ -89,31 +80,16 @@ public class BuildMonitorView extends ListView {
         return currentConfig().getOrder().getClass().getSimpleName();
     }
 
-    @Extension
-    public static final class Descriptor extends ViewDescriptor {
-        public Descriptor() {
-            super(BuildMonitorView.class);
-        }
+    private static final BuildMonitorInstallation installation = new BuildMonitorInstallation();
 
-        @Override
-        public String getDisplayName() {
-            return "Build Monitor View";
-        }
+    @SuppressWarnings("unused") // used in index.jelly
+    public BuildMonitorInstallation getInstallation() {
+        return installation;
+    }
 
-        /**
-         * Cut-n-paste from ListView$Descriptor as we cannot inherit from that class
-         */
-        public FormValidation doCheckIncludeRegex(@QueryParameter String value) {
-            String v = Util.fixEmpty(value);
-            if (v != null) {
-                try {
-                    Pattern.compile(v);
-                } catch (PatternSyntaxException pse) {
-                    return FormValidation.error(pse.getMessage());
-                }
-            }
-            return FormValidation.ok();
-        }
+    @SuppressWarnings("unused") // used in .jelly
+    public boolean collectAnonymousUsageStatistics() {
+        return descriptor.getPermissionToCollectAnonymousUsageStatistics();
     }
 
     @Override
@@ -140,19 +116,12 @@ public class BuildMonitorView extends ListView {
      */
     @JavaScriptMethod
     public JSONObject fetchJobViews() throws Exception {
-        return jsonFrom(jobViews());
+        return Respond.withSuccess(jobViews());
     }
 
     // --
-
     private boolean isGiven(String value) {
         return ! (value == null || "".equals(value));
-    }
-
-    private JSONObject jsonFrom(List<JobView> jobViews) throws IOException {
-        ObjectMapper m = new ObjectMapper();
-
-        return (JSONObject) JSONSerializer.toJSON("{jobs:" + m.writeValueAsString(jobViews) + "}");
     }
 
     private List<JobView> jobViews() {

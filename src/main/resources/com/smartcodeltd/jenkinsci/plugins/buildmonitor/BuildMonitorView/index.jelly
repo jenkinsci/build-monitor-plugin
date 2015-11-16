@@ -50,6 +50,32 @@
             <script src="${resourcesURL}/vendor/ui-bootstrap-custom-tpls-0.4.0.js"></script>
             <script src="${resourcesURL}/vendor/angular-slider-0.1.6.js"></script>
             <script src="${resourcesURL}/vendor/angular-slugify-1.0.0.js"></script>
+
+            <script>
+                window['ga-disable-UA-61694827-4'] = ${!it.collectAnonymousUsageStatistics()};
+
+                window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+
+                ga('create', 'UA-61694827-4', 'auto', {
+                    'userId': '${it.installation.anonymousCorrelationId()}'
+                });
+
+                ga('set', {
+                    'forceSSL':       true,
+                    'appName':        'Build Monitor',
+                    'appId':          'build-monitor-plugin',
+
+                    'appVersion':     '${it.installation.buildMonitorVersion()}',
+                    'appInstallerId': '${h.version}',
+
+                    'dimension1':     '${it.installation.size()}',
+                    'dimension2':     '${it.items.size()}',
+                    'dimension3':     '${it.installation.audience()}'
+                });
+
+                ga('send', 'screenview', {screenName: 'Dashboard'});
+            </script>
+            <script async="async" src='//www.google-analytics.com/analytics.js'></script>
         </head>
         <body>
             <div class="build-monitor dashboard industrial"

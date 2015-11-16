@@ -14,9 +14,9 @@ angular.
 
                 return fetchJobViews().then(function (response) {
 
-                    $scope.jobs = response.data.jobs;
+                    $scope.jobs = response.data.data;
 
-                    $rootScope.$broadcast('jenkins:data-fetched', {});
+                    $rootScope.$broadcast('jenkins:data-fetched', response.data.meta);
 
                 }, tryToRecover());
             });
@@ -33,7 +33,7 @@ angular.
                 }
 
                 lostConnectionsCount.reset();
-            }
+            };
 
             this.decideOnStrategy = function () {
 
@@ -100,10 +100,14 @@ angular.
         }
     }]).
 
-    run(['$rootScope', '$window', '$log', 'notifyUser', 'connectivityStrategist',
-        function ($rootScope, $window, $log, notifyUser, connectivityStrategist) {
+    run(['$rootScope', '$window', '$log', 'notifyUser', 'connectivityStrategist', 'every',
+        function ($rootScope, $window, $log, notifyUser, connectivityStrategist, every) {
             $rootScope.$on('jenkins:data-fetched', function (event) {
                 connectivityStrategist.resetErrorCounter();
+            });
+
+            $rootScope.$on('jenkins:data-fetched', function (event, meta) {
+                $window.ga('send', 'timing', 'Build Monitor API', 'fetchJobs',   meta.response_time_ms);
             });
 
             $rootScope.$on('jenkins:internal-error', function (event, error) {
@@ -116,5 +120,9 @@ angular.
 
             $rootScope.$on('jenkins:unknown-communication-error', function (event, error) {
                 notifyUser.about(error.status);
+            });
+
+            every(60000, function () {
+                $window.ga('send', 'event',  'Build Monitor UI',  'heartbeat');
             });
         }]);

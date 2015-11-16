@@ -1,0 +1,12 @@
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+    <p>
+        By sharing <strong>anonymous</strong> usage and performance statistics with the Build Monitor development team
+        you help us make the plugin better.
+    </p>
+    <p>
+        Thank you, you're a star! &#9829;
+    </p>
+    <p>
+        <a href="http://bit.ly/JBMPP">How we use the stats</a> (1 minute read)
+    </p>
+</j:jelly>

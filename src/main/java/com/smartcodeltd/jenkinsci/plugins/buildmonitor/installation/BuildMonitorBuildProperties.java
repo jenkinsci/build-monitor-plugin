@@ -1,4 +1,4 @@
-package com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade;
+package com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorLogger;
 
