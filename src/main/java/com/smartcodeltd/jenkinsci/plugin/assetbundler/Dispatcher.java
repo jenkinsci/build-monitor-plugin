@@ -5,7 +5,9 @@ import hudson.Extension;
 import hudson.Plugin;
 import hudson.util.PluginServletFilter;
 
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 /*
  *   Based on:
@@ -22,12 +24,14 @@ public class Dispatcher extends Plugin {
     public void postInitialize() throws Exception {
         super.postInitialize();
 
-        PluginServletFilter.addFilter(new LessCSS("/build-monitor-plugin/style.css", pathToIndexLess()));
+        PluginServletFilter.addFilter(new LessCSS("/build-monitor-plugin/style.css", pathTo("less/index.less")));
     }
 
-    private String pathToIndexLess() throws URISyntaxException {
-        String base = getWrapper().parent.getPlugin("build-monitor-plugin").baseResourceURL.toURI().toString();
+    private URL baseResourceURL() {
+        return getWrapper().parent.getPlugin("build-monitor-plugin").baseResourceURL;
+    }
 
-        return (base + "/less/index.less").replaceAll("/+", "/");
+    private URI pathTo(String asset) throws URISyntaxException {
+        return new PathToAsset(baseResourceURL(), asset).toURI();
     }
 }

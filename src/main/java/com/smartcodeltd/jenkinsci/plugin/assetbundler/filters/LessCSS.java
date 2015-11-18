@@ -19,9 +19,9 @@ public class LessCSS implements Filter {
 
     private String compiledCSS;
 
-    public LessCSS(String pathToCSS, String pathToLess) throws URISyntaxException {
+    public LessCSS(String pathToCSS, URI pathToLess) throws URISyntaxException {
         this.pathToCSS  = pathToCSS;
-        this.less       = fileFrom(pathToLess);
+        this.less       = new File(pathToLess);
     }
 
     @Override
@@ -45,10 +45,6 @@ public class LessCSS implements Filter {
         } else {
             chain.doFilter(request, response);
         }
-    }
-
-    private File fileFrom(String path) throws URISyntaxException {
-        return new File(new URI(path));
     }
 
     private String cssFrom(File less) throws Less4jException {
