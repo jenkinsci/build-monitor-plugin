@@ -5,7 +5,7 @@ import hudson.Extension;
 import hudson.Plugin;
 import hudson.util.PluginServletFilter;
 
-import java.net.URI;
+import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -31,7 +31,7 @@ public class Dispatcher extends Plugin {
         return getWrapper().parent.getPlugin("build-monitor-plugin").baseResourceURL;
     }
 
-    private URI pathTo(String asset) throws URISyntaxException {
-        return new PathToAsset(baseResourceURL(), asset).toURI();
+    private File pathTo(String asset) throws URISyntaxException {
+        return new PathToAsset(baseResourceURL(), asset).toFile();
     }
 }

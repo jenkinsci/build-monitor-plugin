@@ -10,24 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 public class LessCSS implements Filter {
-    private final File   less;
+    private final File lessFile;
     private final String pathToCSS;
 
     private String compiledCSS;
 
-    public LessCSS(String pathToCSS, URI pathToLess) throws URISyntaxException {
+    public LessCSS(String pathToCSS, File pathToLess) throws URISyntaxException {
         this.pathToCSS  = pathToCSS;
-        this.less       = new File(pathToLess);
+        this.lessFile   = pathToLess;
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         try {
-            compiledCSS = cssFrom(less);
+            compiledCSS = cssFrom(lessFile);
         } catch (Less4jException e) {
             throw new ServletException("Couldn't compile the CSS from LESS sources", e);
         }
