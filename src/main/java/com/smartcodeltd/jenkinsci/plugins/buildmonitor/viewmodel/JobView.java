@@ -1,7 +1,10 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.google.common.collect.Lists;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Lister;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Pluraliser;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.model.Job;
@@ -10,10 +13,10 @@ import hudson.model.Run;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import static com.google.common.collect.Lists.newLinkedList;
+import static com.google.common.collect.Lists.reverse;
 import static hudson.model.Result.SUCCESS;
 
 /**
@@ -94,27 +97,54 @@ public class JobView {
     }
 
     @JsonProperty
-    public boolean shouldIndicateCulprits() {
-        return ! isClaimed() && culprits().size() > 0;
+    public String headline() {
+        // todo: extract and clean up
+        List<BuildViewModel> failedBuildsAsc = reverse(failedBuilds());
+
+        switch(failedBuildsAsc.size()) {
+            case 0:
+                return "";
+
+            case 1:
+                return Lister.describe(
+                    "",
+                    "Failed after %s committed their changes",
+                    newLinkedList(failedBuildsAsc.get(0).culprits())
+                 );
+
+            default:
+                String buildsFailedSince = Pluraliser.pluralise(
+                        "%s build has failed",
+                        "%s builds have failed",
+                        failedBuildsAsc.size() - 1
+                );
+
+                return Lister.describe(
+                        buildsFailedSince,
+                        buildsFailedSince + " since %s committed their changes",
+                        newLinkedList(failedBuildsAsc.get(0).culprits())
+                );
+        }
     }
 
-    @JsonProperty
-    public Set<String> culprits() {
-        Set<String> culprits = new HashSet<String>();
+    private List<BuildViewModel> failedBuilds() {
+        List<BuildViewModel> failedBuilds = Lists.newArrayList();
 
         BuildViewModel build = lastBuild();
-        // todo: consider introducing a BuildResultJudge to keep this logic in one place
         while (! SUCCESS.equals(build.result())) {
-            culprits.addAll(build.culprits());
+
+            if (! build.isRunning()) {
+                failedBuilds.add(build);
+            }
 
             if (! build.hasPreviousBuild()) {
                 break;
             }
 
             build = build.previousBuild();
-        };
+        }
 
-        return culprits;
+        return failedBuilds;
     }
 
     public boolean isDisabled() {

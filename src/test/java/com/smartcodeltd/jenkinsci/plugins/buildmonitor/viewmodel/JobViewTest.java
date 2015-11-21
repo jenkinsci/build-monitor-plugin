@@ -13,22 +13,12 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacti
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.assumeThat;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.currentTime;
-import static hudson.model.Result.ABORTED;
-import static hudson.model.Result.FAILURE;
-import static hudson.model.Result.SUCCESS;
-import static hudson.model.Result.UNSTABLE;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.not;
+import static hudson.model.Result.*;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Jan Molak
@@ -347,77 +337,53 @@ public class JobViewTest {
     }
 
     /*
-     * Should know who broke the build
+     * Executive summary
      */
 
     @Test
-    public void should_know_who_broke_the_build() {
+    public void should_tell_who_broke_the_build() throws Exception {
         view = a(jobView().of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben")))));
+                a(job().whereTheLast(build().wasBrokenBy("Adam")))));
 
-        assertThat(view.culprits(), hasSize(2));
-        assertThat(view.culprits(), hasItems("Adam", "Ben"));
+        assertThat(view.headline(), is("Failed after Adam committed their changes"));
     }
 
     @Test
-    public void should_know_who_has_been_committing_over_broken_build() {
+    public void should_list_committers_who_broke_the_build() throws Exception {
+        view = a(jobView().of(
+                a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben")))));
+
+        assertThat(view.headline(), is("Failed after Ben and Adam committed their changes"));
+    }
+
+    @Test
+    public void should_tell_who_broke_the_previous_build_if_the_current_one_is_still_running() throws Exception {
+        view = a(jobView().of(
+                a(job().whereTheLast(build().isStillBuilding()).
+                        andThePrevious(build().wasBrokenBy("Ben")))));
+
+        assertThat(view.headline(), is("Failed after Ben committed their changes"));
+    }
+
+    @Test
+    public void should_tell_the_number_of_broken_builds_since_the_last_broken_build() throws Exception {
         view = a(jobView().of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")).
                         andThePrevious(build().wasBrokenBy("Ben", "Connor")).
                         andThePrevious(build().wasBrokenBy("Daniel")).
                         andThePrevious(build().succeededThanksTo("Errol")))));
 
-        assertThat(view.culprits(), hasSize(4));
-        assertThat(view.culprits(), hasItems("Adam", "Ben", "Connor", "Daniel"));
-        assertThat(view.culprits(), not(hasItem("Errol")));
+        assertThat(view.headline(), is("2 builds have failed since Daniel committed their changes"));
     }
 
     @Test
-    public void should_only_mention_each_culprit_once() {
+    public void should_tell_the_number_of_broken_builds_since_the_last_build_broken_by_multiple_committers() throws Exception {
         view = a(jobView().of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")).
-                        andThePrevious(build().wasBrokenBy("Adam", "Ben")).
-                        andThePrevious(build().wasBrokenBy("Ben", "Connor")))));
+                        andThePrevious(build().wasBrokenBy("Ben", "Connor")).
+                        andThePrevious(build().succeededThanksTo("Daniel")))));
 
-        assertThat(view.culprits(), hasSize(3));
-        assertThat(view.culprits(), hasItems("Adam", "Ben", "Connor"));
-    }
-
-    @Test
-    public void should_not_mention_any_culprits_if_the_build_was_successful() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam")))));
-
-        assertThat(view.culprits(), hasSize(0));
-    }
-
-    @Test
-    public void should_not_mention_any_culprits_if_the_build_was_successful_and_is_still_running() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().isStillBuilding())
-                        .andThePrevious(build().succeededThanksTo("Adam")))));
-
-        assertThat(view.culprits(), hasSize(0));
-    }
-
-    @Test
-    public void should_indicate_culprits_if_the_build_is_failing_and_not_claimed() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam"))))
-                .augmented(with(Claim.class)));
-
-        assertThat(view.shouldIndicateCulprits(), is(true));
-        assertThat(view.culprits(), hasSize(1));
-    }
-
-    @Test
-    public void should_not_indicate_any_culprits_if_the_build_was_failing_but_is_now_claimed() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam").and().wasClaimedBy("Ben", "Helping out Adam"))))
-                .augmented(with(Claim.class)));
-
-        assertThat(view.shouldIndicateCulprits(), is(false));
-        assertThat(view.culprits(), hasSize(1));
+        assertThat(view.headline(), is("1 build has failed since Ben and Connor committed their changes"));
     }
 
     /*
@@ -457,11 +423,10 @@ public class JobViewTest {
 
         assertThat(view.lastBuildName(), is(""));
         assertThat(view.lastBuildUrl(), is(""));
+        assertThat(view.headline(), is(""));
         assertThat(view.lastBuildDuration(), is(""));
         assertThat(view.estimatedDuration(), is(""));
         assertThat(view.progress(), is(0));
-        assertThat(view.shouldIndicateCulprits(), is(false));
-        assertThat(view.culprits(), hasSize(0));
         assertThat(view.status(), is("unknown"));
         assertThat(view.isClaimed(), is(false));
         assertThat(view.hasKnownFailures(), is(false));

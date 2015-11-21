@@ -236,13 +236,6 @@ h2 {
 }
 
 .build-monitor .meta li { display: inline-block; }
-.build-monitor .meta .culprits li { padding-right:0; margin-right:0.5em; }
-.build-monitor .meta .culprits li:after { content: ","; }
-.build-monitor .meta .culprits li:last-child:after { content: ""; }
-
-.build-monitor ul.culprits li:first-child:before {
-    content: "Possible Culprits: ";
-}
 
 .build-monitor .meta .failures li { margin-right:0.5em; }
 .build-monitor .meta .failures li:after { content: ","; }
@@ -532,7 +525,7 @@ h2 {
     width:100%;
 }
 .build-monitor nav li:nth-child(1),
-.build-monitor nav li:nth-child(5) {
+.build-monitor nav li:nth-child(4) {
     margin-top:2em;
 }
 .build-monitor nav li:last-child {
