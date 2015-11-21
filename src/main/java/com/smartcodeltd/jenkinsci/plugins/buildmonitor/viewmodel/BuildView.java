@@ -13,10 +13,7 @@ import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.User;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class BuildView implements BuildViewModel {
 
@@ -123,7 +120,7 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public Set<String> culprits() {
-        Set<String> culprits = new HashSet<String>();
+        Set<String> culprits = new TreeSet<String>();
 
         if (build instanceof AbstractBuild<?, ?>) {
             AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;

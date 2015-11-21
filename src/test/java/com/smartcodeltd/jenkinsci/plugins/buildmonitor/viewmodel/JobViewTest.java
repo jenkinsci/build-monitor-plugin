@@ -349,11 +349,11 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_list_committers_who_broke_the_build() throws Exception {
+    public void should_list_committers_who_broke_the_build_in_alphabetical_order() throws Exception {
         view = a(jobView().of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben")))));
 
-        assertThat(view.headline(), is("Failed after Ben and Adam committed their changes"));
+        assertThat(view.headline(), is("Failed after Adam and Ben committed their changes"));
     }
 
     @Test
@@ -380,10 +380,10 @@ public class JobViewTest {
     public void should_tell_the_number_of_broken_builds_since_the_last_build_broken_by_multiple_committers() throws Exception {
         view = a(jobView().of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")).
-                        andThePrevious(build().wasBrokenBy("Ben", "Connor")).
-                        andThePrevious(build().succeededThanksTo("Daniel")))));
+                        andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor")).
+                        andThePrevious(build().succeededThanksTo("Errol")))));
 
-        assertThat(view.headline(), is("1 build has failed since Ben and Connor committed their changes"));
+        assertThat(view.headline(), is("1 build has failed since Ben, Connor and Daniel committed their changes"));
     }
 
     /*
