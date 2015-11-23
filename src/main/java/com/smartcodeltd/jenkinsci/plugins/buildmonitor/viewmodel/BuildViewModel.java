@@ -30,4 +30,8 @@ public interface BuildViewModel {
     boolean hasKnownFailures();
 
     List<String> knownFailures();
+
+    int phase();
+    int jobsinphase();
+    int numphases();
 }

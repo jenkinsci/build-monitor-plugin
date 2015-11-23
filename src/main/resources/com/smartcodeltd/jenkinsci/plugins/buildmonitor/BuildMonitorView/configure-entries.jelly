@@ -62,6 +62,7 @@
       <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
       <f:option value="ByFullName" selected="${it.currentOrder()=='ByFullName'}">${%Full name}</f:option>
       <f:option value="ByStatus" selected="${it.currentOrder()=='ByStatus'}">${%Status}</f:option>
+      <f:option value="ByPhase" selected="${it.currentOrder()=='ByPhase'}">${%Multijob phase}</f:option>
     </select>
   </f:entry>
 

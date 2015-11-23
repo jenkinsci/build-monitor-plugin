@@ -93,4 +93,19 @@ public class NullBuildView implements BuildViewModel {
     public List<String> knownFailures() {
         return null;
     }
+
+    @Override
+    public int phase() {
+        return 0;
+    }
+
+    @Override
+    public int jobsinphase() {
+        return 1;
+    }
+
+    @Override
+    public int numphases() {
+        return 1;
+    }
 }
