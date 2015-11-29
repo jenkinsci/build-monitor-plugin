@@ -1,8 +1,8 @@
 angular.
     module('buildMonitor.settings', [ 'buildMonitor.services', 'uiSlider']).
 
-    controller('controlPanel', ['$scope', 'cookieJar',
-        function ($scope, cookieJar) {
+    controller('controlPanel', ['$scope', 'cookieJar', 'townCrier',
+        function ($scope, cookieJar, townCrier) {
             'use strict';
 
             $scope.settings.fontSize        = cookieJar.get('fontSize',        1);
@@ -13,5 +13,10 @@ angular.
                 $scope.$watch('settings.' + name, function(currentValue) {
                     cookieJar.put(name, currentValue);
                 });
+            });
+
+            // that's the minimum viable product .. at its tiniest
+            townCrier.uponNewVersion(function() {
+                $scope.newVersionAvailable = true;
             });
         }]);

@@ -481,29 +481,35 @@ h2 {
  */
 
 .build-monitor nav {
-    border:1px solid white;
-    z-index: 999;
+    z-index: 100;
     position:absolute;
     top:10px;
     right:8px;
+}
+
+.build-monitor nav section {
+    border:1px solid white;
     width:32px;
     overflow: hidden;
     margin: 0;  padding: 5px;
     background: rgba(57, 57, 57, 0.9);
     border-radius: 5px;
-    opacity:0.5;
 
     -webkit-transition: all 0.25 ease-in;
     transition: all 0.25s ease-in;
 }
-.build-monitor nav:hover {
+.build-monitor nav section {
+    opacity:0.5;
+}
+
+.build-monitor nav:hover section {
     opacity:1.0;
 }
-.build-monitor .showSettings {
+.build-monitor nav section.showSettings {
     opacity: 1.0;
     width:200px !important;
 }
-.build-monitor nav.showSettings ul {
+.build-monitor nav section.showSettings ul {
     height:auto;
 }
 
@@ -524,10 +530,13 @@ h2 {
 .build-monitor nav label {
     width:100%;
 }
-.build-monitor nav li:nth-child(1),
-.build-monitor nav li:nth-child(4) {
+.build-monitor nav li.slider {
     margin-top:2em;
 }
+.build-monitor nav li.buttons {
+    margin-top:2em;
+}
+
 .build-monitor nav li:last-child {
     padding:1em 0 1em 0;
 }
@@ -544,6 +553,29 @@ h2 {
 }
 .build-monitor nav li button.btn {
     width: 100%;
+}
+
+.build-monitor nav .notifications {
+    position: absolute;
+    top:-5px;
+    right:-5px;
+    z-index: 110;
+    opacity: 1;
+    border:1px solid red;
+    background: red;
+    color:white;
+    padding:1px 5px 1px 5px;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow:1px 1px 1px black;
+}
+
+.build-monitor nav li.new-version-available {
+    margin-top:1em;
+    margin-bottom:2em;
+    padding-bottom:1em;
+    border-bottom: 1px solid white;
+    border-radius: 0;
 }
 
 /*

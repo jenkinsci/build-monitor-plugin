@@ -1,7 +1,7 @@
 'use strict';
 
 angular.
-    module('buildMonitor.services', ['ui.bootstrap.dialog', 'buildMonitor.templates', 'template/dialog/message.html']).
+    module('buildMonitor.services', ['ui.bootstrap.dialog', 'buildMonitor.templates', 'buildMonitor.cron', 'template/dialog/message.html']).
 
     value('YahooCookie', YAHOO.util.Cookie).
 
@@ -18,7 +18,7 @@ angular.
                 keyboard: false,
                 backdrop: false
             }).open().then();
-        }
+        };
 
         this.aboutInternalJenkins = function(error) {
             function stackTraceOf(error) {
@@ -51,7 +51,7 @@ angular.
                 backdrop: true,
                 backdropClick: false
             }).open().then();
-        }
+        };
 
         this.about = function (problemStatus) {
 
@@ -69,6 +69,51 @@ angular.
                 });
         }
     }).
+
+    service('townCrier', ['$http', 'every', 'version', 'BUILD_MONITOR_VERSION',
+        function($http, every, version, BUILD_MONITOR_VERSION) {
+
+        var hour            = 3600 * 1000,
+            currentVersion  = version(BUILD_MONITOR_VERSION),
+            observers       = [];
+
+        this.uponNewVersion = function (observer) {
+            observers.push(observer);
+        };
+
+        this.start    = function() {
+            every(hour, function() {
+                return $http
+                    .jsonp('https://api.github.com/repos/jan-molak/jenkins-build-monitor-plugin/releases/latest?callback=JSON_CALLBACK')
+                    .then(function(response) {
+                        var latestRelease = response.data.data.tag_name;
+
+                        if (currentVersion.isOlderThan(latestRelease)) {
+                            angular.forEach(observers, function(observer) {
+                                observer();
+                            });
+                        }
+                    });
+            });
+        };
+    }]).
+
+    factory('version', [function() {
+        function build(version) {
+            var build_number = (version.match(/build\.([0-9]+)/) || []).pop();
+
+            // assume 0 if we couldn't determine the build number
+            return parseInt(build_number || 0);
+        }
+
+        return function (version) {
+            return {
+                isOlderThan: function (anotherVersion) {
+                    return build(version) < build(anotherVersion);
+                }
+            }
+        };
+    }]).
 
     provider('cookieJar',function () {
         var defaultAttributes = {

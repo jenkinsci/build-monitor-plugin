@@ -11,7 +11,6 @@ describe('buildMonitor', function () {
                 var timeline = [],
                     nextId = 0,
                     now = 0,
-                    $window,
                     $timeout;
 
                 $timeout = function (fn, delay) {

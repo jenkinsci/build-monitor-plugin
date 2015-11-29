@@ -100,8 +100,8 @@ angular.
         }
     }]).
 
-    run(['$rootScope', '$window', '$log', 'notifyUser', 'connectivityStrategist', 'every',
-        function ($rootScope, $window, $log, notifyUser, connectivityStrategist, every) {
+    run(['$rootScope', '$window', '$log', 'notifyUser', 'connectivityStrategist', 'every', 'townCrier',
+        function ($rootScope, $window, $log, notifyUser, connectivityStrategist, every, townCrier) {
             $rootScope.$on('jenkins:data-fetched', function (event) {
                 connectivityStrategist.resetErrorCounter();
             });
@@ -125,4 +125,6 @@ angular.
             every(60000, function () {
                 $window.ga('send', 'event',  'Build Monitor UI',  'heartbeat');
             });
+
+            townCrier.start();
         }]);
