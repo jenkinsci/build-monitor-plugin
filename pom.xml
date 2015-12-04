@@ -312,6 +312,7 @@
                     <executable>${npm-executable}</executable>
                     <arguments>
                         <argument>install</argument>
+                        <argument>--silent</argument>
                     </arguments>
                 </configuration>
             </plugin>
