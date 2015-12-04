@@ -3,13 +3,13 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 import com.saucelabs.common.SauceOnDemandAuthentication;
 import com.saucelabs.common.SauceOnDemandSessionIdProvider;
 import com.saucelabs.junit.SauceOnDemandTestWatcher;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation.BuildMonitorBuildProperties;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.BuildMonitor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.Job;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.Scenario;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.utils.Typograph;
 import hudson.tasks.Builder;
 import hudson.tasks.Shell;
-import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -31,6 +31,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
     public SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication();
 
@@ -49,19 +51,30 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
     @Rule
     public SauceOnDemandTestWatcher resultReportingTestWatcher = new SauceOnDemandTestWatcher(this, authentication);
 
+    public final BuildMonitorBuildProperties buildProperties = new BuildMonitorBuildProperties("build-monitor.properties");
+
+
     @Before
     public void setUp() throws Exception {
-        if (shouldUseRemoteBrowser()) {
-            browser   = sauceLabsBrowser();
-            sessionId = (((RemoteWebDriver) browser).getSessionId()).toString();
-        } else {
-            browser   = localChromeBrowser();
-            sessionId = null;                 // so that SauceOnDemandTestWatcher doesn't try to report back to SauceLabs
-        }
+        browser = localOrRemoteBrowser();
 
         browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         given = Scenario.using(jenkins, browser);
+    }
+
+    // fixme: an ugly work around with even uglier side effects, needed until the migration from SauceLabs to BrowserStack is finished
+    private WebDriver localOrRemoteBrowser() throws MalformedURLException {
+        if (shouldUseRemoteSauceLabsBrowser()) {
+            sessionId = (((RemoteWebDriver) browser).getSessionId()).toString();
+            return sauceLabsBrowser();
+        } else if (shouldUseRemoteBrowserStackBrowser()) {
+            sessionId = null;               // so that SauceOnDemandTestWatcher doesn't try to report back to SauceLabs
+            return browserStackBrowser();
+        } else {
+            sessionId = null;               // so that SauceOnDemandTestWatcher doesn't try to report back to SauceLabs
+            return localChromeBrowser();
+        }
     }
 
     @After
@@ -88,9 +101,42 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
         return jenkins.getURL().toString() + path;
     }
 
+    private boolean shouldUseRemoteBrowserStackBrowser() {
+        return isNotBlank(readPropertyOrEnv("BROWSERSTACK_USERNAME", "")) && isNotBlank(readPropertyOrEnv("BROWSERSTACK_AUTOMATION_KEY", ""));
+    }
 
-    private boolean shouldUseRemoteBrowser() {
-        return StringUtils.isNotBlank(authentication.getUsername()) && StringUtils.isNotBlank(authentication.getAccessKey());
+    private boolean shouldUseRemoteSauceLabsBrowser() {
+        return isNotBlank(authentication.getUsername()) && isNotBlank(authentication.getAccessKey());
+    }
+
+    private WebDriver browserStackBrowser() throws MalformedURLException {
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("browser", "Chrome");
+        capabilities.setCapability("browser_version", "43.0");
+        capabilities.setCapability("os", "Windows");
+        capabilities.setCapability("os_version", "7");
+        capabilities.setCapability("resolution", "1024x768");
+
+        capabilities.setCapability("name",        fullTestName());
+
+        capabilities.setCapability("browserstack.local", "true");
+
+        capabilities.setCapability("build",   currentVersion());
+        capabilities.setCapability("project", "Build Monitor");
+
+        return new RemoteWebDriver(
+                new URL(String.format("http://%s:%s@%s/wd/hub",
+                        readPropertyOrEnv("BROWSERSTACK_USERNAME", ""),
+                        readPropertyOrEnv("BROWSERSTACK_AUTOMATION_KEY", ""),
+                        "hub.browserstack.com")
+                ),
+                capabilities
+        );
+    }
+
+    private String currentVersion() {
+        return buildProperties.get("version");
     }
 
     private WebDriver sauceLabsBrowser() throws MalformedURLException {
