@@ -1,8 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 
-import com.saucelabs.common.SauceOnDemandAuthentication;
-import com.saucelabs.common.SauceOnDemandSessionIdProvider;
-import com.saucelabs.junit.SauceOnDemandTestWatcher;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation.BuildMonitorBuildProperties;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.BuildMonitor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.Job;
@@ -19,10 +16,8 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -33,12 +28,9 @@ import java.util.concurrent.TimeUnit;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
-abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
-    public SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication();
+abstract public class AcceptanceTest {
 
     protected WebDriver browser;
-
-    private String sessionId;
 
     protected Scenario given;
 
@@ -48,11 +40,7 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
     @Rule
     public TestName testName = new TestName();
 
-    @Rule
-    public SauceOnDemandTestWatcher resultReportingTestWatcher = new SauceOnDemandTestWatcher(this, authentication);
-
     public final BuildMonitorBuildProperties buildProperties = new BuildMonitorBuildProperties("build-monitor.properties");
-
 
     @Before
     public void setUp() throws Exception {
@@ -63,18 +51,10 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
         given = Scenario.using(jenkins, browser);
     }
 
-    // fixme: an ugly work around with even uglier side effects, needed until the migration from SauceLabs to BrowserStack is finished
     private WebDriver localOrRemoteBrowser() throws MalformedURLException {
-        if (shouldUseRemoteSauceLabsBrowser()) {
-            sessionId = (((RemoteWebDriver) browser).getSessionId()).toString();
-            return sauceLabsBrowser();
-        } else if (shouldUseRemoteBrowserStackBrowser()) {
-            sessionId = null;               // so that SauceOnDemandTestWatcher doesn't try to report back to SauceLabs
-            return browserStackBrowser();
-        } else {
-            sessionId = null;               // so that SauceOnDemandTestWatcher doesn't try to report back to SauceLabs
-            return localChromeBrowser();
-        }
+        return shouldUseRemoteBrowserStackBrowser()
+            ? browserStackBrowser()
+            : localChromeBrowser();
     }
 
     @After
@@ -103,10 +83,6 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
 
     private boolean shouldUseRemoteBrowserStackBrowser() {
         return isNotBlank(readPropertyOrEnv("BROWSERSTACK_USERNAME", "")) && isNotBlank(readPropertyOrEnv("BROWSERSTACK_AUTOMATION_KEY", ""));
-    }
-
-    private boolean shouldUseRemoteSauceLabsBrowser() {
-        return isNotBlank(authentication.getUsername()) && isNotBlank(authentication.getAccessKey());
     }
 
     private WebDriver browserStackBrowser() throws MalformedURLException {
@@ -139,31 +115,8 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
         return buildProperties.get("version");
     }
 
-    private WebDriver sauceLabsBrowser() throws MalformedURLException {
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability("platform", Platform.MAC);
-
-        capabilities.setCapability("version",     readPropertyOrEnv("SELENIUM_VERSION", "43"));
-        capabilities.setCapability("platform",    readPropertyOrEnv("SELENIUM_PLATFORM", "mac"));
-        capabilities.setCapability("browserName", readPropertyOrEnv("SELENIUM_BROWSER", BrowserType.CHROME));
-
-        capabilities.setCapability("name",        fullTestName());
-
-        return new RemoteWebDriver(
-            new URL(String.format("http://%s:%s@%s:%s/wd/hub",
-                    authentication.getUsername(),
-                    authentication.getAccessKey(),
-                    readPropertyOrEnv("SELENIUM_HOST", "localhost"),
-                    readPropertyOrEnv("SELENIUM_PORT", "4445"))
-            ),
-            capabilities
-        );
-    }
-
     private WebDriver localChromeBrowser() {
-        WebDriver driver = new ChromeDriver();
-
-        return driver;
+        return new ChromeDriver();
     }
 
     private String fullTestName() {
@@ -183,11 +136,6 @@ abstract public class AcceptanceTest implements SauceOnDemandSessionIdProvider {
         }
 
         return v;
-    }
-
-    @Override
-    public String getSessionId() {
-        return sessionId;
     }
 
     protected Matcher<? super Job> isSuccessful() {
