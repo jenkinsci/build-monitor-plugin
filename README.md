@@ -5,7 +5,6 @@ Build Monitor Plugin provides a highly visible view of the status of selected Je
 It easily accommodates different computer screen sizes and is ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
 (Inspired by the no longer maintained [RadiatorView](https://wiki.jenkins-ci.org/display/JENKINS/Radiator+View+Plugin) plugin).
 
-[![Build Status](https://smartcode-opensource.ci.cloudbees.com/buildStatus/icon?job=jenkins-build-monitor-plugin)](https://smartcode-opensource.ci.cloudbees.com/job/jenkins-build-monitor-plugin/)
 [![Acceptance Tests Status](https://saucelabs.com/buildstatus/build-monitor)](https://saucelabs.com/u/build-monitor)
 [![Stories in Backlog](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=backlog&title=Backlog)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
 
@@ -73,7 +72,7 @@ Here's how the columns work:
 * Done - done and deployed. Grab the latest version from your Jenkins Update Centre or the [Releases](https://bitly.com/JBMReleases) page.
 
 If you'd like to get hold of the latest and greatest build of the Build Monitor Plugin
-before it's available in the Jenkins Update Centre, you can [download it](http://bit.ly/JBMLatestBuild) from the [SmartCode Open-Source](http://bit.ly/SmartCodeOSCI) Jenkins CI server.
+before it's available in the Jenkins Update Centre, you can [download it](https://smartcode-opensource.ci.cloudbees.com/job/build-monitor/lastBuild/) from the [SmartCode Open-Source](http://bit.ly/SmartCodeOSCI) Jenkins CI server.
 
 ## (A)TDD
 
