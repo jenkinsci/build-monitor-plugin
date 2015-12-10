@@ -29,6 +29,13 @@ Current functionality of the Build Monitor plugin:
 
 All the previous releases together with their change logs are [listed here](https://bitly.com/JBMReleases).
 
+## Requirements
+
+To use Build Monitor you'll need:
+* [Jenkins CI](http://jenkins-ci.org/) version 1.532 or newer - please note that for production installations I recommend using a [Long-Term Support release](http://jenkins-ci.org/changelog-stable)
+* A modern web browser - to avoid unnecessary complexity when implementing the view layer I decided to use CSS 3 flexbox.
+The standard is currently supported by [most modern web browsers](http://caniuse.com/flexbox), so if your browser doesn't support this feature - [consider upgrading](http://browsehappy.com/) :)
+
 ## Your feedback matters!
 
 Do you find Build Monitor useful? Give it a star! &#9733;
@@ -95,13 +102,6 @@ You have several options here:
 
 ### Red and green colours are lovely, but I'm colour blind ...
 There's a colour blind mode you can [enable in the Settings](https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/30#issuecomment-35849019)
-
-## Requirements
-
-To use Build Monitor you'll need:
-* [Jenkins CI](http://jenkins-ci.org/) version 1.532 or newer - please note that for production installations I recommend using a [Long-Term Support release](http://jenkins-ci.org/changelog-stable)
-* A modern web browser - to avoid unnecessary complexity when implementing the view layer I decided to use CSS 3 flexbox.
-The standard is currently supported by [most modern web browsers](http://caniuse.com/flexbox), so if your browser doesn't support this feature - [consider upgrading](http://browsehappy.com/) :)
 
 ## Open Source Software Used
 
