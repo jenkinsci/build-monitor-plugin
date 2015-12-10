@@ -42,16 +42,16 @@ Have feedback? Let me know on twitter: [@JanMolak](https://twitter.com/JanMolak)
 
 ## Setting up
 
-![Setting up](.README/Setting_up.png)
+![Setting up](docs/Setting_up.png)
 
 Simple, right? :-) You can have as many Build Monitor Views as you want - the most popular approach is to have one per team or one per project.
 
 # A picture is worth a thousand words
 
-![Adding jobs](.README/1_Adding_jobs.png)
-![Three columns view](.README/2_Three_columns_view.png)
-![Supports Claim and Build Failure Analyzer plugins](.README/3_Two_columns_view_with_claim_and_build_failure_analyzer_plugins.png)
-![Colour-blind mode](.README/4_Colour_blind_mode.png)
+![Adding jobs](docs/1_Adding_jobs.png)
+![Three columns view](docs/2_Three_columns_view.png)
+![Supports Claim and Build Failure Analyzer plugins](docs/3_Two_columns_view_with_claim_and_build_failure_analyzer_plugins.png)
+![Colour-blind mode](docs/4_Colour_blind_mode.png)
 
 ## Roadmap and work in progress
 
@@ -66,10 +66,7 @@ Here's how the columns work:
 * Done - done and deployed. Grab the latest version from your Jenkins Update Centre or the [Releases](https://bitly.com/JBMReleases) page.
 
 If you'd like to get hold of the latest and greatest build of the Build Monitor Plugin
-before it's available in the Jenkins Update Centre, you can [download it](http://bit.ly/JBMLatestBuild) from the [SmartCode Open-Source](http://bit.ly/SmartCodeOSCI) Jenkins CI server,
-kindly hosted by [CloudBees](http://bit.ly/JBMFOSS).
-
-[![built on dev@cloud](https://www.cloudbees.com/sites/default/files/styles/large/public/Button-Built-on-CB-1.png?itok=3Tnkun-C)](http://bit.ly/JBMFOSS)
+before it's available in the Jenkins Update Centre, you can [download it](http://bit.ly/JBMLatestBuild) from the [SmartCode Open-Source](http://bit.ly/SmartCodeOSCI) Jenkins CI server.
 
 ## (A)TDD
 
@@ -99,15 +96,12 @@ You have several options here:
 ### Red and green colours are lovely, but I'm colour blind ...
 There's a colour blind mode you can [enable in the Settings](https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/30#issuecomment-35849019)
 
-## Known Limitations
+## Requirements
 
-### Browser support - Modern web browsers only
-
-To avoid unnecessary complexity when implementing the view layer I decided to use CSS 3 flexbox.
-The standard is currently supported by [most modern web browsers](http://caniuse.com/flexbox),
-so if your browser doesn't support this feature - [consider upgrading](http://browsehappy.com/) :)
-
-## License: MIT
+To use Build Monitor you'll need:
+* [Jenkins CI](http://jenkins-ci.org/) version 1.532 or newer - please note that for production installations I recommend using a [Long-Term Support release](http://jenkins-ci.org/changelog-stable)
+* A modern web browser - to avoid unnecessary complexity when implementing the view layer I decided to use CSS 3 flexbox.
+The standard is currently supported by [most modern web browsers](http://caniuse.com/flexbox), so if your browser doesn't support this feature - [consider upgrading](http://browsehappy.com/) :)
 
 ## Open Source Software Used
 
@@ -117,6 +111,12 @@ so if your browser doesn't support this feature - [consider upgrading](http://br
 * [HTML5 Boilerplate](http://html5boilerplate.com/) normalize.css
 * [OpenSans font](http://www.google.com/fonts/specimen/Open+Sans) by Steve Matteson
 
-## Inspired by
+## Friends of Build Monitor
 
-No longer maintained [Radiator View Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Radiator+View+Plugin)
+Build Monitor is continuously delivered to a Jenkins near you thanks to:
+* the time and commitment of [the author](http://smartcodeltd.co.uk/) and [the contributors](https://github.com/jan-molak/jenkins-build-monitor-plugin/graphs/contributors)
+* [build infrastructure](https://smartcode-opensource.ci.cloudbees.com/) provided by [CloudBees](http://bit.ly/JBMFOSS)
+* a battery of browsers provided by [BrowserStack](https://www.browserstack.com) and powering the [acceptance tests](/src/test/java/com/smartcodeltd/jenkinsci/plugins/buildmonitor_acceptance)
+
+[![built on dev@cloud](https://www.cloudbees.com/sites/default/files/styles/large/public/Button-Built-on-CB-1.png?itok=3Tnkun-C)](http://bit.ly/JBMFOSS)
+[![tested on BrowserStack](docs/browserstack-logo.png)](http://bit.ly/JBMBS)
