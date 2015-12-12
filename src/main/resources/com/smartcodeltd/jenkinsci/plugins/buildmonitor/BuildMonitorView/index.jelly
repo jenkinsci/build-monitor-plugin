@@ -70,7 +70,8 @@
 
                     'dimension1':     '${it.installation.size()}',
                     'dimension2':     '${it.items.size()}',
-                    'dimension3':     '${it.installation.audience()}'
+                    'dimension3':     '${it.installation.audience()}',
+                    'dimension4':     '${it.installation.anonymousCorrelationId()}'
                 });
 
                 ga('send', 'screenview', {screenName: 'Dashboard'});
