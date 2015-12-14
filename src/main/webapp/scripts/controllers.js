@@ -122,7 +122,7 @@ angular.
                 notifyUser.about(error.status);
             });
 
-            every(60000, function () {
+            every(10 * 60000, function () {
                 $window.ga('send', 'event',  'Build Monitor UI',  'heartbeat');
             });
 
