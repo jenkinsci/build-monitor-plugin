@@ -81,7 +81,7 @@
             <div class="build-monitor dashboard industrial"
                  data-ng-app="buildMonitor"
                  data-ng-controller="JobViews">
-                <header>
+                <header ng-show="settings.showHeader">
                     <a class="home-link" href="${rootURL}/" title="Jenkins">Jenkins</a>
                     <h1><a href="configure" title="Configure the '${it.title}' view">${it.title}</a></h1>
                 </header>
@@ -99,7 +99,7 @@
 
                 <footer>
                     <notifier />
-                    <span class="plugin-author">
+                    <span class="plugin-author" ng-show="settings.showHeader">
                         <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin" title="Learn more about the Build Monitor project" rel="external">Build Monitor</a>
                         version <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin/releases" title="Is your Build Monitor up to date?" rel="external">${it.installation.buildMonitorVersion()}</a>
                         brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a>
