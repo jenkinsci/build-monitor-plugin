@@ -2,7 +2,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
 import com.google.common.base.Objects;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
-import hudson.model.AbstractProject;
 import hudson.model.Job;
 
 import java.util.Comparator;
@@ -10,7 +9,11 @@ import java.util.Comparator;
 public class Config {
 
     public static Config defaultConfig() {
-        return new Config(1, 2, false);
+        Config config = new Config();
+        config.setFontSize(1);
+        config.setNumberOfColumns(2);
+        config.setColourBlindMode(false);
+        return config;
     }
 
     public Comparator<Job<?, ?>> getOrder() {
@@ -46,12 +49,6 @@ public class Config {
     }
 
     public Config() {
-    }
-
-    public Config(float fontSize, int numberOfColumns, boolean colourBlindMode) {
-        this.fontSize = fontSize;
-        this.numberOfColumns = numberOfColumns;
-        this.colourBlindMode = colourBlindMode;
     }
 
     @Override

@@ -3,14 +3,13 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.BuildMonitor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.recipes.With;
 import org.junit.Test;
-import org.openqa.selenium.By;
 
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.tasks.OpenSettingsPanel.*;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.prerequisites.FreestyleProjectExists.aFreestyleProject;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.tasks.ConfigureJobFilters.includesAllTheJobs;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.tasks.CreateBuildMonitorView.createABuildMonitorView;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.tasks.OpenSettingsPanel.openSettingsPanel;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 // @TODO: Work in progress
 public class OutOfTheBoxBehaviourTest extends AcceptanceTest {
@@ -46,7 +45,7 @@ public class OutOfTheBoxBehaviourTest extends AcceptanceTest {
 
         given.WhenI(openSettingsPanel());
 
-        assertEquals(buildMonitor.settings().fontSize(), "1.0");
-        assertEquals(buildMonitor.settings().numberOfColumns(), "2");
+        assertThat(buildMonitor.settings().fontSize(), is("1.0"));
+        assertThat(buildMonitor.settings().numberOfColumns(), is("2"));
     }
 }
