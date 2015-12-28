@@ -148,7 +148,8 @@ abstract public class AcceptanceTest {
             @Override
             protected boolean matchesSafely(final Job job, final Description mismatchDescription) {
                 mismatchDescription.appendText(" was ").appendValue(job.status());
-                return "successful".equalsIgnoreCase(job.status());
+
+                return job.status().contains("successful");
             }
         };
     }
@@ -163,7 +164,8 @@ abstract public class AcceptanceTest {
             @Override
             protected boolean matchesSafely(final Job job, final Description mismatchDescription) {
                 mismatchDescription.appendText(" was ").appendValue(job.status());
-                return "failing".equalsIgnoreCase(job.status());
+
+                return job.status().contains("failing");
             }
         };
     }
