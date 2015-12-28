@@ -1,0 +1,63 @@
+@import "./../flexbox";
+@import './../box-shadow';
+
+body { margin: 0; }
+
+// todo: hide the nav if on mobile: www.html5rocks.com/en/mobile/fullscreen/
+.build-monitor.dashboard {
+  height: 100vh;
+
+  .flex-display();
+  .flex-direction(column);
+  .justify-content(space-between);
+
+  margin: auto;
+
+  &>header {
+    height: 58px;
+    flex-shrink: 0;
+  }
+
+  &>.main {
+    display: block;
+
+    .flex(1 1 0px);
+
+    //min-height: 0;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar { display: none; }
+
+    .flex-display();
+    .flex-direction(column);
+    .justify-content(space-between);
+
+    padding: 0 8px;
+  }
+
+  &>footer {
+    height: 26px;
+    flex-shrink: 0;
+  }
+}
+
+.build-monitor .main.empty {
+  .justify-content(space-around);
+
+  padding:0 10%;
+  text-align: center;
+
+  div.notice {
+    .box-shadow(2px 2px 1px rgba(0,0,0,0.5));
+
+    border-radius: 10px;
+    background:    rgba(0,0,0,0.5);
+
+    padding: 2em;
+
+    p {
+      margin: 0;
+      color:  #ddd;
+    }
+  }
+}

@@ -19,6 +19,6 @@ public class Job {
     }
 
     public String possibleFailureCause() {
-        return root.findElement(By.className("failures")).getText();
+        return root.findElement(By.className("possible-failure-cause")).getText();
     }
 }

@@ -8,7 +8,8 @@ angular.
             var tryToRecover  = connectivityStrategist.decideOnStrategy,
                 fetchJobViews = proxy.buildMonitor.fetchJobViews;
 
-            $scope.jobs = {};
+            $scope.jobs         = [];
+            $scope.fontSize     = fontSizeFor($scope.jobs);
 
             every(5000, function () {
 
@@ -18,8 +19,23 @@ angular.
 
                     $rootScope.$broadcast('jenkins:data-fetched', response.data.meta);
 
+                    $scope.fontSize = fontSizeFor($scope.jobs);
+
                 }, tryToRecover());
             });
+
+            // todo: extract the below as a configuration service, don't rely on $rootScope.settings and make the dependency explicit
+            $rootScope.$watch('settings.numberOfColumns', function() {
+                $scope.fontSize = fontSizeFor($scope.jobs);
+            });
+
+            function fontSizeFor(itemsOnScreen) {
+                var initialFontSize = 24,
+                    minFontSize     = 3,
+                    numberOfRows    = Math.ceil((itemsOnScreen && itemsOnScreen.size() || 1) / ($rootScope.settings.numberOfColumns || 1));
+
+                return Math.max(initialFontSize / numberOfRows, minFontSize);
+            }
         }]).
 
     service('connectivityStrategist', ['$rootScope', '$q', 'counter',
@@ -92,11 +108,12 @@ angular.
                 });
             },
             replace: true,
-            template: '<span class="notifier" ' +
-                'ng-show="message"' +
-                'ng-animate="\'fade\'">' +
-                    '{{ message }}' +
-                "</span>\n"
+            template: ['<div class="notifier"',
+                'ng-show="message"',
+                'ng-animate="\'fade\'">',
+                    '{{ message }}',
+                '</div>\n'
+            ].join('\n')
         }
     }]).
 
@@ -122,7 +139,7 @@ angular.
                 notifyUser.about(error.status);
             });
 
-            every(10 * 60000, function () {
+            every(25 * 60000, function () {
                 $window.ga('send', 'event',  'Build Monitor UI',  'heartbeat');
             });
 

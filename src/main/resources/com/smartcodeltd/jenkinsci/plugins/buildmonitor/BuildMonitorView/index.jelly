@@ -78,35 +78,41 @@
             </script>
             <script async="async" src='//www.google-analytics.com/analytics.js'></script>
         </head>
-        <body>
-            <div class="build-monitor dashboard industrial"
-                 data-ng-app="buildMonitor"
-                 data-ng-controller="JobViews">
-                <header>
-                    <a class="home-link" href="${rootURL}/" title="Jenkins">Jenkins</a>
-                    <h1><a href="configure" title="Configure the '${it.title}' view">${it.title}</a></h1>
-                </header>
+        <body class="build-monitor dashboard industrial"
+              data-ng-app="buildMonitor"
+              data-ng-controller="JobViews">
 
+            <header>
+                <a class="home-link" href="${rootURL}/" title="Jenkins">Jenkins</a>
+                <h1><a href="configure" title="Configure the '${it.title}' view">${it.title}</a></h1>
                 <st:include page="main-settings.jelly"/>
+            </header>
 
-                <j:choose>
-                    <j:when test="${it.isEmpty()}">
-                        <st:include page="main-empty.jelly"/>
-                    </j:when>
-                    <j:otherwise>
-                        <st:include page="main-jobViews.jelly"/>
-                    </j:otherwise>
-                </j:choose>
+            <j:choose>
+                <j:when test="${it.isEmpty()}">
+                    <main class="main empty">
+                        <div class="notice">
+                            <p>It seems a bit empty here... Maybe you'd like to <a href="configure">add some projects</a> to this Build Monitor?</p>
+                        </div>
+                    </main>
+                </j:when>
+                <j:otherwise>
+                    <main class="main">
+                        <st:include page="widgets.jelly" />
+                    </main>
+                </j:otherwise>
+            </j:choose>
 
-                <footer>
+            <footer>
+                <div class="connectivity column">
                     <notifier />
-                    <span class="plugin-author">
-                        <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin" title="Learn more about the Build Monitor project" rel="external">Build Monitor</a>
-                        version <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin/releases" title="Is your Build Monitor up to date?" rel="external">${it.installation.buildMonitorVersion()}</a>
-                        brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a>
-                    </span>
-                </footer>
-            </div>
+                </div>
+                <div class="version-info column">
+                    <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin" title="Learn more about the Build Monitor project" rel="external">Build Monitor</a>
+                    version <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin/releases" title="Is your Build Monitor up to date?" rel="external">${it.installation.buildMonitorVersion()}</a>
+                    brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a>
+                </div>
+            </footer>
 
             <script>
                 /*
@@ -142,6 +148,7 @@
                 delete window.originalMakeStaplerProxy;
             </script>
 
+            <!-- todo: use require.js and bundle it all up -->
             <script src="${resourcesURL}/scripts/app.js"></script>
             <script src="${resourcesURL}/scripts/cron.js"></script>
             <script src="${resourcesURL}/scripts/filters.js"></script>
@@ -150,6 +157,9 @@
             <script src="${resourcesURL}/scripts/controllers.js"></script>
             <script src="${resourcesURL}/scripts/templates.js"></script>
             <script src="${resourcesURL}/scripts/settings.js"></script>
+            <script src="${resourcesURL}/scripts/expansions/build-number.js"></script>
+            <script src="${resourcesURL}/scripts/expansions/build-time.js"></script>
+            <script src="${resourcesURL}/scripts/slot.js"></script>
             <script>
                 'use strict';
 

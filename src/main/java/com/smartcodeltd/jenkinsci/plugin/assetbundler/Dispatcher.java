@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugin.assetbundler;
 
 import com.smartcodeltd.jenkinsci.plugin.assetbundler.filters.LessCSS;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import hudson.Extension;
 import hudson.Plugin;
 import hudson.util.PluginServletFilter;
@@ -24,7 +25,7 @@ public class Dispatcher extends Plugin {
     public void postInitialize() throws Exception {
         super.postInitialize();
 
-        PluginServletFilter.addFilter(new LessCSS("/build-monitor-plugin/style.css", pathTo("less/index.less")));
+        PluginServletFilter.addFilter(new LessCSS("/build-monitor-plugin/style.css", pathTo("less/index.less"), new StaticJenkinsAPIs()));
     }
 
     private URL baseResourceURL() {

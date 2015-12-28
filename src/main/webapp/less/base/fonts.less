@@ -1,6 +1,7 @@
 body {
   font-size:100%;
   font-family: 'Open sans', Verdana, Helvetica, sans serif;
+  margin: 0;
 }
 
 .build-monitor {
@@ -10,22 +11,8 @@ body {
 
   nav label { font-size: 1em; }
 
-  #job-views {
-    h2 { font-size: 3.5em; }
-
-    .build-time,
-    .build-name,
-    .running .build-time,
-    .running .build-name { font-weight: bold; }
-
-    .build-name,
-    .build-time { font-size: 2em; line-height: 1.75em; }
-
-    .build-time>.elapsed       { font-size: 1.0em; }
-    .build-time>.elapsed:after { font-weight: normal; }
-
-    .latest-results ul,
-    .latest-results ol { font-size: 1.3em; }
+  .main {
+    font-size: 24px;
   }
 }
 

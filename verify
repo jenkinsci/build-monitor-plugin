@@ -1,0 +1,3 @@
+#!/bin/sh
+
+MAVEN_OPTS="-Xmx4096m -XX:MaxPermSize=2048m" jenv exec mvn clean verify

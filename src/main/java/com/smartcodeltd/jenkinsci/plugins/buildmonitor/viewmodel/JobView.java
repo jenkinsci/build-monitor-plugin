@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
@@ -182,6 +183,12 @@ public class JobView {
     @JsonProperty
     public List<String> knownFailures() {
         return lastCompletedBuild().knownFailures();
+    }
+
+    // todo track by job.hashCode messes up the animation
+    @JsonProperty @Override
+    public int hashCode() {
+        return Objects.hashCode(job.hashCode());
     }
 
     public String toString() {

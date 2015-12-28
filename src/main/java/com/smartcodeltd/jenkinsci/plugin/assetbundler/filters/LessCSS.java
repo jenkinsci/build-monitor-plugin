@@ -3,6 +3,8 @@ package com.smartcodeltd.jenkinsci.plugin.assetbundler.filters;
 import com.github.sommeri.less4j.Less4jException;
 import com.github.sommeri.less4j.LessCompiler;
 import com.github.sommeri.less4j.core.DefaultLessCompiler;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
+
 import javax.servlet.Filter;
 
 import javax.servlet.*;
@@ -12,24 +14,24 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import static java.lang.String.format;
+
 public class LessCSS implements Filter {
-    private final File lessFile;
+    private final File   lessFile;
     private final String pathToCSS;
+    private final StaticJenkinsAPIs jenkins;
 
     private String compiledCSS;
 
-    public LessCSS(String pathToCSS, File pathToLess) throws URISyntaxException {
+    public LessCSS(String pathToCSS, File pathToLess, StaticJenkinsAPIs jenkins) throws URISyntaxException {
         this.pathToCSS  = pathToCSS;
         this.lessFile   = pathToLess;
+        this.jenkins    = jenkins;
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        try {
-            compiledCSS = cssFrom(lessFile);
-        } catch (Less4jException e) {
-            throw new ServletException("Couldn't compile the CSS from LESS sources", e);
-        }
+
     }
 
     @Override
@@ -46,23 +48,38 @@ public class LessCSS implements Filter {
         }
     }
 
-    private String cssFrom(File less) throws Less4jException {
+    private void sendCSS(ServletResponse response) throws IOException {
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+        String css = compiledAndCachedIfNeeded(lessFile);
+
+        httpResponse.setStatus(HttpServletResponse.SC_OK);
+        httpResponse.setContentType("text/css;charset=UTF-8");
+        httpResponse.setContentLength(css.length());
+        httpResponse.getWriter().write(css);
+    }
+
+    // todo: extract the caching functionality into a separate class
+    private String compiledAndCachedIfNeeded(File less) {
+        if (jenkins.isDevelopmentMode() || compiledCSS == null) {
+            compiledCSS = cssFrom(less);
+        }
+
+        return compiledCSS;
+    }
+
+    private String cssFrom(File less) {
         LessCompiler compiler             = new DefaultLessCompiler();
         LessCompiler.Configuration config = new LessCompiler.Configuration();
 
         config.setCompressing(false);
         config.getSourceMapConfiguration().setLinkSourceMap(false);
 
-        return compiler.compile(less, config).getCss();
-    }
-
-    private void sendCSS(ServletResponse response) throws IOException {
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-
-        httpResponse.setStatus(HttpServletResponse.SC_OK);
-        httpResponse.setContentType("text/css;charset=UTF-8");
-        httpResponse.setContentLength(compiledCSS.length());
-        httpResponse.getWriter().write(compiledCSS);
+        try {
+            return compiler.compile(less, config).getCss();
+        } catch (Less4jException e) {
+            return format("/* Less compilation failed with: %s */", e.getMessage());
+        }
     }
 
     @Override

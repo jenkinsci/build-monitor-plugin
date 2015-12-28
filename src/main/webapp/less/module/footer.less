@@ -1,0 +1,31 @@
+@import '../flexbox';
+
+.build-monitor.dashboard>footer {
+  .flex-display();
+  .flex-direction(row);
+  .justify-content(space-between);
+
+  padding: 0 4px;
+  color: #ddd;
+
+  .column {
+    .flex(1);
+
+    &.connectivity .notifier {
+      display: inline-block;
+
+      margin:  2px;
+      padding: 2px 10px;
+
+      border-radius: 10px;
+      background: #ffcf85;
+      color:#393939;
+    }
+
+    &.version-info {
+      margin:4px;
+
+      text-align: right;
+    }
+  }
+}

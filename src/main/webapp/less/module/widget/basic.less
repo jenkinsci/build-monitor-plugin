@@ -1,0 +1,124 @@
+@import '../../flexbox';
+@import '../../box-shadow';
+
+.build-monitor {
+  .widget.basic.project {
+
+    // ------------------------------------------------------------------------
+    // Base: Typography
+
+    & {
+      header h2 {
+        font-size: 4em;
+      }
+
+      .slots .slot {
+        font-size:     2em;
+        font-weight:   bold;
+
+        text-overflow: ellipsis;
+        white-space:   nowrap;
+        overflow:      hidden;
+      }
+    }
+
+    // ------------------------------------------------------------------------
+    // Layout: FlexBox
+
+    & {
+      .flex(1 1 auto);
+
+      .flex-display();
+      .flex-direction(column);
+      .justify-content(flex-end);
+
+      header {
+        .flex(3 2 auto);
+
+        .flex-display();
+        .flex-direction(column);
+        .justify-content(flex-end);
+      }
+
+      .slots {
+        .flex(2 3 auto);
+
+        .flex-display();
+        .flex-direction(row);
+
+        .slot {
+          .flex(1);
+
+          .flex-display();
+          .flex-direction(column);
+          .justify-content(flex-end);
+        }
+      }
+    }
+
+    // ------------------------------------------------------------------------
+    // Layout: Spacing
+
+    & {
+      position:      relative;
+      border-radius: 10px;
+      overflow-y:    hidden;
+      min-height:    0px;
+
+      header {
+        z-index:  1;
+        margin:   8px;
+        overflow: hidden;
+
+        ul.details {
+          margin:          0.25em 0 0 0;
+          padding:         0;
+          list-style-type: none;
+          text-align:      center;
+
+          li { margin: 0 0 0.25em 0; }
+        }
+
+        .build-failure-analyzer-plugin ul.identified-failures { list-style-type: none; display: inline-block; margin: 0; padding: 0; }
+        .build-failure-analyzer-plugin ul.identified-failures li { display: inline-block; margin-right:0.5em; }
+        .build-failure-analyzer-plugin ul.identified-failures li:after { content: ","; }
+        .build-failure-analyzer-plugin ul.identified-failures li:last-child:after { content: ""; }
+      }
+
+      .slots {
+        .slot-1 { text-align: left;  padding: 0 0   4px 8px; }
+        .slot-2 { text-align: right; padding: 0 8px 4px 0; }
+      }
+
+      & > .progress {
+        z-index:  0;
+        position: absolute;
+        left:     0;
+        top:      0;
+        width:    0%;
+        height:   100%;
+        text-align: right;
+        overflow:   hidden;
+
+        .value { display:none; }
+      }
+    }
+
+    // ------------------------------------------------------------------------
+    // State
+
+    & .slot         { opacity: 0.3; }
+    &.running .slot { opacity: 0.5; }
+
+    // ------------------------------------------------------------------------
+    // Theme
+
+    & {
+      .box-shadow(2px 2px 1px rgba(0,0,0,0.5));
+
+      & > .progress {
+        border-radius:  10px;
+      }
+    }
+  }
+}
