@@ -91,6 +91,23 @@ describe('buildMonitor', function () {
                 expect(notifyMe.callCount).toEqual(2);
             }));
 
+            it ("works when upgrading from Build Monitor 1.7 to 1.8", inject(function ($injector) {
+                given_the_installed_version_of_build_monitor_is('1.7+build.163').
+                and_the_latest_version_available_is('1.8+build.201512282338');
+
+                var townCrier = $injector.get('townCrier');
+
+                townCrier.uponNewVersion(notifyMe);
+
+                townCrier.start();
+                httpBackend.flush();
+
+                timeout.flush(3600 * 1000);
+                httpBackend.flush();
+
+                expect(notifyMe.callCount).toEqual(2);
+            }));
+
             // --
 
             function given_the_installed_version_of_build_monitor_is(version) {

@@ -100,7 +100,7 @@ angular.
 
     factory('version', [function() {
         function build(version) {
-            var build_number = (version.match(/build\.([0-9]+)/) || []).pop();
+            var build_number = (version.match(/([0-9]+)$/) || []).pop();
 
             // assume 0 if we couldn't determine the build number
             return parseInt(build_number || 0);
