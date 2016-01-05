@@ -98,7 +98,7 @@
                     </main>
                 </j:when>
                 <j:otherwise>
-                    <main class="main">
+                    <main class="main ng-cloak">
                         <st:include page="widgets.jelly" />
                     </main>
                 </j:otherwise>
