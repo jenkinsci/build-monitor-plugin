@@ -1,7 +1,7 @@
 'use strict';
 
 angular.
-    module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'uiSlider', 'jenkins']).
+    module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'uiSlider', 'jenkins', 'buildMonitor.stats']).
 
     controller('JobViews', ['$scope', '$rootScope', 'proxy', 'every', 'connectivityStrategist',
         function ($scope, $rootScope, proxy, every, connectivityStrategist) {
@@ -117,14 +117,14 @@ angular.
         }
     }]).
 
-    run(['$rootScope', '$window', '$log', 'notifyUser', 'connectivityStrategist', 'every', 'townCrier',
-        function ($rootScope, $window, $log, notifyUser, connectivityStrategist, every, townCrier) {
+    run(['$rootScope', '$window', 'notifyUser', 'connectivityStrategist', 'every', 'townCrier', 'stats',
+        function ($rootScope, $window, notifyUser, connectivityStrategist, every, townCrier, stats) {
             $rootScope.$on('jenkins:data-fetched', function (event) {
                 connectivityStrategist.resetErrorCounter();
             });
 
             $rootScope.$on('jenkins:data-fetched', function (event, meta) {
-                $window.ga('send', 'timing', 'Build Monitor API', 'fetchJobs',   meta.response_time_ms);
+                stats.timer('Build Monitor API', 'fetchJobs', meta.response_time_ms);
             });
 
             $rootScope.$on('jenkins:internal-error', function (event, error) {

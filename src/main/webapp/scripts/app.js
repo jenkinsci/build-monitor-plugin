@@ -1,19 +1,26 @@
 'use strict';
 
-angular.
-    module('buildMonitor', [
-        'buildMonitor.controllers',
-        'buildMonitor.filters',
-        'buildMonitor.settings',
-        'slugifier',
-        'build-monitor.slots',
-        'build-monitor.expansions.build-number', //todo: this should be discovered rather than defined explicitly
-        'build-monitor.expansions.build-time'    //todo: this should be discovered rather than defined explicitly
-    ]).
-    run(['$rootScope', 'notifyUser', function($rootScope, notifyUser) {
-        $rootScope.settings = { };
+angular
 
-        if (! Modernizr.flexbox) {
-            notifyUser.aboutInsufficientSupportOfCSS3('flexbox');
-        }
-    }]);
+.module('buildMonitor', [
+    'buildMonitor.controllers',
+    'buildMonitor.filters',
+    'buildMonitor.settings',
+    'buildMonitor.stats',
+    'slugifier',
+    'build-monitor.slots',
+    'build-monitor.expansions.build-number', //todo: this should be discovered rather than defined explicitly
+    'build-monitor.expansions.build-time'    //todo: this should be discovered rather than defined explicitly
+])
+
+.config(['statsProvider', function (statsProvider) {
+    statsProvider.configure({ flushIntervalInSeconds: 5 * 60 });
+}])
+
+.run(['$rootScope', 'notifyUser', function($rootScope, notifyUser) {
+    $rootScope.settings = { };
+
+    if (! Modernizr.flexbox) {
+        notifyUser.aboutInsufficientSupportOfCSS3('flexbox');
+    }
+}]);

@@ -47,6 +47,7 @@
 
             <script src="${resourcesURL}/vendor/modernizr.custom.27682.js"></script>
             <script src="${resourcesURL}/vendor/angular-${angularVersion}.min.js"></script>
+            <script src="${resourcesURL}/vendor/ng-lodash-3.10.1.min.js"></script>
             <script src="${resourcesURL}/vendor/ui-bootstrap-custom-tpls-0.4.0.js"></script>
             <script src="${resourcesURL}/vendor/angular-slider-0.1.6.js"></script>
             <script src="${resourcesURL}/vendor/angular-slugify-1.0.0.js"></script>
@@ -153,6 +154,7 @@
             <script src="${resourcesURL}/scripts/cron.js"></script>
             <script src="${resourcesURL}/scripts/filters.js"></script>
             <script src="${resourcesURL}/scripts/services.js"></script>
+            <script src="${resourcesURL}/scripts/stats.js"></script>
             <script src="${resourcesURL}/scripts/jenkins.js"></script>
             <script src="${resourcesURL}/scripts/controllers.js"></script>
             <script src="${resourcesURL}/scripts/templates.js"></script>

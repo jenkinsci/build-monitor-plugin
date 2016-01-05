@@ -17,6 +17,7 @@ module.exports = function(config) {
             'src/test/resources/syntacticSugar.js',
             'src/main/webapp/vendor/angular-1.1.5.js',
             'src/main/webapp/vendor/angular-slider-0.1.6.js',
+            'src/main/webapp/vendor/ng-lodash-3.10.1.min.js',
             'src/main/webapp/vendor/ui-*.js',
             'src/test/resources/vendor/angular-mocks.js',
             'src/test/resources/vendor/sinon-1.7.3.js',
@@ -24,7 +25,8 @@ module.exports = function(config) {
             'src/test/resources/vendor/yahoo-2.9.0.min.js',
             'src/test/resources/vendor/yahoo-cookie-2.9.0.min.js',
             'src/main/webapp/scripts/**/*.js',
-            'src/test/javascript/**/*Spec.js'
+            'src/test/javascript/**/*Spec.js',  // todo: deprecate the "Spec" suffix in favour of ".spec.js"
+            'src/test/javascript/**/*.spec.js'
         ],
 
 
