@@ -11,6 +11,7 @@ node('standard') {
         def version = read_property('version', 'target/classes/build-monitor.properties');
 
         assign_build_name version
+        push_release_branch_for version
     }
 
     archive_artifacts     'target/*.hpi,pom.xml'
@@ -108,6 +109,12 @@ def mvn (command) {
 
     // `sh` instead of `exec` as we actually do care about the output
     sh "${mvn_home}/bin/mvn -B -e -q ${command}"
+}
+
+def push_release_branch_for (version) {
+    sh "git checkout -b release-${version}"
+    sh "git commit -a -m \"Release candidate v${version}\""
+    sh "git push origin release-${version}"
 }
 
 def exec (command, description='') {
