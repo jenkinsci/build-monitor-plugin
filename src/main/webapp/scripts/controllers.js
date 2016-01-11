@@ -3,8 +3,8 @@
 angular.
     module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'uiSlider', 'jenkins', 'buildMonitor.stats']).
 
-    controller('JobViews', ['$scope', '$rootScope', 'proxy', 'every', 'connectivityStrategist',
-        function ($scope, $rootScope, proxy, every, connectivityStrategist) {
+    controller('JobViews', ['$scope', '$rootScope', '$window', 'proxy', 'every', 'connectivityStrategist',
+        function ($scope, $rootScope, $window, proxy, every, connectivityStrategist) {
             var tryToRecover  = connectivityStrategist.decideOnStrategy,
                 fetchJobViews = proxy.buildMonitor.fetchJobViews;
 
@@ -29,12 +29,14 @@ angular.
                 $scope.fontSize = fontSizeFor($scope.jobs);
             });
 
+            // todo: extract into a 'widget' directive; this shouldn't be a responsibility of a controller to calculate the size of the font...
             function fontSizeFor(itemsOnScreen) {
-                var initialFontSize = 24,
-                    minFontSize     = 3,
-                    numberOfRows    = Math.ceil((itemsOnScreen && itemsOnScreen.size() || 1) / ($rootScope.settings.numberOfColumns || 1));
+                var numberOfRows       = Math.ceil((itemsOnScreen && itemsOnScreen.size() || 1) / ($rootScope.settings.numberOfColumns || 1)),
+                    approxWidgetHeight = ($window.innerHeight - (58 + 26)) / numberOfRows,  // todo: calculate this properly when the widgets are extracted as directives
+                    baseFontSize       = approxWidgetHeight / 10,
+                    minFontSize        = 10;
 
-                return Math.max(initialFontSize / numberOfRows, minFontSize);
+                return Math.max(baseFontSize, minFontSize);
             }
         }]).
 
