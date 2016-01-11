@@ -66,7 +66,7 @@
       min-height:    0px;
 
       header {
-        z-index:  1;
+        position: relative;   // so that the stacking order works correctly: https://developers.google.com/web/updates/2012/09/Stacking-Changes-Coming-to-position-fixed-elements
         margin:   8px;
         overflow: hidden;
 
@@ -91,7 +91,6 @@
       }
 
       & > .progress {
-        z-index:  0;
         position: absolute;
         left:     0;
         top:      0;
