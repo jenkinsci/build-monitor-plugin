@@ -45,6 +45,7 @@ public class BuildView implements BuildViewModel {
         return build.getDisplayName();
     }
 
+    // todo: fix the double slash added when there's no parent
     @Override
     public String url() {
         return parentJobLocation.url() + "/" + build.getNumber() + "/";
