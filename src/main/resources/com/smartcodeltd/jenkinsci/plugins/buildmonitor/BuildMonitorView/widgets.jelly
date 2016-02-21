@@ -23,7 +23,7 @@
                     <span>
                         <ng-pluralize
                             count="project.knownFailures.length"
-                            when="{'1': 'Identified problem: ', 'other': '{{ job.knownFailures.length }} identified problems: '}"></ng-pluralize>
+                            when="{'1': 'Identified problem: ', 'other': '{{ project.knownFailures.length }} identified problems: '}"></ng-pluralize>
                     </span>
                     <ul class="identified-failures">
                         <li data-ng-repeat="name in project.knownFailures">{{ name }}</li>
