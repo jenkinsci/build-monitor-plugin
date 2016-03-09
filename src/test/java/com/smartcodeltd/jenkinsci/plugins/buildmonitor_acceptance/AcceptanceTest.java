@@ -94,10 +94,11 @@ abstract public class AcceptanceTest {
         capabilities.setCapability("os_version", "7");
         capabilities.setCapability("resolution", "1024x768");
 
-        capabilities.setCapability("name",        fullTestName());
 
+        capabilities.setCapability("browserstack.debug", "true");
         capabilities.setCapability("browserstack.local", "true");
 
+        capabilities.setCapability("name",    fullTestName());
         capabilities.setCapability("build",   currentVersion());
         capabilities.setCapability("project", "Build Monitor");
 
