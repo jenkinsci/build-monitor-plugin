@@ -238,6 +238,19 @@
     <build>
         <plugins>
             <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-Xmx4096m -XX:PermSize=256m -XX:MaxPermSize=2048m</argLine>
+                    <systemProperties>
+                        <property>
+                            <name>hudson.udp</name>
+                            <value>33849</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
