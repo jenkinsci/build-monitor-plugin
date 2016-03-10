@@ -18,6 +18,7 @@ import org.jvnet.hudson.test.JenkinsRule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -94,6 +95,7 @@ abstract public class AcceptanceTest {
         capabilities.setCapability("os_version", "7");
         capabilities.setCapability("resolution", "1024x768");
 
+        capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
         capabilities.setCapability("browserstack.debug", "true");
         capabilities.setCapability("browserstack.local", "true");

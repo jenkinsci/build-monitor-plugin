@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.recipes.With;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.prerequisites.FreestyleProjectExists.aFreestyleProject;
@@ -11,6 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 // @TODO: Work in progress
+@Ignore("There's a problem with BrowserStack client running on CloudBees Jenkins")
 public class BehaviourWithBuildFailureAnalyserTest extends AcceptanceTest {
 
     @Test

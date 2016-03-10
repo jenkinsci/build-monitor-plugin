@@ -16,6 +16,7 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacti
 import static hudson.model.Result.*;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
@@ -413,7 +414,7 @@ public class JobViewTest {
                 .augmented(with(Analysis.class)));
 
         assertThat(view.hasKnownFailures(), is(true));
-        assertThat(view.knownFailures(), contains(rogueAi));
+        assertThat(view.knownFailures(), hasItem(rogueAi));
     }
 
     @Test

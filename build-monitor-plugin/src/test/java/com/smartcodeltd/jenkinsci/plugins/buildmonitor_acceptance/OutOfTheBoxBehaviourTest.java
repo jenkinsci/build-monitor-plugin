@@ -2,6 +2,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.pageobjects.buildmonitor.BuildMonitor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.recipes.With;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenarios.prerequisites.FreestyleProjectExists.aFreestyleProject;
@@ -10,6 +11,7 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptance.scenari
 import static org.junit.Assert.assertThat;
 
 // @TODO: Work in progress
+@Ignore("There's a problem with BrowserStack client running on CloudBees Jenkins")
 public class OutOfTheBoxBehaviourTest extends AcceptanceTest {
 
     private BuildMonitor buildMonitor;
