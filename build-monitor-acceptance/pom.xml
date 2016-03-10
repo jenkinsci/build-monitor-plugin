@@ -13,6 +13,57 @@
 
     <name>Build Monitor Acceptance Tests</name>
 
+    <properties>
+        <encoding>UTF-8</encoding>
+        <serenity.version>1.1.29-rc.1</serenity.version>
+
+        <webdriver.driver>firefox</webdriver.driver>
+        <browserstack.url></browserstack.url>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>remote-browser</id>
+
+            <activation>
+                <property><name>env.BROWSERSTACK_USERNAME</name></property>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <browserstack.url>http://${env.BROWSERSTACK_USERNAME}:${env.BROWSERSTACK_AUTOMATION_KEY}@hub.browserstack.com/wd/hub</browserstack.url>
+            </properties>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>1.4.1</version>
+                        <executions>
+                            <execution>
+                                <id>ensure-browserstack-credentials-present</id>
+                                <goals><goal>enforce</goal></goals>
+                                <configuration>
+                                    <rules>
+                                        <requireEnvironmentVariable>
+                                            <variableName>BROWSERSTACK_USERNAME</variableName>
+                                            <message>${line.separator}BROWSERSTACK_USERNAME needs to be set to your BrowserStack username${line.separator}</message>
+                                        </requireEnvironmentVariable>
+                                        <requireEnvironmentVariable>
+                                            <variableName>BROWSERSTACK_AUTOMATION_KEY</variableName>
+                                            <message>${line.separator}BROWSERSTACK_AUTOMATION_KEY needs to be set${line.separator}</message>
+                                        </requireEnvironmentVariable>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <dependencies>
         <!-- jenkins acceptance test harness -->
         <dependency>
@@ -35,6 +86,18 @@
                 <exclusion>
                     <groupId>net.sourceforge.htmlunit</groupId>
                     <artifactId>htmlunit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -60,10 +123,39 @@
         </dependency>
         <!-- / jenkins acceptance test harness -->
 
+        <!-- serenity -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-core</artifactId>
+            <version>${serenity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-screenplay</artifactId>
+            <version>${serenity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>browse-the-web</artifactId>
+            <version>${serenity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-junit</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- / serenity -->
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.7</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version><!-- todo: move version definition to parent pom -->
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -80,6 +172,62 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/features/*Test.java</include>
+                    </includes>
+                    <argLine>-Xmx512m</argLine>
+                    <systemPropertyVariables>
+                        <webdriver.driver>${webdriver.driver}</webdriver.driver>
+                        <browserstack.url>${browserstack.url}</browserstack.url>
+                    </systemPropertyVariables>
+                    <environmentVariables>
+                        <!-- todo: remove when the acceptance-test-harness is gone -->
+                        <BROWSER>htmlunit</BROWSER>
+                        <JENKINS_VERSION>1.609.3</JENKINS_VERSION>
+                    </environmentVariables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>net.serenity-bdd.maven.plugins</groupId>
+                <artifactId>serenity-maven-plugin</artifactId>
+                <version>${serenity.version}</version>
+                <executions>
+                    <execution>
+                        <id>serenity-reports</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
