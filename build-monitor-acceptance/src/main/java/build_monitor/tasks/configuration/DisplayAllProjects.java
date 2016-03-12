@@ -5,6 +5,7 @@ import core_jenkins.actions.Choose;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Enter;
+import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
@@ -13,6 +14,7 @@ public class DisplayAllProjects implements Task {
         return instrumented(DisplayAllProjects.class);
     }
 
+    @Step("{0} uses a regular expression to display all projects")
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(

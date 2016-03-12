@@ -13,7 +13,7 @@ public class SaveTheChanges implements Task {
         return instrumented(SaveTheChanges.class);
     }
 
-    @Step("{0] saves the changes")
+    @Step("{0} saves the changes leaving the configuration screen")
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(Click.on(Buttons.OK));
