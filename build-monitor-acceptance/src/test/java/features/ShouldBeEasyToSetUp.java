@@ -3,6 +3,7 @@ package features;
 import build_monitor.questions.ProjectWidget;
 import build_monitor.tasks.ConfigureBuildMonitorView;
 import build_monitor.tasks.CreateABuildMonitorView;
+import build_monitor.tasks.configuration.DisplayAllProjects;
 import core_jenkins.tasks.CreateAFreestyleProject;
 import core_jenkins.tasks.Start;
 import net.serenitybdd.junit.runners.SerenityRunner;
@@ -51,13 +52,12 @@ public class ShouldBeEasyToSetUp {
 
         givenThat(anna).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url),
-                CreateAFreestyleProject.called("my awesome app")
+                CreateAFreestyleProject.called("My Awesome App")
         );
 
         when(anna).attemptsTo(
                 CreateABuildMonitorView.called("Build Monitor"),
-                // todo: configure in a context: .and(ConfigureBuildMonitorView....., ... )
-                ConfigureBuildMonitorView.toDisplayAllProjects()
+                ConfigureBuildMonitorView.to(DisplayAllProjects.usingARegularExpression())
         );
 
         // todo: create a test asserting on status
@@ -66,6 +66,6 @@ public class ShouldBeEasyToSetUp {
 //                displays("status", hasItem(ProjectStatus.Unknown))
 //        ));
 
-        then(anna).should(seeThat(ProjectWidget.of("my awesome app").state(), isCurrentlyVisible()));
+        then(anna).should(seeThat(ProjectWidget.of("My Awesome App").state(), isCurrentlyVisible()));
     }
 }
