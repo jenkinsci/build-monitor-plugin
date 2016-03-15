@@ -8,9 +8,9 @@ import user_interface.navigation.Buttons;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
-public class SaveTheChanges implements Task {
+public class SaveTheChangesToBuildMonitor implements Task {
     public static Task andExitTheConfigurationScreen() {
-        return instrumented(SaveTheChanges.class);
+        return instrumented(SaveTheChangesToBuildMonitor.class);
     }
 
     @Step("{0} saves the changes leaving the configuration screen")

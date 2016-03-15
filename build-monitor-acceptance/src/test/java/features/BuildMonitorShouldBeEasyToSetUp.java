@@ -26,7 +26,7 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
 @RunWith(SerenityRunner.class)
-public class ShouldBeEasyToSetUp {
+public class BuildMonitorShouldBeEasyToSetUp {
 
     Actor anna = Actor.named("Anna");
 
@@ -59,12 +59,6 @@ public class ShouldBeEasyToSetUp {
                 CreateABuildMonitorView.called("Build Monitor"),
                 ConfigureBuildMonitorView.to(DisplayAllProjects.usingARegularExpression())
         );
-
-        // todo: create a test asserting on status
-//        then(anna).should(seeThat(ProjectWidget.of("my awesome app").information(),
-//                displays("name",   equalTo("my awesome app")),
-//                displays("status", hasItem(ProjectStatus.Unknown))
-//        ));
 
         then(anna).should(seeThat(ProjectWidget.of("My Awesome App").state(), isCurrentlyVisible()));
     }

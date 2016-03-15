@@ -185,7 +185,7 @@
                 <configuration>
                     <includes>
                         <include>**/features/*Test.java</include>
-                        <include>**/features/Should*.java</include>
+                        <include>**/features/*Should*.java</include>
                     </includes>
                     <argLine>-Xmx512m</argLine>
                     <systemPropertyVariables>

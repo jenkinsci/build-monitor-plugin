@@ -1,5 +1,6 @@
 package core_jenkins.tasks;
 
+import build_monitor.tasks.configuration.TodoList;
 import core_jenkins.actions.Choose;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
@@ -19,6 +20,12 @@ public class CreateAFreestyleProject implements Task {
         return instrumented(CreateAFreestyleProject.class, name);
     }
 
+    public Task andConfigureItTo(Task configurationTask) {
+        this.configureTheProject.add(configurationTask);
+
+        return this;
+    }
+
     @Override
     @Step("{0} creates a 'Freestyle Project' called '#name'")
     public <T extends Actor> void performAs(T actor) {
@@ -26,9 +33,7 @@ public class CreateAFreestyleProject implements Task {
                 Click.on(SidePanel.New_Item_Link),
                 Choose.the(NewJobPage.Freestyle_Project),
                 Enter.theValue(name).into(NewJobPage.Item_Name_Field).thenHit(ENTER),
-
-                // todo: configure the project if needed
-
+                configureTheProject,
                 Click.on(Save),
                 Click.on(Back_to_Dashboard)
         );
@@ -38,5 +43,6 @@ public class CreateAFreestyleProject implements Task {
         this.name = jobName;
     }
 
-    private final String name;
+    private final String   name;
+    private final TodoList configureTheProject = TodoList.empty();
 }

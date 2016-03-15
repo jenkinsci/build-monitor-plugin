@@ -14,6 +14,8 @@ import static java.lang.String.format;
 import static org.hibernate.validator.internal.util.CollectionHelper.newArrayList;
 
 public enum ProjectStatus {
+    Successful("successful"),
+    Failing("failing"),
     Unknown("unknown");
 
     private final String value;

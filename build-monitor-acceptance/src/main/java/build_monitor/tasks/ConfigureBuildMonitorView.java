@@ -1,6 +1,6 @@
 package build_monitor.tasks;
 
-import build_monitor.tasks.configuration.SaveTheChanges;
+import build_monitor.tasks.configuration.SaveTheChangesToBuildMonitor;
 import build_monitor.tasks.configuration.TodoList;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
@@ -24,7 +24,7 @@ public class ConfigureBuildMonitorView implements Task {
         actor.attemptsTo(
                 AddProjects.toAnEmptyBuildMonitor(),
                 configureTheView,
-                SaveTheChanges.andExitTheConfigurationScreen()
+                SaveTheChangesToBuildMonitor.andExitTheConfigurationScreen()
         );
     }
 

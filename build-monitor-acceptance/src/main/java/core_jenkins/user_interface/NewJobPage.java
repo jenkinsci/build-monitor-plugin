@@ -7,6 +7,6 @@ import core_jenkins.targets.RadioButton;
 
 @DefaultUrl("/newJob")
 public class NewJobPage extends PageObject {
-    public static final Target Item_Name_Field   = Target.the("'Item name' field").locatedBy("#name");
+    public static final Target Item_Name_Field   = Target.the("the 'Item name' field").locatedBy("#name");
     public static final Target Freestyle_Project = RadioButton.withLabel("Freestyle project");
 }
