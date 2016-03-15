@@ -1,12 +1,9 @@
 package features;
 
 import build_monitor.questions.ProjectWidget;
-import build_monitor.tasks.CreateABuildMonitorView;
-import build_monitor.tasks.configuration.DisplayAllProjects;
-import core_jenkins.tasks.CreateAFreestyleProject;
-import core_jenkins.tasks.ScheduleABuild;
+import build_monitor.tasks.CreateAndConfigureABuildMonitorView;
+import core_jenkins.tasks.CreateAProject;
 import core_jenkins.tasks.Start;
-import core_jenkins.tasks.configuration.ExecuteAShellScript;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -53,16 +50,11 @@ public class ProjectStatusShouldBeEasyToDetermine {
 
         givenThat(anna).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url),
-                CreateAFreestyleProject.called("My App").andConfigureItTo(      // todo: too much nesting, extract to "pre-configured" configurations
-                        ExecuteAShellScript.thatPasses()
-                ),
-                ScheduleABuild.of("My App")                                     // todo: should wait for the build to finish
+                CreateAProject.called("My App").andScheduleABuildThatPasses()
         );
 
         when(anna).attemptsTo(
-                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                        DisplayAllProjects.usingARegularExpression()
-                )
+                CreateAndConfigureABuildMonitorView.called("Build Monitor").thatDisplaysAllTheProjects()
         );
 
         then(anna).should(seeThat(ProjectWidget.of("My App").information(),
@@ -76,16 +68,11 @@ public class ProjectStatusShouldBeEasyToDetermine {
 
         givenThat(anna).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url),
-                CreateAFreestyleProject.called("My App").andConfigureItTo(      // todo: too much nesting, extract to "pre-configured" configurations
-                        ExecuteAShellScript.thatFails()
-                ),
-                ScheduleABuild.of("My App")                                     // todo: should wait for the build to finish
+                CreateAProject.called("My App").andScheduleABuildThatFails()
         );
 
         when(anna).attemptsTo(
-                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                        DisplayAllProjects.usingARegularExpression()
-                )
+                CreateAndConfigureABuildMonitorView.called("Build Monitor").thatDisplaysAllTheProjects()
         );
 
         then(anna).should(seeThat(ProjectWidget.of("My App").information(),

@@ -13,28 +13,23 @@ import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class ExecuteAShellScript implements Task {
 
-    private final String script;
-
-    public static Task thatPasses() {
-        return instrumented(ExecuteAShellScript.class, "exit 0;");
+    public static Task that(ShellScript expectedOutcome) {
+        return instrumented(ExecuteAShellScript.class, expectedOutcome);
     }
 
-    public static Task thatFails() {
-        return instrumented(ExecuteAShellScript.class, "exit 1;");
-    }
-
-    @Step("{0} configures the Shell Step to execute '#script'")
+    @Step("{0} configures the Shell Step to execute a script that '#scriptOutcome'")
     @Override
     public <T extends Actor> void performAs(T actor) {
-
         actor.attemptsTo(
             Click.on(Buttons.Add_Build_Step),
             Click.on(Link.called("Execute shell")),
-            EnterCode.asFollows(script).into(ShellBuildStep.Editor)
+            EnterCode.asFollows(scriptOutcome.code()).into(ShellBuildStep.Editor)
         );
     }
 
-    public ExecuteAShellScript(String script) {
-        this.script = script;
+    public ExecuteAShellScript(ShellScript script) {
+        this.scriptOutcome = script;
     }
+
+    private final ShellScript scriptOutcome;
 }
