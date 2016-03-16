@@ -23,7 +23,7 @@ public class ExecuteAShellScript implements Task {
         actor.attemptsTo(
             Click.on(Buttons.Add_Build_Step),
             Click.on(Link.called("Execute shell")),
-            EnterCode.asFollows(scriptOutcome.code()).into(ShellBuildStep.Editor)
+            EnterCode.asFollows(scriptOutcome.code()).intoTheCodeMirror(ShellBuildStep.Editor)
         );
     }
 
