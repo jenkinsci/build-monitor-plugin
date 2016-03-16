@@ -2,8 +2,8 @@ package core_jenkins.tasks.recipes;
 
 import core_jenkins.tasks.CreateAFreestyleProject;
 import core_jenkins.tasks.ScheduleABuild;
-import core_jenkins.tasks.configuration.ExecuteAShellScript;
-import core_jenkins.tasks.configuration.ShellScript;
+import core_jenkins.tasks.configuration.build_steps.ExecuteAShellScript;
+import core_jenkins.tasks.configuration.build_steps.ShellScript;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.thucydides.core.annotations.Step;

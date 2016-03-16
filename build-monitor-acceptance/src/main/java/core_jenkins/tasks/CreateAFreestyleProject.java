@@ -2,12 +2,12 @@ package core_jenkins.tasks;
 
 import build_monitor.tasks.configuration.TodoList;
 import core_jenkins.actions.Choose;
+import core_jenkins.user_interface.NewJobPage;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.thucydides.core.annotations.Step;
-import core_jenkins.user_interface.NewJobPage;
 import user_interface.navigation.SidePanel;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;

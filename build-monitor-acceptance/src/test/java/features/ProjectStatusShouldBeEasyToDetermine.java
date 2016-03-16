@@ -8,12 +8,15 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.thucydides.core.annotations.Managed;
+import net.thucydides.core.guice.Injectors;
+import net.thucydides.core.util.EnvironmentVariables;
 import org.jenkinsci.test.acceptance.junit.JenkinsAcceptanceTestRule;
 import org.jenkinsci.test.acceptance.junit.WithPlugins;
 import org.jenkinsci.test.acceptance.po.Jenkins;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
@@ -39,9 +42,19 @@ public class ProjectStatusShouldBeEasyToDetermine {
     @Inject
     public Jenkins jenkins;
 
+    // fixme: hack
+    @Rule public TestName name = new TestName();
+
     @Before
     public void annaCanBrowseTheWeb() {
+
         anna.can(BrowseTheWeb.with(herBrowser));
+
+        // fixme: hack
+
+        Injectors.getInjector().getInstance(EnvironmentVariables.class).setProperty("browserstack.name", name.getMethodName());
+        Injectors.getInjector().getInstance(EnvironmentVariables.class).setProperty("browserstack.project", "Build Monitor");
+        Injectors.getInjector().getInstance(EnvironmentVariables.class).setProperty("browserstack.build", "1.8-SNAPSHOT");
     }
 
     @Test

@@ -1,4 +1,4 @@
-package core_jenkins.tasks.configuration;
+package core_jenkins.tasks.configuration.build_steps;
 
 public enum ShellScript {
     Finishes_with_Success("exit 0;"),

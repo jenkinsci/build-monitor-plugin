@@ -4,7 +4,6 @@ import net.serenitybdd.core.steps.Instrumented;
 import net.serenitybdd.screenplay.Action;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.JavascriptExecutor;
 
 // the original implementation has a side-effect of injecting the jQuery library, which conflicts with Jenkins' prototype.js
@@ -22,7 +21,6 @@ public class Evaluate implements Action {
         return this;
     }
 
-    @Step("Execute JavaScript #expression")
     public <T extends Actor> void performAs(T theUser) {
         ((JavascriptExecutor) BrowseTheWeb.as(theUser).getDriver()).executeScript(expression, parameters);
     }
