@@ -1,11 +1,11 @@
 package features;
 
-import build_monitor.questions.ProjectWidget;
-import build_monitor.tasks.ConfigureBuildMonitorView;
-import build_monitor.tasks.CreateABuildMonitorView;
-import build_monitor.tasks.configuration.DisplayAllProjects;
-import core_jenkins.tasks.CreateAFreestyleProject;
-import core_jenkins.tasks.Start;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.ConfigureBuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
+import net.serenitybdd.screenplay.jenkins.tasks.CreateAFreestyleProject;
+import net.serenitybdd.screenplay.jenkins.tasks.Start;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;

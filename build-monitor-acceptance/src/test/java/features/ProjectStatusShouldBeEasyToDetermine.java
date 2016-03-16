@@ -1,9 +1,9 @@
 package features;
 
-import build_monitor.questions.ProjectWidget;
-import build_monitor.tasks.CreateAndConfigureABuildMonitorView;
-import core_jenkins.tasks.CreateAProject;
-import core_jenkins.tasks.Start;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateAndConfigureABuildMonitorView;
+import net.serenitybdd.screenplay.jenkins.tasks.CreateAProject;
+import net.serenitybdd.screenplay.jenkins.tasks.Start;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -22,9 +22,9 @@ import org.openqa.selenium.WebDriver;
 
 import javax.inject.Inject;
 
-import static build_monitor.matchers.ProjectInformationMatchers.displaysProjectStatusAs;
-import static build_monitor.model.ProjectStatus.Failing;
-import static build_monitor.model.ProjectStatus.Successful;
+import static com.smartcodeltd.jenkinsci.plugins.build_monitor.matchers.ProjectInformationMatchers.displaysProjectStatusAs;
+import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus.Failing;
+import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus.Successful;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
 @RunWith(SerenityRunner.class)
