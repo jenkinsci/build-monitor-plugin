@@ -4,22 +4,21 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.ConfigureBuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
-import net.serenitybdd.screenplay.jenkins.tasks.CreateAFreestyleProject;
-import net.serenitybdd.screenplay.jenkins.tasks.Start;
+import net.serenitybdd.integration.browserstack.ConfigureBrowserStackSpecificCapabilities;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+import net.serenitybdd.screenplay.jenkins.tasks.CreateAFreestyleProject;
+import net.serenitybdd.screenplay.jenkins.tasks.Start;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Title;
-import net.thucydides.core.guice.Injectors;
-import net.thucydides.core.util.EnvironmentVariables;
 import org.jenkinsci.test.acceptance.junit.JenkinsAcceptanceTestRule;
 import org.jenkinsci.test.acceptance.junit.WithPlugins;
 import org.jenkinsci.test.acceptance.po.Jenkins;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestName;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
@@ -33,27 +32,19 @@ public class BuildMonitorShouldBeEasyToSetUp {
 
     Actor anna = Actor.named("Anna");
 
-    @Managed(uniqueSession = true)
-    public WebDriver herBrowser;
+    @Managed public WebDriver herBrowser;
 
-    @Rule
-    public JenkinsAcceptanceTestRule rules = new JenkinsAcceptanceTestRule();
+    @Rule public TestRule browserstack = ConfigureBrowserStackSpecificCapabilities
+            .forProject("Build Monitor Experiments").andBuild("1.8-SNAPSHOT");
+
 
     // Jenkins acceptance harness integration thingy. todo: Replace with something simpler.
-    @Inject
-    public Jenkins jenkins;
-
-    // fixme: hack
-    @Rule public TestName name = new TestName();
+    @Rule public JenkinsAcceptanceTestRule jenkinsATR = new JenkinsAcceptanceTestRule();
+    @Inject public Jenkins jenkins;
 
     @Before
     public void annaCanBrowseTheWeb() {
         anna.can(BrowseTheWeb.with(herBrowser));
-
-        // fixme: hack
-        Injectors.getInjector().getInstance(EnvironmentVariables.class).setProperty("browserstack.name", name.getMethodName());
-        Injectors.getInjector().getInstance(EnvironmentVariables.class).setProperty("browserstack.project", "Build Monitor");
-        Injectors.getInjector().getInstance(EnvironmentVariables.class).setProperty("browserstack.build", "1.8-SNAPSHOT");
     }
 
     @Test
