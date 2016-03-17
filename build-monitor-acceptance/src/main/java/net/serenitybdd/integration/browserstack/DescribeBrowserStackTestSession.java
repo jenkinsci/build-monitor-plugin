@@ -8,20 +8,20 @@ import org.junit.runner.Description;
 
 import static java.lang.String.*;
 
-public class ConfigureBrowserStackSpecificCapabilities extends TestWatcher {
+public class DescribeBrowserStackTestSession extends TestWatcher {
 
     private final String projectName;
     private       String build = "";
 
-    public ConfigureBrowserStackSpecificCapabilities(String projectName) {
+    public DescribeBrowserStackTestSession(String projectName) {
         this.projectName = projectName;
     }
 
-    public static ConfigureBrowserStackSpecificCapabilities forProject(String projectName){
-        return new ConfigureBrowserStackSpecificCapabilities(projectName);
+    public static DescribeBrowserStackTestSession forProject(String projectName){
+        return new DescribeBrowserStackTestSession(projectName);
     }
 
-    public ConfigureBrowserStackSpecificCapabilities andBuild(String build) {
+    public DescribeBrowserStackTestSession andBuild(String build) {
         this.build = build;
 
         return this;
@@ -41,7 +41,7 @@ public class ConfigureBrowserStackSpecificCapabilities extends TestWatcher {
     }
 
     private String humanReadable(Description description) {
-        return format("%s: %s)",
+        return format("%s: %s",
                 Typograph.deCamelCase(simplified(description.getClassName())),
                 Typograph.de_snake_case(description.getMethodName())
         );

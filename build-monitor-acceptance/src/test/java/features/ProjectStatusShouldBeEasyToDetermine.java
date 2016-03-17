@@ -2,7 +2,7 @@ package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateAndConfigureABuildMonitorView;
-import net.serenitybdd.integration.browserstack.ConfigureBrowserStackSpecificCapabilities;
+import net.serenitybdd.integration.browserstack.DescribeBrowserStackTestSession;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -33,7 +33,7 @@ public class ProjectStatusShouldBeEasyToDetermine {
 
     @Managed public WebDriver herBrowser;
 
-    @Rule public TestRule browserstack = ConfigureBrowserStackSpecificCapabilities
+    @Rule public TestRule browserstack = DescribeBrowserStackTestSession
             .forProject("Build Monitor Experiments").andBuild("1.8-SNAPSHOT");
 
 
