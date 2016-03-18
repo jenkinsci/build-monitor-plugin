@@ -39,6 +39,8 @@ node('standard') {
 
     unstash 'sources'
 
+    sh "git status"
+
 //    push_release_branch_for version
 }
 
