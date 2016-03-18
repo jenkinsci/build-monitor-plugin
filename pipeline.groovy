@@ -11,7 +11,7 @@ node('standard') {
     mvn "release-candidate:updateVersion"
     mvn "clean package --projects build-monitor-plugin"
 
-    version = read_property('version', 'target/classes/build-monitor.properties');
+    version = read_property('version', 'build-monitor-plugin/target/classes/build-monitor.properties');
 
     assign_build_name version
 
