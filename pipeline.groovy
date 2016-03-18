@@ -3,7 +3,7 @@ def version = 'unknown'
 stage 'Build'
 node('standard') {
 
-    git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git'
+    git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'acceptance'
 
     use_jdk    '1.7.latest'
     use_nodejs '0.10.26'
