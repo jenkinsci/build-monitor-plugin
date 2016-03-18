@@ -28,12 +28,13 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 @RunWith(SerenityRunner.class)
+// todo: will this still install the plugin if we already have one
 @WithPlugins({"build-monitor-plugin", "cloudbees-folder"})
 public class ShouldSupportCloudBeesFolders {
 
     Actor anna = Actor.named("Anna");
 
-    @Managed public WebDriver hisBrowser;
+    @Managed public WebDriver herBrowser;
 
     @Rule public TestRule browserstack = DescribeBrowserStackTestSession
             .forProject("Build Monitor Experiments").andBuild("1.8-SNAPSHOT");
@@ -45,7 +46,7 @@ public class ShouldSupportCloudBeesFolders {
 
     @Before
     public void annaCanBrowseTheWeb() {
-        anna.can(BrowseTheWeb.with(hisBrowser));
+        anna.can(BrowseTheWeb.with(herBrowser));
     }
 
     @Test

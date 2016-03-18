@@ -1,21 +1,45 @@
+def version = 'unknown'
+
+stage 'Build'
 node('standard') {
+
     git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git'
 
-    use_jdk    '1.6.0_45'
+    use_jdk    '1.7.latest'
     use_nodejs '0.10.26'
 
+    mvn "release-candidate:updateVersion"
+    mvn "clean package --projects build-monitor-plugin"
+
+    version = read_property('version', 'target/classes/build-monitor.properties');
+
+    assign_build_name version
+
+    archive_junit_results '**/target/surefire-reports/TEST-*.xml,**/target/javascript/test-results.xml'
+
+    stash name: 'sources', includes: '**,**/target/*.hpi', excludes: '**/target/**/*'
+}
+
+stage 'Verify'
+node('standard') {
+
+    unstash 'sources'
+
+    use_jdk '1.7.latest'
+
     with_browser_stack 'linux-x64', {
-        mvn "release-candidate:updateVersion"
-        mvn "clean verify"
-
-        def version = read_property('version', 'target/classes/build-monitor.properties');
-
-        assign_build_name version
-        push_release_branch_for version
+        mvn "verify --projects build-monitor-acceptance"
     }
 
-    archive_artifacts     'target/*.hpi,pom.xml'
-    archive_junit_results '**/target/surefire-reports/TEST-*.xml,**/target/javascript/test-results.xml'
+    archive_artifacts 'target/*.hpi,pom.xml'
+}
+
+stage 'Publish to GitHub'
+node('standard') {
+
+    unstash 'sources'
+
+//    push_release_branch_for version
 }
 
 // --
