@@ -21,7 +21,7 @@ node('standard') {
 }
 
 stage 'Verify'
-node('standard') {
+node('hi-speed') {
 
     unstash 'sources'
 
@@ -31,7 +31,8 @@ node('standard') {
         mvn "verify --projects build-monitor-acceptance"
     }
 
-    archive_artifacts 'target/*.hpi,pom.xml'
+    archive_html      'Serenity', 'build-monitor-acceptance/target/site/serenity'
+    archive_artifacts 'build-monitor-plugin/target/*.hpi,build-monitor-plugin/pom.xml'
 }
 
 stage 'Publish to GitHub'
@@ -66,6 +67,10 @@ def archive_artifacts(artifacts) {
 
 def archive_junit_results(results) {
     step([$class: 'JUnitResultArchiver', testResults: results])
+}
+
+def archive_html(report_name, path) {
+    publishHtml(target: [reportName : report_name, reportDir: path, keepAll: true, alwaysLinkToLastBuild: true, allowMissing: false])
 }
 
 def with_browser_stack(version, actions) {
