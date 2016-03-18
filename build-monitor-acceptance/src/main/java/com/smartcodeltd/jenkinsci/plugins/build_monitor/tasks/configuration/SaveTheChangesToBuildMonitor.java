@@ -13,7 +13,7 @@ public class SaveTheChangesToBuildMonitor implements Task {
         return instrumented(SaveTheChangesToBuildMonitor.class);
     }
 
-    @Step("{0} saves the changes leaving the configuration screen")
+    @Step("{0} saves the changes and leaves the configuration screen")
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(Click.on(Buttons.OK));

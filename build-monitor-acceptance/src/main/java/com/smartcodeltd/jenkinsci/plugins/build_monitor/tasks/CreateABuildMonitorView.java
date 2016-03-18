@@ -18,8 +18,8 @@ public class CreateABuildMonitorView implements Task {
         return instrumented(CreateABuildMonitorView.class, name);
     }
 
-    public Task andConfigureItTo(Task configurationTask) {
-        this.configureBuildMonitor.add(configurationTask);
+    public Task andConfigureItTo(Task... configurationTasks) {
+        this.configureBuildMonitor.addAll(configurationTasks);
 
         return this;
     }

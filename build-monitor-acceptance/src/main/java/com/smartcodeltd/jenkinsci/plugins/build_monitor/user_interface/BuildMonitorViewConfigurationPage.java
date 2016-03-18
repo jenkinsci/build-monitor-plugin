@@ -1,11 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface;
 
-import net.serenitybdd.core.annotations.findby.By;
-import net.serenitybdd.core.pages.PageObject;
-import net.serenitybdd.screenplay.targets.Target;
-import net.serenitybdd.screenplay.jenkins.targets.Checkbox;
+public class BuildMonitorViewConfigurationPage {
 
-public class BuildMonitorViewConfigurationPage extends PageObject {
-    public static final Target Use_Regular_Expression = Checkbox.withLabel("Use a regular expression to include jobs into the view");
-    public static final Target Regular_Expression     = Target.the("the 'Regular expression' field").located(By.name("includeRegex"));
 }

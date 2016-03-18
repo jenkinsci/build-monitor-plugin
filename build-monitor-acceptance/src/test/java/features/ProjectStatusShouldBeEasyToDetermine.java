@@ -1,12 +1,14 @@
 package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateAndConfigureABuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import net.serenitybdd.integration.browserstack.DescribeBrowserStackTestSession;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.jenkins.tasks.CreateAProject;
+import net.serenitybdd.screenplay.jenkins.HaveAFailingProjectCreated;
+import net.serenitybdd.screenplay.jenkins.HaveASuccessfulProjectCreated;
 import net.serenitybdd.screenplay.jenkins.tasks.Start;
 import net.thucydides.core.annotations.Managed;
 import org.jenkinsci.test.acceptance.junit.JenkinsAcceptanceTestRule;
@@ -52,11 +54,13 @@ public class ProjectStatusShouldBeEasyToDetermine {
 
         givenThat(anna).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url),
-                CreateAProject.called("My App").andScheduleABuildThatPasses()
+                HaveASuccessfulProjectCreated.called("My App")
         );
 
         when(anna).attemptsTo(
-                CreateAndConfigureABuildMonitorView.called("Build Monitor").thatDisplaysAllTheProjects()
+                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
+                        DisplayAllProjects.usingARegularExpression()
+                )
         );
 
         then(anna).should(seeThat(ProjectWidget.of("My App").information(),
@@ -70,11 +74,13 @@ public class ProjectStatusShouldBeEasyToDetermine {
 
         givenThat(anna).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url),
-                CreateAProject.called("My App").andScheduleABuildThatFails()
+                HaveAFailingProjectCreated.called("My App")
         );
 
         when(anna).attemptsTo(
-                CreateAndConfigureABuildMonitorView.called("Build Monitor").thatDisplaysAllTheProjects()
+                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
+                        DisplayAllProjects.usingARegularExpression()
+                )
         );
 
         then(anna).should(seeThat(ProjectWidget.of("My App").information(),

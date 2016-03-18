@@ -1,17 +1,17 @@
 package features;
 
+import com.cloudbees.hudson.plugins.folder.HaveAFolderCreated;
+import com.cloudbees.hudson.plugins.folder.HaveANestedProjectCreated;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.ConfigureBuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayNestedProjects;
 import net.serenitybdd.integration.browserstack.DescribeBrowserStackTestSession;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
 import net.serenitybdd.screenplay.jenkins.tasks.Start;
 import net.thucydides.core.annotations.Managed;
-import net.thucydides.core.annotations.Title;
 import org.jenkinsci.test.acceptance.junit.JenkinsAcceptanceTestRule;
 import org.jenkinsci.test.acceptance.junit.WithPlugins;
 import org.jenkinsci.test.acceptance.po.Jenkins;
@@ -25,14 +25,15 @@ import org.openqa.selenium.WebDriver;
 import javax.inject.Inject;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 @RunWith(SerenityRunner.class)
-public class BuildMonitorShouldBeEasyToSetUp {
+@WithPlugins({"build-monitor-plugin", "cloudbees-folder"})
+public class ShouldSupportCloudBeesFolders {
 
     Actor anna = Actor.named("Anna");
 
-    @Managed public WebDriver herBrowser;
+    @Managed public WebDriver hisBrowser;
 
     @Rule public TestRule browserstack = DescribeBrowserStackTestSession
             .forProject("Build Monitor Experiments").andBuild("1.8-SNAPSHOT");
@@ -44,24 +45,29 @@ public class BuildMonitorShouldBeEasyToSetUp {
 
     @Before
     public void annaCanBrowseTheWeb() {
-        anna.can(BrowseTheWeb.with(herBrowser));
+        anna.can(BrowseTheWeb.with(hisBrowser));
     }
 
     @Test
-    @Title("Adding a project to an empty Build Monitor")
-    @WithPlugins({"build-monitor-plugin"})
-    public void adding_project_to_an_empty_build_monitor() {
-
+    public void visualising_projects_nested_in_folders() throws Exception {
         givenThat(anna).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url),
-                HaveAProjectCreated.called("My Awesome App")
+                HaveAFolderCreated.called("Search Services").andInsideIt(
+                        HaveANestedProjectCreated.called("Librarian"),
+                        HaveAFolderCreated.called("Contracts").andInsideIt(
+                                HaveANestedProjectCreated.called("Third Party System")
+                        )
+                )
         );
 
         when(anna).attemptsTo(
-                CreateABuildMonitorView.called("Build Monitor"),
-                ConfigureBuildMonitorView.to(DisplayAllProjects.usingARegularExpression())
+                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
+                        DisplayAllProjects.usingARegularExpression(),
+                        DisplayNestedProjects.fromSubfolders()
+                )
         );
 
-        then(anna).should(seeThat(ProjectWidget.of("My Awesome App").state(), isCurrentlyVisible()));
+        then(anna).should(seeThat(ProjectWidget.of("Search Services » Librarian").state(), isVisible()));
+        then(anna).should(seeThat(ProjectWidget.of("Search Services » Contracts » Third Party System").state(), isVisible()));
     }
 }

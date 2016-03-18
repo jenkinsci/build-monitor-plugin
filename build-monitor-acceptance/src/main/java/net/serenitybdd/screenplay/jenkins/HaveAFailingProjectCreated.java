@@ -1,14 +1,22 @@
-package net.serenitybdd.screenplay.jenkins.tasks.recipes;
+package net.serenitybdd.screenplay.jenkins;
 
+import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.Task;
+import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.jenkins.tasks.CreateAFreestyleProject;
 import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ExecuteAShellScript;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScript;
-import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.Task;
 import net.thucydides.core.annotations.Step;
 
-public class CreateAProjectAndScheduleABuildThatFails implements Task {
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+import static net.serenitybdd.screenplay.jenkins.user_interface.navigation.SidePanel.Back_to_Dashboard;
+
+public class HaveAFailingProjectCreated implements Task {
+
+    public static Task called(String name) {
+        return instrumented(HaveAFailingProjectCreated.class, name);
+    }
 
     @Step("{0} creates the '#projectName' project and schedules a build that fails")
     @Override
@@ -17,11 +25,12 @@ public class CreateAProjectAndScheduleABuildThatFails implements Task {
                 CreateAFreestyleProject.called(projectName).andConfigureItTo(
                         ExecuteAShellScript.that(ShellScript.Finishes_with_Error)
                 ),
+                Click.on(Back_to_Dashboard),
                 ScheduleABuild.of(projectName)
         );
     }
 
-    public CreateAProjectAndScheduleABuildThatFails(String projectName) {
+    public HaveAFailingProjectCreated(String projectName) {
         this.projectName = projectName;
     }
 

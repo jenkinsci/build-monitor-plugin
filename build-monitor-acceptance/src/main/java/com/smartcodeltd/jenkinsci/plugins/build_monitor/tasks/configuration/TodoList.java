@@ -7,6 +7,7 @@ import net.serenitybdd.screenplay.Task;
 
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class TodoList implements Task {
@@ -16,6 +17,12 @@ public class TodoList implements Task {
 
     public TodoList add(Performable task) {
         todos.add(task);
+
+        return this;
+    }
+
+    public TodoList addAll(Performable... tasks) {
+        todos.addAll(asList(tasks));
 
         return this;
     }
