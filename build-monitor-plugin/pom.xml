@@ -269,15 +269,6 @@
                 <artifactId>release-candidate-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>default-cli</id>
-                        <goals>
-                            <goal>updateVersion</goal>
-                        </goals>
-                        <configuration>
-                            <releaseVersionFormat>{{ api_version }}+build.{{ timestamp('YYYYMMddHHmm') }}</releaseVersionFormat>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <phase>process-resources</phase>
                         <goals>
                             <goal>version</goal>

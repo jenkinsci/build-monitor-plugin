@@ -11,7 +11,7 @@
 
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>build-monitor</artifactId>
-    <version>1.8-SNAPSHOT</version>
+    <version>1.8+build.201603182301</version>
     <packaging>pom</packaging>
 
     <name>Build Monitor</name>
@@ -98,5 +98,23 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>com.smartcodeltd</groupId>
+                <artifactId>release-candidate-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>updateVersion</goal>
+                        </goals>
+                        <configuration>
+                            <releaseVersionFormat>{{ api_version }}+build.{{ timestamp('YYYYMMddHHmm') }}</releaseVersionFormat>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>
