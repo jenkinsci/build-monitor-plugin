@@ -17,7 +17,7 @@ node('standard') {
 
     archive_junit_results '**/target/surefire-reports/TEST-*.xml,**/target/javascript/test-results.xml'
 
-    stash name: 'sources', includes: '**,build-monitor-plugin/target/build-monitor-plugin.hpi', excludes: '**/target/**/*'
+    stash name: 'sources', includes: '**,build-monitor-plugin/target/build-monitor-plugin.hpi', excludes: 'build-monitor-plugin/target/**'
 }
 
 stage 'Verify'
@@ -39,8 +39,6 @@ stage 'Publish to GitHub'
 node('standard') {
 
     unstash 'sources'
-
-    sh "git status"
 
 //    push_release_branch_for version
 }
