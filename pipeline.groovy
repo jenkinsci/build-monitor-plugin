@@ -31,8 +31,8 @@ node('hi-speed') {
         mvn "verify --projects build-monitor-acceptance"
     }
 
-    archive_html      'Serenity', 'build-monitor-acceptance/target/site/serenity'
     archive_artifacts 'build-monitor-plugin/target/*.hpi,build-monitor-plugin/pom.xml'
+    archive_html      'Serenity', 'build-monitor-acceptance/target/site/serenity'
 }
 
 stage 'Publish to GitHub'
@@ -70,7 +70,14 @@ def archive_junit_results(results) {
 }
 
 def archive_html(report_name, path) {
-    publishHTML(target: [reportName : report_name, reportDir: path, keepAll: true, alwaysLinkToLastBuild: true, allowMissing: false])
+    publishHTML(target: [
+            reportName : report_name,
+            reportDir: path,
+            reportFiles: 'index.html',
+            keepAll: true,
+            alwaysLinkToLastBuild: true,
+            allowMissing: false
+    ])
 }
 
 def with_browser_stack(version, actions) {
