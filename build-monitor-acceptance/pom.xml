@@ -196,6 +196,7 @@
                         <BROWSER>htmlunit</BROWSER>
                         <JENKINS_VERSION>1.609.3</JENKINS_VERSION>
                         <PLUGINS_DIR>${project.parent.basedir}/build-monitor-plugin/target</PLUGINS_DIR>
+                        <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
                     </environmentVariables>
                 </configuration>
                 <executions>
