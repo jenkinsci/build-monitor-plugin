@@ -17,7 +17,7 @@ node('standard') {
 
     archive_junit_results '**/target/surefire-reports/TEST-*.xml,**/target/javascript/test-results.xml'
 
-    stash name: 'sources', includes: '**,**/target/*.hpi', excludes: '**/target/**/*'
+    stash name: 'sources', includes: '**,**/target/*.hpi', excludes: '**/target/**'
 }
 
 stage 'Verify'
@@ -70,7 +70,7 @@ def archive_junit_results(results) {
 }
 
 def archive_html(report_name, path) {
-    publishHtml(target: [reportName : report_name, reportDir: path, keepAll: true, alwaysLinkToLastBuild: true, allowMissing: false])
+    publishHTML(target: [reportName : report_name, reportDir: path, keepAll: true, alwaysLinkToLastBuild: true, allowMissing: false])
 }
 
 def with_browser_stack(version, actions) {
