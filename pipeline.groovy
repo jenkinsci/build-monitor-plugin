@@ -28,7 +28,7 @@ node('hi-speed') {
     use_jdk '1.7.latest'
 
     with_browser_stack 'linux-x64', {
-        mvn "verify --projects build-monitor-acceptance"
+        mvn "clean verify --projects build-monitor-acceptance"
     }
 
     archive_artifacts 'build-monitor-plugin/target/*.hpi,build-monitor-plugin/pom.xml'
