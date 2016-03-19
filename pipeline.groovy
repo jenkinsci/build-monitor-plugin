@@ -17,7 +17,7 @@ node('standard') {
 
     archive_junit_results '**/target/surefire-reports/TEST-*.xml,**/target/javascript/test-results.xml'
 
-    stash name: 'sources', includes: '**,**/target/*.hpi', excludes: '**/target/**'
+    stash name: 'sources', includes: '**,build-monitor-plugin/target/build-monitor-plugin.hpi', excludes: '**/target/**/*'
 }
 
 stage 'Verify'
