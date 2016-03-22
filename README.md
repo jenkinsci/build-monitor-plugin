@@ -31,7 +31,7 @@ All the previous releases together with their change logs are [listed here](http
 ## Requirements
 
 To use Build Monitor you'll need:
-* [Jenkins CI](http://jenkins-ci.org/) version 1.532 or newer - please note that for production installations I recommend using a [Long-Term Support release](http://jenkins-ci.org/changelog-stable)
+* [Jenkins CI](http://jenkins-ci.org/) version 1.609.3 or newer - please note that for production installations I recommend using a [Long-Term Support release](http://jenkins-ci.org/changelog-stable)
 * A modern web browser - to avoid unnecessary complexity when implementing the view layer I decided to use CSS 3 flexbox.
 The standard is currently supported by [most modern web browsers](http://caniuse.com/flexbox), so if your browser doesn't support this feature - [consider upgrading](http://browsehappy.com/) :)
 

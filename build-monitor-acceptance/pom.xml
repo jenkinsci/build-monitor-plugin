@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>build-monitor</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.9-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -123,6 +123,14 @@
         </dependency>
         <!-- / jenkins acceptance test harness -->
 
+
+        <dependency>
+            <groupId>org.jenkins-ci.main</groupId>
+            <artifactId>cli</artifactId>
+            <!--<version>${jenkins.version}</version>-->
+            <version>1.609.3</version>
+        </dependency>
+
         <!-- serenity -->
         <dependency>
             <groupId>net.serenity-bdd</groupId>
@@ -147,6 +155,11 @@
         </dependency>
         <!-- / serenity -->
 
+        <dependency>
+            <groupId>org.jdeferred</groupId>
+            <artifactId>jdeferred-core</artifactId>
+            <version>1.2.4</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -190,6 +203,7 @@
                     <systemPropertyVariables>
                         <webdriver.driver>${webdriver.driver}</webdriver.driver>
                         <browserstack.url>${browserstack.url}</browserstack.url>
+                        <project.root>${project.parent.basedir}/</project.root>
                     </systemPropertyVariables>
                     <environmentVariables>
                         <!-- todo: remove when the acceptance-test-harness is gone -->

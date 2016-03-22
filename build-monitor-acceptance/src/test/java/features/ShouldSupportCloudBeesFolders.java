@@ -52,7 +52,7 @@ public class ShouldSupportCloudBeesFolders {
     @Test
     public void visualising_projects_nested_in_folders() throws Exception {
         givenThat(anna).wasAbleTo(
-                Start.withJenkinsAt(jenkins.url),
+                Start.withJenkinsAt(jenkins.url.toURI()),
                 HaveAFolderCreated.called("Search Services").andInsideIt(
                         HaveANestedProjectCreated.called("Librarian"),
                         HaveAFolderCreated.called("Contracts").andInsideIt(

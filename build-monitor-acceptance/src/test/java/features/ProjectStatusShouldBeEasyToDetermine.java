@@ -50,10 +50,10 @@ public class ProjectStatusShouldBeEasyToDetermine {
 
     @Test
     @WithPlugins({"build-monitor-plugin"})
-    public void visualising_a_successful_project() {
+    public void visualising_a_successful_project() throws Exception {
 
         givenThat(anna).wasAbleTo(
-                Start.withJenkinsAt(jenkins.url),
+                Start.withJenkinsAt(jenkins.url.toURI()),
                 HaveASuccessfulProjectCreated.called("My App")
         );
 
@@ -70,10 +70,10 @@ public class ProjectStatusShouldBeEasyToDetermine {
 
     @Test
     @WithPlugins({"build-monitor-plugin"})
-    public void visualising_a_failing_project() {
+    public void visualising_a_failing_project() throws Exception {
 
         givenThat(anna).wasAbleTo(
-                Start.withJenkinsAt(jenkins.url),
+                Start.withJenkinsAt(jenkins.url.toURI()),
                 HaveAFailingProjectCreated.called("My App")
         );
 

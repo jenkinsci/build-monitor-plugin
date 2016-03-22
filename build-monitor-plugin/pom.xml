@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>build-monitor</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.9-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -154,7 +154,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>claim</artifactId>
-            <version>2.1</version>
+            <version>2.8</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -216,7 +216,7 @@
         <dependency>
             <groupId>org.jenkins-ci.main</groupId>
             <artifactId>jenkins-test-harness</artifactId>
-            <version>1.532</version>
+            <version>${jenkins.version}</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>
