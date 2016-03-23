@@ -19,7 +19,7 @@ public class PluginDescription {
             );
         }
         catch(IOException e) {
-            throw new RuntimeException(String.format("Couldn't read the manifest file of '%s'.", pluginAtPath.toAbsolutePath()));
+            throw new RuntimeException(String.format("Couldn't read the manifest file of '%s'.", pluginAtPath.toAbsolutePath()), e);
         }
     }
 
