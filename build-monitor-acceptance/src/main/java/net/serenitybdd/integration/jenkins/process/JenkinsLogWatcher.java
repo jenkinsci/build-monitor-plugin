@@ -1,6 +1,8 @@
 package net.serenitybdd.integration.jenkins.process;
 
 import org.jdeferred.Promise;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.List;
@@ -8,6 +10,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 
 class JenkinsLogWatcher implements Closeable, Runnable {
+
+    private final static Logger Log = LoggerFactory.getLogger(JenkinsLogWatcher.class);
 
     private final InputStream jenkinsOutput;
     private final List<JenkinsLogLineWatcher> watchers = new CopyOnWriteArrayList<>();
@@ -29,7 +33,7 @@ class JenkinsLogWatcher implements Closeable, Runnable {
         try {
             jenkinsOutput.close();
         } catch (IOException e) {
-            throw new RuntimeException("Couldn't close Jenkins output stream", e);
+            Log.warn("Couldn't close the output stream of the Jenkins process. Looks like it's already closed.", e);
         }
     }
 
@@ -39,8 +43,7 @@ class JenkinsLogWatcher implements Closeable, Runnable {
             String line;
             while ((line = reader.readLine()) != null) {
 
-                // fixme: a temporary hack to see if Jenkins is lying to us saying that it's started up
-                System.out.println(">> " + line);
+                Log.info(line);
 
                 for (JenkinsLogLineWatcher watcher : watchers) {
                     if (watcher.matches(line)) {

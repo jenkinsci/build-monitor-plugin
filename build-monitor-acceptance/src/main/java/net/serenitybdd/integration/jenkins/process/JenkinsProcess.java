@@ -19,7 +19,7 @@ import static java.util.Arrays.asList;
 
 public class JenkinsProcess {
     private final static Logger Log = LoggerFactory.getLogger(JenkinsProcess.class);
-
+    private final static int Startup_Timeout = 5 * 60 * 1000;
 
     private final ProcessBuilder process;
     private final int port;
@@ -28,11 +28,10 @@ public class JenkinsProcess {
     private final Thread      shutdownHook = new Thread() {
         @Override
         public void run() {
-            jenkinsProcess.destroy();
             jenkinsLogWatcher.close();
+            jenkinsProcess.destroy();
         }
     };
-    private final static int Startup_Timeout = 5 * 60 * 1000;
 
     private JenkinsLogWatcher jenkinsLogWatcher;
     private Thread jenkinsLogWatcherThread;
@@ -62,11 +61,9 @@ public class JenkinsProcess {
 
     // todo: CHECK: does Jenkins process stop when it's restarted?   !!!!
     public void start() throws IOException {
-        Log.info("Starting Jenkins on port {}", port);
-
         jenkinsProcess          = start(process);
         jenkinsLogWatcher       = new JenkinsLogWatcher(tee(jenkinsProcess, jenkinsRunLog));
-        jenkinsLogWatcherThread = new Thread(jenkinsLogWatcher, "Jenkins Log Watcher");
+        jenkinsLogWatcherThread = new Thread(jenkinsLogWatcher, "jenkins");
 
         jenkinsLogWatcherThread.start();
 
@@ -76,9 +73,11 @@ public class JenkinsProcess {
         Promise<Matcher, ?, ?> jenkinsStarted       = jenkinsLogWatcher.watchFor("Jenkins is fully up and running");
 
         try {
-            Log.info("Waiting for Jenkins to get ready ...", port);
-
             jenkinsStarted.waitSafely(Startup_Timeout);
+
+            if (! jenkinsStarted.isResolved()) {
+                throw new RuntimeException(format("Jenkins failed to start within %s seconds, aborting the test.", Startup_Timeout));
+            }
 
             Log.info("Jenkins is now available at http://localhost:{}", port);
         } catch (InterruptedException e) {
@@ -98,8 +97,8 @@ public class JenkinsProcess {
 
     public void stop() {
         Log.info("Stopping Jenkins...");
-        jenkinsProcess.destroy();
         jenkinsLogWatcher.close();
+        jenkinsProcess.destroy();
 
         Runtime.getRuntime().removeShutdownHook(shutdownHook);
         Log.info("Jenkins stopped");
@@ -113,6 +112,8 @@ public class JenkinsProcess {
     }
 
     private Process start(ProcessBuilder jenkinsProcessBuilder) throws IOException {
+        Log.info("Starting Jenkins on port {}...", port);
+
         Process process = jenkinsProcessBuilder.start();
         process.getOutputStream().close();
 
