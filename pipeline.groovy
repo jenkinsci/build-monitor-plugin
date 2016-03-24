@@ -1,7 +1,7 @@
 def version = 'unknown'
 
 stage 'Build'
-node('standard') {
+node('hi-speed') {
 
     git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'acceptance'
 
@@ -15,9 +15,9 @@ node('standard') {
 
     assign_build_name version
 
-    archive_junit_results '**/target/surefire-reports/TEST-*.xml,**/target/javascript/test-results.xml'
+    archive_junit_results 'build-monitor-plugin/target/surefire-reports/TEST-*.xml,build-monitor-plugin/target/javascript/test-results.xml'
 
-    stash name: 'sources', includes: '**,**/target/*.hpi', excludes: '**/target/**/*,**/node_modules'
+    stash name: 'sources', includes: '**,build-monitor-plugin/target/*.hpi', excludes: 'build-monitor-plugin/target/*,**/node_modules/*'
 }
 
 stage 'Verify'
@@ -31,12 +31,13 @@ node('hi-speed') {
         mvn "clean verify --projects build-monitor-acceptance"
     }
 
-    archive_artifacts 'build-monitor-plugin/target/*.hpi,build-monitor-plugin/pom.xml'
-    archive_html      'Serenity', 'build-monitor-acceptance/target/site/serenity'
+    archive_artifacts     'build-monitor-plugin/target/*.hpi,build-monitor-plugin/pom.xml,build-monitor-acceptance/target/failsafe-reports/*-output.txt'
+    archive_junit_results 'build-monitor-acceptance/target/failsafe-reports/TEST-*.xml'
+    archive_html          'Serenity', 'build-monitor-acceptance/target/site/serenity'
 }
 
 stage 'Publish to GitHub'
-node('standard') {
+node('hi-speed') {
 
     unstash 'sources'
 
