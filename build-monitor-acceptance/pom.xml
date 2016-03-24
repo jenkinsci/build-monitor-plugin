@@ -158,12 +158,11 @@
         <dependency>
             <groupId>org.jdeferred</groupId>
             <artifactId>jdeferred-core</artifactId>
-            <version>1.2.4</version>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.7</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
