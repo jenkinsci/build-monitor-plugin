@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 
-class JenkinsLogWatcher implements Closeable, Runnable {
+class JenkinsLogWatcher implements AutoCloseable, Runnable {
 
     private final static Logger Log = LoggerFactory.getLogger(JenkinsLogWatcher.class);
 
@@ -29,12 +29,8 @@ class JenkinsLogWatcher implements Closeable, Runnable {
     }
 
     @Override
-    public void close()  {
-        try {
-            jenkinsOutput.close();
-        } catch (IOException e) {
-            Log.warn("Couldn't close the output stream of the Jenkins process. Looks like it's already closed.", e);
-        }
+    public void close() throws Exception {
+        jenkinsOutput.close();
     }
 
     @Override

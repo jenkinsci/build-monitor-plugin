@@ -28,7 +28,6 @@ public class JenkinsProcess {
     private final Thread      shutdownHook = new Thread() {
         @Override
         public void run() {
-            jenkinsLogWatcher.close();
             jenkinsProcess.destroy();
         }
     };
@@ -97,7 +96,6 @@ public class JenkinsProcess {
 
     public void stop() {
         Log.info("Stopping Jenkins...");
-        jenkinsLogWatcher.close();
         jenkinsProcess.destroy();
 
         Runtime.getRuntime().removeShutdownHook(shutdownHook);
