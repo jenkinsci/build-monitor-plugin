@@ -36,19 +36,17 @@ public class JenkinsTestEnvironment {
     }
 
     public JenkinsInstance create() {
-        return new JenkinsInstance(environmentDetails, ImmutableList.copyOf(testRules));
+        return new JenkinsInstance(new JenkinsTestEnvironmentDetails(pluginUnderTest, tempDir), ImmutableList.copyOf(testRules));
     }
 
     // --
 
     private JenkinsTestEnvironment(Path pathToPluginUnderTest) {
         this.pluginUnderTest    = PluginDescription.of(pathToPluginUnderTest);
-        this.environmentDetails = new JenkinsTestEnvironmentDetails(pluginUnderTest, tempDir);
     }
 
     private static final Path cwd     = Paths.get(getOrElse(getProperty("project.root"), getProperty("user.dir")));
 
-    private final JenkinsTestEnvironmentDetails environmentDetails;
     private final PluginDescription pluginUnderTest;
     private final List<TestRule>    testRules = Lists.newArrayList();
     private       Path              tempDir   = Paths.get(getProperty("java.io.tmpdir"));
