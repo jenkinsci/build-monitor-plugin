@@ -32,7 +32,7 @@ public class JenkinsProcess {
             jenkinsLogWatcher.close();
         }
     };
-    private final static int Startup_Timeout = 30 * 1000;
+    private final static int Startup_Timeout = 5 * 60 * 1000;
 
     private JenkinsLogWatcher jenkinsLogWatcher;
     private Thread jenkinsLogWatcherThread;
@@ -58,10 +58,6 @@ public class JenkinsProcess {
 
         process.environment().putAll(Collections.unmodifiableMap(env));
         process.redirectErrorStream(true);
-    }
-
-    public int port() {
-        return port;
     }
 
     // todo: CHECK: does Jenkins process stop when it's restarted?   !!!!
