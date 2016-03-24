@@ -38,6 +38,10 @@ class JenkinsLogWatcher implements Closeable, Runnable {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(jenkinsOutput))) {
             String line;
             while ((line = reader.readLine()) != null) {
+
+                // fixme: a temporary hack to see if Jenkins is lying to us saying that it's started up
+                System.out.println(">> " + line);
+
                 for (JenkinsLogLineWatcher watcher : watchers) {
                     if (watcher.matches(line)) {
                         watchers.remove(watcher);
