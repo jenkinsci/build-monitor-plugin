@@ -1,7 +1,7 @@
 package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.ConfigureBuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.ConfigureEmptyBuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import environment.TestJenkinsInstance;
@@ -47,7 +47,7 @@ public class BuildMonitorShouldBeEasyToSetUp {
 
         when(anna).attemptsTo(
                 CreateABuildMonitorView.called("Build Monitor"),
-                ConfigureBuildMonitorView.to(DisplayAllProjects.usingARegularExpression())
+                ConfigureEmptyBuildMonitorView.to(DisplayAllProjects.usingARegularExpression())
         );
 
         then(anna).should(seeThat(ProjectWidget.of("My Awesome App").state(), isCurrentlyVisible()));

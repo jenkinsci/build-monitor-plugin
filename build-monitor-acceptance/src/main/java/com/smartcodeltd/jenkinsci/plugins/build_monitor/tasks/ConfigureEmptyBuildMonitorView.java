@@ -12,10 +12,10 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
-public class ConfigureBuildMonitorView implements Task {
+public class ConfigureEmptyBuildMonitorView implements Task {
 
-    public static ConfigureBuildMonitorView to(Task... configurationTasks) {
-        return instrumented(ConfigureBuildMonitorView.class, asList(configurationTasks));
+    public static ConfigureEmptyBuildMonitorView to(Task... configurationTasks) {
+        return instrumented(ConfigureEmptyBuildMonitorView.class, asList(configurationTasks));
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ConfigureBuildMonitorView implements Task {
         );
     }
 
-    public ConfigureBuildMonitorView(List<Performable> actions) {
+    public ConfigureEmptyBuildMonitorView(List<Performable> actions) {
         this.configureTheView.addAll(actions);
     }
 
