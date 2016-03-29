@@ -14,7 +14,6 @@ import static net.serenitybdd.screenplay.Tasks.instrumented;
 public class Start implements Task {
 
     public static Start withJenkinsAt(URI url) {
-        // todo: This side effect sucks. Can I do better?
         Injectors.getInjector().getInstance(EnvironmentVariables.class).setProperty("webdriver.base.url", url.toString());
 
         return instrumented(Start.class);

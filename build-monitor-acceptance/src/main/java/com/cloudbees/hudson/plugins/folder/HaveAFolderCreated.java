@@ -2,7 +2,7 @@ package com.cloudbees.hudson.plugins.folder;
 
 import com.cloudbees.hudson.plugins.folder.tasks.CreateAFolder;
 import com.cloudbees.hudson.plugins.folder.user_interface.FolderDetailsPage;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.TodoList;
+import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;

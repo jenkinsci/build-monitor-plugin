@@ -1,4 +1,4 @@
-package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration;
+package net.serenitybdd.screenplay.jenkins.tasks.configuration;
 
 import com.beust.jcommander.internal.Lists;
 import net.serenitybdd.screenplay.Actor;

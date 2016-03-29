@@ -1,7 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.SaveTheChangesToBuildMonitor;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.TodoList;
+import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
 import net.serenitybdd.screenplay.jenkins.user_interface.JenkinsHomePage;
 import net.serenitybdd.screenplay.jenkins.user_interface.NewViewPage;
 import net.serenitybdd.screenplay.Actor;

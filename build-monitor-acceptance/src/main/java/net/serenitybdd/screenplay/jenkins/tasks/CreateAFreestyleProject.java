@@ -1,6 +1,6 @@
 package net.serenitybdd.screenplay.jenkins.tasks;
 
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.TodoList;
+import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;

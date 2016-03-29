@@ -48,7 +48,7 @@ class JenkinsLogWatcher implements AutoCloseable, Runnable {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Couldn't work with the Jenkins output stream", e);
+            throw new RuntimeException("Jenkins output stream is already closed", e);
         }
     }
 }
