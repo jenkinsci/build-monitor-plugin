@@ -4,6 +4,10 @@ import net.serenitybdd.integration.utils.CommandLineTools;
 import org.junit.runner.Description;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.ServerSocket;
+import java.net.URI;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -14,20 +18,59 @@ public class JenkinsTestEnvironmentDetails {
 
     private final PluginDescription pluginUnderTest;
     private final Path tempDir;
+    private final int port;
 
     public JenkinsTestEnvironmentDetails(PluginDescription pluginUnderTest, Path tempDir) {
         checkArgument(Files.exists(pluginUnderTest.path()), "Location of the plugin file doesn't seem to be correct: %s", pluginUnderTest.path().toAbsolutePath());
 
         this.pluginUnderTest = pluginUnderTest;
         this.tempDir         = tempDir;
+        this.port            = randomLocalPort();
     }
 
     public String requiredJenkinsVersion() {
         return pluginUnderTest.requiredJenkinsVersion();
     }
 
+    public URL url() {
+        try {
+            return URI.create("http://localhost:" + port()).toURL();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Couldn't instantiate the Jenkins URL object. Should never happen.", e);
+        }
+    }
+
+    // todo: refactor and extract
+
+    protected int randomLocalPort(int from, int to){
+        from = (from <=0) ? 49152 : from;
+        to = (to <= 0) ? 65535 : to;
+
+
+        while(true){
+            int candidate = (int) ((Math.random() * (to-from)) + from);
+            if(isFreePort(candidate)){
+                return candidate;
+            }
+        }
+    }
+
+    protected int randomLocalPort(){
+        return randomLocalPort(-1,-1);
+    }
+
+    private boolean isFreePort(int port){
+        try {
+            ServerSocket ss = new ServerSocket(port);
+            ss.close();
+            return true;
+        } catch (IOException ex) {
+            return false;
+        }
+    }
+
     public int port() {
-        return 8080;
+        return port;
     }
 
     public Path temporaryHomeFor(Description test) {

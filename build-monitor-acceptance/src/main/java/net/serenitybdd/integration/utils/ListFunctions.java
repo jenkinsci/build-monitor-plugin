@@ -3,6 +3,7 @@ package net.serenitybdd.integration.utils;
 import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ListFunctions {
@@ -14,11 +15,18 @@ public class ListFunctions {
         return combined;
     }
 
+    public static <T> T[] concat(T[] first, T[] second) {
+        T[] combined = Arrays.copyOf(first, first.length + second.length);
+        System.arraycopy(second, 0, combined, first.length, second.length);
+
+        return combined;
+    }
+
     public static <T> T head(List<T> list) {
         return list.get(0);
     }
 
-    public static List tail(List list) {
+    public static <T> List<T> tail(List<T> list) {
         return ImmutableList.copyOf(list.subList(1, list.size()));
     }
 }

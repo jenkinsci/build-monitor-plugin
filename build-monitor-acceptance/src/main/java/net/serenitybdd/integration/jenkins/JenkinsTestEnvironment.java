@@ -2,7 +2,6 @@ package net.serenitybdd.integration.jenkins;
 
 import com.beust.jcommander.internal.Lists;
 import com.google.common.collect.ImmutableList;
-import net.serenitybdd.integration.jenkins.environment.JenkinsInstance;
 import net.serenitybdd.integration.jenkins.environment.JenkinsTestEnvironmentDetails;
 import net.serenitybdd.integration.jenkins.environment.PluginDescriber;
 import net.serenitybdd.integration.jenkins.environment.PluginDescription;

@@ -5,7 +5,7 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.ConfigureEmptyBuil
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import environment.TestJenkinsInstance;
-import net.serenitybdd.integration.jenkins.environment.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -32,7 +32,7 @@ public class BuildMonitorShouldBeEasyToSetUp {
     @Rule public JenkinsInstance jenkins = TestJenkinsInstance.withBuildMonitor().create();
 
     @Before
-    public void annaCanBrowseTheWeb() {
+    public void actorCanBrowseTheWeb() {
         anna.can(BrowseTheWeb.with(herBrowser));
     }
 
@@ -41,7 +41,7 @@ public class BuildMonitorShouldBeEasyToSetUp {
     public void adding_project_to_an_empty_build_monitor() {
 
         givenThat(anna).wasAbleTo(
-                Start.withJenkinsAt(jenkins.uri()),
+                Start.withJenkinsAt(jenkins.url()),
                 HaveAProjectCreated.called("My Awesome App")
         );
 

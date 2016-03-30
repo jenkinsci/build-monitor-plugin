@@ -20,6 +20,7 @@ import static java.util.Arrays.asList;
 public class JenkinsProcess {
     private final static Logger Log = LoggerFactory.getLogger(JenkinsProcess.class);
     private final static int Startup_Timeout = 5 * 60 * 1000;
+    public static final String JENKINS_IS_FULLY_UP_AND_RUNNING = "Jenkins is fully up and running";
 
     private final ProcessBuilder process;
     private final int port;
@@ -58,7 +59,6 @@ public class JenkinsProcess {
         process.redirectErrorStream(true);
     }
 
-    // todo: CHECK: does Jenkins process stop when it's restarted?   !!!!
     public void start() throws IOException {
         jenkinsProcess          = start(process);
         jenkinsLogWatcher       = new JenkinsLogWatcher(tee(jenkinsProcess, jenkinsRunLog));
@@ -69,7 +69,7 @@ public class JenkinsProcess {
         Runtime.getRuntime().addShutdownHook(shutdownHook);
 
         Promise<Matcher, ?, ?> portConflictDetected = jenkinsLogWatcher.watchFor("java.net.BindException: Address already in use");
-        Promise<Matcher, ?, ?> jenkinsStarted       = jenkinsLogWatcher.watchFor("Jenkins is fully up and running");
+        Promise<Matcher, ?, ?> jenkinsStarted       = jenkinsLogWatcher.watchFor(JENKINS_IS_FULLY_UP_AND_RUNNING);
 
         try {
             jenkinsStarted.waitSafely(Startup_Timeout);
@@ -83,6 +83,18 @@ public class JenkinsProcess {
             throw portConflictDetected.isResolved()
                     ? new RuntimeException(format("Couldn't start Jenkins on port '%s', the port is already in use", port), e)
                     : new RuntimeException("Couldn't start Jenkins", e);
+        }
+    }
+
+    public Promise<Matcher, ?, ?> promiseWhen(String logLine) {
+        return jenkinsLogWatcher.watchFor(logLine);
+    }
+
+    public void waitUntil(String logLine) {
+        try {
+            jenkinsLogWatcher.watchFor(logLine).waitSafely(Startup_Timeout);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(format("Did not see '%s' in the Jenkins log within %s ms", logLine, Startup_Timeout), e);
         }
     }
 

@@ -4,7 +4,7 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import environment.TestJenkinsInstance;
-import net.serenitybdd.integration.jenkins.environment.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -34,7 +34,7 @@ public class ProjectStatusShouldBeEasyToDetermine {
     @Rule public JenkinsInstance jenkins = TestJenkinsInstance.withBuildMonitor().create();
 
     @Before
-    public void annaCanBrowseTheWeb() {
+    public void actorCanBrowseTheWeb() {
         anna.can(BrowseTheWeb.with(herBrowser));
     }
 
@@ -43,7 +43,7 @@ public class ProjectStatusShouldBeEasyToDetermine {
     public void visualising_a_successful_project() throws Exception {
 
         givenThat(anna).wasAbleTo(
-                Start.withJenkinsAt(jenkins.uri()),
+                Start.withJenkinsAt(jenkins.url()),
                 HaveASuccessfulProjectCreated.called("My App")
         );
 
@@ -63,7 +63,7 @@ public class ProjectStatusShouldBeEasyToDetermine {
     public void visualising_a_failing_project() throws Exception {
 
         givenThat(anna).wasAbleTo(
-                Start.withJenkinsAt(jenkins.uri()),
+                Start.withJenkinsAt(jenkins.url()),
                 HaveAFailingProjectCreated.called("My App")
         );
 
