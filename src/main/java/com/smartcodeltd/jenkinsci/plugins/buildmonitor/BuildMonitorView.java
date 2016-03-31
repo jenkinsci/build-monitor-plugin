@@ -82,7 +82,7 @@ public class BuildMonitorView extends ListView {
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public String changeSetVisualization() {
-        return currentConfig().getChangeSetVisualization();
+        return currentConfig().getChangeSetVisualization().name();
     }
 
     private static final BuildMonitorInstallation installation = new BuildMonitorInstallation();
@@ -111,7 +111,11 @@ public class BuildMonitorView extends ListView {
         }
 
         String requestedChangeSetVisualization = req.getParameter("changeSetVisualization");
-        currentConfig().setChangeSetVisualization(requestedChangeSetVisualization);
+        try {
+            currentConfig().setChangeSetVisualization(Config.ChangeSetVisualizationType.valueOf(requestedChangeSetVisualization));
+        } catch (Exception e) {
+            throw new FormException("Can't visualize change sets by " + requestedChangeSetVisualization, "changeSetVisualization");
+        }
     }
 
     /**

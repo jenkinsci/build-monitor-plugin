@@ -20,10 +20,15 @@ public class Config {
         this.order = order;
     }
 
-    public String getChangeSetVisualization() {
-        return getOrElse(changeSetVisualization, "Hidden");
+    public enum ChangeSetVisualizationType {
+        Hidden,
+        LastOrNextBuild,
+        LastBuildOnly
     }
-    public void setChangeSetVisualization(String changeSetVisualization) {
+    public ChangeSetVisualizationType getChangeSetVisualization() {
+        return changeSetVisualization;
+    }
+    public void setChangeSetVisualization(ChangeSetVisualizationType changeSetVisualization) {
         this.changeSetVisualization = changeSetVisualization;
     }
 
@@ -54,5 +59,5 @@ public class Config {
     }
 
     private Comparator<Job<?, ?>> order;
-    private String changeSetVisualization;
+    private ChangeSetVisualizationType changeSetVisualization;
 }

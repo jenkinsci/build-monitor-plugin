@@ -187,15 +187,25 @@ public class JobView {
 
     @JsonProperty
     public boolean hasChangeLog() {
-        String visualizationType = config.getChangeSetVisualization();
-        if (visualizationType.equals("LastOrNextBuild"))
-            return lastBuild().hasChangeLog();
-        return false;
+        switch (config.getChangeSetVisualization()) {
+            case LastOrNextBuild:
+                return lastBuild().hasChangeLog();
+            case LastBuildOnly:
+                return lastCompletedBuild().hasChangeLog();
+            case Hidden:
+            default:
+                return false;
+        }
     }
 
     @JsonProperty
     public List<String> changeLog() {
         return lastBuild().changeLog();
+    }
+
+    @JsonProperty
+    public boolean isChangeLogForUpcomingBuild() {
+        return isRunning() && config.getChangeSetVisualization().equals("LastOrNextBuild");
     }
 
     // todo track by job.hashCode messes up the animation
