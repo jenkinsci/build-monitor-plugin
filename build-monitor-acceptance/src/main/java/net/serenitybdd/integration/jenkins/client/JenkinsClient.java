@@ -13,6 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.regex.Matcher;
 
 import static net.serenitybdd.integration.jenkins.process.JenkinsProcess.JENKINS_IS_FULLY_UP_AND_RUNNING;
@@ -28,6 +29,10 @@ public class JenkinsClient {
         this.process = process;
     }
 
+
+    // user accounts
+    // https://gist.github.com/hayderimran7/50cb1244cc1e856873a4
+    // http://stackoverflow.com/questions/17716242/creating-user-in-jenkins-via-api
 
     // todo: remove as it's no longer needed; a similar mechanism will be needed to setup user accounts though
     public void populateUpdateCenterCaches() {
@@ -57,12 +62,20 @@ public class JenkinsClient {
         process.waitUntil(JENKINS_IS_FULLY_UP_AND_RUNNING);
     }
 
-    public void restart() {
+    public void installPlugins(List<String> plugins) {
+        for (String pluginName : plugins) {
+            executeCommand("install-plugin", pluginName);
+        }
+
+        safeRestart();
+    }
+
+
+    public void safeRestart() {
         executeCommand("safe-restart");
 
         process.waitUntil(JENKINS_IS_FULLY_UP_AND_RUNNING);
     }
-
 
     private int executeGroovy(String... groovyScriptLines) {
         String script = Joiner.on(";\n").join(groovyScriptLines);
@@ -70,10 +83,10 @@ public class JenkinsClient {
         return executor.call("groovy", "=").execute(withInput(script), info(logger), error(logger));
     }
 
+
     private int executeCommand(String... args) {
         return executor.call(args).execute(noManualInput(), info(logger), error(logger));
     }
-
 
     private InputStream noManualInput() {
         return withInput("");

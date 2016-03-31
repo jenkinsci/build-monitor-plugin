@@ -1,7 +1,6 @@
 package net.serenitybdd.integration.jenkins;
 
 import com.beust.jcommander.internal.Lists;
-import com.google.common.collect.ImmutableList;
 import net.serenitybdd.integration.jenkins.environment.JenkinsTestEnvironmentDetails;
 import net.serenitybdd.integration.jenkins.environment.PluginDescriber;
 import net.serenitybdd.integration.jenkins.environment.PluginDescription;
@@ -11,7 +10,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static com.google.common.collect.ImmutableList.copyOf;
 import static java.lang.System.getProperty;
+import static java.util.Arrays.asList;
 import static net.serenitybdd.integration.utils.Nulls.getOrElse;
 
 public class JenkinsTestEnvironment {
@@ -34,8 +35,14 @@ public class JenkinsTestEnvironment {
         return this;
     }
 
+    public JenkinsTestEnvironment withPlugins(String... pluginNames) {
+        otherPlugins.addAll(asList(pluginNames));
+
+        return this;
+    }
+
     public JenkinsInstance create() {
-        return new JenkinsInstance(new JenkinsTestEnvironmentDetails(pluginUnderTest, tempDir), ImmutableList.copyOf(testRules));
+        return new JenkinsInstance(new JenkinsTestEnvironmentDetails(pluginUnderTest, copyOf(otherPlugins), tempDir), copyOf(testRules));
     }
 
     // --
@@ -47,6 +54,7 @@ public class JenkinsTestEnvironment {
     private static final Path cwd     = Paths.get(getOrElse(getProperty("project.root"), getProperty("user.dir")));
 
     private final PluginDescription pluginUnderTest;
-    private final List<TestRule>    testRules = Lists.newArrayList();
-    private       Path              tempDir   = Paths.get(getProperty("java.io.tmpdir"));
+    private final List<String>      otherPlugins = Lists.newArrayList();
+    private final List<TestRule>    testRules    = Lists.newArrayList();
+    private       Path              tempDir      = Paths.get(getProperty("java.io.tmpdir"));
 }

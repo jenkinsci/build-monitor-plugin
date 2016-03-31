@@ -13,7 +13,6 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.tasks.Start;
 import net.thucydides.core.annotations.Managed;
-import org.jenkinsci.test.acceptance.junit.WithPlugins;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,7 +29,10 @@ public class ShouldSupportCloudBeesFolders {
 
     @Managed public WebDriver herBrowser;
 
-    @Rule public JenkinsInstance jenkins = TestJenkinsInstance.withBuildMonitor().create();
+    @Rule public JenkinsInstance jenkins = TestJenkinsInstance
+            .withBuildMonitor()
+            .withPlugins("cloudbees-folder")
+            .create();
 
     @Before
     public void actorCanBrowseTheWeb() {
@@ -39,9 +41,6 @@ public class ShouldSupportCloudBeesFolders {
 
     @Test
     public void visualising_projects_nested_in_folders() throws Exception {
-
-        // todo: refactor and encapsulate
-        jenkins.client().installPlugin("cloudbees-folder");
 
         givenThat(anna).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url()),

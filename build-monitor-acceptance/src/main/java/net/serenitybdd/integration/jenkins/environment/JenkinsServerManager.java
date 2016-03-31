@@ -17,6 +17,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 public class JenkinsServerManager {
     private final JenkinsTestEnvironmentDetails testEnv;
@@ -44,6 +45,8 @@ public class JenkinsServerManager {
 
                             jenkinsProcess.start();
 
+                            installPluginsIfNeeded(client, testEnv.requiredPlugins());
+
                             base.evaluate();
                         } finally {
                             jenkinsProcess.stop();
@@ -52,6 +55,12 @@ public class JenkinsServerManager {
                 };
             }
         };
+    }
+
+    private void installPluginsIfNeeded(JenkinsClient client, List<String> plugins) {
+        if (! plugins.isEmpty()) {
+            client.installPlugins(plugins);
+        }
     }
 
     private JenkinsProcess jenkinsProcessFor(Description acceptanceTest) {
