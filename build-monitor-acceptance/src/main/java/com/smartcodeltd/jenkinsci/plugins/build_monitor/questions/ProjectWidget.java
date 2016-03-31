@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.questions;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectInformation;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectWidgetDetails;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectWidgetInformation;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectWidgetState;
 import net.serenitybdd.core.pages.WebElementState;
@@ -18,6 +19,10 @@ public class ProjectWidget {
 
     public Question<WebElementState> state() {
         return new ProjectWidgetState(projectOfInterest);
+    }
+
+    public Question<String> details() {
+        return new ProjectWidgetDetails(projectOfInterest);
     }
 
     public ProjectWidget(String projectOfInterest) {
