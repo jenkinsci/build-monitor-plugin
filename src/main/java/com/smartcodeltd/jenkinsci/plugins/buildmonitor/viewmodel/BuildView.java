@@ -186,7 +186,6 @@ public class BuildView implements BuildViewModel {
         ChangeLogSet<?> changeSet;
         if (build instanceof AbstractBuild<?, ?>) {
             AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
-            // TODO: option to only show current build? now shows next build if building. should reflect in output
             if (isRunning(jenkinsBuild)) {
                 Run<?,?> nextBuild = jenkinsBuild.getNextBuild();
                 if (nextBuild != null)

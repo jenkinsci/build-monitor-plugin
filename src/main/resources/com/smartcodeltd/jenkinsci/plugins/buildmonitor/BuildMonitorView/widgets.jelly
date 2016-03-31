@@ -31,9 +31,12 @@
                 </li>
                 <li data-ng-show="!!project.hasChangeLog" class="changelog">
                     <span>
-                        <ng-pluralize
+                        <ng-pluralize data-ng-show="!project.isRunning"
                             count="project.changeLog.length"
                             when="{'0': 'No changes since last build', '1': 'Change since last build: ', 'other': '{{ project.changeLog.length }} changes since last build: '}"></ng-pluralize>
+                        <ng-pluralize data-ng-show="!!project.isRunning"
+                            count="project.changeLog.length"
+                            when="{'0': 'No changes in upcoming build', '1': 'Change in upcoming build: ', 'other': '{{ project.changeLog.length }} changes in upcoming build: '}"></ng-pluralize>
                     </span>
                     <ul class="changelog-entries">
                         <li data-ng-repeat="entry in project.changeLog">{{ entry }}</li>
