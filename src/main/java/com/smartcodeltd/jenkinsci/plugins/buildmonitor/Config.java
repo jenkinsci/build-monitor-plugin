@@ -16,15 +16,22 @@ public class Config {
     public Comparator<Job<?, ?>> getOrder() {
         return getOrElse(order, new ByName());
     }
-
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
+    }
+
+    public String getChangeSetVisualization() {
+        return getOrElse(changeSetVisualization, "Hidden");
+    }
+    public void setChangeSetVisualization(String changeSetVisualization) {
+        this.changeSetVisualization = changeSetVisualization;
     }
 
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("order", order.getClass().getSimpleName())
+                .add("changeSetVisualization", changeSetVisualization)
                 .toString();
     }
 
@@ -47,4 +54,5 @@ public class Config {
     }
 
     private Comparator<Job<?, ?>> order;
+    private String changeSetVisualization;
 }

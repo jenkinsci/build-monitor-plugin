@@ -187,12 +187,15 @@ public class JobView {
 
     @JsonProperty
     public boolean hasChangeLog() {
-        return lastCompletedBuild().hasChangeLog();
+        String visualizationType = config.getChangeSetVisualization();
+        if (visualizationType.equals("LastOrNextBuild"))
+            return lastBuild().hasChangeLog();
+        return false;
     }
 
     @JsonProperty
     public List<String> changeLog() {
-        return lastCompletedBuild().changeLog();
+        return lastBuild().changeLog();
     }
 
     // todo track by job.hashCode messes up the animation

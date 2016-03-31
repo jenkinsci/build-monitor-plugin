@@ -186,11 +186,6 @@ public class BuildView implements BuildViewModel {
         ChangeLogSet<?> changeSet;
         if (build instanceof AbstractBuild<?, ?>) {
             AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
-            if (isRunning(jenkinsBuild)) {
-                Run<?,?> nextBuild = jenkinsBuild.getNextBuild();
-                if (nextBuild != null)
-                    jenkinsBuild = (AbstractBuild<?, ?>) nextBuild;
-            }
             changeSet = jenkinsBuild.getChangeSet();
         }
         else {
