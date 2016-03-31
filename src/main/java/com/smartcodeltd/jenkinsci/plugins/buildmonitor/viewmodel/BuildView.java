@@ -12,6 +12,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.User;
+import hudson.scm.ChangeLogSet;
 
 import java.util.*;
 
@@ -163,6 +164,40 @@ public class BuildView implements BuildViewModel {
     @Override
     public List<String> knownFailures() {
         return  analysis().failures();
+    }
+
+    @Override
+    public boolean hasChangeLog() {
+        ChangeLogSet<?> changeSet = getChangeSet();
+        return !changeSet.isEmptySet();
+    }
+
+    @Override
+    public List<String> changeLog() {
+        List<String> list = new ArrayList<String>();
+        ChangeLogSet<?> changeSet = getChangeSet();
+        for (ChangeLogSet.Entry entry : changeSet) {
+            list.add(entry.getMsg());
+        }
+        return list;
+    }
+
+    private ChangeLogSet<?> getChangeSet() {
+        ChangeLogSet<?> changeSet;
+        if (build instanceof AbstractBuild<?, ?>) {
+            AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+            // TODO: option to only show current build? now shows next build if building. should reflect in output
+            if (isRunning(jenkinsBuild)) {
+                Run<?,?> nextBuild = jenkinsBuild.getNextBuild();
+                if (nextBuild != null)
+                    jenkinsBuild = (AbstractBuild<?, ?>) nextBuild;
+            }
+            changeSet = jenkinsBuild.getChangeSet();
+        }
+        else {
+            changeSet = ChangeLogSet.createEmpty(null);
+        }
+        return changeSet;
     }
 
     private Analysis analysis() {

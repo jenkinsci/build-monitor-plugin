@@ -30,4 +30,7 @@ public interface BuildViewModel {
     boolean hasKnownFailures();
 
     List<String> knownFailures();
+
+    boolean hasChangeLog();
+    List<String> changeLog();
 }

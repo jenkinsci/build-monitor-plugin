@@ -185,6 +185,16 @@ public class JobView {
         return lastCompletedBuild().knownFailures();
     }
 
+    @JsonProperty
+    public boolean hasChangeLog() {
+        return lastCompletedBuild().hasChangeLog();
+    }
+
+    @JsonProperty
+    public List<String> changeLog() {
+        return lastCompletedBuild().changeLog();
+    }
+
     // todo track by job.hashCode messes up the animation
     @JsonProperty @Override
     public int hashCode() {

@@ -93,4 +93,14 @@ public class NullBuildView implements BuildViewModel {
     public List<String> knownFailures() {
         return null;
     }
+
+    @Override
+    public boolean hasChangeLog() {
+        return false;
+    }
+
+    @Override
+    public List<String> changeLog() {
+        return null;
+    }
 }
