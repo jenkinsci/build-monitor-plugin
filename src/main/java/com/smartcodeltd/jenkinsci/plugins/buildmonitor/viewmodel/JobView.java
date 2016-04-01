@@ -186,34 +186,38 @@ public class JobView {
     }
 
     @JsonProperty
-    public boolean hasChangeLog() {
-        switch (config.getChangeSetVisualization()) {
-            case LastOrNextBuild:
-                return lastBuild().hasChangeLog();
-            case LastBuildOnly:
-                return lastCompletedBuild().hasChangeLog();
-            case Hidden:
-            default:
-                return false;
-        }
+    public boolean shouldVisualizeChangeLog() {
+        return config.getChangeSetVisualization() != Config.ChangeSetVisualizationType.Hidden && job.getLastBuild() != null;
     }
 
     @JsonProperty
     public List<String> changeLog() {
-        switch (config.getChangeSetVisualization()) {
-            case LastOrNextBuild:
-                return lastBuild().changeLog();
-            case LastBuildOnly:
-                return lastCompletedBuild().changeLog();
-            case Hidden:
-            default:
-                return null;
-        }
+        BuildViewModel buildForChangeLogFetching = getBuildForChangeLogFetching();
+        return buildForChangeLogFetching != null ? buildForChangeLogFetching.changeLog() : null;
+    }
+
+    @JsonProperty
+    public boolean hasChangeLogComputed() {
+        BuildViewModel buildForChangeLogFetching = getBuildForChangeLogFetching();
+        return buildForChangeLogFetching != null && buildForChangeLogFetching.hasChangeLogComputed();
     }
 
     @JsonProperty
     public boolean isChangeLogForUpcomingBuild() {
-        return lastBuild().isRunning() && config.getChangeSetVisualization() == Config.ChangeSetVisualizationType.LastOrNextBuild;
+        BuildViewModel buildForChangeLogFetching = getBuildForChangeLogFetching();
+        return buildForChangeLogFetching != null && buildForChangeLogFetching.isRunning();
+    }
+
+    private BuildViewModel getBuildForChangeLogFetching() {
+        switch (config.getChangeSetVisualization()) {
+            case LastOrNextBuild:
+                return lastBuild();
+            case LastBuildOnly:
+                return lastCompletedBuild();
+            case Hidden:
+            default:
+                return null;
+        }
     }
 
     // todo track by job.hashCode messes up the animation
@@ -246,6 +250,6 @@ public class JobView {
             return new NullBuildView();
         }
 
-        return BuildView.of(job.getLastBuild(), config, augmentor, relative, systemTime);
+        return BuildView.of(build, config, augmentor, relative, systemTime);
     }
 }

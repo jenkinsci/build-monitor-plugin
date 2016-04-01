@@ -167,31 +167,25 @@ public class BuildView implements BuildViewModel {
     }
 
     @Override
-    public boolean hasChangeLog() {
-        ChangeLogSet<?> changeSet = getChangeSet();
-        return !changeSet.isEmptySet();
-    }
-
-    @Override
     public List<String> changeLog() {
         List<String> list = new ArrayList<String>();
-        ChangeLogSet<?> changeSet = getChangeSet();
-        for (ChangeLogSet.Entry entry : changeSet) {
-            list.add(entry.getMsg());
+        if (build instanceof AbstractBuild<?, ?>) {
+            AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+            ChangeLogSet<?> changeSet = jenkinsBuild.getChangeSet();
+            for (ChangeLogSet.Entry entry : changeSet) {
+                list.add(entry.getMsg());
+            }
         }
         return list;
     }
 
-    private ChangeLogSet<?> getChangeSet() {
-        ChangeLogSet<?> changeSet;
+    @Override
+    public boolean hasChangeLogComputed() {
         if (build instanceof AbstractBuild<?, ?>) {
             AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
-            changeSet = jenkinsBuild.getChangeSet();
+            return jenkinsBuild.hasChangeSetComputed();
         }
-        else {
-            changeSet = ChangeLogSet.createEmpty(null);
-        }
-        return changeSet;
+        return false;
     }
 
     private Analysis analysis() {

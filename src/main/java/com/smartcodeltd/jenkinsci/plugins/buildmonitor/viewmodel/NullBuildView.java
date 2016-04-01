@@ -95,12 +95,12 @@ public class NullBuildView implements BuildViewModel {
     }
 
     @Override
-    public boolean hasChangeLog() {
-        return false;
+    public List<String> changeLog() {
+        return null;
     }
 
     @Override
-    public List<String> changeLog() {
-        return null;
+    public boolean hasChangeLogComputed() {
+        return false;
     }
 }
