@@ -74,6 +74,13 @@
     </select>
   </f:entry>
 
+  <f:entry title="${%Build Time Visualization}">
+    <select name="buildTimeVisualization" class="setting-input">
+      <f:option value="CountUp" selected='${it.buildTimeVisualization()=="CountUp"}'>${%Count Up}</f:option>
+      <f:option value="ShowRemaining" selected="${it.buildTimeVisualization()=='ShowRemaining'}">${%Show Remaining}</f:option>
+    </select>
+  </f:entry>
+
   </f:section>
 
   <script>

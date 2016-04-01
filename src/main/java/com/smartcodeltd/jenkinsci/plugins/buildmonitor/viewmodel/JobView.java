@@ -7,6 +7,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Lister;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Pluraliser;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.HumanReadableDuration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.model.Job;
 import hudson.model.Result;
@@ -84,6 +85,17 @@ public class JobView {
     @JsonProperty
     public String timeElapsedSinceLastBuild() {
         return formatted(lastCompletedBuild().timeElapsedSince());
+    }
+
+    @JsonProperty
+    public String estimatedTimeLeft() {
+        Duration estimatedDuration = lastCompletedBuild().estimatedDuration();
+        Duration timeElapsedSince = lastCompletedBuild().timeElapsedSince();
+        if (estimatedDuration == null || timeElapsedSince == null)
+            return formatted(null);
+
+        long timeLeft = estimatedDuration.toLong() - timeElapsedSince.toLong();
+        return formatted(new HumanReadableDuration(timeLeft >= 0 ? timeLeft : 0));
     }
 
     private String formatted(Duration duration) {
@@ -228,6 +240,11 @@ public class JobView {
             default:
                 return null;
         }
+    }
+
+    @JsonProperty
+    public boolean buildTimeCountsDown() {
+        return config.getBuildTimeVisualization() == Config.BuildTimeVisualizationType.ShowRemaining;
     }
 
     // todo track by job.hashCode messes up the animation
