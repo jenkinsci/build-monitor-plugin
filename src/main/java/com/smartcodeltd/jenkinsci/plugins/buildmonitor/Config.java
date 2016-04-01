@@ -23,7 +23,8 @@ public class Config {
     public enum ChangeSetVisualizationType {
         Hidden,
         LastOrNextBuild,
-        LastBuildOnly
+        LastBuildOnly,
+        NextBuildOnly
     }
     public ChangeSetVisualizationType getChangeSetVisualization() {
         return getOrElse(changeSetVisualization, ChangeSetVisualizationType.Hidden);

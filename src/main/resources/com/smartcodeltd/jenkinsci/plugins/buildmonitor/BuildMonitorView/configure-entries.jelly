@@ -70,6 +70,7 @@
       <f:option value="Hidden" selected='${it.changeSetVisualization()=="Hidden"}'>${%Hidden}</f:option>
       <f:option value="LastOrNextBuild" selected="${it.changeSetVisualization()=='LastOrNextBuild'}">${%Last Or Next Build}</f:option>
       <f:option value="LastBuildOnly" selected="${it.changeSetVisualization()=='LastBuildOnly'}">${%Last Build Only}</f:option>
+      <f:option value="NextBuildOnly" selected="${it.changeSetVisualization()=='NextBuildOnly'}">${%Next Build Only}</f:option>
     </select>
   </f:entry>
 

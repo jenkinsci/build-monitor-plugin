@@ -187,7 +187,16 @@ public class JobView {
 
     @JsonProperty
     public boolean shouldVisualizeChangeLog() {
-        return config.getChangeSetVisualization() != Config.ChangeSetVisualizationType.Hidden && job.getLastBuild() != null;
+        if (job.getLastBuild() == null) // no builds whatsoever
+            return false;
+
+        if (config.getChangeSetVisualization() == Config.ChangeSetVisualizationType.Hidden)
+            return false;
+
+        if (config.getChangeSetVisualization() == Config.ChangeSetVisualizationType.NextBuildOnly && !lastBuild().isRunning())
+            return false;
+
+        return true;
     }
 
     @JsonProperty
@@ -211,6 +220,7 @@ public class JobView {
     private BuildViewModel getBuildForChangeLogFetching() {
         switch (config.getChangeSetVisualization()) {
             case LastOrNextBuild:
+            case NextBuildOnly:
                 return lastBuild();
             case LastBuildOnly:
                 return lastCompletedBuild();
