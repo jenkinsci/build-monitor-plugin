@@ -15,19 +15,19 @@ public class TodoList implements Task {
         return instrumented(TodoList.class);
     }
 
-    public TodoList add(Performable task) {
+    public <T extends Performable> TodoList add(T task) {
         todos.add(task);
 
         return this;
     }
 
-    public TodoList addAll(Performable... tasks) {
+    public <T extends Performable> TodoList addAll(T... tasks) {
         todos.addAll(asList(tasks));
 
         return this;
     }
 
-    public TodoList addAll(List<Performable> tasks) {
+    public <T extends Performable> TodoList addAll(List<T> tasks) {
         todos.addAll(tasks);
 
         return this;

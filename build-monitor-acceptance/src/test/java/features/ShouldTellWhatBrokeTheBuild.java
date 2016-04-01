@@ -3,18 +3,14 @@ package features;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
-import com.sonyericsson.jenkins.plugins.bfa.user_interface.FailureCauseManagementPage;
-import com.sonyericsson.jenkins.plugins.bfa.user_interface.JenkinsHomePageWithBFA;
+import com.sonyericsson.jenkins.plugins.bfa.HaveAShellScriptFailureCauseDefined;
 import environment.TestJenkinsInstance;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.jenkins.HaveAFailingProjectCreated;
 import net.serenitybdd.screenplay.jenkins.tasks.Start;
-import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Breadcrumbs;
 import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
@@ -46,20 +42,7 @@ public class ShouldTellWhatBrokeTheBuild {
     public void displays_potential_failure_cause_when_it_is_known() throws Exception {
         givenThat(dave).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url()),
-
-                Click.on(JenkinsHomePageWithBFA.Failure_Cause_Management_Link),
-
-                Click.on(FailureCauseManagementPage.Create_New),
-                Enter.theValue("Rogue AI").into(FailureCauseManagementPage.Name),
-                Enter.theValue("The pod bay doors won't open").into(FailureCauseManagementPage.Description),
-
-                Click.on(FailureCauseManagementPage.Add_Indication),
-                Click.on(FailureCauseManagementPage.Build_Log_Indication_Link),
-                Enter.theValue("Build step 'Execute shell' marked build as failure").into(FailureCauseManagementPage.Pattern_Field),
-
-                Click.on(FailureCauseManagementPage.Save),
-                Click.on(Breadcrumbs.Jenkins_Link),
-
+                HaveAShellScriptFailureCauseDefined.called("Rogue AI"),
                 HaveAFailingProjectCreated.called("Discovery One")
         );
 

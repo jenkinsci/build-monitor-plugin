@@ -19,7 +19,7 @@ public class Setting {
     }
 
     public Target ofType(String elementType) {
-        return Target.the(format("the '%s' setting", name))
+        return Target.the(format("the '%s' field", name))
                 .locatedBy("//tr[td[contains(@class, 'setting-name') and contains(., '{0}')]]//{1}")
                 .of(name, elementType);
     }
