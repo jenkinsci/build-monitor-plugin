@@ -172,10 +172,10 @@ public class BuildView implements BuildViewModel {
         if (build instanceof AbstractBuild<?, ?>) {
             AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
             ChangeLogSet<?> changeSet = jenkinsBuild.getChangeSet();
-            int index = 0;
-            for (ChangeLogSet.Entry entry : changeSet) {
-                String prefix = index++ > 1 ? "○" : "";
-                list.add(prefix + entry.getMsg());
+            Object[] entries = changeSet.getItems();
+            String prefix = entries.length > 1 ? "○" : "";
+            for (Object entry : entries) {
+                list.add(prefix + ((ChangeLogSet.Entry)entry).getMsg());
             }
         }
         return list;
