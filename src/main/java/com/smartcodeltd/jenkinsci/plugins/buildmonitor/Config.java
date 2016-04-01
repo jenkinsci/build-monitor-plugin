@@ -26,7 +26,7 @@ public class Config {
         LastBuildOnly
     }
     public ChangeSetVisualizationType getChangeSetVisualization() {
-        return changeSetVisualization;
+        return getOrElse(changeSetVisualization, ChangeSetVisualizationType.Hidden);
     }
     public void setChangeSetVisualization(ChangeSetVisualizationType changeSetVisualization) {
         this.changeSetVisualization = changeSetVisualization;
