@@ -185,6 +185,51 @@ public class JobView {
         return lastCompletedBuild().knownFailures();
     }
 
+    @JsonProperty
+    public boolean shouldVisualizeChangeLog() {
+        if (job.getLastBuild() == null) // no builds whatsoever
+            return false;
+
+        if (config.getChangeSetVisualization() == Config.ChangeSetVisualizationType.Hidden)
+            return false;
+
+        if (config.getChangeSetVisualization() == Config.ChangeSetVisualizationType.NextBuildOnly && !lastBuild().isRunning())
+            return false;
+
+        return true;
+    }
+
+    @JsonProperty
+    public List<String> changeLog() {
+        BuildViewModel buildForChangeLogFetching = getBuildForChangeLogFetching();
+        return buildForChangeLogFetching != null ? buildForChangeLogFetching.changeLog() : null;
+    }
+
+    @JsonProperty
+    public boolean hasChangeLogComputed() {
+        BuildViewModel buildForChangeLogFetching = getBuildForChangeLogFetching();
+        return buildForChangeLogFetching != null && buildForChangeLogFetching.hasChangeLogComputed();
+    }
+
+    @JsonProperty
+    public boolean isChangeLogForUpcomingBuild() {
+        BuildViewModel buildForChangeLogFetching = getBuildForChangeLogFetching();
+        return buildForChangeLogFetching != null && buildForChangeLogFetching.isRunning();
+    }
+
+    private BuildViewModel getBuildForChangeLogFetching() {
+        switch (config.getChangeSetVisualization()) {
+            case LastOrNextBuild:
+            case NextBuildOnly:
+                return lastBuild();
+            case LastBuildOnly:
+                return lastCompletedBuild();
+            case Hidden:
+            default:
+                return null;
+        }
+    }
+
     // todo track by job.hashCode messes up the animation
     @JsonProperty @Override
     public int hashCode() {
@@ -215,6 +260,6 @@ public class JobView {
             return new NullBuildView();
         }
 
-        return BuildView.of(job.getLastBuild(), config, augmentor, relative, systemTime);
+        return BuildView.of(build, config, augmentor, relative, systemTime);
     }
 }

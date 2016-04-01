@@ -12,6 +12,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.User;
+import hudson.scm.ChangeLogSet;
 
 import java.util.*;
 
@@ -163,6 +164,28 @@ public class BuildView implements BuildViewModel {
     @Override
     public List<String> knownFailures() {
         return  analysis().failures();
+    }
+
+    @Override
+    public List<String> changeLog() {
+        List<String> list = new ArrayList<String>();
+        if (build instanceof AbstractBuild<?, ?>) {
+            AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+            ChangeLogSet<?> changeSet = jenkinsBuild.getChangeSet();
+            for (ChangeLogSet.Entry entry : changeSet) {
+                list.add(entry.getMsg());
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public boolean hasChangeLogComputed() {
+        if (build instanceof AbstractBuild<?, ?>) {
+            AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+            return jenkinsBuild.hasChangeSetComputed();
+        }
+        return false;
     }
 
     private Analysis analysis() {
