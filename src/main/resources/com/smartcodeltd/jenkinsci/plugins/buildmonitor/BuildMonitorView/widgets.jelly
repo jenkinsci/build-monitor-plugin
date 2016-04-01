@@ -34,7 +34,7 @@
                         <span>
                             <ng-pluralize data-ng-show="!project.changeLogForUpcomingBuild"
                                 count="project.changeLog.length"
-                                when="{'0': 'No changes since last build', '1': 'Changes in build: ', 'other': '{{ project.changeLog.length }} changes in build: '}"></ng-pluralize>
+                                when="{'0': 'No changes since last build', '1': 'Change in build: ', 'other': '{{ project.changeLog.length }} changes in build: '}"></ng-pluralize>
                             <ng-pluralize data-ng-show="!!project.changeLogForUpcomingBuild"
                                 count="project.changeLog.length"
                                 when="{'0': 'No changes in upcoming build', '1': 'Change in upcoming build: ', 'other': '{{ project.changeLog.length }} changes in upcoming build: '}"></ng-pluralize>

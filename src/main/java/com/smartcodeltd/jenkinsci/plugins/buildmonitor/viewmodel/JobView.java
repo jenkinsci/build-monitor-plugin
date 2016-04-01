@@ -187,34 +187,32 @@ public class JobView {
 
     @JsonProperty
     public boolean shouldVisualizeChangeLog() {
-        if (job.getLastBuild() == null) // no builds whatsoever
-            return false;
-
-        if (config.getChangeSetVisualization() == Config.ChangeSetVisualizationType.Hidden)
-            return false;
-
-        if (config.getChangeSetVisualization() == Config.ChangeSetVisualizationType.NextBuildOnly && !lastBuild().isRunning())
-            return false;
-
-        return true;
+        switch (config.getChangeSetVisualization()) {
+            case LastOrNextBuild:
+                return job.getLastBuild() != null || lastBuild().isRunning();
+            case NextBuildOnly:
+                return lastBuild().isRunning();
+            case LastBuildOnly:
+                return job.getLastBuild() != null;
+            case Hidden:
+            default:
+                return false;
+        }
     }
 
     @JsonProperty
     public List<String> changeLog() {
-        BuildViewModel buildForChangeLogFetching = getBuildForChangeLogFetching();
-        return buildForChangeLogFetching != null ? buildForChangeLogFetching.changeLog() : null;
+        return getBuildForChangeLogFetching().changeLog();
     }
 
     @JsonProperty
     public boolean hasChangeLogComputed() {
-        BuildViewModel buildForChangeLogFetching = getBuildForChangeLogFetching();
-        return buildForChangeLogFetching != null && buildForChangeLogFetching.hasChangeLogComputed();
+        return getBuildForChangeLogFetching().hasChangeLogComputed();
     }
 
     @JsonProperty
     public boolean isChangeLogForUpcomingBuild() {
-        BuildViewModel buildForChangeLogFetching = getBuildForChangeLogFetching();
-        return buildForChangeLogFetching != null && buildForChangeLogFetching.isRunning();
+        return getBuildForChangeLogFetching().isRunning();
     }
 
     private BuildViewModel getBuildForChangeLogFetching() {
@@ -226,7 +224,7 @@ public class JobView {
                 return lastCompletedBuild();
             case Hidden:
             default:
-                return null;
+                return new NullBuildView();
         }
     }
 
