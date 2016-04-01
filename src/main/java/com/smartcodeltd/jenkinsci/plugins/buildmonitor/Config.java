@@ -16,15 +16,40 @@ public class Config {
     public Comparator<Job<?, ?>> getOrder() {
         return getOrElse(order, new ByName());
     }
-
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
+    }
+
+    public enum ChangeSetVisualizationType {
+        Hidden,
+        LastOrNextBuild,
+        LastBuildOnly,
+        NextBuildOnly
+    }
+    public ChangeSetVisualizationType getChangeSetVisualization() {
+        return getOrElse(changeSetVisualization, ChangeSetVisualizationType.Hidden);
+    }
+    public void setChangeSetVisualization(ChangeSetVisualizationType changeSetVisualization) {
+        this.changeSetVisualization = changeSetVisualization;
+    }
+
+    public enum BuildTimeVisualizationType {
+        CountUp,
+        ShowRemaining
+    }
+    public BuildTimeVisualizationType getBuildTimeVisualization() {
+        return getOrElse(buildTimeVisualization, BuildTimeVisualizationType.CountUp);
+    }
+    public void setBuildTimeVisualization(BuildTimeVisualizationType buildTimeVisualization) {
+        this.buildTimeVisualization = buildTimeVisualization;
     }
 
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("order", order.getClass().getSimpleName())
+                .add("changeSetVisualization", changeSetVisualization)
+                .add("buildTimeVisualization", buildTimeVisualization)
                 .toString();
     }
 
@@ -47,4 +72,6 @@ public class Config {
     }
 
     private Comparator<Job<?, ?>> order;
+    private ChangeSetVisualizationType changeSetVisualization;
+    private BuildTimeVisualizationType buildTimeVisualization;
 }

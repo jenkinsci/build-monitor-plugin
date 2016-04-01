@@ -80,6 +80,16 @@ public class BuildMonitorView extends ListView {
         return currentConfig().getOrder().getClass().getSimpleName();
     }
 
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public String changeSetVisualization() {
+        return currentConfig().getChangeSetVisualization().name();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public String buildTimeVisualization() {
+        return currentConfig().getBuildTimeVisualization().name();
+    }
+
     private static final BuildMonitorInstallation installation = new BuildMonitorInstallation();
 
     @SuppressWarnings("unused") // used in index.jelly
@@ -96,14 +106,27 @@ public class BuildMonitorView extends ListView {
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
 
-        String requestedOrdering = req.getParameter("order");
-
         title = req.getParameter("title");
 
+        String requestedOrdering = req.getParameter("order");
         try {
             currentConfig().setOrder(orderIn(requestedOrdering));
         } catch (Exception e) {
             throw new FormException("Can't order projects by " + requestedOrdering, "order");
+        }
+
+        String requestedChangeSetVisualization = req.getParameter("changeSetVisualization");
+        try {
+            currentConfig().setChangeSetVisualization(Config.ChangeSetVisualizationType.valueOf(requestedChangeSetVisualization));
+        } catch (Exception e) {
+            throw new FormException("Can't visualize change sets by " + requestedChangeSetVisualization, "changeSetVisualization");
+        }
+
+        String requestedBuildTimeVisualization = req.getParameter("buildTimeVisualization");
+        try {
+            currentConfig().setBuildTimeVisualization(Config.BuildTimeVisualizationType.valueOf(requestedBuildTimeVisualization));
+        } catch (Exception e) {
+            throw new FormException("Can't visualize build time by " + requestedBuildTimeVisualization, "buildTimeVisualization");
         }
     }
 
