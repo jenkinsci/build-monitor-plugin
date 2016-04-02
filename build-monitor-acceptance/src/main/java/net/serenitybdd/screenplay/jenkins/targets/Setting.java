@@ -7,26 +7,16 @@ import static java.lang.String.format;
 
 public class Setting {
     public static Target defining(String name) {
-        String xpath = "//tr[td[contains(@class, 'setting-name') and contains(., '{0}')]]//%s";
-
-        return Target.the(format("the '%s' setting", name))
-                .locatedBy(either(format(xpath, "input"), format(xpath, "textarea")))
+        return Target.the(format("the '%s' field", name))
+                .locatedBy(either(xpathFor("input"), xpathFor("textarea")))
                 .of(name);
+    }
+
+    private static String xpathFor(String fieldType) {
+        return format("//tr[td[contains(@class, 'setting-name') and contains(., '{0}')]]//%s", fieldType);
     }
 
     private static String either(String... xpaths) {
         return Joiner.on(" | ").join(xpaths);
-    }
-
-    public Target ofType(String elementType) {
-        return Target.the(format("the '%s' field", name))
-                .locatedBy("//tr[td[contains(@class, 'setting-name') and contains(., '{0}')]]//{1}")
-                .of(name, elementType);
-    }
-
-    private final String name;
-
-    public Setting(String name) {
-        this.name = name;
     }
 }
