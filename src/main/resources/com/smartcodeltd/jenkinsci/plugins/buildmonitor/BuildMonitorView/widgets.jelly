@@ -29,6 +29,26 @@
                         <li data-ng-repeat="name in project.knownFailures">{{ name }}</li>
                     </ul>
                 </li>
+                <div data-ng-show="!!project.shouldVisualizeChangeLog" class="changelog">
+                    <li data-ng-show="!!project.hasChangeLogComputed">
+                        <span>
+                            <ng-pluralize data-ng-show="!project.changeLogForUpcomingBuild"
+                                count="project.changeLog.length"
+                                when="{'0': 'No changes since last build', '1': 'Change in build: ', 'other': '{{ project.changeLog.length }} changes in build: '}"></ng-pluralize>
+                            <ng-pluralize data-ng-show="!!project.changeLogForUpcomingBuild"
+                                count="project.changeLog.length"
+                                when="{'0': 'No changes in upcoming build', '1': 'Change in upcoming build: ', 'other': '{{ project.changeLog.length }} changes in upcoming build: '}"></ng-pluralize>
+                        </span>
+                        <ul class="changelog-entries">
+                            <li data-ng-repeat="entry in project.changeLog">{{ entry }}</li>
+                        </ul>
+                    </li>
+                    <li data-ng-show="!project.hasChangeLogComputed">
+                        <span>
+                            Computing change log...
+                        </span>
+                    </li>
+                </div>
             </ul>
         </header>
 

@@ -83,6 +83,13 @@
         .build-failure-analyzer-plugin ul.identified-failures li { display: inline-block; margin-right:0.5em; }
         .build-failure-analyzer-plugin ul.identified-failures li:after { content: ","; }
         .build-failure-analyzer-plugin ul.identified-failures li:last-child:after { content: ""; }
+
+        .changelog ul.changelog-entries { list-style-type: none; display: inline-block; margin: 0; padding: 0; }
+        .changelog ul.changelog-entries li { display: inline-block; margin-right:0.5em; }
+        .changelog ul.changelog-entries li:after { content: ","; }
+        .changelog ul.changelog-entries li:last-child:after { content: ""; }
+        .changelog ul.changelog-entries li:before { content: "○"; }
+        .changelog ul.changelog-entries li:first-child:last-child:before { content: ""; }
       }
 
       .slots {

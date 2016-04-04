@@ -185,6 +185,49 @@ public class JobView {
         return lastCompletedBuild().knownFailures();
     }
 
+    @JsonProperty
+    public boolean shouldVisualizeChangeLog() {
+        switch (config.getChangeSetVisualization()) {
+            case LastOrNextBuild:
+                return job.getLastBuild() != null || lastBuild().isRunning();
+            case NextBuildOnly:
+                return lastBuild().isRunning();
+            case LastBuildOnly:
+                return job.getLastBuild() != null;
+            case Hidden:
+            default:
+                return false;
+        }
+    }
+
+    @JsonProperty
+    public List<String> changeLog() {
+        return getBuildForChangeLogFetching().changeLog();
+    }
+
+    @JsonProperty
+    public boolean hasChangeLogComputed() {
+        return getBuildForChangeLogFetching().hasChangeLogComputed();
+    }
+
+    @JsonProperty
+    public boolean isChangeLogForUpcomingBuild() {
+        return getBuildForChangeLogFetching().isRunning();
+    }
+
+    private BuildViewModel getBuildForChangeLogFetching() {
+        switch (config.getChangeSetVisualization()) {
+            case LastOrNextBuild:
+            case NextBuildOnly:
+                return lastBuild();
+            case LastBuildOnly:
+                return lastCompletedBuild();
+            case Hidden:
+            default:
+                return new NullBuildView();
+        }
+    }
+
     // todo track by job.hashCode messes up the animation
     @JsonProperty @Override
     public int hashCode() {
@@ -215,6 +258,6 @@ public class JobView {
             return new NullBuildView();
         }
 
-        return BuildView.of(job.getLastBuild(), config, augmentor, relative, systemTime);
+        return BuildView.of(build, config, augmentor, relative, systemTime);
     }
 }
