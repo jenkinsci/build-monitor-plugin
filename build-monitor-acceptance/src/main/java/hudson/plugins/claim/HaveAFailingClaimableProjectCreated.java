@@ -1,7 +1,9 @@
-package net.serenitybdd.screenplay.jenkins;
+package hudson.plugins.claim;
 
+import hudson.plugins.claim.tasks.configuration.BrokenBuildClaiming;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
+import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
 import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ExecuteAShellScript;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScript;
@@ -9,24 +11,24 @@ import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
-public class HaveAFailingProjectCreated implements Task {
-
+public class HaveAFailingClaimableProjectCreated implements Task {
     public static Task called(String name) {
-        return instrumented(HaveAFailingProjectCreated.class, name);
+        return instrumented(HaveAFailingClaimableProjectCreated.class, name);
     }
 
-    @Step("{0} creates the '#projectName' project and schedules a build that fails")
+    @Step("{0} creates the '#projectName' project and schedules a build that fails, but can be claimed")
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 HaveAProjectCreated.called(projectName).andConfiguredTo(
-                        ExecuteAShellScript.that(ShellScript.Finishes_with_Error)
+                        ExecuteAShellScript.that(ShellScript.Finishes_with_Error),
+                        BrokenBuildClaiming.allow()
                 ),
                 ScheduleABuild.of(projectName)
         );
     }
 
-    public HaveAFailingProjectCreated(String projectName) {
+    public HaveAFailingClaimableProjectCreated(String projectName) {
         this.projectName = projectName;
     }
 
