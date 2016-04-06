@@ -42,7 +42,7 @@ public class FindFreePort implements ApplicativeTestRule<JenkinsInstance> {
         return new TestWatcher() {
             @Override
             protected void starting(Description description) {
-                int portNumber = anyFreeLocalPortInRange(Dynamic_Range_Start, Dynamic_Range_End);
+                int portNumber = anyFreeLocalPortInRange(rangeStart, rangeEnd);
 
                 Log.info("Found a free port: {}", portNumber);
 
