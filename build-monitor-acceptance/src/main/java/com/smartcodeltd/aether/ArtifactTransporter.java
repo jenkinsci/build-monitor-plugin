@@ -16,7 +16,6 @@ import org.eclipse.aether.spi.connector.RepositoryConnectorFactory;
 import org.eclipse.aether.spi.connector.transport.TransporterFactory;
 import org.eclipse.aether.transport.file.FileTransporterFactory;
 import org.eclipse.aether.transport.http.HttpTransporterFactory;
-import org.jenkinsci.test.acceptance.utils.aether.ConsoleTransferListener;
 
 import javax.validation.constraints.NotNull;
 import java.nio.file.Path;

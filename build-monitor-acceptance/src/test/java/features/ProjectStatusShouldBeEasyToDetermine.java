@@ -12,7 +12,6 @@ import net.serenitybdd.screenplay.jenkins.HaveAFailingProjectCreated;
 import net.serenitybdd.screenplay.jenkins.HaveASuccessfulProjectCreated;
 import net.serenitybdd.screenplay.jenkins.tasks.Start;
 import net.thucydides.core.annotations.Managed;
-import org.jenkinsci.test.acceptance.junit.WithPlugins;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,7 +38,6 @@ public class ProjectStatusShouldBeEasyToDetermine {
     }
 
     @Test
-    @WithPlugins({"build-monitor-plugin"})
     public void visualising_a_successful_project() throws Exception {
 
         givenThat(anna).wasAbleTo(
@@ -59,7 +57,6 @@ public class ProjectStatusShouldBeEasyToDetermine {
     }
 
     @Test
-    @WithPlugins({"build-monitor-plugin"})
     public void visualising_a_failing_project() throws Exception {
 
         givenThat(anna).wasAbleTo(
