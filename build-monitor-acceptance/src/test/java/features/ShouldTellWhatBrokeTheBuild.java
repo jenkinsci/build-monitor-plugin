@@ -4,8 +4,9 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import com.sonyericsson.jenkins.plugins.bfa.HaveAShellScriptFailureCauseDefined;
-import environment.TestJenkinsInstance;
+import environment.JenkinsSandbox;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -28,10 +29,9 @@ public class ShouldTellWhatBrokeTheBuild {
 
     @Managed public WebDriver hisBrowser;
 
-    @Rule public JenkinsInstance jenkins = TestJenkinsInstance
-            .withBuildMonitor()
-            .withPlugins("cloudbees-folder", "build-failure-analyzer")  // BFA relies on Folder being available
-            .create();
+    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
+            InstallPlugins.fromUpdateCenter("cloudbees-folder", "build-failure-analyzer")
+    ).create();
 
     @Before
     public void actorCanBrowseTheWeb() {

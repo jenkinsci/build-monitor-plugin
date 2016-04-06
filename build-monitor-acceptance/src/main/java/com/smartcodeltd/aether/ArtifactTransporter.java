@@ -18,6 +18,7 @@ import org.eclipse.aether.transport.file.FileTransporterFactory;
 import org.eclipse.aether.transport.http.HttpTransporterFactory;
 import org.jenkinsci.test.acceptance.utils.aether.ConsoleTransferListener;
 
+import javax.validation.constraints.NotNull;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +44,7 @@ public class ArtifactTransporter {
         return get(t[0], t[1], t[2], extension);
     }
 
-    public Path get(String groupName, String artifactName, String version, String artifactFileExtension) {
+    public Path get(@NotNull String groupName, @NotNull String artifactName, @NotNull String version, @NotNull String artifactFileExtension) {
         Artifact artifact = new DefaultArtifact(groupName, artifactName, artifactFileExtension, version);
 
         RepositorySystem system = newRepositorySystem();

@@ -1,16 +1,23 @@
 package net.serenitybdd.integration.utils;
 
+import com.beust.jcommander.internal.Lists;
 import com.google.common.collect.ImmutableList;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ListFunctions {
-    public static <T> List<T> concat(List<? extends T> first, List<? extends T> second) {
-        List<T> combined = new ArrayList<>(first.size() + second.size());
-        combined.addAll(first);
-        combined.addAll(second);
+    public static <T> List<T> concat(List<? extends T>... lists) {
+        if (lists.length == 0) {
+            return Collections.EMPTY_LIST;
+        }
+
+        List<T> combined = Lists.newArrayList();
+
+        for (List<? extends T> list : lists) {
+            combined.addAll(list);
+        }
 
         return combined;
     }

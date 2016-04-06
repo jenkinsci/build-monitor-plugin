@@ -3,7 +3,7 @@ package features;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
-import environment.TestJenkinsInstance;
+import environment.JenkinsSandbox;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
@@ -31,7 +31,7 @@ public class ProjectStatusShouldBeEasyToDetermine {
 
     @Managed public WebDriver herBrowser;
 
-    @Rule public JenkinsInstance jenkins = TestJenkinsInstance.withBuildMonitor().create();
+    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().create();
 
     @Before
     public void actorCanBrowseTheWeb() {

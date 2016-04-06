@@ -39,7 +39,7 @@ class JenkinsLogWatcher implements AutoCloseable, Runnable {
             String line;
             while ((line = reader.readLine()) != null) {
 
-                Log.info(line);
+                Log.debug(line);
 
                 for (JenkinsLogLineWatcher watcher : watchers) {
                     if (watcher.matches(line)) {

@@ -1,15 +1,11 @@
 package net.serenitybdd.integration.jenkins.process;
 
-import org.apache.commons.io.input.TeeInputStream;
 import org.jdeferred.Promise;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -24,7 +20,6 @@ public class JenkinsProcess {
 
     private final ProcessBuilder process;
     private final int port;
-    private final Path jenkinsRunLog;
     private       Process     jenkinsProcess;
     private final Thread      shutdownHook = new Thread() {
         @Override
@@ -36,13 +31,11 @@ public class JenkinsProcess {
     private JenkinsLogWatcher jenkinsLogWatcher;
     private Thread jenkinsLogWatcherThread;
 
-    public JenkinsProcess(@NotNull Path java, @NotNull Path jenkinsWar, @NotNull int port, @NotNull Path jenkinsHome, @NotNull Path log) {
+    public JenkinsProcess(@NotNull Path java, @NotNull Path jenkinsWar, @NotNull int port, @NotNull Path jenkinsHome) {
         Log.debug("jenkins.war:  {}", jenkinsWar.toAbsolutePath());
         Log.debug("JENKINS_HOME: {}", jenkinsHome.toAbsolutePath());
-        Log.debug("jenkins log:  {}", log.toAbsolutePath());
 
         this.port = port;
-        this.jenkinsRunLog = log;
 
         Map<String, String> env = new HashMap<>();
         env.put("JENKINS_HOME", jenkinsHome.toAbsolutePath().toString());
@@ -61,7 +54,7 @@ public class JenkinsProcess {
 
     public void start() throws IOException {
         jenkinsProcess          = start(process);
-        jenkinsLogWatcher       = new JenkinsLogWatcher(tee(jenkinsProcess, jenkinsRunLog));
+        jenkinsLogWatcher       = new JenkinsLogWatcher(jenkinsProcess.getInputStream());
         jenkinsLogWatcherThread = new Thread(jenkinsLogWatcher, "jenkins");
 
         jenkinsLogWatcherThread.start();
@@ -95,14 +88,6 @@ public class JenkinsProcess {
             jenkinsLogWatcher.watchFor(logLine).waitSafely(Startup_Timeout);
         } catch (InterruptedException e) {
             throw new RuntimeException(format("Did not see '%s' in the Jenkins log within %s ms", logLine, Startup_Timeout), e);
-        }
-    }
-
-    private InputStream tee(Process process, Path log) {
-        try {
-            return new TeeInputStream(process.getInputStream(), new FileOutputStream(log.toFile()));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(format("Log file not found: '%s'", log.toAbsolutePath()), e);
         }
     }
 

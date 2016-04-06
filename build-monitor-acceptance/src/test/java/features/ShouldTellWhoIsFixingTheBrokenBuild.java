@@ -1,8 +1,9 @@
 package features;
 
-import environment.TestJenkinsInstance;
+import environment.JenkinsSandbox;
 import hudson.plugins.claim.HaveAFailingClaimableProjectCreated;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -25,11 +26,9 @@ public class ShouldTellWhoIsFixingTheBrokenBuild {
 
     @Managed public WebDriver hisBrowser;
 
-    @Rule public JenkinsInstance jenkins = TestJenkinsInstance  // TestEnvironment contains the server manager and the process
-            // .with(latestBuildOfBuildMonitorPlugin())
-            .withBuildMonitor()
-            .withPlugins("claim")
-            .create();
+    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
+            InstallPlugins.fromUpdateCenter("claim")
+    ).create();
 
     @Before
     public void actorCanBrowseTheWeb() {
@@ -45,6 +44,6 @@ public class ShouldTellWhoIsFixingTheBrokenBuild {
 
 
 
-        Thread.sleep(5 * 60 * 1000);
+//        Thread.sleep(5 * 60 * 1000);
     }
 }

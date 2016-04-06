@@ -6,8 +6,9 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayNestedProjects;
-import environment.TestJenkinsInstance;
+import environment.JenkinsSandbox;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -29,10 +30,9 @@ public class ShouldSupportCloudBeesFolders {
 
     @Managed public WebDriver herBrowser;
 
-    @Rule public JenkinsInstance jenkins = TestJenkinsInstance
-            .withBuildMonitor()
-            .withPlugins("cloudbees-folder")
-            .create();
+    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
+            InstallPlugins.fromUpdateCenter("cloudbees-folder")
+    ).create();
 
     @Before
     public void actorCanBrowseTheWeb() {

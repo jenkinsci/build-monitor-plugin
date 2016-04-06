@@ -8,20 +8,20 @@ import org.junit.runner.Description;
 
 import static java.lang.String.*;
 
-public class DescribeBrowserStackTestSession extends TestWatcher {
+public class BrowserStackTestSessionName extends TestWatcher {
 
     private final String projectName;
     private       String build = "";
 
-    public DescribeBrowserStackTestSession(String projectName) {
+    public BrowserStackTestSessionName(String projectName) {
         this.projectName = projectName;
     }
 
-    public static DescribeBrowserStackTestSession forProject(String projectName){
-        return new DescribeBrowserStackTestSession(projectName);
+    public static BrowserStackTestSessionName forProject(String projectName){
+        return new BrowserStackTestSessionName(projectName);
     }
 
-    public DescribeBrowserStackTestSession andBuild(String build) {
+    public BrowserStackTestSessionName andBuild(String build) {
         this.build = build;
 
         return this;

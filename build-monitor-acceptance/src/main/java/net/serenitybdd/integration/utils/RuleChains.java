@@ -19,11 +19,11 @@ public class RuleChains {
     }
 
 
-    public static RuleChain chained(List<TestRule> customRules) {
+    public static <R extends TestRule> RuleChain chained(List<R> customRules) {
         return chained(RuleChain.emptyRuleChain(), customRules);
     }
 
-    private static RuleChain chained(RuleChain acc, List<TestRule> customRules) {
+    public static <R extends TestRule> RuleChain chained(RuleChain acc, List<R> customRules) {
         return customRules.isEmpty()
                 ? acc
                 : chained(acc.around(head(customRules)), tail(customRules));
