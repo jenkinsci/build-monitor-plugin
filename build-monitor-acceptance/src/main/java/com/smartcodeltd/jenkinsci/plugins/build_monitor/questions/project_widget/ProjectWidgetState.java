@@ -9,7 +9,7 @@ import net.serenitybdd.screenplay.targets.Target;
 
 import static net.serenitybdd.screenplay.questions.WebElementQuestion.stateOf;
 
-@Subject("the Build Monitor Widget representing the '#projectName' project")
+@Subject("the widget representing the '#projectName' project on the Build Monitor")
 public class ProjectWidgetState implements Question<WebElementState> {
 
     @Override

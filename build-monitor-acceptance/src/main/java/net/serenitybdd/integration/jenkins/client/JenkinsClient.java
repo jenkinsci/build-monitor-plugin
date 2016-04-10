@@ -16,10 +16,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import static java.lang.String.format;
 import static net.serenitybdd.integration.jenkins.process.JenkinsProcess.JENKINS_IS_FULLY_UP_AND_RUNNING;
 
 public class JenkinsClient {
     private final static Logger logger = LoggerFactory.getLogger(JenkinsClient.class);
+    private final static int Max_Wait_Time = 5 * 60 * 1000;
 
     private final JenkinsProcess process;
     private final JenkinsClientExecutor executor;
@@ -34,7 +36,28 @@ public class JenkinsClient {
     // https://gist.github.com/hayderimran7/50cb1244cc1e856873a4
     // http://stackoverflow.com/questions/17716242/creating-user-in-jenkins-via-api
 
-    // todo: remove as it's no longer needed; a similar mechanism will be needed to setup user accounts though
+    public void registerAccount(String username, String password) {
+        logger.info("Enabling Jenkins Security and registering account for '{}', identified by '{}'", username, password);
+
+        Promise<Matcher, ?, ?> promise = process.promiseWhen("defining beans \\[authenticationManager\\]");
+
+        executeGroovy(
+                "def instance         = jenkins.model.Jenkins.getInstance()",
+                "def usersCanRegister = true",
+                "def realm            = new hudson.security.HudsonPrivateSecurityRealm(usersCanRegister)",
+                format("hudsonRealm.createAccount(\"%s\",\"%s\")", username, password),
+                "instance.setSecurityRealm(realm)",
+                "instance.save()"
+        );
+
+        try {
+            promise.waitSafely(Max_Wait_Time);
+            logger.info("Account for '{}' created", username);
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Couldn't enable Jenkins Security", e);
+        }
+    }
+
     public void populateUpdateCenterCaches() {
         logger.info("FETCHING UPDATE CENTER");
 
@@ -48,7 +71,7 @@ public class JenkinsClient {
         );
 
         try {
-            promise.waitSafely(10 * 1000);
+            promise.waitSafely(Max_Wait_Time);
             logger.info("UPDATE CENTER RELOADED");
         } catch (InterruptedException e) {
             throw new RuntimeException("Couldn't update the Update Center caches.", e);
@@ -62,6 +85,7 @@ public class JenkinsClient {
         process.waitUntil(JENKINS_IS_FULLY_UP_AND_RUNNING);
     }
 
+
     public void installPlugins(List<String> plugins) {
         for (String pluginName : plugins) {
             executeCommand("install-plugin", pluginName);
@@ -69,7 +93,6 @@ public class JenkinsClient {
 
         safeRestart();
     }
-
 
     public void safeRestart() {
         executeCommand("safe-restart");
@@ -82,7 +105,6 @@ public class JenkinsClient {
 
         return executor.call("groovy", "=").execute(withInput(script), info(logger), error(logger));
     }
-
 
     private int executeCommand(String... args) {
         return executor.call(args).execute(noManualInput(), info(logger), error(logger));

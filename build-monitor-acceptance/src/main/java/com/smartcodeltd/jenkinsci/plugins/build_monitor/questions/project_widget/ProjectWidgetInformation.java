@@ -9,7 +9,7 @@ import net.serenitybdd.screenplay.annotations.Subject;
 import net.serenitybdd.screenplay.questions.Attribute;
 import net.serenitybdd.screenplay.targets.Target;
 
-@Subject("the Build Monitor Widget representing the '#projectName' project")
+@Subject("the widget representing the '#projectName' project on the Build Monitor")
 public class ProjectWidgetInformation implements Question<ProjectInformation> {
 
     @Override

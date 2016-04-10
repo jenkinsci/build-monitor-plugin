@@ -7,7 +7,7 @@ import net.serenitybdd.screenplay.annotations.Subject;
 import net.serenitybdd.screenplay.questions.Text;
 import net.serenitybdd.screenplay.targets.Target;
 
-@Subject("the Build Monitor Widget details representing the '#projectName' project")
+@Subject("the details of the widget representing the '#projectName' project on the Build Monitor")
 public class ProjectWidgetDetails implements Question<String> {
 
     @Override

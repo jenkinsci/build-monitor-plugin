@@ -16,7 +16,8 @@ import static org.hibernate.validator.internal.util.CollectionHelper.newArrayLis
 public enum ProjectStatus {
     Successful("successful"),
     Failing("failing"),
-    Unknown("unknown");
+    Unknown("unknown"),
+    Claimed("claimed");
 
     private final String value;
 

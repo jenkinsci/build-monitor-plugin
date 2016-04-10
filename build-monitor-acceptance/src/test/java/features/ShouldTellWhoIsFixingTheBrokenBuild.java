@@ -1,33 +1,42 @@
 package features;
 
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import environment.JenkinsSandbox;
 import hudson.plugins.claim.HaveAFailingClaimableProjectCreated;
+import hudson.plugins.claim.tasks.Claim;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
+import net.serenitybdd.integration.jenkins.environment.rules.RegisterUserAccount;
 import net.serenitybdd.junit.runners.SerenityRunner;
-import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+import net.serenitybdd.screenplay.jenkins.JenkinsUser;
+import net.serenitybdd.screenplay.jenkins.tasks.GoBack;
+import net.serenitybdd.screenplay.jenkins.tasks.LogIn;
 import net.serenitybdd.screenplay.jenkins.tasks.Start;
 import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
-import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
+import static com.smartcodeltd.jenkinsci.plugins.build_monitor.matchers.ProjectInformationMatchers.displaysProjectStatusAs;
+import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus.Claimed;
+import static net.serenitybdd.screenplay.GivenWhenThen.*;
+import static org.hamcrest.core.Is.is;
 
 @RunWith(SerenityRunner.class)
-@Ignore
 public class ShouldTellWhoIsFixingTheBrokenBuild {
 
-    Actor ben = Actor.named("Ben");
+    JenkinsUser ben = JenkinsUser.named("Ben");
 
     @Managed public WebDriver hisBrowser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
-            InstallPlugins.fromUpdateCenter("claim")
+            InstallPlugins.fromUpdateCenter("claim"),
+            RegisterUserAccount.of(ben)
     ).create();
 
     @Before
@@ -36,14 +45,22 @@ public class ShouldTellWhoIsFixingTheBrokenBuild {
     }
 
     @Test
-    public void name() throws Exception {
+    public void claiming_a_broken_build() throws Exception {
         givenThat(ben).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url()),
+                LogIn.as(ben),
                 HaveAFailingClaimableProjectCreated.called("Responsibly Developed App")
         );
 
+        when(ben).attemptsTo(
+                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
+                        DisplayAllProjects.usingARegularExpression()
+                ),
+                Claim.lastBrokenBuildOf("Responsibly Developed App").saying("My bad, fixing now"),
+                GoBack.to("Build Monitor")
+        );
 
-
-//        Thread.sleep(5 * 60 * 1000);
+        then(ben).should(seeThat(ProjectWidget.of("Responsibly Developed App").information(), displaysProjectStatusAs(Claimed)));
+        then(ben).should(seeThat(ProjectWidget.of("Responsibly Developed App").details(),     is("Claimed by Ben: My bad, fixing now")));
     }
 }
