@@ -45,7 +45,7 @@ public class JenkinsClient {
                 "def instance         = jenkins.model.Jenkins.getInstance()",
                 "def usersCanRegister = true",
                 "def realm            = new hudson.security.HudsonPrivateSecurityRealm(usersCanRegister)",
-                format("hudsonRealm.createAccount(\"%s\",\"%s\")", username, password),
+                format("realm.createAccount(\"%s\",\"%s\")", username, password),
                 "instance.setSecurityRealm(realm)",
                 "instance.save()"
         );

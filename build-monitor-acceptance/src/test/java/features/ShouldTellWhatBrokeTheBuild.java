@@ -39,7 +39,7 @@ public class ShouldTellWhatBrokeTheBuild {
     }
 
     @Test
-    public void displays_potential_failure_cause_when_it_is_known() throws Exception {
+    public void displaying_potential_failure_cause() throws Exception {
         givenThat(dave).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url()),
                 HaveAShellScriptFailureCauseDefined.called("Rogue AI"),
