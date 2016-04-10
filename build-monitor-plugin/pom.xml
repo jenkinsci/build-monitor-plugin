@@ -261,6 +261,8 @@
                 <extensions>true</extensions>
                 <configuration>
                     <disabledTestInjection>true</disabledTestInjection>
+                    <jenkinsHome>${project.parent.basedir}/work</jenkinsHome>
+                    <warSourceDirectory>${project.parent.basedir}/build-monitor-plugin/src/main/webapp</warSourceDirectory>
                 </configuration>
             </plugin>
             <plugin>
