@@ -49,18 +49,18 @@ public class ShouldTellWhoIsFixingTheBrokenBuild {
         givenThat(ben).wasAbleTo(
                 Start.withJenkinsAt(jenkins.url()),
                 LogIn.as(ben),
-                HaveAFailingClaimableProjectCreated.called("Responsibly Developed App")
+                HaveAFailingClaimableProjectCreated.called("Responsibly Developed")
         );
 
         when(ben).attemptsTo(
                 CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
                         DisplayAllProjects.usingARegularExpression()
                 ),
-                Claim.lastBrokenBuildOf("Responsibly Developed App").saying("My bad, fixing now"),
+                Claim.lastBrokenBuildOf("Responsibly Developed").saying("My bad, fixing now"),
                 GoBack.to("Build Monitor")
         );
 
-        then(ben).should(seeThat(ProjectWidget.of("Responsibly Developed App").information(), displaysProjectStatusAs(Claimed)));
-        then(ben).should(seeThat(ProjectWidget.of("Responsibly Developed App").details(),     is("Claimed by Ben: My bad, fixing now")));
+        then(ben).should(seeThat(ProjectWidget.of("Responsibly Developed").information(), displaysProjectStatusAs(Claimed)));
+        then(ben).should(seeThat(ProjectWidget.of("Responsibly Developed").details(),     is("Claimed by Ben: My bad, fixing now")));
     }
 }
