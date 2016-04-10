@@ -1,21 +1,47 @@
-node('standard') {
-    git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git'
+def version = 'unknown'
 
-    use_jdk    '1.6.0_45'
+stage 'Build'
+node('hi-speed') {
+
+    git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'acceptance'
+
+    use_jdk    '1.7.latest'
     use_nodejs '0.10.26'
 
+    mvn "release-candidate:updateVersion"
+    mvn "clean package --projects build-monitor-plugin"
+
+    version = read_property('version', 'build-monitor-plugin/target/classes/build-monitor.properties');
+
+    assign_build_name version
+
+    archive_junit_results 'build-monitor-plugin/target/surefire-reports/TEST-*.xml,build-monitor-plugin/target/javascript/test-results.xml'
+
+    stash name: 'sources', includes: '**,build-monitor-plugin/target/*.hpi', excludes: 'build-monitor-plugin/target/*,**/node_modules/*'
+}
+
+stage 'Verify'
+node('hi-speed') {
+
+    unstash 'sources'
+
+    use_jdk '1.7.latest'
+
     with_browser_stack 'linux-x64', {
-        mvn "release-candidate:updateVersion"
-        mvn "clean verify"
-
-        def version = read_property('version', 'target/classes/build-monitor.properties');
-
-        assign_build_name version
-        push_release_branch_for version
+        mvn "clean verify --projects build-monitor-acceptance"
     }
 
-    archive_artifacts     'target/*.hpi,pom.xml'
-    archive_junit_results '**/target/surefire-reports/TEST-*.xml,**/target/javascript/test-results.xml'
+    archive_artifacts     'build-monitor-plugin/target/*.hpi,build-monitor-plugin/pom.xml,build-monitor-acceptance/target/failsafe-reports/*-output.txt'
+    archive_junit_results 'build-monitor-acceptance/target/failsafe-reports/TEST-*.xml'
+    archive_html          'Serenity', 'build-monitor-acceptance/target/site/serenity'
+}
+
+stage 'Publish to GitHub'
+node('hi-speed') {
+
+    unstash 'sources'
+
+//    push_release_branch_for version
 }
 
 // --
@@ -40,6 +66,17 @@ def archive_artifacts(artifacts) {
 
 def archive_junit_results(results) {
     step([$class: 'JUnitResultArchiver', testResults: results])
+}
+
+def archive_html(report_name, path) {
+    publishHTML(target: [
+            reportName : report_name,
+            reportDir: path,
+            reportFiles: 'index.html',
+            keepAll: true,
+            alwaysLinkToLastBuild: true,
+            allowMissing: false
+    ])
 }
 
 def with_browser_stack(version, actions) {
