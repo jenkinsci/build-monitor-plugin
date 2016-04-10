@@ -3,7 +3,7 @@ def version = 'unknown'
 stage 'Build'
 node('hi-speed') {
 
-    git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'acceptance'
+    git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'master'
 
     use_jdk    '1.7.latest'
     use_nodejs '0.10.26'
@@ -41,7 +41,7 @@ node('hi-speed') {
 
     unstash 'sources'
 
-//    push_release_branch_for version
+    create_and_push_release_branch_for version
 }
 
 // --
@@ -148,7 +148,7 @@ def mvn (command) {
     sh "${mvn_home}/bin/mvn -B -e -q ${command}"
 }
 
-def push_release_branch_for (version) {
+def create_and_push_release_branch_for(version) {
     sh "git checkout -b release-${version}"
     sh "git commit -a -m \"Release candidate v${version}\""
     sh "git push origin release-${version}"
