@@ -6,7 +6,7 @@ import net.thucydides.core.util.EnvironmentVariables;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 
 public class BrowserStackTestSessionName extends TestWatcher {
 
