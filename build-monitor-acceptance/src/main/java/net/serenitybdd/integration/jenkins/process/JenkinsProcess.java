@@ -43,6 +43,7 @@ public class JenkinsProcess {
 
         process = process(java,
                 "-Duser.language=en",
+                "-Dhudson.Main.development=true",
                 "-jar", jenkinsWar.toString(),
                 "--ajp13Port=-1",
                 "--httpPort=" + port

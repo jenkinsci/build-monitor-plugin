@@ -198,6 +198,8 @@
                         <PLUGINS_DIR>${project.parent.basedir}/build-monitor-plugin/target</PLUGINS_DIR>
                         <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
                     </environmentVariables>
+                    <forkCount>1C</forkCount>
+                    <reuseForks>false</reuseForks>
                 </configuration>
                 <executions>
                     <execution>
