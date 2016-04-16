@@ -10,7 +10,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAFailingProjectCreated;
 import net.serenitybdd.screenplay.jenkins.HaveASuccessfulProjectCreated;
-import net.serenitybdd.screenplay.jenkins.tasks.Start;
+import net.serenitybdd.screenplayx.actions.Navigate;
 import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,7 +41,7 @@ public class ProjectStatusShouldBeEasyToDetermine {
     public void visualising_a_successful_project() throws Exception {
 
         givenThat(anna).wasAbleTo(
-                Start.withJenkinsAt(jenkins.url()),
+                Navigate.to(jenkins.url()),
                 HaveASuccessfulProjectCreated.called("My App")
         );
 
@@ -60,7 +60,7 @@ public class ProjectStatusShouldBeEasyToDetermine {
     public void visualising_a_failing_project() throws Exception {
 
         givenThat(anna).wasAbleTo(
-                Start.withJenkinsAt(jenkins.url()),
+                Navigate.to(jenkins.url()),
                 HaveAFailingProjectCreated.called("My App")
         );
 

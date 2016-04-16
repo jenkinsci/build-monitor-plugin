@@ -10,7 +10,7 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
-import net.serenitybdd.screenplay.jenkins.tasks.Start;
+import net.serenitybdd.screenplayx.actions.Navigate;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Title;
 import org.junit.Before;
@@ -41,7 +41,7 @@ public class BuildMonitorShouldBeEasyToSetUp {
     public void adding_project_to_an_empty_build_monitor() {
 
         givenThat(anna).wasAbleTo(
-                Start.withJenkinsAt(jenkins.url()),
+                Navigate.to(jenkins.url()),
                 HaveAProjectCreated.called("My Awesome App")
         );
 

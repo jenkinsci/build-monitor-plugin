@@ -14,7 +14,7 @@ import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.JenkinsUser;
 import net.serenitybdd.screenplay.jenkins.tasks.GoBack;
 import net.serenitybdd.screenplay.jenkins.tasks.LogIn;
-import net.serenitybdd.screenplay.jenkins.tasks.Start;
+import net.serenitybdd.screenplayx.actions.Navigate;
 import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
@@ -47,7 +47,7 @@ public class ShouldTellWhoIsFixingTheBrokenBuild {
     @Test
     public void claiming_a_broken_build() throws Exception {
         givenThat(ben).wasAbleTo(
-                Start.withJenkinsAt(jenkins.url()),
+                Navigate.to(jenkins.url()),
                 LogIn.as(ben),
                 HaveAFailingClaimableProjectCreated.called("Responsibly Developed")
         );

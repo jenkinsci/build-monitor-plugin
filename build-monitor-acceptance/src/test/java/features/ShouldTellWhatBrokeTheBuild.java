@@ -11,7 +11,7 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAFailingProjectCreated;
-import net.serenitybdd.screenplay.jenkins.tasks.Start;
+import net.serenitybdd.screenplayx.actions.Navigate;
 import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,7 +41,7 @@ public class ShouldTellWhatBrokeTheBuild {
     @Test
     public void displaying_potential_failure_cause() throws Exception {
         givenThat(dave).wasAbleTo(
-                Start.withJenkinsAt(jenkins.url()),
+                Navigate.to(jenkins.url()),
                 HaveAShellScriptFailureCauseDefined.called("Rogue AI"),
                 HaveAFailingProjectCreated.called("Discovery One")
         );

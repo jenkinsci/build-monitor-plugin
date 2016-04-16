@@ -12,7 +12,7 @@ import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.jenkins.tasks.Start;
+import net.serenitybdd.screenplayx.actions.Navigate;
 import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,7 +43,7 @@ public class ShouldSupportCloudBeesFolders {
     public void visualising_projects_nested_in_folders() throws Exception {
 
         givenThat(anna).wasAbleTo(
-                Start.withJenkinsAt(jenkins.url()),
+                Navigate.to(jenkins.url()),
                 HaveAFolderCreated.called("Search Services").andInsideIt(
                         HaveANestedProjectCreated.called("Librarian"),
                         HaveAFolderCreated.called("Contracts").andInsideIt(
