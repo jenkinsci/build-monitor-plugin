@@ -1,6 +1,7 @@
 <ul id="widgets"
+    data-viewport-units=""
     data-ng-class="{ 'colour-blind-mode': settings.colourBlind == 1 }"
-    data-ng-style="{ 'font-size': (fontSize * settings.fontSize) + 'px'}"
+    data-ng-style="{ 'font-size': (fontSize * settings.fontSize) + vmax}"
     class="columns-{{ settings.numberOfColumns }}">
 
     <!-- todo: fix the CSS3 progress bar 'pulse' animations so that they work with 'track by project.hashCode' -->

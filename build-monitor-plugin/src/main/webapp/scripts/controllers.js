@@ -9,7 +9,7 @@ angular.
                 fetchJobViews = proxy.buildMonitor.fetchJobViews;
 
             $scope.jobs         = [];
-            $scope.fontSize     = fontSizeFor($scope.jobs);
+            $scope.fontSize     = fontSizeFor($scope.jobs, $rootScope.settings.numberOfColumns);
 
             every(5000, function () {
 
@@ -19,24 +19,24 @@ angular.
 
                     $rootScope.$broadcast('jenkins:data-fetched', response.data.meta);
 
-                    $scope.fontSize = fontSizeFor($scope.jobs);
+                    $scope.fontSize = fontSizeFor($scope.jobs, $rootScope.settings.numberOfColumns);
 
                 }, tryToRecover());
             });
 
             // todo: extract the below as a configuration service, don't rely on $rootScope.settings and make the dependency explicit
-            $rootScope.$watch('settings.numberOfColumns', function() {
-                $scope.fontSize = fontSizeFor($scope.jobs);
+            $rootScope.$watch('settings.numberOfColumns', function(newColumnCount) {
+                $scope.fontSize = fontSizeFor($scope.jobs, newColumnCount);
             });
 
             // todo: extract into a 'widget' directive; this shouldn't be a responsibility of a controller to calculate the size of the font...
-            function fontSizeFor(itemsOnScreen) {
-                var numberOfRows       = Math.ceil((itemsOnScreen && itemsOnScreen.size() || 1) / ($rootScope.settings.numberOfColumns || 1)),
-                    approxWidgetHeight = ($window.innerHeight - (58 + 26)) / numberOfRows,  // todo: calculate this properly when the widgets are extracted as directives
-                    baseFontSize       = approxWidgetHeight / 10,
-                    minFontSize        = 10;
+            function fontSizeFor(itemsOnScreen, numberOfColumns) {
+                var baseFontSizePercentage  = 5,
+                    itemsCount    = itemsOnScreen && itemsOnScreen.size() || 1,
+                    actualColumns = Math.min(itemsCount, numberOfColumns),
+                    actualRows    = Math.ceil(itemsCount / actualColumns);
 
-                return Math.max(baseFontSize, minFontSize);
+                return (baseFontSizePercentage / Math.max(actualRows, actualColumns));
             }
         }]).
 
@@ -90,6 +90,28 @@ angular.
                 }
             }
         }]).
+
+    // because IE11 and Edge browsers don't support vmax and vmin ... http://caniuse.com/#search=vmax
+    directive('viewportUnits', function ($window) {
+        return function (scope, element) {
+            var w = angular.element($window);
+            scope.getWindowDimensions = function () {
+                return {
+                    'h': $window.innerHeight,
+                    'w': $window.innerWidth
+                };
+            };
+
+            scope.$watch(scope.getWindowDimensions, function (size, oldSize) {
+                scope.vmax = size.h > size.w ? 'vh' : 'vw';
+                scope.vmin = size.h < size.w ? 'vh' : 'vw';
+            }, true);
+
+            w.bind('resize', function () {
+                scope.$apply();
+            });
+        };
+    }).
 
     directive('notifier', ['$timeout', function ($timeout) {
         return {
