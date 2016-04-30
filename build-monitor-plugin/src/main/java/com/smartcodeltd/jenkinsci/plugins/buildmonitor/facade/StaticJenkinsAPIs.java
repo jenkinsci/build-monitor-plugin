@@ -18,4 +18,11 @@ public class StaticJenkinsAPIs {
     public int numberOfUsers() {
         return User.getAll().size();
     }
+
+    // see https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/215
+    public String crumbFieldName() {
+        Jenkins instance = Jenkins.getInstance();
+
+        return instance.isUseCrumbs() ? instance.getCrumbIssuer().getCrumbRequestField() : ".crumb";
+    }
 }

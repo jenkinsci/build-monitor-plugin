@@ -34,24 +34,31 @@ angular.module('jenkins', []).
         };
     }).
 
-    factory('proxyFrom', ['$http', 'stringified', 'STAPLER_CONTENT_TYPE', function($http, stringified, STAPLER_CONTENT_TYPE) {
+    factory('proxyFrom', [
+        '$http', 'stringified', 'STAPLER_CONTENT_TYPE', 'CSRF_CRUMB_FIELD_NAME',
+        function($http, stringified, STAPLER_CONTENT_TYPE, CSRF_CRUMB_FIELD_NAME) {
+
         return function(binding) {
             var url = binding.url + '/',
                 proxy = {};
 
             angular.forEach(binding.methods, function(method) {
                 proxy[method] = function() {
-                    var parameters = Array.prototype.slice.apply(arguments);
+                    var parameters = Array.prototype.slice.apply(arguments),
+                        headers    = {
+                            'Content-Type': STAPLER_CONTENT_TYPE,
+                            'Crumb':        binding.crumb  // Crumb header is needed to get past Stapler
+                        };
+
+                    // a '.crumb' header is needed to support CSRF protection up to Jenkins 2.0 (#46),
+                    // but since Jenkins 2.0 it is called 'Jenkins-Crumb' (#215)
+                    headers[CSRF_CRUMB_FIELD_NAME] = binding.crumb;
 
                     return $http({
                         url:     url + method,
                         method:  'POST',
                         data:    stringified(parameters),
-                        headers: {
-                            'Content-Type': STAPLER_CONTENT_TYPE,
-                            'Crumb':  binding.crumb,  // Crumb header is needed to get past Stapler
-                            '.crumb': binding.crumb   // .crumb header is needed to support CSRF protection (#46)
-                        }
+                        headers: headers
                     });
                 }
             });

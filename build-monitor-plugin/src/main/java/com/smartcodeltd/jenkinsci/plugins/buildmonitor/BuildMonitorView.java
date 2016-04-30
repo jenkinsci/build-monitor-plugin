@@ -24,6 +24,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.api.Respond;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation.BuildMonitorInstallation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
@@ -73,6 +74,11 @@ public class BuildMonitorView extends ListView {
     @SuppressWarnings("unused") // used in .jelly
     public boolean isEmpty() {
         return jobViews().isEmpty();
+    }
+
+    @SuppressWarnings("unused") // used in .jelly
+    public String getCsrfCrumbFieldName() {
+        return new StaticJenkinsAPIs().crumbFieldName();
     }
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly form

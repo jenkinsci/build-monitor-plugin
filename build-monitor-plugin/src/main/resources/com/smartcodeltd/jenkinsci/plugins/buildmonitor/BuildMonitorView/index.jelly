@@ -170,6 +170,7 @@
                     module('buildMonitor').
 
                     constant('BUILD_MONITOR_VERSION', '${it.installation.buildMonitorVersion()}').
+                    constant('CSRF_CRUMB_FIELD_NAME', '${it.csrfCrumbFieldName}').
 
                     config(function(proxyProvider, cookieJarProvider, hashCodeProvider) {
                         var hashCodeOf = hashCodeProvider.hashCodeOf;

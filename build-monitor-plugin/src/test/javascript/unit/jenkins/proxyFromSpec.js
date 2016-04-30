@@ -7,7 +7,11 @@ describe('buildMonitor', function () {
         var httpBackend,
             stringified;
 
-        beforeEach(module('jenkins'));
+        beforeEach(function() {
+            module('jenkins', function ($provide) {
+                $provide.constant('CSRF_CRUMB_FIELD_NAME', '.crumb');
+            });
+        });
 
         beforeEach(inject(function($injector) {
             httpBackend = $injector.get('$httpBackend');
@@ -90,8 +94,8 @@ describe('buildMonitor', function () {
                     headers: {
                         'Accept':       'application/json, text/plain, */*',
                         'Content-Type': 'application/x-stapler-method-invocation;charset=UTF-8',
-                        'Crumb':        crumb,
-                        '.crumb':       crumb
+                        'Crumb':         crumb,
+                        '.crumb':        crumb
                     }
                 };
 
