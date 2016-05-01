@@ -9,7 +9,7 @@ describe('buildMonitor', function () {
             beforeEach(module('buildMonitor.services'));
 
             beforeEach(inject(function(_counter_) {
-                counter = _counter_;
+                counter = _counter_.create();
             }));
 
             it('starts from zero', inject(function (_counter_) {

@@ -43,9 +43,9 @@ angular.
     service('connectivityStrategist', ['$rootScope', '$q', 'counter',
         function ($rootScope, $q, counter) {
 
-            var lostConnectionsCount = counter;
+            var lostConnectionsCount = counter.create();
 
-            this.resetErrorCounter = function () {
+            this.resetConnectionErrorsCounter = function () {
                 if (lostConnectionsCount.value() > 0) {
                     $rootScope.$broadcast("jenkins:connection-reestablished", {});
                 }
@@ -73,6 +73,14 @@ angular.
                     return $q.reject(error);
                 }
 
+                function handleMisconfiguredProxy(error) {
+                    lostConnectionsCount.increase();
+
+                    $rootScope.$broadcast("jenkins:proxy-issue", error);
+
+                    return $q.when(error);
+                }
+
                 function handleUnknown(error) {
                     $rootScope.$broadcast("jenkins:unknown-communication-error", error);
                     return $q.reject(error);
@@ -85,6 +93,7 @@ angular.
                         case 500: return handleInternalJenkins(error);
                         case 502: return handleLostConnection(error);
                         case 503: return handleLostConnection(error);
+                        case 504: return handleMisconfiguredProxy(error);
                         default:  return handleUnknown(error);
                     }
                 }
@@ -123,6 +132,10 @@ angular.
                     $scope.message = 'Communication with Jenkins mother ship is lost. Trying to reconnect...';
                 });
 
+                $scope.$on('jenkins:proxy-issue', function () {
+                    $scope.message = 'The Jenkins proxy server seems to be misconfigured, it complains with "504: Gateway timeout". Trying to reconnect...';
+                });
+
                 $scope.$on('jenkins:connection-reestablished', function () {
                     $scope.message = "... and we're back online, yay! :-)";
 
@@ -144,7 +157,7 @@ angular.
     run(['$rootScope', '$window', 'notifyUser', 'connectivityStrategist', 'every', 'townCrier', 'stats',
         function ($rootScope, $window, notifyUser, connectivityStrategist, every, townCrier, stats) {
             $rootScope.$on('jenkins:data-fetched', function (event) {
-                connectivityStrategist.resetErrorCounter();
+                connectivityStrategist.resetConnectionErrorsCounter();
             });
 
             $rootScope.$on('jenkins:data-fetched', function (event, meta) {

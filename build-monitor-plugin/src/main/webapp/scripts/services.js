@@ -193,11 +193,17 @@ angular.
 
     factory('counter', [function() {
 
-        var value = 0;
+        function Counter() {
+            this._value = 0;
+        }
 
+        Counter.prototype.reset    = function() { this._value = 0;    }
+        Counter.prototype.increase = function() { ++this._value;      }
+        Counter.prototype.value    = function() { return this._value; }
+    
         return {
-            reset:    function() { value = 0;    },
-            increase: function() { ++value;      },
-            value:    function() { return value; }
+            create: function() {
+                return new Counter();
+            }
         }
     }]);
