@@ -133,7 +133,7 @@ angular.
                 });
 
                 $scope.$on('jenkins:proxy-issue', function () {
-                    $scope.message = 'The Jenkins proxy server seems to be misconfigured, it complains with "504: Gateway timeout". Trying to reconnect...';
+                    $scope.message = 'Your impatient proxy timed out with a "504" before Jenkins managed to respond. Let\'s try again...';
                 });
 
                 $scope.$on('jenkins:connection-reestablished', function () {
