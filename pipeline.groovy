@@ -31,7 +31,7 @@ node('hi-speed') {
         mvn "clean verify --projects build-monitor-acceptance"
     }
 
-    archive_artifacts     'build-monitor-plugin/target/*.hpi,build-monitor-plugin/pom.xml,build-monitor-acceptance/target/failsafe-reports/*-output.txt'
+    archive_artifacts     'build-monitor-plugin/target/*.hpi,pom.xml,build-monitor-plugin/pom.xml,build-monitor-acceptance/pom.xml,build-monitor-acceptance/target/failsafe-reports/*-output.txt'
     archive_junit_results 'build-monitor-acceptance/target/failsafe-reports/TEST-*.xml'
     archive_html          'Serenity', 'build-monitor-acceptance/target/site/serenity'
 }
