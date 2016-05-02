@@ -17,8 +17,20 @@ public class Config {
         return getOrElse(order, new ByName());
     }
 
+    public boolean getGroup() {
+        return group;
+    }
+
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
+    }
+
+    public void setGroup(String state) {
+        if (state == null) {
+            group = false;
+        } else {
+            group = true;
+        }
     }
 
     @Override
@@ -47,4 +59,5 @@ public class Config {
     }
 
     private Comparator<Job<?, ?>> order;
+    private boolean group;
 }

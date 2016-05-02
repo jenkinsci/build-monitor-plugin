@@ -1,3 +1,4 @@
+
 /*
  * The MIT License
  *
@@ -42,6 +43,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Exchanger;
+import java.util.logging.Logger;
 
 import static hudson.Util.filter;
 
@@ -49,6 +52,9 @@ import static hudson.Util.filter;
  * @author Jan Molak
  */
 public class BuildMonitorView extends ListView {
+
+    private static final Logger LOGGER = Logger.getLogger(BuildMonitorView.class.getName());
+
     @Extension
     public static final BuildMonitorDescriptor descriptor = new BuildMonitorDescriptor();
 
@@ -97,6 +103,7 @@ public class BuildMonitorView extends ListView {
         super.submit(req);
 
         String requestedOrdering = req.getParameter("order");
+        String grouping = req.getParameter("group");
 
         title = req.getParameter("title");
 
@@ -105,6 +112,14 @@ public class BuildMonitorView extends ListView {
         } catch (Exception e) {
             throw new FormException("Can't order projects by " + requestedOrdering, "order");
         }
+        currentConfig().setGroup(grouping);
+        if (currentConfig().getGroup()) {
+            LOGGER.info("Success!");
+        } else {
+            LOGGER.info("Awwww...");
+        }
+
+
     }
 
     /**
@@ -130,7 +145,19 @@ public class BuildMonitorView extends ListView {
         List<Job<?, ?>> projects = new ArrayList(filter(super.getItems(), Job.class));
         List<JobView> jobs = new ArrayList<JobView>();
 
+
+
         Collections.sort(projects, currentConfig().getOrder());
+
+        if (currentConfig().getGroup()) {
+
+            try {
+                Collections.sort(projects, grouping("pipelineGroup"));
+                LOGGER.info("grouped");
+            } catch (Exception e) {
+                System.err.println("There was a error grouping the pipeline.");
+            }
+        }
 
         for (Job project : projects) {
             jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent()));
@@ -184,6 +211,12 @@ public class BuildMonitorView extends ListView {
 
     @SuppressWarnings("unchecked")
     private Comparator<Job<?, ?>> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        String packageName = this.getClass().getPackage().getName() + ".order.";
+
+        return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).newInstance();
+    }
+
+    private Comparator<Job<?, ?>> grouping(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
         return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).newInstance();
