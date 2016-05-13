@@ -14,9 +14,9 @@ public class pipelineGroup implements Comparator<AbstractProject<?, ?>> {
     @Override
     public int compare(AbstractProject<?, ?> a, AbstractProject<?, ?> b) {
         if (BuildUtil.pipelineBuildNumber(a.getLastBuild()) < BuildUtil.pipelineBuildNumber(b.getLastBuild())) {
-            return -1;
-        } else if (BuildUtil.pipelineBuildNumber(a.getLastBuild()) > BuildUtil.pipelineBuildNumber(b.getLastBuild())) {
             return 1;
+        } else if (BuildUtil.pipelineBuildNumber(a.getLastBuild()) > BuildUtil.pipelineBuildNumber(b.getLastBuild())) {
+            return -1;
         } else {
             return 0;
         }

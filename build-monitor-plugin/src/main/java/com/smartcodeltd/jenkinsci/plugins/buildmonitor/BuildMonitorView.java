@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static hudson.Util.filter;
 
@@ -51,23 +52,22 @@ import static hudson.Util.filter;
  */
 public class BuildMonitorView extends ListView {
 
+    private static final Logger log= Logger.getLogger( BuildMonitorView.class.getName() );
+
     @Extension
     public static final BuildMonitorDescriptor descriptor = new BuildMonitorDescriptor();
 
     private String title;
-
-    private boolean groupByPipelineNumber;
 
     /**
      * @param name  Name of the view to be displayed on the Views tab
      * @param title Title to be displayed on the Build Monitor; defaults to 'name' if not set
      */
     @DataBoundConstructor
-    public BuildMonitorView(String name, String title, boolean groupByPipelineNumber) {
+    public BuildMonitorView(String name, String title) {
         super(name);
 
         this.title = title;
-        this.groupByPipelineNumber = groupByPipelineNumber;
     }
 
     @SuppressWarnings("unused") // used in .jelly
@@ -99,7 +99,7 @@ public class BuildMonitorView extends ListView {
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly
     public boolean isGroupByPipelineNumber() {
-        return groupByPipelineNumber;
+        return currentConfig().getGroup();
     }
 
     @Override
@@ -107,6 +107,7 @@ public class BuildMonitorView extends ListView {
         super.submit(req);
 
         String requestedOrdering = req.getParameter("order");
+        String requestedGrouping = req.getParameter("groupByPipelineNumber");
 
         title = req.getParameter("title");
 
@@ -115,6 +116,7 @@ public class BuildMonitorView extends ListView {
         } catch (Exception e) {
             throw new FormException("Can't order projects by " + requestedOrdering, "order");
         }
+        currentConfig().setGroup(requestedGrouping);
     }
 
     /**
@@ -142,7 +144,7 @@ public class BuildMonitorView extends ListView {
 
         Collections.sort(projects, currentConfig().getOrder());
 
-        if (groupByPipelineNumber) {
+        if (currentConfig().getGroup()) {
             try {
                 Collections.sort(projects, orderIn("pipelineGroup"));
             } catch (ClassNotFoundException e) {
@@ -159,7 +161,7 @@ public class BuildMonitorView extends ListView {
         for (Job project : projects) {
             int pipelineId = BuildUtil.pipelineBuildNumber((AbstractBuild<?, ?>) project.getLastBuild());
 
-            if(groupByPipelineNumber && pipelineId != previousPipelineId) {
+            if(currentConfig().getGroup() && pipelineId != previousPipelineId) {
                 jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent(), pipelineId, true));
             } else {
                 jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent(), pipelineId, false));

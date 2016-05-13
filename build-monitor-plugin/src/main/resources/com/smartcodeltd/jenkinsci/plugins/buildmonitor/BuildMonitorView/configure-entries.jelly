@@ -57,7 +57,7 @@
   </f:entry>
 
   <f:entry title="${%Group by pipeline number}" field="groupByPipelineNumber">
-    <f:checkbox/>
+    <f:checkbox name="groupByPipelineNumber"/>
   </f:entry>
 
   <f:entry title="${%Ordered by}" help="help/view-config/order.html">

@@ -21,6 +21,17 @@ public class Config {
         this.order = order;
     }
 
+    public void setGroup(String groupByPipelineNumber) {
+        if (groupByPipelineNumber != null) {
+            group = true;
+        } else {
+            group = false;
+        }
+    }
+    public boolean getGroup() {
+        return group;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -47,4 +58,5 @@ public class Config {
     }
 
     private Comparator<Job<?, ?>> order;
+    private boolean group;
 }
