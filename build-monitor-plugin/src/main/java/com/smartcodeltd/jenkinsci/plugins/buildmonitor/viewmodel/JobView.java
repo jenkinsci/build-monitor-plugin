@@ -29,17 +29,21 @@ public class JobView {
     private final BuildAugmentor augmentor;
     private final RelativeLocation relative;
     private final Config config;
+    private final int pipelineNumber;
+    private final boolean groupPipeline;
 
-    public static JobView of(Job<?, ?> job, Config config, BuildAugmentor augmentor) {
-        return new JobView(job, config, augmentor, RelativeLocation.of(job), new Date());
+    public static JobView of(Job<?, ?> job, Config config, BuildAugmentor augmentor, int pipelineNumber, boolean groupPipeline) {
+        return new JobView(job, config, augmentor, RelativeLocation.of(job), new Date(), pipelineNumber, groupPipeline);
     }
 
-    public JobView(Job<?, ?> job, Config config, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime) {
+    public JobView(Job<?, ?> job, Config config, BuildAugmentor augmentor, RelativeLocation relative, Date systemTime, int pipelineNumber, boolean groupPipeline) {
         this.job        = job;
         this.config     = config;
         this.augmentor  = augmentor;
         this.relative   = relative;
         this.systemTime = systemTime;
+        this.pipelineNumber = pipelineNumber;
+        this.groupPipeline = groupPipeline;
     }
 
     @JsonProperty
@@ -184,6 +188,12 @@ public class JobView {
     public List<String> knownFailures() {
         return lastCompletedBuild().knownFailures();
     }
+
+    @JsonProperty
+    public int pipelineNumber() { return pipelineNumber; }
+
+    @JsonProperty
+    public boolean groupByPipelineNumber() { return groupPipeline; }
 
     // todo track by job.hashCode messes up the animation
     @JsonProperty @Override

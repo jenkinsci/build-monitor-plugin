@@ -15,6 +15,8 @@ public class JobViewRecipe implements Supplier<JobView> {
     private BuildAugmentor augmentor = new BuildAugmentor();
     private RelativeLocation relative;
     private Date systemTime = new Date();
+    private int pipelineId = 1;
+    private boolean groupPipeline = false;
 
     public JobViewRecipe of(Job<?, ?> job) {
         this.job = job;
@@ -44,6 +46,6 @@ public class JobViewRecipe implements Supplier<JobView> {
 
     @Override
     public JobView get() {
-        return new JobView(job, config, augmentor, relative, systemTime);
+        return new JobView(job, config, augmentor, relative, systemTime, pipelineId, groupPipeline);
     }
 }

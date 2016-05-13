@@ -56,8 +56,8 @@
     <f:textbox name="title" value="${it.title}"/>
   </f:entry>
 
-  <f:entry title="${%Group pipelines}" field="group">
-    <f:checkbox name="group"/>
+  <f:entry title="${%Group by pipeline number}" field="groupByPipelineNumber">
+    <f:checkbox/>
   </f:entry>
 
   <f:entry title="${%Ordered by}" help="help/view-config/order.html">

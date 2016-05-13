@@ -26,12 +26,12 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.api.Respond;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation.BuildMonitorInstallation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.util.BuildUtil;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.Extension;
+import hudson.model.*;
 import hudson.model.Descriptor.FormException;
-import hudson.model.Job;
-import hudson.model.ListView;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -43,8 +43,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.Exchanger;
-import java.util.logging.Logger;
 
 import static hudson.Util.filter;
 
@@ -53,22 +51,23 @@ import static hudson.Util.filter;
  */
 public class BuildMonitorView extends ListView {
 
-    private static final Logger LOGGER = Logger.getLogger(BuildMonitorView.class.getName());
-
     @Extension
     public static final BuildMonitorDescriptor descriptor = new BuildMonitorDescriptor();
 
     private String title;
+
+    private boolean groupByPipelineNumber;
 
     /**
      * @param name  Name of the view to be displayed on the Views tab
      * @param title Title to be displayed on the Build Monitor; defaults to 'name' if not set
      */
     @DataBoundConstructor
-    public BuildMonitorView(String name, String title) {
+    public BuildMonitorView(String name, String title, boolean groupByPipelineNumber) {
         super(name);
 
         this.title = title;
+        this.groupByPipelineNumber = groupByPipelineNumber;
     }
 
     @SuppressWarnings("unused") // used in .jelly
@@ -98,12 +97,16 @@ public class BuildMonitorView extends ListView {
         return descriptor.getPermissionToCollectAnonymousUsageStatistics();
     }
 
+    @SuppressWarnings("unused") // used in the configure-entries.jelly
+    public boolean isGroupByPipelineNumber() {
+        return groupByPipelineNumber;
+    }
+
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
 
         String requestedOrdering = req.getParameter("order");
-        String grouping = req.getParameter("group");
 
         title = req.getParameter("title");
 
@@ -112,14 +115,6 @@ public class BuildMonitorView extends ListView {
         } catch (Exception e) {
             throw new FormException("Can't order projects by " + requestedOrdering, "order");
         }
-        currentConfig().setGroup(grouping);
-        if (currentConfig().getGroup()) {
-            LOGGER.info("Success!");
-        } else {
-            LOGGER.info("Awwww...");
-        }
-
-
     }
 
     /**
@@ -145,22 +140,31 @@ public class BuildMonitorView extends ListView {
         List<Job<?, ?>> projects = new ArrayList(filter(super.getItems(), Job.class));
         List<JobView> jobs = new ArrayList<JobView>();
 
-
-
         Collections.sort(projects, currentConfig().getOrder());
 
-        if (currentConfig().getGroup()) {
-
+        if (groupByPipelineNumber) {
             try {
-                Collections.sort(projects, grouping("pipelineGroup"));
-                LOGGER.info("grouped");
-            } catch (Exception e) {
-                System.err.println("There was a error grouping the pipeline.");
+                Collections.sort(projects, orderIn("pipelineGroup"));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
             }
         }
 
+        int previousPipelineId = 0;
+
         for (Job project : projects) {
-            jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent()));
+            int pipelineId = BuildUtil.pipelineBuildNumber((AbstractBuild<?, ?>) project.getLastBuild());
+
+            if(groupByPipelineNumber && pipelineId != previousPipelineId) {
+                jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent(), pipelineId, true));
+            } else {
+                jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent(), pipelineId, false));
+            }
+            previousPipelineId = pipelineId;
         }
 
         return jobs;
@@ -211,12 +215,6 @@ public class BuildMonitorView extends ListView {
 
     @SuppressWarnings("unchecked")
     private Comparator<Job<?, ?>> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        String packageName = this.getClass().getPackage().getName() + ".order.";
-
-        return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).newInstance();
-    }
-
-    private Comparator<Job<?, ?>> grouping(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
         return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).newInstance();
