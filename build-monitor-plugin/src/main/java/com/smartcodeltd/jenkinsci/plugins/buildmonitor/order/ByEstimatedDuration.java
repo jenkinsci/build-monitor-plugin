@@ -6,9 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 
-/**
- * Created by mycronic-praktikant on 2016-04-20.
- */
 public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>> {
 
     private static final Logger LOGGER = Logger.getLogger(ByEstimatedDuration.class.getName());
