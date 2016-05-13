@@ -4,11 +4,8 @@ import hudson.model.AbstractProject;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>> {
-
-    private static final Logger LOGGER = Logger.getLogger(ByEstimatedDuration.class.getName());
 
     @Override
     public int compare(AbstractProject<?, ?> a, AbstractProject<?,?> b) {
@@ -19,7 +16,7 @@ public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>> {
      * Returns a sum of the estimated duration for a project and all upstream projects
      *
      * @param project
-     * @return
+     * @return time
      */
     private long getTotalEstimatedDuration(AbstractProject<?, ?> project) {
         long time = project.getEstimatedDuration();
@@ -30,7 +27,6 @@ public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>> {
                 time += getTotalEstimatedDuration((AbstractProject<?, ?>)upStreamProjects.get(i));
             }
         }
-        LOGGER.info(project.getName() + " : " + time);
         return time;
     }
 
