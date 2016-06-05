@@ -55,6 +55,11 @@ public class NullBuildView implements BuildViewModel {
     }
 
     @Override
+    public String description() {
+        return "";
+    }
+
+    @Override
     public boolean hasPreviousBuild() {
         return false;
     }

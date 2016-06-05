@@ -4,10 +4,10 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ExecuteAShellScript;
-import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScript;
 import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
+import static net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScriptThat.Finishes_With_Success;
 
 public class HaveASuccessfulProjectCreated implements Task {
 
@@ -20,7 +20,7 @@ public class HaveASuccessfulProjectCreated implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 HaveAProjectCreated.called(projectName).andConfiguredTo(
-                        ExecuteAShellScript.that(ShellScript.Finishes_with_Success)
+                        ExecuteAShellScript.that(Finishes_With_Success)
                 ),
                 ScheduleABuild.of(projectName)
         );

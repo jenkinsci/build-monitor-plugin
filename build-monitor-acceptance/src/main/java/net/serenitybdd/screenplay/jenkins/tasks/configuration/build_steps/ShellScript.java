@@ -1,21 +1,58 @@
 package net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps;
 
-public enum ShellScript {
-    Finishes_with_Success("exit 0;"),
-    Finishes_with_Error("exit 1;");
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 
-    ShellScript(String script) {
-        this.script = script;
+import javax.annotation.Nullable;
+import java.util.List;
+
+import static com.google.common.collect.Lists.transform;
+import static java.util.Arrays.asList;
+
+public class ShellScript {
+
+    public static ShellScript that(String descriptionOfScriptsBehaviour) {
+        return new ShellScript(descriptionOfScriptsBehaviour);
+    }
+
+    public ShellScript definedAs(String... lines) {
+        return this.definedAs(asList(lines));
+    }
+
+    public ShellScript definedAs(List<String> lines) {
+        this.code = Joiner.on('\n').join(lines);
+
+        return this;
+    }
+
+    public ShellScript andOutputs(String... lines) {
+        return definedAs(transform(asList(lines), mapEachLineTo("echo \"%s\";")));
+    }
+
+    public String code() {
+        return code;
     }
 
     @Override
     public String toString() {
-        return this.name().replaceAll("_", " ");
+        return description;
     }
 
-    public String code() {
-        return script;
+    private ShellScript(String descriptionOfScriptsBehaviour) {
+        this.description = descriptionOfScriptsBehaviour;
     }
 
-    private final String script;
+    private Function<String, String> mapEachLineTo(final String template) {
+        return new Function<String, String>() {
+            @Nullable
+            @Override
+            public String apply(@Nullable String line) {
+                return String.format(template, line);
+            }
+        };
+    }
+
+    private final String description;
+
+    private String code = "";
 }

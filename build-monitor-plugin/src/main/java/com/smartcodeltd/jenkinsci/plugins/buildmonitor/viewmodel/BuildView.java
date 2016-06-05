@@ -15,6 +15,8 @@ import hudson.model.User;
 
 import java.util.*;
 
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafety.getOrElse;
+
 public class BuildView implements BuildViewModel {
 
     private final Run<?,?> build;
@@ -103,6 +105,11 @@ public class BuildView implements BuildViewModel {
         }
 
         return 100;
+    }
+
+    @Override
+    public String description() {
+        return getOrElse(build.getDescription(), "");
     }
 
     private boolean isTakingLongerThanUsual() {

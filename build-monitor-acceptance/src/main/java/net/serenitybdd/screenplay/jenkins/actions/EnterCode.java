@@ -49,13 +49,17 @@ public class EnterCode {
         private String setCodeMirrorValueTo(String code) {
             return String.format(
                     "var code_mirror = arguments[0].CodeMirror;" +
-                    "if (code_mirror != null) { " +
-                    "    code_mirror.setValue('%s');" +
-                    "    code_mirror.save();" +
-                    "} else { " +
-                    "    console.error('CodeMirror object is not present on the', arguments[0], 'element'); " +
-                    "}",
-                code);
+                            "if (code_mirror != null) { " +
+                            "    code_mirror.setValue('%s');" +
+                            "    code_mirror.save();" +
+                            "} else { " +
+                            "    console.error('CodeMirror object is not present on the', arguments[0], 'element'); " +
+                            "}",
+                    escapeNewLineCharacters(code));
+        }
+
+        private String escapeNewLineCharacters(String code) {
+            return code.replaceAll("\n", "\\\\n");
         }
     }
 }

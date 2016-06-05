@@ -8,7 +8,7 @@ import static java.lang.String.format;
 public class Setting {
     public static Target defining(String name) {
         return Target.the(format("the '%s' field", name))
-                .locatedBy(either(xpathFor("input"), xpathFor("textarea")))
+                .locatedBy(lastElementMatching(either(xpathFor("input"), xpathFor("textarea"))))
                 .of(name);
     }
 
@@ -18,5 +18,9 @@ public class Setting {
 
     private static String either(String... xpaths) {
         return Joiner.on(" | ").join(xpaths);
+    }
+
+    private static String lastElementMatching(String xpath) {
+        return format("(%s)[last()]", xpath);
     }
 }
