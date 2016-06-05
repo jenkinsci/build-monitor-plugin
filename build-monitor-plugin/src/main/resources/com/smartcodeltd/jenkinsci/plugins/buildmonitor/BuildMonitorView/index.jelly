@@ -58,7 +58,8 @@
                 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 
                 ga('create', 'UA-61694827-4', 'auto', {
-                    'userId': '${it.installation.anonymousCorrelationId()}'
+                    'userId':     '${it.installation.anonymousCorrelationId()}',
+                    'sampleRate': 1
                 });
 
                 ga('set', {

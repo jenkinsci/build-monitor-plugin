@@ -14,7 +14,7 @@ angular
 ])
 
 .config(['statsProvider', function (statsProvider) {
-    statsProvider.configure({ flushIntervalInSeconds: 5 * 60 });
+    statsProvider.configure({ flushIntervalInSeconds: 10 * 60 });
 }])
 
 .run(['$rootScope', 'notifyUser', function($rootScope, notifyUser) {

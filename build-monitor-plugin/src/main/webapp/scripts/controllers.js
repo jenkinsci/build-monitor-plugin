@@ -176,9 +176,5 @@ angular.
                 notifyUser.about(error.status);
             });
 
-            every(25 * 60000, function () {
-                $window.ga('send', 'event',  'Build Monitor UI',  'heartbeat');
-            });
-
             townCrier.start();
         }]);
