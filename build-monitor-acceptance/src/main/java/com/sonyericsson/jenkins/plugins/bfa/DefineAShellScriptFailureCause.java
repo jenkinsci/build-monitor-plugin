@@ -6,6 +6,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.thucydides.core.annotations.Step;
 
+import static net.serenitybdd.integration.utils.Nulls.getOrElse;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class DefineAShellScriptFailureCause implements Task {
@@ -14,12 +15,24 @@ public class DefineAShellScriptFailureCause implements Task {
         return instrumented(DefineAShellScriptFailureCause.class, name);
     }
 
+    public DefineAShellScriptFailureCause describedAs(String description) {
+        this.description = description;
+
+        return this;
+    }
+
+    public DefineAShellScriptFailureCause matching(String regex) {
+        this.regex = regex;
+
+        return this;
+    }
+
     @Step("{0} defines what constitutes a 'Shell Script Failure'")
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                DefineAFailureCause.called(name).describedAs("A shell script has failed").indicatedBy(
-                        LineInTheBuildLog.matching("Build step 'Execute shell' marked build as failure")
+                DefineAFailureCause.called(name).describedAs(getOrElse(description, name)).indicatedBy(
+                        LineInTheBuildLog.matching(regex)
                 )
         );
     }
@@ -29,4 +42,6 @@ public class DefineAShellScriptFailureCause implements Task {
     }
 
     private final String name;
+    private String description;
+    private String regex       = "Build step 'Execute shell' marked build as failure";
 }

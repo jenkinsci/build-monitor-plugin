@@ -38,7 +38,7 @@ public class DefineAFailureCause implements Task {
     }
 
     private final String name;
-    private String description;
+    private String description = "";
     private final TodoList configureFailureCauseIndicators = TodoList.empty();
 
     public DefineAFailureCause(String name) {

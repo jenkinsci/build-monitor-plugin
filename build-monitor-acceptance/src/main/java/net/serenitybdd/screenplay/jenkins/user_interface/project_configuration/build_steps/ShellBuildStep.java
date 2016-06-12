@@ -3,5 +3,5 @@ package net.serenitybdd.screenplay.jenkins.user_interface.project_configuration.
 import net.serenitybdd.screenplay.targets.Target;
 
 public class ShellBuildStep {
-    public static final Target Editor = Target.the("code editor").locatedBy(".CodeMirror");
+    public static final Target Editor = Target.the("code editor").locatedBy("(//div[@class='CodeMirror'])[last()]");
 }

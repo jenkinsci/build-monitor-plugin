@@ -2,15 +2,12 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa;
 
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -41,7 +38,7 @@ public class AnalysedTest {
 
     private static FoundFailureCause failure(String name) {
         FoundFailureCause failure = mock(FoundFailureCause.class);
-        when(failure.getName()).thenReturn(name);
+        when(failure.getDescription()).thenReturn(name);
         return failure;
     }
 }
