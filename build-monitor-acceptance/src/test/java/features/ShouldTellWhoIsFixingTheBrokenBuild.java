@@ -1,8 +1,7 @@
 package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
 import environment.JenkinsSandbox;
 import hudson.plugins.claim.HaveAFailingClaimableProjectCreated;
 import hudson.plugins.claim.tasks.Claim;
@@ -53,9 +52,7 @@ public class ShouldTellWhoIsFixingTheBrokenBuild {
         );
 
         when(ben).attemptsTo(
-                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                        DisplayAllProjects.usingARegularExpression()
-                ),
+                HaveABuildMonitorViewCreated.showingAllTheProjects(),
                 Claim.lastBrokenBuildOf("Responsibly Developed").saying("My bad, fixing now"),
                 GoBack.to("Build Monitor")
         );

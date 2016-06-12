@@ -1,8 +1,7 @@
 package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
 import environment.JenkinsSandbox;
 import hudson.plugins.descriptionsetter.tasks.SetBuildDescription;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
@@ -55,11 +54,7 @@ public class ShouldDescribeEachProject {
                 ScheduleABuild.of("Example Github Project")
         );
 
-        when(dave).attemptsTo(
-                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                        DisplayAllProjects.usingARegularExpression()
-                )
-        );
+        when(dave).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
         then(dave).should(seeThat(ProjectWidget.of("Example Github Project").details(), is("Revision: 67f4b3")));
     }

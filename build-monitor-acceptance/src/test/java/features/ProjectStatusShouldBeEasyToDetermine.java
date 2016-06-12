@@ -1,8 +1,7 @@
 package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
 import environment.JenkinsSandbox;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.junit.runners.SerenityRunner;
@@ -45,11 +44,7 @@ public class ProjectStatusShouldBeEasyToDetermine {
                 HaveASuccessfulProjectCreated.called("My App")
         );
 
-        when(anna).attemptsTo(
-                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                        DisplayAllProjects.usingARegularExpression()
-                )
-        );
+        when(anna).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
         then(anna).should(seeThat(ProjectWidget.of("My App").information(),
                 displaysProjectStatusAs(Successful)
@@ -64,11 +59,7 @@ public class ProjectStatusShouldBeEasyToDetermine {
                 HaveAFailingProjectCreated.called("My App")
         );
 
-        when(anna).attemptsTo(
-                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                        DisplayAllProjects.usingARegularExpression()
-                )
-        );
+        when(anna).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
         then(anna).should(seeThat(ProjectWidget.of("My App").information(),
                 displaysProjectStatusAs(Failing)
