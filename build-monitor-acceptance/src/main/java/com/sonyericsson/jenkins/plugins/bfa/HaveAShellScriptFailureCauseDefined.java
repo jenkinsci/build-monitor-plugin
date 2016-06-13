@@ -2,22 +2,28 @@ package com.sonyericsson.jenkins.plugins.bfa;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class HaveAShellScriptFailureCauseDefined implements Task {
 
-    public static Task called(String name) {
+    public static HaveAShellScriptFailureCauseDefined called(String name) {
         return instrumented(HaveAShellScriptFailureCauseDefined.class, name);
     }
 
-    @Step("{0} defines what constitutes a '#name' failure")
+    public HaveAShellScriptFailureCauseDefined describedAs(String description) {
+        this.description = description;
+
+        return this;
+    }
+
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 UseFailureCauseManagement.to(
-                        DefineAShellScriptFailureCause.called(name)
+                        DefineABuildLogIndicatedFailureCause.called(name).
+                                describedAs(description).
+                                matching(Build_Log_Pattern)
                 )
         );
     }
@@ -27,4 +33,7 @@ public class HaveAShellScriptFailureCauseDefined implements Task {
     }
 
     private final String name;
+    private String description = "A shell script has failed";
+
+    private static final String Build_Log_Pattern = "Build step 'Execute shell' marked build as failure";
 }

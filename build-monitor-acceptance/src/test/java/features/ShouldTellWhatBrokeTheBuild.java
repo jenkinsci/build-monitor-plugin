@@ -2,7 +2,7 @@ package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
-import com.sonyericsson.jenkins.plugins.bfa.DefineAShellScriptFailureCause;
+import com.sonyericsson.jenkins.plugins.bfa.DefineABuildLogIndicatedFailureCause;
 import com.sonyericsson.jenkins.plugins.bfa.HaveAShellScriptFailureCauseDefined;
 import com.sonyericsson.jenkins.plugins.bfa.UseFailureCauseManagement;
 import environment.JenkinsSandbox;
@@ -48,13 +48,13 @@ public class ShouldTellWhatBrokeTheBuild {
     public void displaying_potential_failure_cause() throws Exception {
         givenThat(dave).wasAbleTo(
                 Navigate.to(jenkins.url()),
-                HaveAShellScriptFailureCauseDefined.called("Rogue AI"),
+                HaveAShellScriptFailureCauseDefined.called("Rogue AI").describedAs("Pod bay doors didn't open"),
                 HaveAFailingProjectCreated.called("Discovery One")
         );
 
         when(dave).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
-        then(dave).should(seeThat(ProjectWidget.of("Discovery One").details(), is("Identified problem: Rogue AI")));
+        then(dave).should(seeThat(ProjectWidget.of("Discovery One").details(), is("Identified problem: Pod bay doors didn't open")));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ShouldTellWhatBrokeTheBuild {
         givenThat(dave).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 UseFailureCauseManagement.to(
-                        DefineAShellScriptFailureCause.called("XUnit test failures").
+                        DefineABuildLogIndicatedFailureCause.called("Unit tests failure").
                                 describedAs("${1,2} of ${1,1} unit tests failed").
                                 matching(".*Total: (\\d+).*Failed: ([1-9]\\d*).*")
                 ),
