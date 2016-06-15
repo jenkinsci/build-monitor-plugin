@@ -274,10 +274,6 @@ public class JobViewTest {
                 a(jobView().of(a(job().whereTheLast(build().isStillBuilding()).andThePrevious(build().finishedWith(SUCCESS))))),
                 a(jobView().of(a(job().whereTheLast(build().isStillUpdatingTheLog()).andThePrevious(build().finishedWith(SUCCESS))))));
 
-        // I could do this instead of having two assertions:
-        // assertThat(view.status(), both(containsString("successful")).and(containsString("running")));
-        // but then it would require Java 7
-
         for (JobView view : views) {
             assertThat(view.status(), containsString("successful"));
             assertThat(view.status(), containsString("running"));

@@ -196,6 +196,12 @@ public class JobView {
         return Objects.hashCode(job.hashCode());
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return Objects.equal(job,obj);
+    }
+
+
     public String toString() {
         return name();
     }

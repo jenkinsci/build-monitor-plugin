@@ -29,6 +29,6 @@ public class ByLastBuildTime implements Comparator<Job<?, ?>> {
     	}
 
     	// "New is always better" - B. Stinson ;-)
-        return (b.getLastBuild().getTimestamp().compareTo(a.getLastBuild().getTimestamp()));
+        return b.getLastBuild().getTimestamp().compareTo(a.getLastBuild().getTimestamp());
     }
 }
