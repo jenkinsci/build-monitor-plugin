@@ -6,6 +6,7 @@ import org.eclipse.aether.RepositoryEvent;
 import java.io.PrintStream;
 
 public class ConsoleRepositoryListener extends AbstractRepositoryListener {
+    private static final String FROM= " from ";
 
     private PrintStream out;
 
@@ -43,15 +44,15 @@ public class ConsoleRepositoryListener extends AbstractRepositoryListener {
     }
 
     public void artifactResolved(RepositoryEvent event) {
-        out.println(">> Resolved artifact " + event.getArtifact() + " from " + event.getRepository());
+        out.println(">> Resolved artifact " + event.getArtifact() + FROM + event.getRepository());
     }
 
     public void artifactDownloading(RepositoryEvent event) {
-        out.println(">> Downloading artifact " + event.getArtifact() + " from " + event.getRepository());
+        out.println(">> Downloading artifact " + event.getArtifact() + FROM + event.getRepository());
     }
 
     public void artifactDownloaded(RepositoryEvent event) {
-        out.println(">> Downloaded artifact " + event.getArtifact() + " from " + event.getRepository());
+        out.println(">> Downloaded artifact " + event.getArtifact() + FROM + event.getRepository());
     }
 
     public void artifactResolving(RepositoryEvent event) {
@@ -79,11 +80,11 @@ public class ConsoleRepositoryListener extends AbstractRepositoryListener {
     }
 
     public void metadataResolved(RepositoryEvent event) {
-        out.println(">> Resolved metadata " + event.getMetadata() + " from " + event.getRepository());
+        out.println(">> Resolved metadata " + event.getMetadata() + FROM + event.getRepository());
     }
 
     public void metadataResolving(RepositoryEvent event) {
-        out.println(">> Resolving metadata " + event.getMetadata() + " from " + event.getRepository());
+        out.println(">> Resolving metadata " + event.getMetadata() + FROM + event.getRepository());
     }
 
 }
