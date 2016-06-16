@@ -8,6 +8,9 @@ import org.hamcrest.TypeSafeMatcher;
 import static java.lang.String.format;
 
 public class ProjectInformationMatchers {
+
+    private ProjectInformationMatchers() {}
+
     public static ProjectStatusMatcher displaysProjectStatusAs(ProjectStatus desiredStatus) {
         return new ProjectStatusMatcher(desiredStatus);
     }

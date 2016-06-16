@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class Sugar {
+    private Sugar(){}
 
     public static JobViewRecipe jobView() {
         return new JobViewRecipe();

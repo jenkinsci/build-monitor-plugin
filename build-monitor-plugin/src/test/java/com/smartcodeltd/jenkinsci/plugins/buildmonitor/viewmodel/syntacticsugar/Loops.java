@@ -11,7 +11,7 @@ import java.util.List;
  * @author Jan Molak
  */
 public class Loops {
-
+    private Loops(){}
     public static <T> List<T> asFollows(T... examples) {
         return Arrays.asList(examples);
     }

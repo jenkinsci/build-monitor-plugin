@@ -9,6 +9,8 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.api.Success.succes
 import static net.sf.json.JSONSerializer.toJSON;
 
 public class Respond {
+    private Respond(){}
+
     private static ObjectMapper mapper = new ObjectMapper();
 
     public static <T> JSONObject withSuccess(T responseData) throws IOException {

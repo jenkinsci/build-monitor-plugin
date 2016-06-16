@@ -11,6 +11,8 @@ import net.serenitybdd.integration.jenkins.environment.rules.SandboxJenkinsHome;
 import static java.lang.System.getProperty;
 
 public class JenkinsSandbox {
+    private JenkinsSandbox(){}
+
     public static TestEnvironment configure() {
         CWD cwd = CWD.or(getProperty("project.root"));
 

@@ -6,6 +6,9 @@ import net.serenitybdd.screenplay.jenkins.targets.Link;
 import net.serenitybdd.screenplay.targets.Target;
 
 public class FailureCauseManagementPage {
+
+    private FailureCauseManagementPage(){}
+
     public static final Target Create_New_Link = Link.called("Create new");
     public static final Target Name            = Setting.defining("Name"); //Target.the("Name field").locatedBy("//*[@name='_.name']");
     public static final Target Description     = Setting.defining("Description"); //Target.the("Description field").locatedBy("//*[@name='_.description']");

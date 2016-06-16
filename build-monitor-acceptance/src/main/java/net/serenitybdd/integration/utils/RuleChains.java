@@ -10,6 +10,7 @@ import static net.serenitybdd.integration.utils.ListFunctions.head;
 import static net.serenitybdd.integration.utils.ListFunctions.tail;
 
 public class RuleChains {
+    private RuleChains(){}
     public static RuleChain from(TestRule... rules) {
         return from(Arrays.asList(rules));
     }

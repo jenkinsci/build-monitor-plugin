@@ -5,6 +5,7 @@ import java.util.List;
 import static java.lang.String.format;
 
 public class Lister {
+    private Lister(){}
     private static final String DEFAULT_NO_ITEMS_TEMPLATE = "%s";
 
     public static <T> String describe(String pluralTemplate, List<T> items) {
