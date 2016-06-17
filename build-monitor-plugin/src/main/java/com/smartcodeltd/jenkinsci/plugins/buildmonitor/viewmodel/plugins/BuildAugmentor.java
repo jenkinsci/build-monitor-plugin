@@ -18,8 +18,8 @@ import java.util.Set;
 // improved with something akin to a Visitor pattern
 public class BuildAugmentor {
 
-    public static String CLAIM_PLUGIN = "claim";
-    public static String ANALYSER_PLUGIN = "build-failure-analyzer";
+    public static final String CLAIM_PLUGIN = "claim";
+    public static final String ANALYSER_PLUGIN = "build-failure-analyzer";
 
     public static BuildAugmentor fromDetectedPlugins() {
         BuildAugmentor augmentor = new BuildAugmentor();
