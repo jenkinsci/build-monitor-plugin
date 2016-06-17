@@ -8,6 +8,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class ListFunctions {
+
+    private ListFunctions(){}
+
     public static <T> List<T> concat(List<? extends T>... lists) {
         if (lists.length == 0) {
             return Collections.EMPTY_LIST;

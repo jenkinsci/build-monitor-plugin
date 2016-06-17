@@ -5,6 +5,7 @@ import net.serenitybdd.screenplay.targets.Target;
 import static java.lang.String.format;
 
 public class Link {
+    private Link(){}
     public static Target called(String text) {
         return to(text);
     }

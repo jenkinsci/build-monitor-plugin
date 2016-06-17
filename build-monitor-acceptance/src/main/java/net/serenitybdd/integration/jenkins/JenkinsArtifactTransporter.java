@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class JenkinsArtifactTransporter {
+    private JenkinsArtifactTransporter(){}
+
     public static ArtifactTransporter create() {
         return new ArtifactTransporter(
                 pathToLocalMavenRepository(),

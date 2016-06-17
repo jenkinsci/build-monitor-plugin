@@ -6,6 +6,8 @@ import net.serenitybdd.screenplay.targets.Target;
 import static java.lang.String.format;
 
 public class Setting {
+    private Setting(){}
+
     public static Target defining(String name) {
         return Target.the(format("the '%s' field", name))
                 .locatedBy(lastElementMatching(either(xpathFor("input"), xpathFor("textarea"))))

@@ -3,6 +3,8 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability;
 import static java.lang.String.format;
 
 public class Pluraliser {
+    private Pluraliser(){}
+
     public static String pluralise(String template, int count) {
         return format(template, count);
     }

@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions;
 
 public class NullSafety {
+    private NullSafety(){}
 
     /**
      * @param value         a value that can be a potential null

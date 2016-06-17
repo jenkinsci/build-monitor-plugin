@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import static net.serenitybdd.integration.utils.Nulls.coalesce;
 
 public class CommandLineTools {
+    private CommandLineTools(){}
     public static Path java() {
         Path javaBin = Paths.get(coalesce(
                 System.getenv("JENKINS_JAVA_HOME"),

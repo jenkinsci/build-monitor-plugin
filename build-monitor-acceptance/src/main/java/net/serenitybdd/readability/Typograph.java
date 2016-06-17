@@ -1,6 +1,8 @@
 package net.serenitybdd.readability;
 
 public class Typograph {
+    private Typograph(){}
+
     public static String deCamelCase(String camelCasedString) {
         return camelCasedString.replaceAll(
                 String.format("%s|%s|%s",
