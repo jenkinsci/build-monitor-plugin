@@ -14,6 +14,7 @@ public class NotAnalysed implements Analysis {
         return Collections.emptyList();
     }
 
+    @Override
     public String toString() {
         return "No known failures";
     }

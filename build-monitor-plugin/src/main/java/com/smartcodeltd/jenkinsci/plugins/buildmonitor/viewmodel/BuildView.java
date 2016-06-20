@@ -176,6 +176,7 @@ public class BuildView implements BuildViewModel {
         return augmentor.detailsOf(build, Analysis.class);
     }
 
+    @Override
     public String toString() {
         return name();
     }

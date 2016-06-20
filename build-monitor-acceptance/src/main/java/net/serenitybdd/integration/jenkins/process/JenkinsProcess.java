@@ -110,10 +110,10 @@ public class JenkinsProcess {
     private Process start(ProcessBuilder jenkinsProcessBuilder) throws IOException {
         Log.info("Starting Jenkins on port {}...", port);
 
-        Process process = jenkinsProcessBuilder.start();
-        process.getOutputStream().close();
+        Process jenkinsProcess = jenkinsProcessBuilder.start();
+        jenkinsProcess.getOutputStream().close();
 
-        return process;
+        return jenkinsProcess;
     }
 
     private static String OS = System.getProperty("os.name").toLowerCase();

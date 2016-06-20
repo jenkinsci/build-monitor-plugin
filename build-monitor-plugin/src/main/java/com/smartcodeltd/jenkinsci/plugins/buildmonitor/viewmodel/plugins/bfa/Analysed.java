@@ -27,6 +27,7 @@ public class Analysed implements Analysis {
         return failures;
     }
 
+    @Override
     public String toString() {
         return String.format("Failed with %s",failures());
     }

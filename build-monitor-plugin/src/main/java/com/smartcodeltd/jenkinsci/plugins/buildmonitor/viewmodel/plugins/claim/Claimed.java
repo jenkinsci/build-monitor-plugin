@@ -24,6 +24,7 @@ public class Claimed implements Claim {
         return action.getReason();
     }
 
+    @Override
     public String toString() {
         return String.format("Claimed by \"%s\": \"%s\"", author(), reason());
     }

@@ -247,8 +247,8 @@ public class JobViewTest {
                 a(jobView().of(a(job().whereTheLast(build().isStillBuilding())))),
                 a(jobView().of(a(job().whereTheLast(build().isStillUpdatingTheLog())))));
 
-        for (JobView view : views) {
-            assertThat(view.status(), containsString("running"));
+        for (JobView jobView : views) {
+            assertThat(jobView.status(), containsString("running"));
         }
     }
 
@@ -278,9 +278,9 @@ public class JobViewTest {
         // assertThat(view.status(), both(containsString("successful")).and(containsString("running")));
         // but then it would require Java 7
 
-        for (JobView view : views) {
-            assertThat(view.status(), containsString("successful"));
-            assertThat(view.status(), containsString("running"));
+        for (JobView jobView : views) {
+            assertThat(jobView.status(), containsString("successful"));
+            assertThat(jobView.status(), containsString("running"));
         }
     }
 
@@ -298,9 +298,9 @@ public class JobViewTest {
                         andThePrevious(build().finishedWith(FAILURE)))))
         );
 
-        for (JobView view : views) {
-            assertThat(view.status(), containsString("failing"));
-            assertThat(view.status(), containsString("running"));
+        for (JobView jobView : views) {
+            assertThat(jobView.status(), containsString("failing"));
+            assertThat(jobView.status(), containsString("running"));
         }
     }
 

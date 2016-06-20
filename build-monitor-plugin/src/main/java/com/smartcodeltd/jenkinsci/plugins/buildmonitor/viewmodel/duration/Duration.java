@@ -8,6 +8,7 @@ abstract public class Duration {
         this.duration = milliseconds;
     }
 
+    @Override
     abstract public String toString();
 
     public boolean greaterThan(Duration otherDuration) {

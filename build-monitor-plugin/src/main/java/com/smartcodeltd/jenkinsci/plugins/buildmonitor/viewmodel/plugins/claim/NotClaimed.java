@@ -16,6 +16,7 @@ public class NotClaimed implements Claim {
         return null;
     }
 
+    @Override
     public String toString() {
         return "Not claimed";
     }

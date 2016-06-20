@@ -196,6 +196,7 @@ public class JobView {
         return Objects.hashCode(job.hashCode());
     }
 
+    @Override
     public String toString() {
         return name();
     }
