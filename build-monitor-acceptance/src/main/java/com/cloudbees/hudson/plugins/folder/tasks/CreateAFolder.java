@@ -15,6 +15,13 @@ import static net.serenitybdd.screenplay.jenkins.user_interface.navigation.Butto
 import static org.openqa.selenium.Keys.ENTER;
 
 public class CreateAFolder implements Task {
+
+    private final String name;
+
+    public CreateAFolder(String jobName) {
+        this.name = jobName;
+    }
+
     public static CreateAFolder called(String name) {
         return instrumented(CreateAFolder.class, name);
     }
@@ -30,9 +37,4 @@ public class CreateAFolder implements Task {
         );
     }
 
-    public CreateAFolder(String jobName) {
-        this.name = jobName;
-    }
-
-    private final String   name;
 }

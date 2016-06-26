@@ -11,6 +11,12 @@ import net.thucydides.core.annotations.Step;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class HaveAFolderCreated implements Task {
+    private final String name;
+    private final TodoList configurationTasks = TodoList.empty();
+
+    public HaveAFolderCreated(String name) {
+        this.name = name;
+    }
 
     public static HaveAFolderCreated called(String name) {
         return instrumented(HaveAFolderCreated.class, name);
@@ -31,11 +37,4 @@ public class HaveAFolderCreated implements Task {
                 Click.on(FolderDetailsPage.Up_Link)
         );
     }
-
-    public HaveAFolderCreated(String name) {
-        this.name = name;
-    }
-
-    private final String name;
-    private final TodoList configurationTasks = TodoList.empty();
 }
