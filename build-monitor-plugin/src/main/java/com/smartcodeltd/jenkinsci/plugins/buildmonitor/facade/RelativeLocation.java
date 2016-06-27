@@ -10,7 +10,7 @@ import org.kohsuke.stapler.Stapler;
 import org.kohsuke.stapler.StaplerRequest;
 
 public class RelativeLocation {
-    final private Job job;
+    private final Job job;
 
     public static RelativeLocation of(Job job) {
         return new RelativeLocation(job);

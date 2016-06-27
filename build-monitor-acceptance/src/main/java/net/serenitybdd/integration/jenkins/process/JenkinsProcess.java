@@ -14,8 +14,8 @@ import static java.lang.String.format;
 import static java.util.Arrays.asList;
 
 public class JenkinsProcess {
-    private final static Logger Log = LoggerFactory.getLogger(JenkinsProcess.class);
-    private final static int Startup_Timeout = 5 * 60 * 1000;
+    private static final Logger Log = LoggerFactory.getLogger(JenkinsProcess.class);
+    private static final int Startup_Timeout = 5 * 60 * 1000;
     public static final String JENKINS_IS_FULLY_UP_AND_RUNNING = "Jenkins is fully up and running";
 
     private final ProcessBuilder process;

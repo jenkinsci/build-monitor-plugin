@@ -20,8 +20,8 @@ import static java.lang.String.format;
 import static net.serenitybdd.integration.jenkins.process.JenkinsProcess.JENKINS_IS_FULLY_UP_AND_RUNNING;
 
 public class JenkinsClient {
-    private final static Logger logger = LoggerFactory.getLogger(JenkinsClient.class);
-    private final static int Max_Wait_Time = 5 * 60 * 1000;
+    private static final Logger logger = LoggerFactory.getLogger(JenkinsClient.class);
+    private static final int Max_Wait_Time = 5 * 60 * 1000;
 
     private final JenkinsProcess process;
     private final JenkinsClientExecutor executor;

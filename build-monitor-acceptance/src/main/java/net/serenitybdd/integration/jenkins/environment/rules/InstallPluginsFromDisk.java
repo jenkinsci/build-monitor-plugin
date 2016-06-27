@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Arrays.asList;
 
 public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstance> {
-    private final static Logger Log = LoggerFactory.getLogger(InstallPluginsFromDisk.class);
+    private static final Logger Log = LoggerFactory.getLogger(InstallPluginsFromDisk.class);
 
     private final List<Path> pluginsToInstall;
 

@@ -1,6 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration;
 
-abstract public class Duration {
+public abstract class Duration {
 
     protected final long duration;
 
@@ -8,7 +8,7 @@ abstract public class Duration {
         this.duration = milliseconds;
     }
 
-    abstract public String toString();
+    public abstract String toString();
 
     public boolean greaterThan(Duration otherDuration) {
         return duration > otherDuration.toLong();
