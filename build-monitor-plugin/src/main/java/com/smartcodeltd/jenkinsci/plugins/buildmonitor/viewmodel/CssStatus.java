@@ -12,7 +12,7 @@ import static hudson.model.Result.*;
  */
 public class CssStatus {
 
-    private final static Map<Result, String> statuses = new HashMap<Result, String>() {{
+    private static final Map<Result, String> statuses = new HashMap<Result, String>() {{
         put(SUCCESS,   "successful");
         put(UNSTABLE,  "unstable");
         put(FAILURE,   "failing");

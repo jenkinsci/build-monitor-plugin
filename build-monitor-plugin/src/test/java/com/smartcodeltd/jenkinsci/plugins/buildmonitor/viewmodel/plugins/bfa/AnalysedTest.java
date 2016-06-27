@@ -14,8 +14,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class AnalysedTest {
-    private final static String FAILURE1_NAME = "JMS Server Down";
-    private final static String FAILURE2_NAME = "Unit test failures";
+    private static final String FAILURE1_NAME = "JMS Server Down";
+    private static final String FAILURE2_NAME = "Unit test failures";
 
     @Test
     public void should_be_a_simple_proxy_to_the_claim_build_action() throws Exception {

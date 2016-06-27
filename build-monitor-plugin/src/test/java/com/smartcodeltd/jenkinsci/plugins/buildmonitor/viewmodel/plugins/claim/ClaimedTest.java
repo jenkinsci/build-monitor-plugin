@@ -9,9 +9,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ClaimedTest {
-    private final static String AUTHOR = "Adam";
-    private final static String REASON = "I broke it, sorry, fixing now.";
-    private final static String EXPECTED_STRING_REPRESENTATION = String.format("Claimed by \"%s\": \"%s\"", AUTHOR, REASON);
+    private static final String AUTHOR = "Adam";
+    private static final String REASON = "I broke it, sorry, fixing now.";
+    private static final String EXPECTED_STRING_REPRESENTATION = String.format("Claimed by \"%s\": \"%s\"", AUTHOR, REASON);
 
     @Test
     public void should_be_a_simple_proxy_to_the_claim_build_action() throws Exception {

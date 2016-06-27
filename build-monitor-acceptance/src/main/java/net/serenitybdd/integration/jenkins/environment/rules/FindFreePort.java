@@ -16,8 +16,8 @@ import static java.lang.String.format;
 public class FindFreePort implements ApplicativeTestRule<JenkinsInstance> {
     private static final Logger Log = LoggerFactory.getLogger(FindFreePort.class);
 
-    private final static int Dynamic_Range_Start = 49152;
-    private final static int Dynamic_Range_End   = 65535;
+    private static final int Dynamic_Range_Start = 49152;
+    private static final int Dynamic_Range_End   = 65535;
 
     private final int rangeStart;
     private final int rangeEnd;

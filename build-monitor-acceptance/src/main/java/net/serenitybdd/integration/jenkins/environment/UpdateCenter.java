@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class UpdateCenter {
-    private final static String Update_Center_URL_Template
+    private static final String Update_Center_URL_Template
             = "https://updates.jenkins-ci.org/update-center.json?id=default&version=%s";
     private final Path tempDir;
 

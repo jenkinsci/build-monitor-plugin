@@ -9,7 +9,7 @@ import java.util.Properties;
 public class BuildMonitorBuildProperties {
     private static final BuildMonitorLogger logger = BuildMonitorLogger.forClass(BuildMonitorBuildProperties.class);
 
-    final private Properties properties = new java.util.Properties();
+    private final Properties properties = new java.util.Properties();
 
     public BuildMonitorBuildProperties(String file) {
         try {
