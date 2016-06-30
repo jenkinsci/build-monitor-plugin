@@ -31,6 +31,8 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SerenityRunner.class)
 public class ShouldTellWhatBrokeTheBuild {
 
+    private static final String MY_APP = "My App";
+
     Actor dave = Actor.named("Dave");
 
     @Managed public WebDriver hisBrowser;
@@ -66,16 +68,16 @@ public class ShouldTellWhatBrokeTheBuild {
                                 describedAs("${1,2} of ${1,1} unit tests failed").
                                 matching(".*Total: (\\d+).*Failed: ([1-9]\\d*).*")
                 ),
-                HaveAProjectCreated.called("My App").andConfiguredTo(
+                HaveAProjectCreated.called(MY_APP).andConfiguredTo(
                         ExecuteAShellScript.that(hasXUnitFailures()),
                         ExecuteAShellScript.that(Finishes_With_Error)
                 ),
-                ScheduleABuild.of("My App")
+                ScheduleABuild.of(MY_APP)
         );
 
         when(dave).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
-        then(dave).should(seeThat(ProjectWidget.of("My App").details(),
+        then(dave).should(seeThat(ProjectWidget.of(MY_APP).details(),
                 is("Identified problem: 5 of 143 unit tests failed")
         ));
     }

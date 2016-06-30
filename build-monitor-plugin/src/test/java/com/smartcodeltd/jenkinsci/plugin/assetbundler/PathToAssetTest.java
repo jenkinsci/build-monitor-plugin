@@ -11,12 +11,12 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class PathToAssetTest {
-
+    private static final String INDEX_LESS_PATH = "less/index.less";
     @Test
     public void combines_base_resource_url_given_by_jenkins_and_a_path_to_the_asset() throws Exception {
         URL base = baseResourceUrlGivenByJenkins("file:///opt/jenkins/plugins/build-monitor-plugin/");
 
-        PathToAsset path = new PathToAsset(base, "less/index.less");
+        PathToAsset path = new PathToAsset(base, INDEX_LESS_PATH);
 
         assertThat(absolute(path), is("/opt/jenkins/plugins/build-monitor-plugin/less/index.less"));
     }
@@ -25,7 +25,7 @@ public class PathToAssetTest {
     public void works_with_unc_paths_on_windows() throws Exception {
         URL base = baseResourceUrlGivenByJenkins("file://server/jenkins/plugins/build-monitor-plugin/");
 
-        PathToAsset path = new PathToAsset(base, "less/index.less");
+        PathToAsset path = new PathToAsset(base, INDEX_LESS_PATH);
 
         assertThat(absolute(path), is("/server/jenkins/plugins/build-monitor-plugin/less/index.less"));
     }
@@ -37,7 +37,7 @@ public class PathToAssetTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Sorry, can't load the asset from 'http://google.com/less/index.less' using the 'file' protocol");
 
-        new PathToAsset(new URL("http://google.com"), "less/index.less");
+        new PathToAsset(new URL("http://google.com"), INDEX_LESS_PATH);
     }
 
     // --
