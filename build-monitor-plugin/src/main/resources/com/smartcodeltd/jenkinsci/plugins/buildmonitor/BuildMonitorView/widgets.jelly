@@ -5,18 +5,27 @@
     class="columns-{{ settings.numberOfColumns }}">
 
     <!-- todo: fix the CSS3 progress bar 'pulse' animations so that they work with 'track by project.hashCode' -->
-    <li ng-repeat="project in jobs"
+    <!-- <span ng-repeat="project in jobs"> -->
+    <!-- if new pipeline id and/or pipeline name print: -->
+    <!-- <li ng-if="{{project.groupPipeline}}" style="flex:1 1 99%;"><div style="background-color:#666666;text-align:center;" class="basic project widget">#{{ .pipelineId }}</div></li> -->
+
+    <li
+        ng-repeat="project in jobs"
         class="{{ project.status }} basic project widget"
         id="{{ project.name | slugify }}"
     >
+
         <div class="progress" style="width: {{project.progress}}%">
             <span class="value">{{project.progress}}%</span>
         </div>
 
         <header>
+
             <h2>
-                <a title="{{project.name}}" href="{{project.url}}">{{project.name}}</a>
+                <div ng-if="project.groupByPipelineNumber" style="border-radius:5px; float:left; padding-right:5px; padding-left:5px; background:#666666;">#{{project.pipelineNumber}}</div>
+                <div><a title="{{project.name}}" href="{{project.url}}">{{project.name}}</a></div>
             </h2>
+
             <ul class="details">
                 <li>{{ project.headline }}</li>
                 <li data-ng-show="!!project.lastBuildDescription" class="build-description description-setter-plugin">{{ project.lastBuildDescription }}</li>

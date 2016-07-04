@@ -1,3 +1,4 @@
+
 /*
  * The MIT License
  *
@@ -26,12 +27,12 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.api.Respond;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation.BuildMonitorInstallation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.util.BuildUtil;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
 import hudson.Extension;
+import hudson.model.*;
 import hudson.model.Descriptor.FormException;
-import hudson.model.Job;
-import hudson.model.ListView;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static hudson.Util.filter;
 
@@ -50,6 +52,9 @@ import static hudson.Util.filter;
  * @author Jan Molak
  */
 public class BuildMonitorView extends ListView {
+
+    private static final Logger log= Logger.getLogger( BuildMonitorView.class.getName() );
+
     @Extension
     public static final BuildMonitorDescriptor descriptor = new BuildMonitorDescriptor();
 
@@ -98,11 +103,17 @@ public class BuildMonitorView extends ListView {
         return descriptor.getPermissionToCollectAnonymousUsageStatistics();
     }
 
+    @SuppressWarnings("unused") // used in the configure-entries.jelly
+    public boolean isGroupByPipelineNumber() {
+        return currentConfig().getGroup();
+    }
+
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
 
         String requestedOrdering = req.getParameter("order");
+        String requestedGrouping = req.getParameter("groupByPipelineNumber");
 
         title = req.getParameter("title");
 
@@ -111,6 +122,7 @@ public class BuildMonitorView extends ListView {
         } catch (Exception e) {
             throw new FormException("Can't order projects by " + requestedOrdering, "order");
         }
+        currentConfig().setGroup(requestedGrouping);
     }
 
     /**
@@ -138,8 +150,29 @@ public class BuildMonitorView extends ListView {
 
         Collections.sort(projects, currentConfig().getOrder());
 
+        if (currentConfig().getGroup()) {
+            try {
+                Collections.sort(projects, orderIn("pipelineGroup"));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int previousPipelineId = 0;
+
         for (Job project : projects) {
-            jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent()));
+            int pipelineId = BuildUtil.pipelineBuildNumber((AbstractBuild<?, ?>) project.getLastBuild());
+
+            if(currentConfig().getGroup() && pipelineId != previousPipelineId) {
+                jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent(), pipelineId, true));
+            } else {
+                jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent(), pipelineId, false));
+            }
+            previousPipelineId = pipelineId;
         }
 
         return jobs;

@@ -56,7 +56,11 @@
     <f:textbox name="title" value="${it.title}"/>
   </f:entry>
 
-  <f:entry title="${%Ordered by}">
+  <f:entry title="${%Group by pipeline number}" field="groupByPipelineNumber">
+    <f:checkbox name="groupByPipelineNumber"/>
+  </f:entry>
+
+  <f:entry title="${%Ordered by}" help="help/view-config/order.html">
     <select name="order" class="setting-input">
       <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
       <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
