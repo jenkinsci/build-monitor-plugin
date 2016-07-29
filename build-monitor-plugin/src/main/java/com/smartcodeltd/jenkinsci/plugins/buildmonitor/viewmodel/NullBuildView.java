@@ -75,6 +75,11 @@ public class NullBuildView implements BuildViewModel {
     }
 
     @Override
+    public Set<String> committers() {
+        return new HashSet<String>();
+    }
+
+    @Override
     public boolean isClaimed() {
         return false;
     }

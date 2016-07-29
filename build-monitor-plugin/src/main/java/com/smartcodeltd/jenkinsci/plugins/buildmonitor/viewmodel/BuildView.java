@@ -1,5 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
@@ -12,6 +14,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.User;
+import hudson.scm.ChangeLogSet;
 
 import java.util.*;
 
@@ -128,19 +131,32 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public Set<String> culprits() {
-        Set<String> culprits = new TreeSet<String>();
-
-        if (build instanceof AbstractBuild<?, ?>) {
-            AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
-
-            if (! (isRunning(jenkinsBuild))) {
-                for (User culprit : jenkinsBuild.getCulprits()) {
-                    culprits.add(culprit.getFullName());
-                }
+        return getUsers(new Reader() {
+            @Override
+            public Iterable<String> readUsersFrom(AbstractBuild<?, ?> jenkinsBuild) {
+                return Iterables.transform(jenkinsBuild.getCulprits(), new Function<User, String>() {
+                    @Override
+                    public String apply(User culprit) {
+                        return culprit.getFullName();
+                    }
+                });
             }
-        }
+        });
+    }
 
-        return culprits;
+    @Override
+    public Set<String> committers() {
+        return getUsers(new Reader() {
+            @Override
+            public Iterable<String> readUsersFrom(AbstractBuild<?, ?> jenkinsBuild) {
+                return Iterables.transform(jenkinsBuild.getChangeSet(), new Function<ChangeLogSet.Entry, String>() {
+                    @Override
+                    public String apply(ChangeLogSet.Entry entry) {
+                        return entry.getAuthor().getFullName();
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -196,5 +212,23 @@ public class BuildView implements BuildViewModel {
         this.augmentor = augmentor;
         this.parentJobLocation = parentJobLocation;
         this.systemTime = systemTime;
+    }
+
+    private interface Reader {
+        Iterable<String> readUsersFrom(AbstractBuild<?, ?> jenkinsBuild);
+    }
+
+    private Set<String> getUsers(Reader reader) {
+        Set<String> users = new TreeSet<String>();
+
+        if (build instanceof AbstractBuild<?, ?>) {
+            AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
+
+            if (! (isRunning(jenkinsBuild))) {
+                Iterables.addAll(users, reader.readUsersFrom(jenkinsBuild));
+            }
+        }
+
+        return users;
     }
 }

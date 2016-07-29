@@ -1,6 +1,8 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Optional;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
@@ -17,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newLinkedList;
-import static com.google.common.collect.Lists.reverse;
 import static hudson.model.Result.SUCCESS;
 
 /**
@@ -104,50 +105,82 @@ public class JobView {
 
     @JsonProperty
     public String headline() {
-        // todo: extract and clean up
-        List<BuildViewModel> failedBuildsAsc = reverse(failedBuilds());
-
-        switch(failedBuildsAsc.size()) {
-            case 0:
-                return "";
-
-            case 1:
-                return Lister.describe(
-                    "",
-                    "Failed after %s committed their changes",
-                    newLinkedList(failedBuildsAsc.get(0).culprits())
-                 );
-
-            default:
-                String buildsFailedSince = Pluraliser.pluralise(
-                        "%s build has failed",
-                        "%s builds have failed",
-                        failedBuildsAsc.size() - 1
-                );
-
-                return Lister.describe(
-                        buildsFailedSince,
-                        buildsFailedSince + " since %s committed their changes",
-                        newLinkedList(failedBuildsAsc.get(0).culprits())
-                );
+        BuildViewModel lastBuild = lastBuild();
+        if (SUCCESS.equals(lastBuild.result())) {
+            return getSuccessHeadline(lastBuild);
+        } else {
+            return getFailureHeadline(lastBuild);
         }
     }
 
-    private List<BuildViewModel> failedBuilds() {
+    private String getSuccessHeadline(BuildViewModel lastBuild) {
+        Optional<BuildViewModel> lastCompletedBuildBeforeThisOne = lastCompletedBuildBefore(lastBuild);
+        if (!lastCompletedBuildBeforeThisOne.isPresent() || SUCCESS.equals(lastCompletedBuildBeforeThisOne.get().result())) {
+            return "";
+        } else {
+            return Lister.describe(
+                    "",
+                    "Succeeded after %s committed their changes :-)",
+                    newLinkedList(lastBuild.committers())
+            );
+        }
+    }
+
+    private String getFailureHeadline(BuildViewModel lastBuild) {
+        List<BuildViewModel> failedBuildsNewestToOldest = failedBuildsSince(lastBuild);
+
+        BuildViewModel firstFailedBuild = Iterables.getLast(failedBuildsNewestToOldest);
+
+        if (failedBuildsNewestToOldest.size() == 1) {
+            return Lister.describe(
+                    "",
+                    "Failed after %s committed their changes",
+                    newLinkedList(firstFailedBuild.culprits())
+            );
+        } else {
+            String buildsFailedSince = Pluraliser.pluralise(
+                    "%s build has failed",
+                    "%s builds have failed",
+                    failedBuildsNewestToOldest.size() - 1
+            );
+
+            return Lister.describe(
+                    buildsFailedSince,
+                    buildsFailedSince + " since %s committed their changes",
+                    newLinkedList(firstFailedBuild.culprits())
+            );
+        }
+    }
+
+    private Optional<BuildViewModel> lastCompletedBuildBefore(BuildViewModel build) {
+        BuildViewModel currentBuild = build;
+        do {
+            if (currentBuild.hasPreviousBuild()) {
+                currentBuild = currentBuild.previousBuild();
+            } else {
+                return Optional.absent();
+            }
+        } while (currentBuild.isRunning());
+
+        return Optional.of(currentBuild);
+    }
+
+    private List<BuildViewModel> failedBuildsSince(BuildViewModel build) {
+        BuildViewModel currentBuild = build;
+
         List<BuildViewModel> failedBuilds = Lists.newArrayList();
 
-        BuildViewModel build = lastBuild();
-        while (! SUCCESS.equals(build.result())) {
+        while (! SUCCESS.equals(currentBuild.result())) {
 
-            if (! build.isRunning()) {
-                failedBuilds.add(build);
+            if (! currentBuild.isRunning()) {
+                failedBuilds.add(currentBuild);
             }
 
-            if (! build.hasPreviousBuild()) {
+            if (! currentBuild.hasPreviousBuild()) {
                 break;
             }
 
-            build = build.previousBuild();
+            currentBuild = currentBuild.previousBuild();
         }
 
         return failedBuilds;

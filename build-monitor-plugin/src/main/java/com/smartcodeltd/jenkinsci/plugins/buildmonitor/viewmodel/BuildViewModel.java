@@ -23,6 +23,7 @@ public interface BuildViewModel {
     public BuildViewModel previousBuild();
 
     public Set<String> culprits();
+    public Set<String> committers();
 
     boolean isClaimed();
     String claimant();

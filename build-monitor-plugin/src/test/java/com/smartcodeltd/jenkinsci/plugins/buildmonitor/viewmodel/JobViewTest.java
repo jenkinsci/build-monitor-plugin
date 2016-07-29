@@ -387,6 +387,50 @@ public class JobViewTest {
         assertThat(view.headline(), is("1 build has failed since Ben, Connor and Daniel committed their changes"));
     }
 
+    @Test
+    public void should_tell_who_fixed_the_broken_build() throws Exception {
+        view = a(jobView().of(
+                a(job().whereTheLast(build().succeededThanksTo("Adam")).
+                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
+
+        assertThat(view.headline(), is("Succeeded after Adam committed their changes :-)"));
+    }
+
+    @Test
+    public void should_list_committers_who_fixed_the_broken_build() throws Exception {
+        view = a(jobView().of(
+                a(job().whereTheLast(build().succeededThanksTo("Adam", "Connor")).
+                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
+
+        assertThat(view.headline(), is("Succeeded after Adam and Connor committed their changes :-)"));
+    }
+
+    @Test
+    public void should_not_tell_anything_if_broken_build_was_fixed_without_committers() throws Exception {
+        view = a(jobView().of(
+                a(job().whereTheLast(build().succeededThanksTo()).
+                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
+
+        assertThat(view.headline(), is(""));
+    }
+
+    @Test
+    public void should_not_congratulate_if_previous_succeeded() throws Exception {
+        view = a(jobView().of(
+                a(job().whereTheLast(build().succeededThanksTo("Adam")).
+                        andThePrevious(build().succeededThanksTo("Ben")))));
+
+        assertThat(view.headline(), is(""));
+    }
+
+    @Test
+    public void should_not_congratulate_if_no_failure_before() throws Exception {
+        view = a(jobView().of(
+                a(job().whereTheLast(build().succeededThanksTo("Adam")))));
+
+        assertThat(view.headline(), is(""));
+    }
+
     /*
      * Should know who claimed a broken build
      */
