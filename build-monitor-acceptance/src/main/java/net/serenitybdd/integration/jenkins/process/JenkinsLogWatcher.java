@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 
 class JenkinsLogWatcher implements AutoCloseable, Runnable {
 
-    private final static Logger Log = LoggerFactory.getLogger(JenkinsLogWatcher.class);
+    private static final Logger Log = LoggerFactory.getLogger(JenkinsLogWatcher.class);
 
     private final InputStream jenkinsOutput;
     private final List<JenkinsLogLineWatcher> watchers = new CopyOnWriteArrayList<>();

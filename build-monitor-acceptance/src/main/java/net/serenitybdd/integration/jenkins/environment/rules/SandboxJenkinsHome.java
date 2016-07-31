@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import static java.lang.String.format;
 
 public class SandboxJenkinsHome implements ApplicativeTestRule<JenkinsInstance> {
-    private final static Logger Log = LoggerFactory.getLogger(SandboxJenkinsHome.class);
+    private static final Logger Log = LoggerFactory.getLogger(SandboxJenkinsHome.class);
 
     private final Path rootDirectory;
 

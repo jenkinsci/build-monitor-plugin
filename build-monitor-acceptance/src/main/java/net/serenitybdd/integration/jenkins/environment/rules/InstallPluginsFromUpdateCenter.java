@@ -18,7 +18,7 @@ import static java.util.Arrays.asList;
 
 public class InstallPluginsFromUpdateCenter implements ApplicativeTestRule<JenkinsInstance> {
 
-    private final static Logger Log = LoggerFactory.getLogger(InstallPluginsFromUpdateCenter.class);
+    private static final Logger Log = LoggerFactory.getLogger(InstallPluginsFromUpdateCenter.class);
 
     private final UpdateCenter updateCenter = new UpdateCenter();
 
