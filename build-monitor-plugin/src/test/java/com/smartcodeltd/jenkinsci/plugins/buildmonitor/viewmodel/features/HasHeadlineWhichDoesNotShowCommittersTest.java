@@ -4,7 +4,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
-import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -16,7 +15,7 @@ public class HasHeadlineWhichDoesNotShowCommittersTest {
         view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")))));
 
-        assertThat(headlineOf(view), isEmptyString());
+        assertThat(headlineOf(view), is("1 build has failed"));
     }
 
     @Test
@@ -27,7 +26,7 @@ public class HasHeadlineWhichDoesNotShowCommittersTest {
                         andThePrevious(build().wasBrokenBy("Daniel")).
                         andThePrevious(build().succeededThanksTo("Errol")))));
 
-        assertThat(headlineOf(view), is("2 builds have failed"));
+        assertThat(headlineOf(view), is("3 builds have failed"));
     }
 
     @Test
@@ -37,7 +36,7 @@ public class HasHeadlineWhichDoesNotShowCommittersTest {
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor")).
                         andThePrevious(build().succeededThanksTo("Errol")))));
 
-        assertThat(headlineOf(view), is("1 build has failed"));
+        assertThat(headlineOf(view), is("2 builds have failed"));
     }
 
     @Test

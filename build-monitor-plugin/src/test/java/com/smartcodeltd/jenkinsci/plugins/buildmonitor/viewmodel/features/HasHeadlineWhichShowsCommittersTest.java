@@ -15,7 +15,15 @@ public class HasHeadlineWhichShowsCommittersTest {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")))));
 
-        assertThat(headlineOf(view), is("Failed after Adam committed their changes"));
+        assertThat(headlineOf(view), is("1 build has failed since Adam committed their changes"));
+    }
+
+    @Test
+    public void should_say_nothing_if_no_builds_were_executed() throws Exception {
+        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
+                a(job().thatHasNeverRun())));
+
+        assertThat(headlineOf(view), is(""));
     }
 
     @Test
@@ -23,7 +31,7 @@ public class HasHeadlineWhichShowsCommittersTest {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben")))));
 
-        assertThat(headlineOf(view), is("Failed after Adam and Ben committed their changes"));
+        assertThat(headlineOf(view), is("1 build has failed since Adam and Ben committed their changes"));
     }
 
     @Test
@@ -32,7 +40,7 @@ public class HasHeadlineWhichShowsCommittersTest {
                 a(job().whereTheLast(build().isStillBuilding()).
                         andThePrevious(build().wasBrokenBy("Ben")))));
 
-        assertThat(headlineOf(view), is("Failed after Ben committed their changes"));
+        assertThat(headlineOf(view), is("1 build has failed since Ben committed their changes"));
     }
 
     @Test
@@ -43,7 +51,7 @@ public class HasHeadlineWhichShowsCommittersTest {
                         andThePrevious(build().wasBrokenBy("Daniel")).
                         andThePrevious(build().succeededThanksTo("Errol")))));
 
-        assertThat(headlineOf(view), is("2 builds have failed since Daniel committed their changes"));
+        assertThat(headlineOf(view), is("3 builds have failed since Daniel committed their changes"));
     }
 
     @Test
@@ -53,7 +61,7 @@ public class HasHeadlineWhichShowsCommittersTest {
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor")).
                         andThePrevious(build().succeededThanksTo("Errol")))));
 
-        assertThat(headlineOf(view), is("1 build has failed since Ben, Connor and Daniel committed their changes"));
+        assertThat(headlineOf(view), is("2 builds have failed since Ben, Connor and Daniel committed their changes"));
     }
 
     @Test
@@ -75,7 +83,7 @@ public class HasHeadlineWhichShowsCommittersTest {
     }
 
     @Test
-    public void should_not_tell_anything_if_broken_build_was_fixed_without_committers() throws Exception {
+    public void should_not_tell_anything_if_broken_build_was_fixed_without_known_committers() throws Exception {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().succeededThanksTo()).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
