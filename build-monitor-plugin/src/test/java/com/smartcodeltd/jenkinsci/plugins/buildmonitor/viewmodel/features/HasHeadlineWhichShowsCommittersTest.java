@@ -4,7 +4,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
-import static hudson.model.Result.SUCCESS;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -78,7 +77,7 @@ public class HasHeadlineWhichShowsCommittersTest {
     @Test
     public void should_not_tell_anything_if_broken_build_was_fixed_without_committers() throws Exception {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().finishedWith(SUCCESS)).
+                a(job().whereTheLast(build().succeededThanksTo()).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
 
         assertThat(headlineOf(view), is(""));

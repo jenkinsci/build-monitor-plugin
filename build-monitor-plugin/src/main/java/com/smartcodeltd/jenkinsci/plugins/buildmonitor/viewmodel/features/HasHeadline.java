@@ -19,120 +19,9 @@ import static hudson.model.Result.SUCCESS;
 /**
  * @author Jan Molak
  */
-public class HasHeadline implements Feature {
+public class HasHeadline implements Feature<HasHeadline.Headline> {
     private final Config config;
     private JobView job;
-
-    public HasHeadline(Config config) {
-        this.config = config;
-    }
-
-    @Override
-    public HasHeadline of(JobView jobView) {
-        this.job = jobView;
-
-        return this;
-    }
-
-    @Override
-    public Headline asJson() {
-        return new Headline(headline());
-    }
-
-    private String headline() {
-        BuildViewModel lastBuild = job.lastBuild();
-        if (SUCCESS.equals(lastBuild.result())) {
-            return successHeadline(lastBuild);
-        } else {
-            return failureHeadline(lastBuild);
-        }
-    }
-
-    private String successHeadline(BuildViewModel lastBuild) {
-        Optional<BuildViewModel> lastCompletedBuildBeforeThisOne = buildBefore(lastBuild);
-
-        if (!lastCompletedBuildBeforeThisOne.isPresent() || SUCCESS.equals(lastCompletedBuildBeforeThisOne.get().result())) {
-            return "";
-        } else {
-            return Lister.describe(
-                    "",
-                    "Succeeded after %s committed their changes :-)",
-                    newLinkedList(committersOf(lastBuild))
-            );
-        }
-    }
-
-    // todo: clean up
-    private Optional<BuildViewModel> buildBefore(BuildViewModel build) {
-        BuildViewModel previousBuild = build;
-        do {
-            if (previousBuild.hasPreviousBuild()) {
-                previousBuild = previousBuild.previousBuild();
-            } else {
-                return Optional.absent();
-            }
-        } while (previousBuild.isRunning());
-
-        return Optional.of(previousBuild);
-    }
-
-    private String failureHeadline(BuildViewModel lastBuild) {
-        List<BuildViewModel> failedBuildsNewestToOldest = failedBuildsSince(lastBuild);
-
-        BuildViewModel firstFailedBuild = Iterables.getLast(failedBuildsNewestToOldest);
-
-        switch (failedBuildsNewestToOldest.size()) {
-            case 0:         // todo: is this case needed?
-                return "";
-
-            case 1:
-                return Lister.describe(
-                            "",
-                            "Failed after %s committed their changes",
-                            newLinkedList(committersOf(firstFailedBuild))
-                        );
-
-            default:
-                String buildsFailedSoFar = Pluraliser.pluralise(
-                        "%s build has failed",
-                        "%s builds have failed",
-                        failedBuildsNewestToOldest.size() - 1
-                );
-
-                return Lister.describe(
-                        buildsFailedSoFar,
-                        buildsFailedSoFar + " since %s committed their changes",
-                        newLinkedList(committersOf(firstFailedBuild))
-                );
-        }
-    }
-
-    private Set<String> committersOf(BuildViewModel build) {
-        return config.displayCommitters
-                ? build.culprits()
-                : ImmutableSet.<String>of();
-    }
-
-    private List<BuildViewModel> failedBuildsSince(BuildViewModel build) {
-        BuildViewModel currentBuild = build;
-
-        List<BuildViewModel> failedBuilds = Lists.newArrayList();
-
-        while (! SUCCESS.equals(currentBuild.result())) {
-
-            if (! currentBuild.isRunning()) {
-                failedBuilds.add(currentBuild);
-            }
-
-            if (! currentBuild.hasPreviousBuild()) {
-                break;
-            }
-
-            currentBuild = currentBuild.previousBuild();
-        }
-
-        return failedBuilds;
-    }
 
     public static class Config {
         public final boolean displayCommitters;
@@ -153,5 +42,138 @@ public class HasHeadline implements Feature {
         public String value() {
             return value;
         }
+    }
+
+    public HasHeadline(Config config) {
+        this.config = config;
+    }
+
+    @Override
+    public HasHeadline of(JobView jobView) {
+        this.job = jobView;
+
+        return this;
+    }
+
+    @Override
+    public Headline asJson() {
+        return headlineOf(job).asJson();
+    }
+
+    private SerialisableAsJsonObjectCalled<Headline> headlineOf(JobView job) {
+
+        return SUCCESS.equals(job.lastBuild().result())
+                ? new SuccessHeadline()
+                : new FailureHeadline();
+    }
+
+    // --
+
+    private class SuccessHeadline implements SerialisableAsJsonObjectCalled<Headline> {
+
+        @Override
+        public Headline asJson() {
+            return new Headline(textFor(job.lastBuild()));
+        }
+
+        private String textFor(BuildViewModel lastBuild) {
+            Optional<BuildViewModel> lastCompletedBuildBeforeThisOne = buildBefore(lastBuild);
+
+            if (! lastCompletedBuildBeforeThisOne.isPresent() || SUCCESS.equals(lastCompletedBuildBeforeThisOne.get().result())) {
+                return "";
+            } else {
+                return Lister.describe(
+                        "",
+                        "Succeeded after %s committed their changes :-)",
+                        newLinkedList(committersOf(lastBuild))
+                );
+            }
+        }
+
+        private Optional<BuildViewModel> buildBefore(BuildViewModel build) {
+            BuildViewModel previousBuild = build;
+            do {
+                if (previousBuild.hasPreviousBuild()) {
+                    previousBuild = previousBuild.previousBuild();
+                } else {
+                    return Optional.absent();
+                }
+            } while (previousBuild.isRunning());
+
+            return Optional.of(previousBuild);
+        }
+
+        private Set<String> committersOf(BuildViewModel build) {
+            return config.displayCommitters
+                    ? build.committers()
+                    : ImmutableSet.<String>of();
+        }
+    }
+
+    private class FailureHeadline implements SerialisableAsJsonObjectCalled<Headline> {
+
+        @Override
+        public Headline asJson() {
+            return new Headline(text(job.lastBuild()));
+        }
+
+        private String text(BuildViewModel lastBuild) {
+            List<BuildViewModel> failedBuildsNewestToOldest = failedBuildsSince(lastBuild);
+
+            BuildViewModel firstFailedBuild = Iterables.getLast(failedBuildsNewestToOldest);
+
+            switch (failedBuildsNewestToOldest.size()) {
+                case 0:
+                    return "";
+
+                case 1:
+                    return Lister.describe(
+                            "",
+                            "Failed after %s committed their changes",
+                            newLinkedList(responsibleFor(firstFailedBuild))
+                    );
+
+                default:
+                    String buildsFailedSoFar = Pluraliser.pluralise(
+                            "%s build has failed",
+                            "%s builds have failed",
+                            failedBuildsNewestToOldest.size() - 1
+                    );
+
+                    return Lister.describe(
+                            buildsFailedSoFar,
+                            buildsFailedSoFar + " since %s committed their changes",
+                            newLinkedList(responsibleFor(firstFailedBuild))
+                    );
+            }
+        }
+
+        private List<BuildViewModel> failedBuildsSince(BuildViewModel build) {
+            BuildViewModel currentBuild = build;
+
+            List<BuildViewModel> failedBuilds = Lists.newArrayList();
+
+            while (! SUCCESS.equals(currentBuild.result())) {
+
+                if (! currentBuild.isRunning()) {
+                    failedBuilds.add(currentBuild);
+                }
+
+                if (! currentBuild.hasPreviousBuild()) {
+                    break;
+                }
+
+                currentBuild = currentBuild.previousBuild();
+            }
+
+            return failedBuilds;
+        }
+
+        private Set<String> responsibleFor(BuildViewModel build) {
+            return config.displayCommitters
+                    ? build.culprits()
+                    : ImmutableSet.<String>of();
+        }
+
     }
 }

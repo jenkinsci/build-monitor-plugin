@@ -8,7 +8,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 /**
  * @author Jan Molak
  */
-public class KnowsLastBuildDetails implements Feature {
+public class KnowsLastBuildDetails implements Feature<KnowsLastBuildDetails.LastBuild> {
     private JobView job;
 
     public KnowsLastBuildDetails(/* config */) {

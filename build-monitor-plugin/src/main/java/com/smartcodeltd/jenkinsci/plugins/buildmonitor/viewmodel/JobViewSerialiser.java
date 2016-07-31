@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * @author Jan Molak
  */
-public class JobViewSerializer extends JsonSerializer<JobView> {
+public class JobViewSerialiser extends JsonSerializer<JobView> {
     @Override
     public void serialize(JobView job, JsonGenerator jgen, SerializerProvider provider) throws IOException {
         jgen.writeStartObject();
@@ -21,7 +21,7 @@ public class JobViewSerializer extends JsonSerializer<JobView> {
         jgen.writeObjectField("progress",           job.progress());
         jgen.writeObjectField("estimatedDuration",  job.estimatedDuration());
 
-        for (Feature feature : job.features()) {
+        for (Feature<?> feature : job.features()) {
             Object serialised = feature.asJson();
 
             if (serialised != null) {

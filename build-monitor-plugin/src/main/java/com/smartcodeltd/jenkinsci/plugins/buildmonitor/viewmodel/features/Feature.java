@@ -5,8 +5,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 /**
  * @author Jan Molak
  */
-public interface Feature {
+public interface Feature<JSON extends Object> extends SerialisableAsJsonObjectCalled<JSON> {
     <F extends Feature> F of(JobView jobView);
-
-    Object asJson();
 }
