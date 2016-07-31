@@ -1,6 +1,8 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Lister;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Pluraliser;
@@ -12,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 import static com.google.common.collect.Lists.newLinkedList;
-import static com.google.common.collect.Lists.reverse;
 import static hudson.model.Result.SUCCESS;
 
 /**
@@ -39,30 +40,69 @@ public class HasHeadline implements Feature {
     }
 
     private String headline() {
-        List<BuildViewModel> failedBuildsAsc = reverse(failedBuilds());
+        BuildViewModel lastBuild = job.lastBuild();
+        if (SUCCESS.equals(lastBuild.result())) {
+            return successHeadline(lastBuild);
+        } else {
+            return failureHeadline(lastBuild);
+        }
+    }
 
-        switch (failedBuildsAsc.size()) {
-            case 0:
+    private String successHeadline(BuildViewModel lastBuild) {
+        Optional<BuildViewModel> lastCompletedBuildBeforeThisOne = buildBefore(lastBuild);
+
+        if (!lastCompletedBuildBeforeThisOne.isPresent() || SUCCESS.equals(lastCompletedBuildBeforeThisOne.get().result())) {
+            return "";
+        } else {
+            return Lister.describe(
+                    "",
+                    "Succeeded after %s committed their changes :-)",
+                    newLinkedList(committersOf(lastBuild))
+            );
+        }
+    }
+
+    // todo: clean up
+    private Optional<BuildViewModel> buildBefore(BuildViewModel build) {
+        BuildViewModel previousBuild = build;
+        do {
+            if (previousBuild.hasPreviousBuild()) {
+                previousBuild = previousBuild.previousBuild();
+            } else {
+                return Optional.absent();
+            }
+        } while (previousBuild.isRunning());
+
+        return Optional.of(previousBuild);
+    }
+
+    private String failureHeadline(BuildViewModel lastBuild) {
+        List<BuildViewModel> failedBuildsNewestToOldest = failedBuildsSince(lastBuild);
+
+        BuildViewModel firstFailedBuild = Iterables.getLast(failedBuildsNewestToOldest);
+
+        switch (failedBuildsNewestToOldest.size()) {
+            case 0:         // todo: is this case needed?
                 return "";
 
             case 1:
                 return Lister.describe(
                             "",
                             "Failed after %s committed their changes",
-                            newLinkedList(committersOf(failedBuildsAsc.get(0)))
+                            newLinkedList(committersOf(firstFailedBuild))
                         );
 
             default:
                 String buildsFailedSoFar = Pluraliser.pluralise(
                         "%s build has failed",
                         "%s builds have failed",
-                        failedBuildsAsc.size() - 1
+                        failedBuildsNewestToOldest.size() - 1
                 );
 
                 return Lister.describe(
                         buildsFailedSoFar,
                         buildsFailedSoFar + " since %s committed their changes",
-                        newLinkedList(committersOf(failedBuildsAsc.get(0)))
+                        newLinkedList(committersOf(firstFailedBuild))
                 );
         }
     }
@@ -73,21 +113,22 @@ public class HasHeadline implements Feature {
                 : ImmutableSet.<String>of();
     }
 
-    private List<BuildViewModel> failedBuilds() {
+    private List<BuildViewModel> failedBuildsSince(BuildViewModel build) {
+        BuildViewModel currentBuild = build;
+
         List<BuildViewModel> failedBuilds = Lists.newArrayList();
 
-        BuildViewModel build = job.lastBuild();
-        while (! SUCCESS.equals(build.result())) {
+        while (! SUCCESS.equals(currentBuild.result())) {
 
-            if (! build.isRunning()) {
-                failedBuilds.add(build);
+            if (! currentBuild.isRunning()) {
+                failedBuilds.add(currentBuild);
             }
 
-            if (! build.hasPreviousBuild()) {
+            if (! currentBuild.hasPreviousBuild()) {
                 break;
             }
 
-            build = build.previousBuild();
+            currentBuild = currentBuild.previousBuild();
         }
 
         return failedBuilds;

@@ -24,6 +24,7 @@ public interface BuildViewModel {
     BuildViewModel previousBuild();
 
     Set<String> culprits();
+    Set<String> committers();
 
     <A extends Action> Optional<A> detailsOf(Class<A> jenkinsAction);
 }

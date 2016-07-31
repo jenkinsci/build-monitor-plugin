@@ -40,6 +40,24 @@ public class HasHeadlineWhichDoesNotShowCommittersTest {
         assertThat(headlineOf(view), is("1 build has failed"));
     }
 
+    @Test
+    public void should_not_tell_who_fixed_the_broken_build() throws Exception {
+        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
+                a(job().whereTheLast(build().succeededThanksTo("Adam")).
+                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
+
+        assertThat(headlineOf(view), is(""));
+    }
+
+    @Test
+    public void should_not_list_committers_who_fixed_the_broken_build() throws Exception {
+        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
+                a(job().whereTheLast(build().succeededThanksTo("Adam", "Connor")).
+                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
+
+        assertThat(headlineOf(view), is(""));
+    }
+
     // --
 
     private Feature hasHeadlineThatDoesNotShowCommitters() {

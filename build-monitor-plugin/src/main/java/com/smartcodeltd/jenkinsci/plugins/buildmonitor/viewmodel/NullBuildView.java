@@ -76,6 +76,11 @@ public class NullBuildView implements BuildViewModel {
     }
 
     @Override
+    public Set<String> committers() {
+        return new HashSet<String>();
+    }
+
+    @Override
     public <A extends Action> Optional<A> detailsOf(Class<A> jenkinsAction) {
         return Optional.absent();
     }
