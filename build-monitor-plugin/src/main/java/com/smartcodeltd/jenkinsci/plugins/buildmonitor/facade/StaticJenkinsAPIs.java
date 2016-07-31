@@ -25,4 +25,8 @@ public class StaticJenkinsAPIs {
 
         return instance.isUseCrumbs() ? instance.getCrumbIssuer().getCrumbRequestField() : ".crumb";
     }
+
+    public boolean hasPlugin(String pluginName) {
+        return Jenkins.getInstance().getPlugin(pluginName) != null;
+    }
 }

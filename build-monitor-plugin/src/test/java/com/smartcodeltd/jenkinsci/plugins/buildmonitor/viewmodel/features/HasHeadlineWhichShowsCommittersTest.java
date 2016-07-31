@@ -1,0 +1,68 @@
+package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
+
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
+import org.junit.Test;
+
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
+public class HasHeadlineWhichShowsCommittersTest {
+    private JobView view;
+
+    @Test
+    public void should_tell_who_broke_the_build() throws Exception {
+        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
+                a(job().whereTheLast(build().wasBrokenBy("Adam")))));
+
+        assertThat(headlineOf(view), is("Failed after Adam committed their changes"));
+    }
+
+    @Test
+    public void should_list_committers_who_broke_the_build_in_alphabetical_order() throws Exception {
+        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
+                a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben")))));
+
+        assertThat(headlineOf(view), is("Failed after Adam and Ben committed their changes"));
+    }
+
+    @Test
+    public void should_tell_who_broke_the_previous_build_if_the_current_one_is_still_running() throws Exception {
+        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
+                a(job().whereTheLast(build().isStillBuilding()).
+                        andThePrevious(build().wasBrokenBy("Ben")))));
+
+        assertThat(headlineOf(view), is("Failed after Ben committed their changes"));
+    }
+
+    @Test
+    public void should_tell_the_number_of_broken_builds_since_the_last_broken_build() throws Exception {
+        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
+                a(job().whereTheLast(build().wasBrokenBy("Adam")).
+                        andThePrevious(build().wasBrokenBy("Ben", "Connor")).
+                        andThePrevious(build().wasBrokenBy("Daniel")).
+                        andThePrevious(build().succeededThanksTo("Errol")))));
+
+        assertThat(headlineOf(view), is("2 builds have failed since Daniel committed their changes"));
+    }
+
+    @Test
+    public void should_tell_the_number_of_broken_builds_since_the_last_build_broken_by_multiple_committers() throws Exception {
+        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
+                a(job().whereTheLast(build().wasBrokenBy("Adam")).
+                        andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor")).
+                        andThePrevious(build().succeededThanksTo("Errol")))));
+
+        assertThat(headlineOf(view), is("1 build has failed since Ben, Connor and Daniel committed their changes"));
+    }
+
+    // --
+
+    private Feature hasHeadlineThatShowsCommitters() {
+        return new HasHeadline(new HasHeadline.Config(true));
+    }
+
+    private String headlineOf(JobView job) {
+        return job.which(HasHeadline.class).asJson().value();
+    }
+}

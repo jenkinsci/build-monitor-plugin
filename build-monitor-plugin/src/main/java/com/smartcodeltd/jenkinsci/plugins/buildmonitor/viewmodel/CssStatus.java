@@ -31,10 +31,6 @@ public class CssStatus {
             status += " running";
         }
 
-        if (job.isClaimed()) {
-            status += " claimed";
-        }
-
         return status;
     }
 

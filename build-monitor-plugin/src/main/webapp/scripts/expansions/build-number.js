@@ -14,13 +14,13 @@ directive('buildNumber', [function () {
         },
         template: [
             '<a',
-                'data-ng-show="!!project.lastBuildName"',
+                'data-ng-show="!!project.lastBuild.name"',
                 'class="build-name"',
-                'title="Details of {{project.name}}, build {{project.lastBuildName}}"',
-                'href="{{project.lastBuildUrl}}"',
+                'title="Details of {{project.name}}, build {{project.lastBuild.name}}"',
+                'href="{{project.lastBuild.url}}"',
             '>',
                 '<span>',
-                    '{{project.lastBuildName}}',
+                    '{{project.lastBuild.name}}',
                 '</span>',
             '</a>\n'
         ].join('\n')

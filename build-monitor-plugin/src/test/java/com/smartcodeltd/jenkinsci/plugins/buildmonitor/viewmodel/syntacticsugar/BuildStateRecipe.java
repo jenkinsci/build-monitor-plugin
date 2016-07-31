@@ -2,16 +2,22 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar
 
 import com.google.common.base.Supplier;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
-import hudson.model.*;
+import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
+import hudson.model.AbstractBuild;
+import hudson.model.AbstractProject;
+import hudson.model.Result;
+import hudson.model.User;
 import hudson.plugins.claim.ClaimBuildAction;
 import hudson.scm.ChangeLogSet;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.AnalysedTest.failureCauseBuildAction;
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.ClaimedTest.claimBuildAction;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Jan Molak
@@ -127,11 +133,37 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe knownFailures(String... failures) {
+    private ClaimBuildAction claimBuildAction(String author, String reason) {
+        ClaimBuildAction action = mock(ClaimBuildAction.class);
+        when(action.isClaimed()).thenReturn(true);
+        when(action.getClaimedByName()).thenReturn(author);
+        when(action.getReason()).thenReturn(reason);
+
+        return action;
+    }
+
+    public BuildStateRecipe knownProblems(String... failures) {
         final FailureCauseBuildAction action = failureCauseBuildAction(failures);
         when(build.getAction(FailureCauseBuildAction.class)).thenReturn(action);
 
         return this;
+    }
+
+    private FailureCauseBuildAction failureCauseBuildAction(String... FailureNames) {
+        FailureCauseBuildAction action = mock(FailureCauseBuildAction.class);
+        List<FoundFailureCause> items = new ArrayList<FoundFailureCause>();
+        for( String name : FailureNames ) {
+            items.add(failure(name));
+        }
+        when(action.getFoundFailureCauses()).thenReturn(items);
+
+        return action;
+    }
+
+    private FoundFailureCause failure(String name) {
+        FoundFailureCause failure = mock(FoundFailureCause.class);
+        when(failure.getDescription()).thenReturn(name);
+        return failure;
     }
 
     public BuildStateRecipe and() {
