@@ -33,7 +33,7 @@ public class ConsoleTransferListener
 
     private PrintStream out;
 
-    private Map<TransferResource, Long> downloads = new ConcurrentHashMap<TransferResource, Long>();
+    private Map<TransferResource, Long> downloads = new ConcurrentHashMap<>();
 
     private int lastLength;
 

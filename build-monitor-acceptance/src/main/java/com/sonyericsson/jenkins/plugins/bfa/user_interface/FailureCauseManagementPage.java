@@ -7,9 +7,9 @@ import net.serenitybdd.screenplay.targets.Target;
 
 public class FailureCauseManagementPage {
     public static final Target Create_New_Link = Link.called("Create new");
-    public static final Target Name            = Setting.defining("Name"); //Target.the("Name field").locatedBy("//*[@name='_.name']");
-    public static final Target Description     = Setting.defining("Description"); //Target.the("Description field").locatedBy("//*[@name='_.description']");
-    public static final Target Comment         = Setting.defining("Comment"); //Target.the("Comment field").locatedBy("//*[@name='_.comment']");
+    public static final Target Name            = Setting.defining("Name");
+    public static final Target Description     = Setting.defining("Description");
+    public static final Target Comment         = Setting.defining("Comment");
     public static final Target Add_Indication  = Button.called("Add Indication");
 
     public static final Target Build_Log_Indication_Link            = Link.called("Build Log Indication");
