@@ -24,6 +24,7 @@ public class LoggerOutputStream extends OutputStream {
         }
     }
 
+    @Override
     public void flush() {
         witness.note(buffer);
         buffer = "";

@@ -77,7 +77,7 @@ public class JobView {
 
     private String formatted(Duration duration) {
         return null != duration
-                ? duration.toString()
+                ? duration.value()
                 : "";
     }
 
@@ -107,7 +107,7 @@ public class JobView {
         return Objects.equal(job, obj);
     }
 
-
+    @Override
     public String toString() {
         return name();
     }
