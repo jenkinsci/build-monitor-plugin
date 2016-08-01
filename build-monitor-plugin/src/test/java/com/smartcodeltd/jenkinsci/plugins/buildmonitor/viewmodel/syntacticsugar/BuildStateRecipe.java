@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
 import com.google.common.base.Supplier;
+import com.google.common.collect.Lists;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
 import hudson.model.AbstractBuild;
@@ -9,6 +10,9 @@ import hudson.model.Result;
 import hudson.model.User;
 import hudson.plugins.claim.ClaimBuildAction;
 import hudson.scm.ChangeLogSet;
+import jenkins.model.CauseOfInterruption;
+import jenkins.model.InterruptedBuildAction;
+import org.powermock.api.mockito.PowerMockito;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +22,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 /**
  * @author Jan Molak
@@ -142,6 +147,31 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return action;
     }
 
+    public BuildStateRecipe wasAbortedBy(String username) {
+        User user = userCalled(username);
+
+        mockStatic(User.class);
+        PowerMockito.when(User.get(user.getId())).thenReturn(user);
+
+        final InterruptedBuildAction action = interruptedBuildAction(user);
+        when(build.getAction(InterruptedBuildAction.class)).thenReturn(action);
+
+        finishedWith(Result.ABORTED);
+
+        return this;
+    }
+
+    private InterruptedBuildAction interruptedBuildAction(User user) {
+        List<CauseOfInterruption> causes = Lists.<CauseOfInterruption>newArrayList(
+                new CauseOfInterruption.UserInterruption(user)
+        );
+
+        InterruptedBuildAction action = mock(InterruptedBuildAction.class);
+        when(action.getCauses()).thenReturn(causes);
+
+        return action;
+    }
+
     public BuildStateRecipe knownProblems(String... failures) {
         final FailureCauseBuildAction action = failureCauseBuildAction(failures);
         when(build.getAction(FailureCauseBuildAction.class)).thenReturn(action);
@@ -175,6 +205,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return build;
     }
 
+    // todo: replace mock user with userCalled
     private List<ChangeLogSet.Entry> entriesBy(String... authors) {
         List<ChangeLogSet.Entry> entries = new ArrayList<ChangeLogSet.Entry>();
 
@@ -188,6 +219,14 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
             entries.add(entry);
         }
         return entries;
+    }
+
+    private User userCalled(String name) {
+        User user = mock(User.class);
+        when(user.getId()).thenReturn(name.toLowerCase());
+        when(user.getFullName()).thenReturn(name);
+
+        return user;
     }
 
     private ChangeLogSet changeSetBasedOn(final List<ChangeLogSet.Entry> entries) {

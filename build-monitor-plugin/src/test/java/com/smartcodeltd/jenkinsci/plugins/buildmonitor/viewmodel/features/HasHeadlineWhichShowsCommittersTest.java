@@ -5,7 +5,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headli
 import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
-import static hudson.model.Result.ABORTED;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -124,15 +123,6 @@ public class HasHeadlineWhichShowsCommittersTest {
                 a(job().whereTheLast(build().succeededThanksTo("Adam")))));
 
         assertThat(headlineOf(view), isEmptyString());
-    }
-
-    @Test
-    public void should_tell_if_a_build_was_aborted() throws Exception {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().finishedWith(ABORTED)))));
-
-        // todo: might be worth to detect who aborted the build too
-        assertThat(headlineOf(view), is("Execution aborted"));
     }
 
     // --
