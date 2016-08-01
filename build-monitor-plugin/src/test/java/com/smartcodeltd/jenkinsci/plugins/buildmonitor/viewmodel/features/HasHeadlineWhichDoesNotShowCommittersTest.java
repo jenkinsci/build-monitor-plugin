@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
 import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
@@ -40,27 +41,18 @@ public class HasHeadlineWhichDoesNotShowCommittersTest {
     }
 
     @Test
-    public void should_not_tell_who_fixed_the_broken_build() throws Exception {
+    public void should_congratulate_anonymously_when_the_build_is_fixed() throws Exception {
         view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
                 a(job().whereTheLast(build().succeededThanksTo("Adam")).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
 
-        assertThat(headlineOf(view), is(""));
-    }
-
-    @Test
-    public void should_not_list_committers_who_fixed_the_broken_build() throws Exception {
-        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam", "Connor")).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
-
-        assertThat(headlineOf(view), is(""));
+        assertThat(headlineOf(view), is("And we're back in the green!"));
     }
 
     // --
 
     private Feature hasHeadlineThatDoesNotShowCommitters() {
-        return new HasHeadline(new HasHeadline.Config(false));
+        return new HasHeadline(new HeadlineConfig(false));
     }
 
     private String headlineOf(JobView job) {

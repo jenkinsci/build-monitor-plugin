@@ -26,7 +26,7 @@ import org.openqa.selenium.WebDriver;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScriptThat.Finishes_With_Error;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.containsString;
 
 @RunWith(SerenityRunner.class)
 public class ShouldTellWhatBrokeTheBuild {
@@ -54,7 +54,9 @@ public class ShouldTellWhatBrokeTheBuild {
 
         when(dave).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
-        then(dave).should(seeThat(ProjectWidget.of("Discovery One").details(), is("Identified problem: Pod bay doors didn't open")));
+        then(dave).should(seeThat(ProjectWidget.of("Discovery One").details(),
+                containsString("Identified problem: Pod bay doors didn't open")
+        ));
     }
 
     @Test
@@ -76,7 +78,7 @@ public class ShouldTellWhatBrokeTheBuild {
         when(dave).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
         then(dave).should(seeThat(ProjectWidget.of("My App").details(),
-                is("Identified problem: 5 of 143 unit tests failed")
+                containsString("Identified problem: 5 of 143 unit tests failed")
         ));
     }
 

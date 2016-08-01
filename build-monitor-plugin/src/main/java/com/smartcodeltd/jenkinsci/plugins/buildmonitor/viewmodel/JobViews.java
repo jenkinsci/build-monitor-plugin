@@ -2,6 +2,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.*;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
 import hudson.model.Job;
 
 import java.util.List;
@@ -26,7 +27,8 @@ public class JobViews {
     public JobView viewOf(Job<?, ?> job) {
         List<Feature> viewFeatures = newArrayList();
 
-        viewFeatures.add(new HasHeadline(new HasHeadline.Config(config.shouldDisplayCommitters())));
+        // todo: a more elegant way of assembling the features would be nice
+        viewFeatures.add(new HasHeadline(new HeadlineConfig(config.shouldDisplayCommitters())));
         viewFeatures.add(new KnowsLastBuildDetails());
 
         if (jenkins.hasPlugin(Claim)) {
