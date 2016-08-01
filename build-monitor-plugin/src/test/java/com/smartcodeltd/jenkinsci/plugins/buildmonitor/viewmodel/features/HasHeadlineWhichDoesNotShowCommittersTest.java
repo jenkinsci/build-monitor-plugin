@@ -5,6 +5,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headli
 import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
+import static hudson.model.Result.ABORTED;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -58,7 +59,15 @@ public class HasHeadlineWhichDoesNotShowCommittersTest {
         assertThat(headlineOf(view), is("Back in the green!"));
     }
 
-    // --
+    @Test
+    public void should_tell_if_a_build_was_aborted() throws Exception {
+        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
+                a(job().whereTheLast(build().finishedWith(ABORTED)))));
+
+        assertThat(headlineOf(view), is("Execution aborted"));
+    }
+
+// --
 
     private Feature hasHeadlineThatDoesNotShowCommitters() {
         return new HasHeadline(new HeadlineConfig(false));

@@ -37,6 +37,7 @@ public class HasHeadline implements Feature<Headline> {
     private CandidateHeadline headlineOf(final JobView job) {
         List<CandidateHeadline> availableHeadlines = newArrayList(
                 new HeadlineOfExecuting(job, config),
+                new HeadlineOfAborted(job, config),
                 new HeadlineOfFixed(job, config),
                 new HeadlineOfFailing(job, config)
         );
