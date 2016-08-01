@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static com.google.common.collect.Iterables.transform;
+import static com.google.common.collect.Lists.newArrayList;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafety.getOrElse;
 
 public class BuildView implements BuildViewModel {
@@ -123,7 +125,7 @@ public class BuildView implements BuildViewModel {
         return getUsers(new Reader() {
             @Override
             public Iterable<String> readUsersFrom(AbstractBuild<?, ?> jenkinsBuild) {
-                return Iterables.transform(jenkinsBuild.getCulprits(), new Function<User, String>() {
+                return transform(jenkinsBuild.getCulprits(), new Function<User, String>() {
                     @Override
                     public String apply(User culprit) {
                         return culprit.getFullName();
@@ -138,12 +140,16 @@ public class BuildView implements BuildViewModel {
         return getUsers(new Reader() {
             @Override
             public Iterable<String> readUsersFrom(AbstractBuild<?, ?> jenkinsBuild) {
-                return Iterables.transform(jenkinsBuild.getChangeSet(), new Function<ChangeLogSet.Entry, String>() {
+                return transform(nonNullIterable(jenkinsBuild.getChangeSet()), new Function<ChangeLogSet.Entry, String>() {
                     @Override
                     public String apply(ChangeLogSet.Entry entry) {
                         return entry.getAuthor().getFullName();
                     }
                 });
+            }
+
+            private <T> T nonNullIterable(T list) {
+                return (T) getOrElse(list, newArrayList());
             }
         });
     }
@@ -183,9 +189,7 @@ public class BuildView implements BuildViewModel {
         if (build instanceof AbstractBuild<?, ?>) {
             AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
 
-            if (! (isRunning(jenkinsBuild))) {
-                Iterables.addAll(users, reader.readUsersFrom(jenkinsBuild));
-            }
+            Iterables.addAll(users, reader.readUsersFrom(jenkinsBuild));
         }
 
         return users;

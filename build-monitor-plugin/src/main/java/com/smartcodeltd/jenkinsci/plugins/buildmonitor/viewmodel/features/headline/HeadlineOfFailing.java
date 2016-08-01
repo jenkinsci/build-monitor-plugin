@@ -1,23 +1,24 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Lister;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Pluraliser;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.SerialisableAsJsonObjectCalled;
 
 import java.util.List;
 import java.util.Set;
 
+import static com.google.common.collect.Iterables.contains;
 import static com.google.common.collect.Iterables.getLast;
+import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
+import static hudson.model.Result.FAILURE;
 import static hudson.model.Result.SUCCESS;
+import static hudson.model.Result.UNSTABLE;
 
-public class HeadlineOfFailing implements SerialisableAsJsonObjectCalled<Headline> {
-
-    private final static Set<String> Empty_Set = ImmutableSet.of();
+public class HeadlineOfFailing implements CandidateHeadline {
 
     private final JobView job;
     private final HeadlineConfig config;
@@ -25,6 +26,11 @@ public class HeadlineOfFailing implements SerialisableAsJsonObjectCalled<Headlin
     public HeadlineOfFailing(JobView job, HeadlineConfig config) {
         this.job = job;
         this.config = config;
+    }
+
+    @Override
+    public boolean isApplicableTo(JobView job) {
+        return contains(newArrayList(FAILURE, UNSTABLE), job.lastCompletedBuild().result());
     }
 
     @Override
@@ -76,6 +82,6 @@ public class HeadlineOfFailing implements SerialisableAsJsonObjectCalled<Headlin
     private Set<String> responsibleFor(BuildViewModel build) {
         return config.displayCommitters
                 ? build.culprits()
-                : Empty_Set;
+                : Sets.<String>newHashSet();
     }
 }

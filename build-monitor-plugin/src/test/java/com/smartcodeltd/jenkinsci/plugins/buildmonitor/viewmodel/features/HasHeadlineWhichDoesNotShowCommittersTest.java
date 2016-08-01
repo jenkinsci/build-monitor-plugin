@@ -5,11 +5,20 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headli
 import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
+import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class HasHeadlineWhichDoesNotShowCommittersTest {
     private JobView view;
+
+    @Test
+    public void should_tell_whose_changes_are_being_built() throws Exception {
+        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
+                a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Adam")))));
+
+        assertThat(headlineOf(view), isEmptyString());
+    }
 
     @Test
     public void should_not_tell_who_broke_the_build() throws Exception {
@@ -46,7 +55,7 @@ public class HasHeadlineWhichDoesNotShowCommittersTest {
                 a(job().whereTheLast(build().succeededThanksTo("Adam")).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
 
-        assertThat(headlineOf(view), is("And we're back in the green!"));
+        assertThat(headlineOf(view), is("Back in the green!"));
     }
 
     // --

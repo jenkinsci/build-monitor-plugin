@@ -1,11 +1,14 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
+import com.google.common.base.Predicate;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.*;
 
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.HasHeadline.CurrentState.*;
-import static hudson.model.Result.NOT_BUILT;
-import static hudson.model.Result.SUCCESS;
+import java.util.List;
+
+import static com.google.common.collect.Iterables.filter;
+import static com.google.common.collect.Iterables.getFirst;
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * @author Jan Molak
@@ -31,31 +34,18 @@ public class HasHeadline implements Feature<Headline> {
         return headlineOf(job).asJson();
     }
 
-    private SerialisableAsJsonObjectCalled<Headline> headlineOf(JobView job) {
-        switch (stateOf(job)) {
-            case Never_Run:  return new NoHeadline();
-            case Successful: return new HeadlineOfSuccessful(job, config);
-            case Failed:     return new HeadlineOfFailing(job, config);
-            default:         return new NoHeadline();
-        }
-    }
+    private CandidateHeadline headlineOf(final JobView job) {
+        List<CandidateHeadline> availableHeadlines = newArrayList(
+                new HeadlineOfExecuting(job, config),
+                new HeadlineOfFixed(job, config),
+                new HeadlineOfFailing(job, config)
+        );
 
-    private CurrentState stateOf(JobView job) {
-
-        if (SUCCESS.equals(job.lastCompletedBuild().result())) {
-            return Successful;
-        }
-
-        if (NOT_BUILT.equals(job.lastBuild().result())) {
-            return Never_Run;
-        }
-
-        return Failed;
-    }
-
-    public enum CurrentState {
-        Never_Run,
-        Successful,
-        Failed;
+        return getFirst(filter(availableHeadlines, new Predicate<CandidateHeadline>() {
+            @Override
+            public boolean apply(CandidateHeadline candidateHeadline) {
+                return candidateHeadline.isApplicableTo(job);
+            }
+        }), new NoHeadline());
     }
 }

@@ -21,6 +21,30 @@ public class HasHeadlineWhichShowsCommittersTest {
     }
 
     @Test
+    public void should_say_nothing_if_no_builds_were_executed_and_one_is_running_now() throws Exception {
+        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
+                a(job().whereTheLast(build().isStillBuilding()))));
+
+        assertThat(headlineOf(view), isEmptyString());
+    }
+
+    @Test
+    public void should_tell_whose_changes_are_being_built() throws Exception {
+        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
+                a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Adam")))));
+
+        assertThat(headlineOf(view), is("Building Adam's changes"));
+    }
+
+    @Test
+    public void should_tell_whose_changes_are_being_built_when_there_are_multiple_committers() throws Exception {
+        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
+                a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Ben", "Adam")))));
+
+        assertThat(headlineOf(view), is("Building Adam and Ben's changes"));
+    }
+
+    @Test
     public void should_tell_who_broke_the_build() throws Exception {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")))));
@@ -34,15 +58,6 @@ public class HasHeadlineWhichShowsCommittersTest {
                 a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben")))));
 
         assertThat(headlineOf(view), is("1 build has failed since Adam and Ben committed their changes"));
-    }
-
-    @Test
-    public void should_tell_who_broke_the_previous_build_if_the_current_one_is_still_running() throws Exception {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().isStillBuilding()).
-                        andThePrevious(build().wasBrokenBy("Ben")))));
-
-        assertThat(headlineOf(view), is("1 build has failed since Ben committed their changes"));
     }
 
     @Test
@@ -72,7 +87,7 @@ public class HasHeadlineWhichShowsCommittersTest {
                 a(job().whereTheLast(build().succeededThanksTo("Adam")).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
 
-        assertThat(headlineOf(view), is("Succeeded after Adam committed their changes :-)"));
+        assertThat(headlineOf(view), is("Fixed after Adam committed their changes :-)"));
     }
 
     @Test
@@ -81,7 +96,7 @@ public class HasHeadlineWhichShowsCommittersTest {
                 a(job().whereTheLast(build().succeededThanksTo("Adam", "Connor")).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
 
-        assertThat(headlineOf(view), is("Succeeded after Adam and Connor committed their changes :-)"));
+        assertThat(headlineOf(view), is("Fixed after Adam and Connor committed their changes :-)"));
     }
 
     @Test
@@ -90,7 +105,7 @@ public class HasHeadlineWhichShowsCommittersTest {
                 a(job().whereTheLast(build().succeededThanksTo()).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
 
-        assertThat(headlineOf(view), is("And we're back in the green!"));
+        assertThat(headlineOf(view), is("Back in the green!"));
     }
 
     @Test
