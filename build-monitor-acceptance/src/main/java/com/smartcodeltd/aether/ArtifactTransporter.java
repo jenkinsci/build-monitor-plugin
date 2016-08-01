@@ -16,6 +16,8 @@ import org.eclipse.aether.spi.connector.RepositoryConnectorFactory;
 import org.eclipse.aether.spi.connector.transport.TransporterFactory;
 import org.eclipse.aether.transport.file.FileTransporterFactory;
 import org.eclipse.aether.transport.http.HttpTransporterFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.nio.file.Path;
@@ -27,8 +29,11 @@ import static java.lang.String.format;
 
 public class ArtifactTransporter {
 
+    private static final Logger Log = LoggerFactory.getLogger(ArtifactTransporter.class);
+
     private final List<RemoteRepository> remoteLocations;
     private final Path localRepositoryLocation;
+
 
     public ArtifactTransporter(Path localRepositoryLocation, RemoteRepository... remoteLocations) {
         this.localRepositoryLocation = localRepositoryLocation;
@@ -58,7 +63,7 @@ public class ArtifactTransporter {
 
             artifact = artifactResult.getArtifact();
 
-            System.out.println(artifact + " resolved to  " + artifact.getFile());
+            Log.info(artifact + " resolved to  " + artifact.getFile());
 
             return artifact.getFile().toPath();
 

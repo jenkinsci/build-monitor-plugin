@@ -1,5 +1,9 @@
 package net.serenitybdd.integration.jenkins.environment;
 
+import net.serenitybdd.integration.jenkins.environment.rules.FindFreePort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -7,9 +11,13 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 
 public class PluginDescription {
+    private static final Logger Log = LoggerFactory.getLogger(FindFreePort.class);
+
     public static PluginDescription of(@NotNull Path pluginAtPath) {
+        JarFile jarFile = null;
         try {
-            Attributes attrs = new JarFile(pluginAtPath.toFile()).getManifest().getMainAttributes();
+            jarFile = new JarFile(pluginAtPath.toFile());
+            Attributes attrs = jarFile.getManifest().getMainAttributes();
 
             return new PluginDescription(
                     pluginAtPath,
@@ -18,8 +26,18 @@ public class PluginDescription {
                     attrs.getValue("Jenkins-Version")
             );
         }
-        catch(IOException e) {
+        catch (IOException e) {
             throw new RuntimeException(String.format("Couldn't read the manifest file of '%s'.", pluginAtPath.toAbsolutePath()), e);
+        }
+        finally {
+            if (jarFile != null){
+                try {
+                    jarFile.close();
+                } catch (IOException e) {
+                    Log.error("error closing jarFile",e);
+                }
+
+            }
         }
     }
 

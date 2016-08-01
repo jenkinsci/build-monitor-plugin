@@ -58,7 +58,7 @@ public class BuildView implements BuildViewModel {
     }
 
     private boolean isRunning(Run<?, ?> build) {
-        return (build.hasntStartedYet() || build.isBuilding() || build.isLogUpdated());
+        return build.hasntStartedYet() || build.isBuilding() || build.isLogUpdated();
     }
 
     @Override

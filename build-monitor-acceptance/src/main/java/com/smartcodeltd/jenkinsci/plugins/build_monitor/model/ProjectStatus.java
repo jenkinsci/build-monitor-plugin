@@ -56,8 +56,6 @@ public enum ProjectStatus {
     // todo: Java 8?
 
     private static Set<String> projectStatusClasses() {
-        // todo: can I use that instead? EnumValues.forType(ProjectStatus.class);
-
         return setOf(stringRepresentationsOf(EnumSet.allOf(ProjectStatus.class)));
     }
 
