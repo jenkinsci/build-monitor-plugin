@@ -7,7 +7,12 @@ public class DurationInMilliseconds extends Duration {
     }
 
     @Override
-    public String toString() {
+    public String value() {
         return String.valueOf(duration);
+    }
+
+    @Override
+    public String toString() {
+        return value();
     }
 }

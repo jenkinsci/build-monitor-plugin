@@ -28,7 +28,7 @@ public class KnowsLastBuildDetails implements Feature<KnowsLastBuildDetails.Last
 
     private static String formatted(Duration duration) {
         return null != duration
-                ? duration.toString()
+                ? duration.value()
                 : "";
     }
 

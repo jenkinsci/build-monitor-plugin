@@ -159,6 +159,7 @@ public class BuildView implements BuildViewModel {
         return Optional.fromNullable(build.getAction(jenkinsAction));
     }
 
+    @Override
     public String toString() {
         return name();
     }

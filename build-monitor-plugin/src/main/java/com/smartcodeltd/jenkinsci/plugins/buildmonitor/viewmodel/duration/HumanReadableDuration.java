@@ -24,7 +24,7 @@ public class HumanReadableDuration extends Duration {
     }
 
     @Override
-    public String toString() {
+    public String value() {
         String formatted;
 
         formatted  = hours() > 0   ? hours()   + "h " : "";
@@ -32,5 +32,10 @@ public class HumanReadableDuration extends Duration {
         formatted += seconds() + "s";
 
         return formatted;
+    }
+
+    @Override
+    public String toString() {
+        return value();
     }
 }
