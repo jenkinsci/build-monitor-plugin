@@ -104,7 +104,7 @@ public class JobView {
 
     @Override
     public boolean equals(Object obj) {
-        return Objects.equal(job,obj);
+        return Objects.equal(job, obj);
     }
 
 

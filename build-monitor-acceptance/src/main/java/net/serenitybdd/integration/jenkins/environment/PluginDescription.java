@@ -12,6 +12,7 @@ import java.util.jar.JarFile;
 
 public class PluginDescription {
     private static final Logger Log = LoggerFactory.getLogger(FindFreePort.class);
+
     public static PluginDescription of(@NotNull Path pluginAtPath) {
         JarFile jarFile = null;
         try {
@@ -25,11 +26,11 @@ public class PluginDescription {
                     attrs.getValue("Jenkins-Version")
             );
         }
-        catch(IOException e) {
+        catch (IOException e) {
             throw new RuntimeException(String.format("Couldn't read the manifest file of '%s'.", pluginAtPath.toAbsolutePath()), e);
         }
         finally {
-            if(jarFile!=null){
+            if (jarFile != null){
                 try {
                     jarFile.close();
                 } catch (IOException e) {

@@ -1,6 +1,5 @@
 package com.smartcodeltd.aether;
 
-import net.serenitybdd.integration.jenkins.environment.rules.FindFreePort;
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;

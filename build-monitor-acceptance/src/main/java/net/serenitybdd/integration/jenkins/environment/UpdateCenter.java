@@ -47,13 +47,14 @@ public class UpdateCenter {
 
         ReadableByteChannel rbc = Channels.newChannel(link.openStream());
         FileOutputStream fos = null;
-        try{
+
+        try {
             fos = new FileOutputStream(destination.toAbsolutePath().toFile());
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 
             return destination;
         } finally {
-            if(fos!=null){
+            if (fos != null) {
                 fos.close();
             }
         }
