@@ -116,7 +116,7 @@
                 <div class="version-info column">
                     <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin" title="Learn more about the Build Monitor project" rel="external">Build Monitor</a>
                     version <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin/releases" title="Is your Build Monitor up to date?" rel="external">${it.installation.buildMonitorVersion()}</a>
-                    brought to you by <a href="http://smartcodeltd.co.uk" rel="external">Jan Molak</a>
+                    brought to you by <a href="https://bit.ly/JBMAbout" rel="external">Jan Molak</a>
                 </div>
             </footer>
 
