@@ -1,7 +1,14 @@
 'use strict';
 
 angular.
-    module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'rzModule', 'jenkins', 'buildMonitor.stats']).
+    module('buildMonitor.controllers', [
+        'buildMonitor.services',
+        'buildMonitor.cron',
+        'buildMonitor.stats',
+        'jenkins',
+        'rzModule',
+        'ngAnimate'
+    ]).
 
     controller('JobViews', ['$scope', '$rootScope', '$window', 'proxy', 'every', 'connectivityStrategist',
         function ($scope, $rootScope, $window, proxy, every, connectivityStrategist) {
@@ -109,6 +116,21 @@ angular.
                 }
             }
         }]).
+
+    directive('animateOnChange', ['$animate', '$timeout', function($animate, $timeout) {
+        return function(scope, elem, attr) {
+            scope.$watch(attr.animateOnChange, function(newValue, oldValue) {
+                if (newValue !== oldValue) {
+                    var cssClass = 'updated';
+                    $animate.addClass(elem, cssClass).then(function() {
+                        $timeout(function() {
+                            $animate.removeClass(elem, cssClass);
+                        }, 5);
+                    });
+                }
+            });
+        }
+    }]).
 
     // because IE11 and Edge browsers don't support vmax and vmin ... http://caniuse.com/#search=vmax
     directive('viewportUnits', function ($window) {

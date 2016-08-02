@@ -7,33 +7,44 @@
   .project {
 
     &.unknown > .progress {
-      -webkit-animation: forUnknown 2.25s 2 alternate;
-      -moz-animation: forUnknown 2.25s 2 alternate;
-      animation: forUnknown 2.25s 2 alternate;
       background-color: #9D9D9D;
+
+      &.updated {
+        -webkit-animation: forUnknown 2.25s 2 alternate;
+        -moz-animation: forUnknown 2.25s 2 alternate;
+        animation: forUnknown 2.25s 2 alternate;
+      }
     }
 
     &.successful > .progress {
-      -webkit-animation: forSuccessful 2.25s 2 alternate;
-      -moz-animation: forSuccessful 2.25s 2 alternate;
-      animation: forSuccessful 2.25s 2 alternate;
       background-color: green;
+
+      &.updated {
+        -webkit-animation: forSuccessful 2.25s 2 alternate;
+        -moz-animation: forSuccessful 2.25s 2 alternate;
+        animation: forSuccessful 2.25s 2 alternate;
+      }
     }
 
     &.unstable > .progress {
-      -webkit-animation: forUnstable 2.25s 2 alternate;
-      -moz-animation: forUnstable 2.25s 2 alternate;
-      animation: forUnstable 2.25s 2 alternate;
       background-color: #f9aa1c;
+
+      .updated {
+        -webkit-animation: forUnstable 2.25s 2 alternate;
+        -moz-animation: forUnstable 2.25s 2 alternate;
+        animation: forUnstable 2.25s 2 alternate;
+      }
     }
 
-    &.failing > .progress {
-      -webkit-animation: forFailing 2.25s 2 alternate;
-      -moz-animation: forFailing 2.25s 2 alternate;
-      animation: forFailing 2.25s 2 alternate;
+    &.failing > .progress.updated {
       background-color: firebrick;
-    }
 
+      .updated {
+        -webkit-animation: forFailing 2.25s 2 alternate;
+        -moz-animation: forFailing 2.25s 2 alternate;
+        animation: forFailing 2.25s 2 alternate;
+      }
+    }
   }
 }
 
