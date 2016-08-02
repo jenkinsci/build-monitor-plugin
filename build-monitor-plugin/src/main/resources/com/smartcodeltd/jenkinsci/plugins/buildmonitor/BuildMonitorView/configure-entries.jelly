@@ -50,7 +50,7 @@
 
   <!-- END cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.532/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
 
-  <f:section title="${%Build Monitor Settings}">
+  <f:section title="${%Build Monitor - View Settings}">
 
   <f:entry title="${%Title}">
     <f:textbox name="title" value="${it.title}"/>
@@ -66,6 +66,14 @@
       <f:option value="ByEstimatedDuration" selected="${it.currentOrder()=='ByEstimatedDuration'}">${%Estimated duration}</f:option>
     </select>
   </f:entry>
+
+  </f:section>
+
+  <f:section title="${%Build Monitor - Widget Settings}">
+
+    <f:entry title="${%Display committers}" help="${descriptor.getHelpFile('displayCommitters')}">
+      <f:checkbox id="displayCommitters" field="displayCommitters" />
+    </f:entry>
 
   </f:section>
 

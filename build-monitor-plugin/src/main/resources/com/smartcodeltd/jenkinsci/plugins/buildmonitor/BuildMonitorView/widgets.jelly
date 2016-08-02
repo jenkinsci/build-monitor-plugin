@@ -7,6 +7,7 @@
     <!-- todo: fix the CSS3 progress bar 'pulse' animations so that they work with 'track by project.hashCode' -->
     <li ng-repeat="project in jobs"
         class="{{ project.status }} basic project widget"
+        data-ng-class="{ 'claimed': !! project.claim.active }"
         id="{{ project.name | slugify }}"
     >
         <div class="progress" style="width: {{project.progress}}%">
@@ -18,17 +19,17 @@
                 <a title="{{project.name}}" href="{{project.url}}">{{project.name}}</a>
             </h2>
             <ul class="details">
-                <li>{{ project.headline }}</li>
-                <li data-ng-show="!!project.lastBuildDescription" class="build-description description-setter-plugin">{{ project.lastBuildDescription }}</li>
-                <li data-ng-show="!!project.claimed" class="claim-plugin">Claimed by <strong>{{ project.claimAuthor }}</strong>: {{ project.claimReason }}</li>
-                <li data-ng-show="!!project.hasKnownFailures" class="build-failure-analyzer-plugin possible-failure-cause">
+                <li data-ng-show="!  project.claim.active">{{ project.headline }}</li>
+                <li data-ng-show="!! project.lastBuild.description" class="build-description description-setter-plugin">{{ project.lastBuild.description }}</li>
+                <li data-ng-show="!! project.claim.active" class="claim-plugin">Claimed by <strong>{{ project.claim.author }}</strong>: {{ project.claim.reason }}</li>
+                <li data-ng-show="!! project.problems" class="build-failure-analyzer-plugin possible-failure-cause">
                     <span>
                         <ng-pluralize
-                            count="project.knownFailures.length"
-                            when="{'1': 'Identified problem: ', 'other': '{{ project.knownFailures.length }} identified problems: '}"></ng-pluralize>
+                            count="project.problems.length"
+                            when="{'1': 'Identified problem: ', 'other': '{{ project.problems.length }} identified problems: '}"></ng-pluralize>
                     </span>
                     <ul class="identified-failures">
-                        <li data-ng-repeat="name in project.knownFailures">{{ name }}</li>
+                        <li data-ng-repeat="name in project.problems">{{ name }}</li>
                     </ul>
                 </li>
             </ul>

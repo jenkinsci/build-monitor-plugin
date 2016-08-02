@@ -1,22 +1,16 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.bfa.Analysis;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.claim.Claim;
 import hudson.model.Result;
 import org.junit.Test;
 
-import java.util.Date;
 import java.util.List;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Loops.asFollows;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.assumeThat;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.currentTime;
 import static hudson.model.Result.*;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
@@ -41,8 +35,8 @@ public class JobViewTest {
         when(relativeLocation.name()).thenReturn(theName);
 
         view = a(jobView().of(
-                a(job().withName(theName)))
-                .with(relativeLocation));
+                a(job().withName(theName))
+        ).with(relativeLocation));
 
         assertThat(view.name(), is(theName));
         assertThat(view.toString(), is(theName));
@@ -60,31 +54,6 @@ public class JobViewTest {
 
         assertThat(view.url(), is(expectedUrl));
         verify(relativeLocation, times(1)).url();
-    }
-
-    @Test
-    public void should_know_current_build_number() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().hasNumber(5)))));
-
-        assertThat(view.lastBuildName(), is("#5"));
-    }
-
-    @Test
-    public void should_use_build_name_if_its_known() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().hasName("1.3.4+build.15")))));
-
-        assertThat(view.lastBuildName(), is("1.3.4+build.15"));
-    }
-
-    @Test
-    public void should_know_the_url_of_the_last_build() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().hasNumber(22))))
-                .with(locatedAt("job/project-name")));
-
-        assertThat(view.lastBuildUrl(), is("job/project-name/22/"));
     }
 
     /*
@@ -133,47 +102,6 @@ public class JobViewTest {
         assertThat(view.progress(), is(20));
     }
 
-    /*
-     * Elapsed time
-     */
-
-    @Test
-    public void should_know_how_long_a_build_has_been_running_for() throws Exception {
-
-        String startTime = "13:10:00",
-                sixSecondsLater = "13:10:06",
-                twoAndHalfMinutesLater = "13:12:30",
-                anHourAndHalfLater = "14:40:00";
-        Date currentTime = currentTime().is(startTime);
-
-        view = a(jobView().of(
-                a(job().whereTheLast(build().startedAt(startTime).isStillBuilding())))
-                .assuming(currentTime));
-        assumeThat(currentTime).is(sixSecondsLater);
-        assertThat(view.lastBuildDuration(), is("6s"));
-
-        assumeThat(currentTime).is(twoAndHalfMinutesLater);
-        assertThat(view.lastBuildDuration(), is("2m 30s"));
-
-        assumeThat(currentTime).is(anHourAndHalfLater);
-        assertThat(view.lastBuildDuration(), is("1h 30m 0s"));
-    }
-
-    @Test
-    public void should_know_how_long_the_last_build_took_once_its_finished() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(SUCCESS).and().took(3)))));
-
-        assertThat(view.lastBuildDuration(), is("3m 0s"));
-    }
-
-    @Test
-    public void should_not_say_anything_about_the_duration_if_the_build_hasnt_run_yet() throws Exception {
-        view = a(jobView().of(a(job())));
-
-        assertThat(view.lastBuildDuration(), is(""));
-    }
-
     @Test
     public void should_know_how_long_the_next_build_is_supposed_to_take() throws Exception {
         view = a(jobView().of(
@@ -187,20 +115,6 @@ public class JobViewTest {
         view = a(jobView().of(a(job())));
 
         assertThat(view.estimatedDuration(), is(""));
-    }
-
-    /*
-     * Last build, last success and last failure (ISO 8601)
-     */
-    @Test
-    public void should_know_how_long_since_the_last_build_happened() throws Exception {
-        String tenMinutesInMilliseconds = String.format("%d", 10 * 60 * 1000);
-
-        view = a(jobView().of(
-                a(job().whereTheLast(build().startedAt("18:05:00").and().took(5))))
-                .assuming(currentTime().is("18:20:00")));
-
-        assertThat(view.timeElapsedSinceLastBuild(), is(tenMinutesInMilliseconds));
     }
 
     /*
@@ -329,151 +243,12 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_describe_the_job_as_claimed_if_someone_claimed_last_build_failures() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(FAILURE).and().wasClaimedBy("Adam", "sorry, I broke it, fixing now"))))
-                .augmented(with(Claim.class)));
-
-        assertThat(view.status(), containsString("claimed"));
-    }
-
-    /*
-     * Executive summary
-     */
-
-    @Test
-    public void should_tell_who_broke_the_build() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam")))));
-
-        assertThat(view.headline(), is("Failed after Adam committed their changes"));
-    }
-
-    @Test
-    public void should_list_committers_who_broke_the_build_in_alphabetical_order() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben")))));
-
-        assertThat(view.headline(), is("Failed after Adam and Ben committed their changes"));
-    }
-
-    @Test
-    public void should_tell_who_broke_the_previous_build_if_the_current_one_is_still_running() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().isStillBuilding()).
-                        andThePrevious(build().wasBrokenBy("Ben")))));
-
-        assertThat(view.headline(), is("Failed after Ben committed their changes"));
-    }
-
-    @Test
-    public void should_tell_the_number_of_broken_builds_since_the_last_broken_build() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam")).
-                        andThePrevious(build().wasBrokenBy("Ben", "Connor")).
-                        andThePrevious(build().wasBrokenBy("Daniel")).
-                        andThePrevious(build().succeededThanksTo("Errol")))));
-
-        assertThat(view.headline(), is("2 builds have failed since Daniel committed their changes"));
-    }
-
-    @Test
-    public void should_tell_the_number_of_broken_builds_since_the_last_build_broken_by_multiple_committers() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam")).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor")).
-                        andThePrevious(build().succeededThanksTo("Errol")))));
-
-        assertThat(view.headline(), is("1 build has failed since Ben, Connor and Daniel committed their changes"));
-    }
-
-    @Test
-    public void should_tell_who_fixed_the_broken_build() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam")).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
-
-        assertThat(view.headline(), is("Succeeded after Adam committed their changes :-)"));
-    }
-
-    @Test
-    public void should_list_committers_who_fixed_the_broken_build() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam", "Connor")).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
-
-        assertThat(view.headline(), is("Succeeded after Adam and Connor committed their changes :-)"));
-    }
-
-    @Test
-    public void should_not_tell_anything_if_broken_build_was_fixed_without_committers() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().succeededThanksTo()).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
-
-        assertThat(view.headline(), is(""));
-    }
-
-    @Test
-    public void should_not_congratulate_if_previous_succeeded() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam")).
-                        andThePrevious(build().succeededThanksTo("Ben")))));
-
-        assertThat(view.headline(), is(""));
-    }
-
-    @Test
-    public void should_not_congratulate_if_no_failure_before() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam")))));
-
-        assertThat(view.headline(), is(""));
-    }
-
-    /*
-     * Should know who claimed a broken build
-     */
-
-    @Test
-    public void should_know_if_a_failing_build_has_been_claimed() throws Exception {
-        String ourPotentialHero = "Adam",
-                theReason = "I broke it, sorry, fixing now";
-
-        view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(FAILURE).and().wasClaimedBy(ourPotentialHero, theReason))))
-                .augmented(with(Claim.class)));
-
-        assertThat(view.isClaimed(), is(true));
-        assertThat(view.claimAuthor(), is(ourPotentialHero));
-        assertThat(view.claimReason(), is(theReason));
-    }
-
-    @Test
-    public void should_describe_known_failures() {
-        String rogueAi = "Pod bay doors didn't open";
-
-        view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(FAILURE).and().knownFailures(rogueAi))))
-                .augmented(with(Analysis.class)));
-
-        assertThat(view.hasKnownFailures(), is(true));
-        assertThat(view.knownFailures(), hasItem(rogueAi));
-    }
-
-    @Test
     public void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() throws Exception {
         view = a(jobView().of(
                 a(job().thatHasNeverRun())));
 
-        assertThat(view.lastBuildName(), is(""));
-        assertThat(view.lastBuildUrl(), is(""));
-        assertThat(view.headline(), is(""));
-        assertThat(view.lastBuildDuration(), is(""));
         assertThat(view.estimatedDuration(), is(""));
         assertThat(view.progress(), is(0));
         assertThat(view.status(), is("unknown"));
-        assertThat(view.isClaimed(), is(false));
-        assertThat(view.hasKnownFailures(), is(false));
     }
 }

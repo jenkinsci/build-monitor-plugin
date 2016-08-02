@@ -1,10 +1,11 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.google.common.base.Optional;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
+import hudson.model.Action;
 import hudson.model.Result;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class NullBuildView implements BuildViewModel {
@@ -80,27 +81,7 @@ public class NullBuildView implements BuildViewModel {
     }
 
     @Override
-    public boolean isClaimed() {
-        return false;
-    }
-
-    @Override
-    public String claimant() {
-        return null;
-    }
-
-    @Override
-    public String reasonForClaim() {
-        return null;
-    }
-
-    @Override
-    public boolean hasKnownFailures() {
-        return false;
-    }
-
-    @Override
-    public List<String> knownFailures() {
-        return null;
+    public <A extends Action> Optional<A> detailsOf(Class<A> jenkinsAction) {
+        return Optional.absent();
     }
 }

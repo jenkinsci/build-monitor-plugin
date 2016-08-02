@@ -10,6 +10,8 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 
 public class Config {
 
+    private boolean displayCommitters;
+
     public static Config defaultConfig() {
         return new Config();
     }
@@ -28,6 +30,14 @@ public class Config {
 
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
+    }
+
+    public boolean shouldDisplayCommitters() {
+        return getOrElse(displayCommitters, true);
+    }
+
+    public void setDisplayCommitters(boolean flag) {
+        this.displayCommitters = flag;
     }
 
     @Override

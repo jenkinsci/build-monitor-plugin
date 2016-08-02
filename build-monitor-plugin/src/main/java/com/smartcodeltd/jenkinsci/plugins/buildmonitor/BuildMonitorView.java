@@ -27,7 +27,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.api.Respond;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation.BuildMonitorInstallation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.plugins.BuildAugmentor;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobViews;
 import hudson.Extension;
 import hudson.model.Descriptor.FormException;
 import hudson.model.Job;
@@ -86,6 +86,11 @@ public class BuildMonitorView extends ListView {
         return currentConfig().getOrder().getClass().getSimpleName();
     }
 
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public boolean isDisplayCommitters() {
+        return currentConfig().shouldDisplayCommitters();
+    }
+
     private static final BuildMonitorInstallation installation = new BuildMonitorInstallation();
 
     @SuppressWarnings("unused") // used in index.jelly
@@ -102,14 +107,20 @@ public class BuildMonitorView extends ListView {
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
 
-        String requestedOrdering = req.getParameter("order");
+        JSONObject json = req.getSubmittedForm();
 
-        title = req.getParameter("title");
+        synchronized (this) {
 
-        try {
-            currentConfig().setOrder(orderIn(requestedOrdering));
-        } catch (Exception e) {
-            throw new FormException("Can't order projects by " + requestedOrdering, "order");
+            String requestedOrdering = req.getParameter("order");
+            title                    = req.getParameter("title");
+
+            currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
+
+            try {
+                currentConfig().setOrder(orderIn(requestedOrdering));
+            } catch (Exception e) {
+                throw new FormException("Can't order projects by " + requestedOrdering, "order");
+            }
         }
     }
 
@@ -131,6 +142,8 @@ public class BuildMonitorView extends ListView {
     }
 
     private List<JobView> jobViews() {
+        JobViews views = new JobViews(new StaticJenkinsAPIs(), currentConfig());
+
         //A little bit of evil to make the type system happy.
         @SuppressWarnings("unchecked")
         List<Job<?, ?>> projects = new ArrayList(filter(super.getItems(), Job.class));
@@ -139,14 +152,10 @@ public class BuildMonitorView extends ListView {
         Collections.sort(projects, currentConfig().getOrder());
 
         for (Job project : projects) {
-            jobs.add(JobView.of(project, currentConfig(), withAugmentationsIfTheyArePresent()));
+            jobs.add(views.viewOf(project));
         }
 
         return jobs;
-    }
-
-    private BuildAugmentor withAugmentationsIfTheyArePresent() {
-        return BuildAugmentor.fromDetectedPlugins();
     }
 
     /**
