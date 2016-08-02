@@ -12,8 +12,18 @@ angular
 
     // private
 
+    function analyticsScriptLoaded() {
+        return !! $window.ga && !! $window.ga.create;
+    }
+
+    // this function sends the performance indicators to google analytics only when:
+    // - you agreed to participate in making Build Monitor better by allowing for the anonymous stats to be collected
+    //   see https://github.com/jan-molak/jenkins-build-monitor-plugin/wiki/Privacy-Policy
+    // - your machine is connected to the Internet
     function sendTimer (timer) {
-        $window.ga('send', 'timing', timer.category, timer.variable, timer.value);
+        if (analyticsScriptLoaded()) {
+            $window.ga('send', 'timing', timer.category, timer.variable, timer.value);
+        }
     }
 
     function timerExtractedFrom (metrics) {
@@ -47,8 +57,8 @@ angular
 
     // public
 
-    this.configure = function(config) {
-        config = angular.extend(defaults, config);
+    this.configure = function(_config_) {
+        config = angular.extend(defaults, _config_);
     };
 
     this.$get = ['every', '$window', 'googleAnalyticsBackend', function (every, $window, googleAnalyticsBackend) {
@@ -60,13 +70,9 @@ angular
     function Stats(configured, every, $window, backend) {
         var categorised_timers = {};
 
-        every(configured.flushIntervalInSeconds * 1000, flush);
-
-        whenUserLeavesTheApplication(flush);
-
         // public
 
-        this.timer = function(category_name, parameter_name, value_in_ms) {
+        function recordTimer (category_name, parameter_name, value_in_ms) {
             if (! categorised_timers[category_name]) {
                 categorised_timers[category_name] = {};
             }
@@ -76,7 +82,7 @@ angular
             }
 
             categorised_timers[category_name][parameter_name].push(Number(value_in_ms));
-        };
+        }
 
         // --
 
@@ -126,5 +132,11 @@ angular
 
             return _.reduce(categorised_timers, processEachCategory, {});
         }
+
+        every(configured.flushIntervalInSeconds * 1000, flush);
+
+        whenUserLeavesTheApplication(flush);
+
+        this.timer = recordTimer;
     }
 }]);
