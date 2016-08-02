@@ -9,7 +9,7 @@
 
     <j:set var="resourcesURL" value="${resURL}/plugin/build-monitor-plugin" />
     <j:set var="jobsURL" value="${rootURL}/job" />
-    <j:set var="angularVersion" value="1.1.5" />
+    <j:set var="angularVersion" value="1.5.8" />
 
     <x:doctype name="html" />
     <html>
@@ -28,9 +28,6 @@
             <l:yui module="yahoo" />
             <l:yui module="cookie" />
 
-            <script src="${resURL}/scripts/prototype.js" type="text/javascript"/>
-            <script src="${resURL}/scripts/behavior.js" type="text/javascript"/>
-
             <st:adjunct assumes="org.kohsuke.stapler.framework.prototype.prototype"
                         includes="org.kohsuke.stapler.bind"/>
 
@@ -40,19 +37,24 @@
 
             <link rel="stylesheet" href="${resourcesURL}/styles/normalize.css"/>
             <link rel="stylesheet" href="${resourcesURL}/styles/bootstrap-combined.2.3.2.min.css"/>
-            <link rel="stylesheet" href="${resourcesURL}/styles/angular-slider.css"/>
+            <link rel="stylesheet" href="${resourcesURL}/vendor/angular-slider-5.4.0/rzslider.min.css"/>
 
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
             <link rel="stylesheet" href="${rootURL}/build-monitor-plugin/style.css"/>
 
             <script src="${resURL}/scripts/yui/cookie/cookie-min.js"></script>
 
+            <script src="${resourcesURL}/vendor/angular-${angularVersion}/angular.min.js"></script>
+            <script src="${resourcesURL}/vendor/angular-${angularVersion}/angular-sanitize.min.js"></script>
+            <script src="${resourcesURL}/vendor/angular-${angularVersion}/angular-animate.min.js"></script>
+
             <script src="${resourcesURL}/vendor/modernizr.custom.27682.js"></script>
-            <script src="${resourcesURL}/vendor/angular-${angularVersion}.min.js"></script>
             <script src="${resourcesURL}/vendor/ng-lodash-3.10.1.min.js"></script>
             <script src="${resourcesURL}/vendor/ui-bootstrap-custom-tpls-0.4.0.js"></script>
-            <script src="${resourcesURL}/vendor/angular-slider-0.1.6.js"></script>
+
             <script src="${resourcesURL}/vendor/angular-slugify-1.0.0.js"></script>
+
+            <script src="${resourcesURL}/vendor/angular-slider-5.4.0/rzslider.min.js"></script>
 
             <script>
                 window['ga-disable-UA-61694827-4'] = ${!it.collectAnonymousUsageStatistics()};

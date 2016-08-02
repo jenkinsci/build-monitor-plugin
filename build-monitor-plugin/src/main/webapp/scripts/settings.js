@@ -1,5 +1,5 @@
 angular.
-    module('buildMonitor.settings', [ 'buildMonitor.services', 'uiSlider']).
+    module('buildMonitor.settings', [ 'buildMonitor.services', 'rzModule']).
 
     controller('controlPanel', ['$scope', 'cookieJar', 'townCrier',
         function ($scope, cookieJar, townCrier) {

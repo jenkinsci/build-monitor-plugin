@@ -1,0 +1,19 @@
+.rzslider {
+  span.rz-bubble {
+    color: #fff;
+  }
+
+  span.rz-bubble.rz-limit {
+    color: #ccc;
+  }
+
+  span.rz-pointer {
+    background-color: #f5f5f5;
+
+    &:after           { background-color: grey; }
+
+    &:hover:after     { background-color: darkgrey; }
+
+    &.rz-active:after { background-color: black; }
+  }
+}

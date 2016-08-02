@@ -6,62 +6,7 @@ describe('buildMonitor', function () {
 
             var noop = angular.noop;
 
-            beforeEach(module('buildMonitor.cron', ['everyProvider', '$provide', function (everyProvider, $provide) {
-
-                var timeline = [],
-                    nextId = 0,
-                    now = 0,
-                    $timeout;
-
-                $timeout = function (fn, delay) {
-                    timeline.push({
-                        nextTime: (now + delay),
-                        delay: delay,
-                        fn: fn,
-                        id: nextId
-                    });
-                    timeline.sort(function (a, b) {
-                        return a.nextTime - b.nextTime;
-                    });
-
-                    return nextId++;
-                };
-
-                $timeout.flush = function (millis) {
-                    now += millis;
-                    while (timeline.length && timeline[0].nextTime <= now) {
-                        var task = timeline[0];
-                        task.fn();
-
-                        clearTimeout(task.id)
-
-                        timeline.sort(function (a, b) {
-                            return a.nextTime - b.nextTime;
-                        });
-                    }
-
-                    return millis;
-
-
-                    function clearTimeout(id) {
-                        var fnIndex;
-
-                        angular.forEach(timeline, function (fn, index) {
-                            if (fn.id === id) fnIndex = index;
-                        });
-
-                        if (fnIndex !== undefined) {
-                            timeline.splice(fnIndex, 1);
-                            return true;
-                        }
-
-                        return false;
-                    };
-                };
-
-                $provide.provider('every', everyProvider);
-                $provide.value('$timeout', $timeout);
-            }]));
+            beforeEach(module('buildMonitor.cron'));
 
             it('executes the first iteration straight away', inject(function (every) {
                 var counter = 0;

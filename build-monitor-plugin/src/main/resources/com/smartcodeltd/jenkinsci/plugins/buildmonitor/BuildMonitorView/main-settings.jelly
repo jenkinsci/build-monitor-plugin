@@ -12,15 +12,15 @@
                     <p>New version of Build Monitor is&amp;nbsp;<a href="http://bit.ly/JBMReleases" title="Check out the release notes">available now</a>!</p>
                     <p>Upgrade via <a href="${h.inferHudsonURL(request)}pluginManager">Plugin Manager</a></p>
                 </li>
-                <li class="slider">
+                <li class="settings-option">
                     <span class="slider-label">Text scale</span>
-                    <slider floor="0.3" ceiling="2" step="0.1" precision="1" data-ng-model="settings.fontSize"></slider>
+                    <rzslider rz-slider-model="settings.fontSize" rz-slider-options="{ floor: 0.3, ceil: 2, step: 0.1, precision: 1 }"></rzslider>
                 </li>
-                <li>
+                <li class="settings-option">
                     <span class="slider-label">Maximum number of columns</span>
-                    <slider floor="1" ceiling="8" step="1" precision="0" data-ng-model="settings.numberOfColumns"></slider>
+                    <rzslider rz-slider-model="settings.numberOfColumns" rz-slider-options="{ floor: 1, ceil: 8, step: 1, precision: 0 }"></rzslider>
                 </li>
-                <li>
+                <li class="settings-option">
                     <input data-ng-model="settings.colourBlind"
                            data-ng-false-value="0"
                            data-ng-true-value="1"

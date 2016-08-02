@@ -294,7 +294,7 @@ h2 {
 .build-monitor nav label {
     width:100%;
 }
-.build-monitor nav li.slider {
+.build-monitor nav li.settings-option {
     margin-top:2em;
 }
 .build-monitor nav li.buttons {
@@ -340,13 +340,6 @@ h2 {
     padding-bottom:1em;
     border-bottom: 1px solid white;
     border-radius: 0;
-}
-
-/*
- *   Angular slider
- */
-slider {
-    width: 180px;
 }
 
 /*

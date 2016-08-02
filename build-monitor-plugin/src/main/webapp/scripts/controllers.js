@@ -1,7 +1,7 @@
 'use strict';
 
 angular.
-    module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'uiSlider', 'jenkins', 'buildMonitor.stats']).
+    module('buildMonitor.controllers', [ 'buildMonitor.services', 'buildMonitor.cron', 'rzModule', 'jenkins', 'buildMonitor.stats']).
 
     controller('JobViews', ['$scope', '$rootScope', '$window', 'proxy', 'every', 'connectivityStrategist',
         function ($scope, $rootScope, $window, proxy, every, connectivityStrategist) {
@@ -32,7 +32,7 @@ angular.
             // todo: extract into a 'widget' directive; this shouldn't be a responsibility of a controller to calculate the size of the font...
             function fontSizeFor(itemsOnScreen, numberOfColumns) {
                 var baseFontSizePercentage  = 5,
-                    itemsCount    = itemsOnScreen && itemsOnScreen.size() || 1,
+                    itemsCount    = itemsOnScreen && itemsOnScreen.length || 1,
                     actualColumns = Math.min(itemsCount, numberOfColumns),
                     actualRows    = Math.ceil(itemsCount / actualColumns);
 
@@ -88,13 +88,23 @@ angular.
 
                 return function (error) {
                     switch (error.status) {
-                        case 0:   return handleLostConnection(error);
-                        case 404: return handleJenkinsRestart(error);
-                        case 500: return handleInternalJenkins(error);
-                        case 502: return handleLostConnection(error);
-                        case 503: return handleLostConnection(error);
-                        case 504: return handleMisconfiguredProxy(error);
-                        default:  return handleUnknown(error);
+                        case 0:
+                        case -1:
+                        case 502:
+                        case 503:
+                            return handleLostConnection(error);
+
+                        case 404:
+                            return handleJenkinsRestart(error);
+
+                        case 500:
+                            return handleInternalJenkins(error);
+
+                        case 504:
+                            return handleMisconfiguredProxy(error);
+
+                        default:
+                            return handleUnknown(error);
                     }
                 }
             }

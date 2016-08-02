@@ -31,7 +31,7 @@ angular.module("buildMonitor.templates", []).run(["$templateCache", function($te
         "	<h1>Sorry to bother you, but Jenkins is having a problem :-(</h1>\n" +
         "</div>\n" +
         "<div class=\"modal-body\">\n" +
-        "   <p>Instead of an expected response I received the following, which usually means an internal Jenkins error:</p>" +
+        "   <p>Instead of the expected response, I received the following, which usually means an internal Jenkins error:</p>" +
         "	<textarea rows='5'>{{ error }}</textarea>\n" +
         "   <div ng-show='{{ stackTrace.length }}'>\n" +
         "       <p>This translates to the following stack trace:</p>\n" +

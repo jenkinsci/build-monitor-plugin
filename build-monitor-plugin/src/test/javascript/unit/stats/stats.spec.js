@@ -2,45 +2,33 @@
 
 describe('buildMonitor', function () {
     describe('stats', function () {
-        var stats,
-            googleAnalyticsBackend,
-            $timeout,
-            $window,
-            sandbox,
-            interval = seconds(10);
+        var sandbox,
+            intervalInSeconds = 10,
+            intervalInMillis  = millis(intervalInSeconds);
 
         beforeEach(function() {
             sandbox = sinon.sandbox.create();
 
             module('buildMonitor.stats', function(statsProvider) {
-                statsProvider.configure({ flushIntervalInSeconds: interval });
-            });
-
-            inject(function (_stats_, _googleAnalyticsBackend_, _$timeout_, _$window_) {
-                stats = _stats_;
-                googleAnalyticsBackend = _googleAnalyticsBackend_;
-
-                $timeout   = _$timeout_;
-                $window    = _$window_;
+                statsProvider.configure({ flushIntervalInSeconds: intervalInSeconds });
             });
         });
 
         afterEach(function () { sandbox.restore(); });
 
-        it ('does not flush the metrics if there are none recorded', function () {
+        it ('does not flush the metrics if there are none recorded', inject(function($timeout, googleAnalyticsBackend) {
             googleAnalyticsBackend.flush = sandbox.spy();
 
-            $timeout.flush();
+            $timeout.verifyNoPendingTasks();
+        }));
 
-            expect(googleAnalyticsBackend.flush).not.toHaveBeenCalled();
-        });
-
-        it ('flushes the timers after a "flushInterval" seconds', function () {
+        it ('flushes the timers after a "flushInterval" seconds', inject(function($timeout, stats, googleAnalyticsBackend) {
             googleAnalyticsBackend.flush = sandbox.spy();
 
             stats.timer('category name', 'timer name', 250);
 
-            $timeout.flush(seconds(10));
+            // $timeout.flush(5 * 60 * 1000 * 1000);
+            $timeout.flush();
 
             expect(googleAnalyticsBackend.flush).toHaveBeenCalledWith({
                 'category name': {
@@ -51,27 +39,27 @@ describe('buildMonitor', function () {
                   }
                 }
             });
-        });
+        }));
 
-        it ('removes recorded metrics after the flush', function () {
+        it ('removes recorded metrics after the flush', inject(function($timeout, stats, googleAnalyticsBackend) {
             googleAnalyticsBackend.flush = sandbox.spy();
 
             stats.timer('category name', 'timer name', 250);
 
-            $timeout.flush(interval);
-            $timeout.flush(interval);
+            $timeout.flush(intervalInMillis);
+            $timeout.flush(intervalInMillis);
 
             expect(googleAnalyticsBackend.flush).toHaveBeenCalledOnce();
-        });
+        }));
 
-        it ('starts fresh with every interval', function () {
+        it ('starts fresh with every interval', inject(function($timeout, stats, googleAnalyticsBackend) {
             googleAnalyticsBackend.flush = sandbox.spy();
 
             stats.timer('category name', 'timer name', 250);
-            $timeout.flush(interval);
+            $timeout.flush(intervalInMillis);
 
             stats.timer('category name', 'timer name', 475);
-            $timeout.flush(interval);
+            $timeout.flush(intervalInMillis);
 
             expect(googleAnalyticsBackend.flush).toHaveBeenCalledWith({
                 'category name': {
@@ -82,9 +70,9 @@ describe('buildMonitor', function () {
                     }
                 }
             });
-        });
+        }));
 
-        it ('accumulates metrics within an interval', function () {
+        it ('accumulates metrics within an interval', inject(function($timeout, stats, googleAnalyticsBackend) {
             googleAnalyticsBackend.flush = sandbox.spy();
 
             stats.timer('category name', 'timer name', 250);
@@ -92,7 +80,7 @@ describe('buildMonitor', function () {
             stats.timer('category name', 'timer name', 425);
             stats.timer('category name', 'timer name', 167);
 
-            $timeout.flush(interval);
+            $timeout.flush(intervalInMillis);
 
             expect(googleAnalyticsBackend.flush).toHaveBeenCalledWith({
                 'category name': {
@@ -103,9 +91,9 @@ describe('buildMonitor', function () {
                     }
                 }
             });
-        });
+        }));
 
-        it ('accumulates metrics within a category', function () {
+        it ('accumulates metrics within a category', inject(function($timeout, stats, googleAnalyticsBackend) {
             googleAnalyticsBackend.flush = sandbox.spy();
 
             stats.timer('category name',        'timer name', 250);
@@ -113,7 +101,7 @@ describe('buildMonitor', function () {
             stats.timer('second category name', 'timer name', 425);
             stats.timer('category name',        'timer name', 167);
 
-            $timeout.flush(interval);
+            $timeout.flush(intervalInMillis);
 
             expect(googleAnalyticsBackend.flush).toHaveBeenCalledWith({
                 'category name': {
@@ -131,9 +119,9 @@ describe('buildMonitor', function () {
                     }
                 }
             });
-        });
+        }));
 
-        it ('accumulates metrics per parameter', function () {
+        it ('accumulates metrics per parameter', inject(function($timeout, stats, googleAnalyticsBackend) {
             googleAnalyticsBackend.flush = sandbox.spy();
 
             stats.timer('category name', 'timer name', 250);
@@ -141,7 +129,7 @@ describe('buildMonitor', function () {
             stats.timer('category name', 'timer name', 425);
             stats.timer('category name', 'second timer name', 167);
 
-            $timeout.flush(interval);
+            $timeout.flush(intervalInMillis);
 
             expect(googleAnalyticsBackend.flush).toHaveBeenCalledWith({
                 'category name': {
@@ -157,23 +145,23 @@ describe('buildMonitor', function () {
                     }
                 }
             });
-        });
+        }));
 
         describe('integration with google analytics script', function () {
 
-            it ('works for a single timer', function () {
+            it ('works for a single timer', inject(function($timeout, $window, stats) {
                 $window.ga = sandbox.spy(); // let's pretend we've got google analytics script loaded
 
                 stats.timer('my timing category', 'timer name', 315);
 
-                $timeout.flush(interval);
+                $timeout.flush(intervalInMillis);
 
-                expect(ga).toHaveBeenCalledWith('send', 'timing', 'my timing category', 'timer name lower', 315);
-                expect(ga).toHaveBeenCalledWith('send', 'timing', 'my timing category', 'timer name upper', 315);
-                expect(ga).toHaveBeenCalledWith('send', 'timing', 'my timing category', 'timer name mean',  315);
-            });
+                expect($window.ga).toHaveBeenCalledWith('send', 'timing', 'my timing category', 'timer name lower', 315);
+                expect($window.ga).toHaveBeenCalledWith('send', 'timing', 'my timing category', 'timer name upper', 315);
+                expect($window.ga).toHaveBeenCalledWith('send', 'timing', 'my timing category', 'timer name mean',  315);
+            }));
 
-            it ('works for a timers from different categories', function () {
+            it ('works for a timers from different categories', inject(function($timeout, $window, stats) {
                 $window.ga = sandbox.spy(); // let's pretend we've got the google analytics script loaded
 
                 stats.timer('my timing category 1', 'timer',        250);
@@ -190,7 +178,7 @@ describe('buildMonitor', function () {
                 stats.timer('my timing category 2', 'second timer', 350);
                 stats.timer('my timing category 3', 'third timer',  167);
 
-                $timeout.flush(interval);
+                $timeout.flush(intervalInMillis);
 
                 expect($window.ga).toHaveBeenCalledWith('send', 'timing', 'my timing category 1', 'timer lower', 215);
                 expect($window.ga).toHaveBeenCalledWith('send', 'timing', 'my timing category 1', 'timer upper', 280);
@@ -203,10 +191,10 @@ describe('buildMonitor', function () {
                 expect($window.ga).toHaveBeenCalledWith('send', 'timing', 'my timing category 3', 'third timer lower', 167);
                 expect($window.ga).toHaveBeenCalledWith('send', 'timing', 'my timing category 3', 'third timer upper', 167);
                 expect($window.ga).toHaveBeenCalledWith('send', 'timing', 'my timing category 3', 'third timer mean',  167);
-            });
+            }));
         });
 
-        function seconds(number) {
+        function millis(number) {
             return number * 1000;
         }
     });
