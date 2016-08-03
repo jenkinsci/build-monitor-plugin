@@ -7,11 +7,12 @@ angular.
         'buildMonitor.stats',
         'jenkins',
         'rzModule',
-        'ngAnimate'
+        'ngAnimate',
+        'ngSanitize'
     ]).
 
-    controller('JobViews', ['$scope', '$rootScope', '$window', 'proxy', 'every', 'connectivityStrategist',
-        function ($scope, $rootScope, $window, proxy, every, connectivityStrategist) {
+    controller('JobViews', ['$scope', '$rootScope', '$window', 'connectivityStrategist', 'every', 'proxy',
+        function ($scope, $rootScope, $window, connectivityStrategist, every, proxy) {
             var tryToRecover  = connectivityStrategist.decideOnStrategy,
                 fetchJobViews = proxy.buildMonitor.fetchJobViews;
 
