@@ -21,11 +21,18 @@
                     <rzslider rz-slider-model="settings.numberOfColumns" rz-slider-options="{ floor: 1, ceil: 8, step: 1, precision: 0 }"></rzslider>
                 </li>
                 <li class="settings-option">
-                    <input data-ng-model="settings.colourBlind"
-                           data-ng-false-value="0"
-                           data-ng-true-value="1"
+                    <input ng-model="settings.colourBlind"
+                           ng-false-value="'0'"
+                           ng-true-value="'1'"
                            id="settings-colour-blind" type="checkbox" />
                     <label for="settings-colour-blind" title="Applies a colour blind-friendly colour scheme">Colour blind mode?</label>
+                </li>
+                <li class="settings-option">
+                    <input ng-model="settings.reduceMotion"
+                           ng-false-value="'0'"
+                           ng-true-value="'1'"
+                           id="settings-reduce-motion" type="checkbox" />
+                    <label for="settings-reduce-motion" title="Reduces the amount of animation Build Monitor uses">Reduce motion?</label>
                 </li>
                 <li class="buttons">
                     <a class="btn"

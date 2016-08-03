@@ -1,48 +1,42 @@
 .build-monitor {
 
-  .colour-blind-mode .progress {
+  &.colour-blind-mode .progress {
     opacity: 0.60;
   }
 
   .project {
+    &.unknown    > .progress { background-color: #9D9D9D; }
+    &.successful > .progress { background-color: green; }
+    &.unstable   > .progress { background-color: #f9aa1c; }
+    &.failing    > .progress { background-color: firebrick; }
+  }
 
-    &.unknown > .progress {
-      background-color: #9D9D9D;
+  &:not(.reduce-motion-mode) {
 
-      &.updated {
-        -webkit-animation: forUnknown 2.25s 2 alternate;
-        -moz-animation: forUnknown 2.25s 2 alternate;
-        animation: forUnknown 2.25s 2 alternate;
+    .project {
+
+      &.unknown > .progress.updated {
+          -webkit-animation: forUnknown 2.25s 2 alternate;
+          -moz-animation: forUnknown 2.25s 2 alternate;
+          animation: forUnknown 2.25s 2 alternate;
       }
-    }
 
-    &.successful > .progress {
-      background-color: green;
-
-      &.updated {
-        -webkit-animation: forSuccessful 2.25s 2 alternate;
-        -moz-animation: forSuccessful 2.25s 2 alternate;
-        animation: forSuccessful 2.25s 2 alternate;
+      &.successful > .progress.updated {
+          -webkit-animation: forSuccessful 2.25s 2 alternate;
+          -moz-animation: forSuccessful 2.25s 2 alternate;
+          animation: forSuccessful 2.25s 2 alternate;
       }
-    }
 
-    &.unstable > .progress {
-      background-color: #f9aa1c;
-
-      .updated {
-        -webkit-animation: forUnstable 2.25s 2 alternate;
-        -moz-animation: forUnstable 2.25s 2 alternate;
-        animation: forUnstable 2.25s 2 alternate;
+      &.unstable > .progress.updated {
+          -webkit-animation: forUnstable 2.25s 2 alternate;
+          -moz-animation: forUnstable 2.25s 2 alternate;
+          animation: forUnstable 2.25s 2 alternate;
       }
-    }
 
-    &.failing > .progress.updated {
-      background-color: firebrick;
-
-      .updated {
-        -webkit-animation: forFailing 2.25s 2 alternate;
-        -moz-animation: forFailing 2.25s 2 alternate;
-        animation: forFailing 2.25s 2 alternate;
+      &.failing > .progress.updated {
+          -webkit-animation: forFailing 2.25s 2 alternate;
+          -moz-animation: forFailing 2.25s 2 alternate;
+          animation: forFailing 2.25s 2 alternate;
       }
     }
   }

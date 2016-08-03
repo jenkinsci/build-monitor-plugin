@@ -128,7 +128,7 @@ h2 {
 }
 
 
-.build-monitor .colour-blind-mode .unstable {
+.build-monitor.colour-blind-mode .unstable {
     /* diamonds */
     background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), to(transparent)),
         -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), to(transparent)),
@@ -156,7 +156,7 @@ h2 {
         linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
 }
 
-.build-monitor .colour-blind-mode .failing {
+.build-monitor.colour-blind-mode .failing {
     background-image: -webkit-gradient(linear, 0 100%, 100% 0,
         color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
         color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
