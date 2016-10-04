@@ -14,7 +14,7 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'src/test/resources/syntacticSugar.js',
+            'src/test/resources/custom_matchers.js',
             'src/main/webapp/vendor/modernizr.custom.27682.js', // needed?
             'src/main/webapp/vendor/angular-1.5.8/angular.js',
             'src/main/webapp/vendor/angular-1.5.8/angular-animate.js',
@@ -24,7 +24,7 @@ module.exports = function(config) {
             'src/main/webapp/vendor/ui-*.js',
             'src/test/resources/vendor/angular-mocks-1.5.8.js',
             'src/test/resources/vendor/sinon-1.7.3.js',
-            'src/test/resources/vendor/jasmine-sinon-0.3.1.js',
+            'src/test/resources/vendor/jasmine-sinon-0.4.0.js',
             'src/test/resources/vendor/yahoo-2.9.0.min.js',
             'src/test/resources/vendor/yahoo-cookie-2.9.0.min.js',
             'src/main/webapp/scripts/**/*.js',
