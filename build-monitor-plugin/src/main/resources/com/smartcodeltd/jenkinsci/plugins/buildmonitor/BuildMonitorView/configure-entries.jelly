@@ -56,6 +56,14 @@
     <f:textbox name="title" value="${it.title}"/>
   </f:entry>
 
+  <f:entry title="${%Branches to Include}" help="${descriptor.getHelpFile('branchesToInclude')}">
+    <f:textbox name="branchesToInclude" field="branchesToInclude" value="${it.branchesToInclude()}"/>
+  </f:entry>
+
+  <f:entry title="${%Branches to Exclude}" help="${descriptor.getHelpFile('branchesToExclude')}">
+    <f:textbox name="branchesToExclude" field="branchesToExclude" value="${it.branchesToExclude()}"/>
+  </f:entry>
+
   <f:entry title="${%Ordered by}">
     <select name="order" class="setting-input">
       <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>

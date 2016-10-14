@@ -87,6 +87,16 @@ public class BuildMonitorView extends ListView {
     }
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public String branchesToInclude() {
+        return currentConfig().getBranchesToInclude();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public String branchesToExclude() {
+        return currentConfig().getBranchesToExclude();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public boolean isDisplayCommitters() {
         return currentConfig().shouldDisplayCommitters();
     }
@@ -112,9 +122,13 @@ public class BuildMonitorView extends ListView {
         synchronized (this) {
 
             String requestedOrdering = req.getParameter("order");
+            String branchesToInclude = req.getParameter("branchesToInclude");
+            String branchesToExclude = req.getParameter("branchesToExclude");
             title                    = req.getParameter("title");
 
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
+            currentConfig().setBranchesToInclude(branchesToInclude);
+            currentConfig().setBranchesToExclude(branchesToExclude);
 
             try {
                 currentConfig().setOrder(orderIn(requestedOrdering));
@@ -144,13 +158,10 @@ public class BuildMonitorView extends ListView {
     private List<JobView> jobViews() {
         JobViews views = new JobViews(new StaticJenkinsAPIs(), currentConfig());
 
-        //A little bit of evil to make the type system happy.
-        @SuppressWarnings("unchecked")
-        List<Job<?, ?>> projects = new ArrayList(filter(super.getItems(), Job.class));
-        List<JobView> jobs = new ArrayList<JobView>();
-
+        List<Job<?, ?>> projects = currentJobFilter().filterJobs(this.getItems());
         Collections.sort(projects, currentConfig().getOrder());
 
+        List<JobView> jobs = new ArrayList<JobView>(projects.size());
         for (Job project : projects) {
             jobs.add(views.viewOf(project));
         }
@@ -177,6 +188,10 @@ public class BuildMonitorView extends ListView {
         }
 
         return config;
+    }
+
+    private JobFilter currentJobFilter() {
+        return new JobFilter(currentConfig());
     }
 
     private boolean creatingAFreshView() {

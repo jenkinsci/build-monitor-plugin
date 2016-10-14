@@ -44,10 +44,32 @@ public class Config {
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("order", order.getClass().getSimpleName())
+                .add("branchesToInclude", branchesToInclude)
+                .add("branchesToExclude", branchesToExclude)
                 .toString();
     }
 
     // --
 
     private Comparator<Job<?, ?>> order;
+
+    private String branchesToInclude;
+
+    public String getBranchesToInclude() {
+        return branchesToInclude;
+    }
+
+    public void setBranchesToInclude(String branchesToInclude) {
+        this.branchesToInclude = branchesToInclude;
+    }
+
+    private String branchesToExclude;
+
+    public String getBranchesToExclude() {
+        return branchesToExclude;
+    }
+
+    public void setBranchesToExclude(String branchesToExclude) {
+        this.branchesToExclude = branchesToExclude;
+    }
 }
