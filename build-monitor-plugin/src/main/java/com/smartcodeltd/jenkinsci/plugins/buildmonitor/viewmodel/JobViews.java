@@ -30,6 +30,7 @@ public class JobViews {
         // todo: a more elegant way of assembling the features would be nice
         viewFeatures.add(new HasHeadline(new HeadlineConfig(config.shouldDisplayCommitters())));
         viewFeatures.add(new KnowsLastBuildDetails());
+        viewFeatures.add(new BadgesDetails());
 
         if (jenkins.hasPlugin(Claim)) {
             viewFeatures.add(new CanBeClaimed());

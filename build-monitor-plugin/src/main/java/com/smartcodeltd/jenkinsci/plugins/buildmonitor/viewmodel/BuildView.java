@@ -11,6 +11,7 @@ import hudson.model.*;
 import hudson.scm.ChangeLogSet;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -157,6 +158,11 @@ public class BuildView implements BuildViewModel {
     @Override
     public <A extends Action> Optional<A> detailsOf(Class<A> jenkinsAction) {
         return Optional.fromNullable(build.getAction(jenkinsAction));
+    }
+    
+    @Override
+    public List<BuildBadgeAction> badgeActions() {
+    	return build.getBadgeActions();
     }
 
     @Override

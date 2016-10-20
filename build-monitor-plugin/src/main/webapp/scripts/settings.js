@@ -9,6 +9,7 @@ angular.
             $scope.settings.numberOfColumns = cookieJar.get('numberOfColumns', 2);
             $scope.settings.colourBlind     = cookieJar.get('colourBlind',     0);
             $scope.settings.reduceMotion    = cookieJar.get('reduceMotion',    0);
+			$scope.settings.showBadges      = cookieJar.get('showBadges',      0);
 
             angular.forEach($scope.settings, function(value, name) {
                 $scope.$watch('settings.' + name, function(currentValue) {
