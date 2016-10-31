@@ -112,6 +112,7 @@ h2 {
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .unstable   { background-color:#f59400; }
 .build-monitor .failing    { background-color:darkred; }
+.build-monitor .aborted    { background-color:darkgray; }
 .build-monitor .disabled   { background-color:gray; }
 
 /*
@@ -121,6 +122,7 @@ h2 {
 .build-monitor .disabled,
 .build-monitor .successful,
 .build-monitor .unstable,
+.build-monitor .aborted,
 .build-monitor .failing {
     -webkit-background-size: 50px 50px;
     -moz-background-size:    50px 50px;
@@ -156,6 +158,7 @@ h2 {
         linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, .2) 75%);
 }
 
+.build-monitor.colour-blind-mode .aborted,
 .build-monitor.colour-blind-mode .failing {
     background-image: -webkit-gradient(linear, 0 100%, 100% 0,
         color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
@@ -180,6 +183,7 @@ h2 {
 }
 
 .build-monitor .unstable.claimed,
+.build-monitor .aborted.claimed,
 .build-monitor .failing.claimed {
     background-image: -webkit-gradient(linear, 0 0, 100% 100%,
         color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),

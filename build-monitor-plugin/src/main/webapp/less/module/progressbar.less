@@ -9,6 +9,7 @@
     &.successful > .progress { background-color: green; }
     &.unstable   > .progress { background-color: #f9aa1c; }
     &.failing    > .progress { background-color: firebrick; }
+    &.aborted    > .progress { background-color: gray; }
   }
 
   &:not(.reduce-motion-mode) {
@@ -38,6 +39,12 @@
           -moz-animation: forFailing 2.25s 2 alternate;
           animation: forFailing 2.25s 2 alternate;
       }
+
+      &.aborted > .progress.updated {
+          -webkit-animation: forAborted 2.25s 2 alternate;
+          -moz-animation: forAborted 2.25s 2 alternate;
+          animation: forAborted 2.25s 2 alternate;
+      }
     }
   }
 }
@@ -55,3 +62,6 @@
 @-webkit-keyframes  forFailing    { 0% {background-color: firebrick;} 100% {background-color: red;} }
 @-moz-keyframes     forFailing    { 0% {background-color: firebrick;} 100% {background-color: red;} }
 @keyframes          forFailing    { 0% {background-color: firebrick;} 100% {background-color: red;} }
+@-webkit-keyframes  forAborted    { 0% {background-color: gray;} 100% {background-color: lightgray;} }
+@-moz-keyframes     forAborted    { 0% {background-color: gray;} 100% {background-color: lightgray;} }
+@keyframes          forAborted    { 0% {background-color: gray;} 100% {background-color: lightgray;} }

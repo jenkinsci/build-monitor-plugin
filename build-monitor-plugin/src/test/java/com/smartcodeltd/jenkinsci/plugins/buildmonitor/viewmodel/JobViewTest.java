@@ -1,7 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
-import hudson.model.Result;
 import org.junit.Test;
 
 import java.util.List;
@@ -131,12 +130,18 @@ public class JobViewTest {
 
     @Test
     public void should_describe_the_job_as_failing_if_the_last_build_failed() {
-        for (Result result : asFollows(FAILURE, ABORTED)) {
-            view = a(jobView().of(
-                    a(job().whereTheLast(build().finishedWith(result)))));
+        view = a(jobView().of(
+                a(job().whereTheLast(build().finishedWith(FAILURE)))));
 
-            assertThat(view.status(), containsString("failing"));
-        }
+        assertThat(view.status(), containsString("failing"));
+    }
+
+    @Test
+    public void should_describe_the_job_as_aborted_if_the_last_build_was_aborted() {
+        view = a(jobView().of(
+                a(job().whereTheLast(build().finishedWith(ABORTED)))));
+
+        assertThat(view.status(), containsString("aborted"));
     }
 
     @Test
