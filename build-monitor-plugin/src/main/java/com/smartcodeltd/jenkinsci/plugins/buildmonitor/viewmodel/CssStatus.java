@@ -17,7 +17,7 @@ public class CssStatus {
         put(UNSTABLE,  "unstable");
         put(FAILURE,   "failing");
         put(NOT_BUILT, "unknown");
-        put(ABORTED,   "failing");  // if someone has aborted it then something is clearly not right, right? :)
+        put(ABORTED,   "aborted");
     }};
 
     public static String of(final JobView job) {
