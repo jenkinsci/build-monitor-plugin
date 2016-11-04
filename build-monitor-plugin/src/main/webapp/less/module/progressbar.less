@@ -5,11 +5,11 @@
   }
 
   .project {
-    &.unknown    > .progress { background-color: #9D9D9D; }
+    &.unknown    > .progress { background-color: #9d9d9d; }
     &.successful > .progress { background-color: green; }
     &.unstable   > .progress { background-color: #f9aa1c; }
     &.failing    > .progress { background-color: firebrick; }
-    &.aborted    > .progress { background-color: gray; }
+    &.aborted    > .progress { background-color: #909090; }
   }
 
   &:not(.reduce-motion-mode) {
@@ -62,6 +62,6 @@
 @-webkit-keyframes  forFailing    { 0% {background-color: firebrick;} 100% {background-color: red;} }
 @-moz-keyframes     forFailing    { 0% {background-color: firebrick;} 100% {background-color: red;} }
 @keyframes          forFailing    { 0% {background-color: firebrick;} 100% {background-color: red;} }
-@-webkit-keyframes  forAborted    { 0% {background-color: gray;} 100% {background-color: lightgray;} }
-@-moz-keyframes     forAborted    { 0% {background-color: gray;} 100% {background-color: lightgray;} }
-@keyframes          forAborted    { 0% {background-color: gray;} 100% {background-color: lightgray;} }
+@-webkit-keyframes  forAborted    { 0% {background-color: #909090;} 100% {background-color: #a9a9a9;} }
+@-moz-keyframes     forAborted    { 0% {background-color: #909090;} 100% {background-color: #a9a9a9;} }
+@keyframes          forAborted    { 0% {background-color: #909090;} 100% {background-color: #a9a9a9;} }

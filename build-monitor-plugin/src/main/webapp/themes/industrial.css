@@ -5,7 +5,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2014, Jan Molak, SmartCode Ltd http://smartcodeltd.co.uk
+ * Copyright (c) Jan Molak, SmartCode Ltd http://smartcodeltd.co.uk
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -112,8 +112,10 @@ h2 {
 .build-monitor .successful { background-color:darkgreen; }
 .build-monitor .unstable   { background-color:#f59400; }
 .build-monitor .failing    { background-color:darkred; }
-.build-monitor .aborted    { background-color:darkgray; }
-.build-monitor .disabled   { background-color:gray; }
+/* same grey background because in each case there's no visibility of what's wrong with the build */
+.build-monitor .aborted,
+.build-monitor .disabled   { background-color:grey; }
+.build-monitor .disabled h2 { text-decoration: line-through; }
 
 /*
  * Striped background patterns inspired by Lea Verou
