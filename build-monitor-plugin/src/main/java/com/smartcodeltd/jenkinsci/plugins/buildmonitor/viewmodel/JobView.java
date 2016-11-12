@@ -86,7 +86,11 @@ public class JobView {
     }
 
     public boolean isDisabled() {
-        return ! job.isBuildable();
+        return ! isJobBuildable();
+    }
+
+    private boolean isJobBuildable() {
+        return job.isBuildable();
     }
 
     public boolean isRunning() {
