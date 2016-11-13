@@ -11,6 +11,7 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacti
 import static hudson.model.Result.*;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -176,6 +177,13 @@ public class JobViewTest {
         view = a(jobView().of(a(job().thatIsNotBuildable())));
 
         assertThat(view.status(), containsString("disabled"));
+    }
+
+    @Test
+    public void should_describe_the_job_as_enabled_if_external_job() {
+        view = a(jobView().of(a(job().thatIsAnExternalJob())));
+
+        assertThat(view.status(), not(containsString("disabled")));
     }
 
     @Test
