@@ -86,7 +86,15 @@ public class JobView {
     }
 
     public boolean isDisabled() {
-        return ! job.isBuildable();
+        return ! (isJobBuildable() || isJobExternal());
+    }
+
+    private boolean isJobBuildable() {
+        return job.isBuildable();
+    }
+
+    private boolean isJobExternal() {
+        return job instanceof hudson.model.ViewJob;
     }
 
     public boolean isRunning() {

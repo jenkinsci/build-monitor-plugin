@@ -4,6 +4,7 @@ import com.google.common.base.Supplier;
 import hudson.model.AbstractBuild;
 import hudson.model.ItemGroup;
 import hudson.model.Job;
+import hudson.model.ViewJob;
 
 import java.util.Stack;
 
@@ -58,6 +59,14 @@ public class JobStateRecipe implements Supplier<Job<?,?>> {
     }
 
     public JobStateRecipe thatIsNotBuildable() {
+        when(job.isBuildable()).thenReturn(Boolean.FALSE);
+
+        return this;
+    }
+
+    public JobStateRecipe thatIsAnExternalJob() {
+        job = mock(ViewJob.class);
+
         when(job.isBuildable()).thenReturn(Boolean.FALSE);
 
         return this;
