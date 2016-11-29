@@ -100,6 +100,14 @@ public class JenkinsClient {
         process.waitUntil(JENKINS_IS_FULLY_UP_AND_RUNNING);
     }
 
+    public void setExternalBuildResult(String projectName, String result) {
+        executeCommand("set-external-build-result",
+                "--job", projectName,
+                "--result", result,
+                "--log", format("%s finished with %s", projectName, result)
+        );
+    }
+
     private int executeGroovy(String... groovyScriptLines) {
         String script = Joiner.on(";\n").join(groovyScriptLines);
 
