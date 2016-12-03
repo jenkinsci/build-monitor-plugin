@@ -30,5 +30,5 @@ public interface BuildViewModel {
 
     <A extends Action> Optional<A> detailsOf(Class<A> jenkinsAction);
     
-    List<BuildBadgeAction> badgeActions();
+    List<BuildBadgeAction> badges();
 }

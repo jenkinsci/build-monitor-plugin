@@ -161,7 +161,7 @@ public class BuildView implements BuildViewModel {
     }
     
     @Override
-    public List<BuildBadgeAction> badgeActions() {
+    public List<BuildBadgeAction> badges() {
     	return build.getBadgeActions();
     }
 

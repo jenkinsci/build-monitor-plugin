@@ -1,91 +1,79 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
 import com.google.common.collect.ImmutableList;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorLogger;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 
 import hudson.model.BuildBadgeAction;
-import jenkins.model.Jenkins;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import org.apache.commons.jelly.JellyContext;
 import org.apache.commons.jelly.JellyException;
-import org.apache.commons.jelly.XMLOutput;
 import org.codehaus.jackson.annotate.JsonValue;
-import org.kohsuke.stapler.MetaClass;
-import org.kohsuke.stapler.WebApp;
-import org.kohsuke.stapler.jelly.JellyClassLoaderTearOff;
 
 /**
- * @author Jan Molak
+ * @author Daniel Beland
  */
 public class BadgesDetails implements Feature<BadgesDetails.Badges> {
-    private JobView job;
+	private JobView job;
 
-    public BadgesDetails() {
+	private final StaticJenkinsAPIs jenkins;
 
-    }
+	public BadgesDetails(StaticJenkinsAPIs jenkinsAPIs) {
+		this.jenkins = jenkinsAPIs;
+	}
 
-    @Override
-    public BadgesDetails of(JobView jobView) {
-        this.job = jobView;
+	@Override
+	public BadgesDetails of(JobView jobView) {
+		this.job = jobView;
 
-        return this;
-    }
+		return this;
+	}
 
-    @Override
-    public Badges asJson() {
-        return !job.lastCompletedBuild().badgeActions().isEmpty()                  // would be nice to have .map(Claim(_)).orElse(), but hey...
-                ? new Badges(job.lastCompletedBuild().badgeActions())
-                : null;                             // `null` because we don't want to serialise an empty object
-    }
+	@Override
+	public Badges asJson() {
+		return !job.lastCompletedBuild().badges().isEmpty()
+				? new Badges(jenkins, job.lastCompletedBuild().badges())
+						: null; // `null` because we don't want to serialise an empty object
+	}
 
-    public static class Badges {
+	public static class Badges {
+		private static final BuildMonitorLogger logger = BuildMonitorLogger.forClass(Badges.class);
 
-        private final List<String> badges = newArrayList();
+		private final List<String> badges = newArrayList();
 
-        public Badges(List<BuildBadgeAction> badgeActions) {
-        	MetaClass mc = WebApp.getCurrent().getMetaClass(getClass());
-    		JellyContext context = mc.classLoader.loadTearOff(JellyClassLoaderTearOff.class).createContext();
+		public Badges(StaticJenkinsAPIs jenkins, List<BuildBadgeAction> badgeActions) {
+			render(jenkins, badgeActions);
+		}
 
-    		context.setVariable("app", Jenkins.getInstance());
-    		context.setVariable("rootURL", Jenkins.getInstance().getRootUrl());
-    		context.setVariable("h", new hudson.Functions());
-    		context.setVariable("resURL", Jenkins.RESOURCE_PATH);
-    		context.setVariable("imagesURL", Jenkins.RESOURCE_PATH + "/images");
+		private void render(StaticJenkinsAPIs jenkins, List<BuildBadgeAction> badgeActions) {
+			for( BuildBadgeAction badge : badgeActions ) {
+				URL jellyFile = jenkins.getBadgeJelly(badge);
 
-    		for( BuildBadgeAction badge : badgeActions ) {
-    			context.setVariable("it", badge);
+				if( jellyFile != null ) {
+					try {
+						String html = new String(jenkins.runJellyScript(jellyFile, badge)); 
+						badges.add(html);
+					} catch (IOException ex) {
+						// This can produce a lot of logs as the same badge will constantly 
+						// fail every time we refresh the display so using debug level 
+						logger.debug("render", "Error rendering Build Badge: {0}", ex.getMessage());
+					} catch (JellyException ex) {
+						logger.debug("render", "Error rendering Build Badge: {0}", ex.getMessage());
+					}
+				}
+			}
+		}
 
-    			String jelly = badge.getClass().getSimpleName() + "/badge.jelly";
-    			URL jellyFile = badge.getClass().getResource(jelly);
-
-    			if( jellyFile != null ) {
-    				try {
-    					ByteArrayOutputStream html = new ByteArrayOutputStream();
-    					XMLOutput xmlOutput = XMLOutput.createXMLOutput(html);
-    					context.runScript(jellyFile, xmlOutput);
-    					xmlOutput.flush();
-
-    					badges.add(new String(html.toByteArray()));
-    				} catch (JellyException ex) {
-    					// To be logged
-    				} catch (IOException ex) {
-    					// To be logged
-    				}
-    			}
-    		}
-       }
-
-        @JsonValue
-        public List<String> value() {
-            return ImmutableList.copyOf(badges);
-        }
-    }
+		@JsonValue
+		public List<String> value() {
+			return ImmutableList.copyOf(badges);
+		}
+	}
 
 }

@@ -89,7 +89,7 @@ public class NullBuildView implements BuildViewModel {
     }
 
 	@Override
-	public List<BuildBadgeAction> badgeActions() {
+	public List<BuildBadgeAction> badges() {
 		return new ArrayList<BuildBadgeAction>();
 	}
 }
