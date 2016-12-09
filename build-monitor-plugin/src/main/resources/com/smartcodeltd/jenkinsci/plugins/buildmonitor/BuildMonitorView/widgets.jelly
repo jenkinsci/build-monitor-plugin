@@ -8,7 +8,10 @@
         data-ng-class="{ 'claimed': !! project.claim.active }"
         id="{{ project.name | slugify }}"
     >
-        <div class="progress" animate-on-change="project.progress" style="width: {{ project.progress }}%">
+        <div class="progress"
+             animate-on-change="project.progress"
+             data-ng-style="{ 'width': project.progress + '%' }"
+        >
             <span class="value">{{project.progress}}%</span>
         </div>
 
