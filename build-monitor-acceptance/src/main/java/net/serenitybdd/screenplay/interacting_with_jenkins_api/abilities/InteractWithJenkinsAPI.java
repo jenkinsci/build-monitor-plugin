@@ -29,11 +29,6 @@ public class InteractWithJenkinsAPI implements Ability {
         client.setExternalBuildResult(project, "1");
     }
 
-    @Override
-    public Ability asActor(Actor actor) {
-        return this;
-    }
-
     public InteractWithJenkinsAPI(JenkinsClient client) {
         this.client = client;
     }
