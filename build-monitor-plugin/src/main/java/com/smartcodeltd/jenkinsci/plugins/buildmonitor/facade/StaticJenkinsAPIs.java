@@ -19,10 +19,7 @@ import org.kohsuke.stapler.WebApp;
 import org.kohsuke.stapler.jelly.JellyClassLoaderTearOff;
 
 public class StaticJenkinsAPIs {
-	
-	private static Object $LOCK = new Object();
-	private static JellyContext jellyContext;
-	
+
     public boolean isDevelopmentMode() {
         return Main.isUnitTest || Main.isDevelopmentMode;
     }
@@ -51,20 +48,22 @@ public class StaticJenkinsAPIs {
 		return badge.getClass().getResource(jelly);
 	}
 
-    public byte[] runJellyScript(URL jellyFile, Object it) throws IOException, JellyException {
-    	synchronized($LOCK) {
-    		if( jellyContext == null ) {
-		    	MetaClass mc = WebApp.getCurrent().getMetaClass(getClass());
-				jellyContext = mc.classLoader.loadTearOff(JellyClassLoaderTearOff.class).createContext();
-		
-				jellyContext.setVariable("app", Jenkins.getInstance());
-				jellyContext.setVariable("rootURL", Jenkins.getInstance().getRootUrl());
-				jellyContext.setVariable("h", new hudson.Functions());
-				jellyContext.setVariable("resURL", Jenkins.RESOURCE_PATH);
-				jellyContext.setVariable("imagesURL", Jenkins.RESOURCE_PATH + "/images");
-    		}
-    	}
+    private JellyContext createJellyScript(Object it) {
+    	MetaClass mc = WebApp.getCurrent().getMetaClass(getClass());
+    	JellyContext jellyContext = mc.classLoader.loadTearOff(JellyClassLoaderTearOff.class).createContext();
+
+    	jellyContext.setVariable("app", Jenkins.getInstance());
+    	jellyContext.setVariable("rootURL", Jenkins.getInstance().getRootUrl());
+    	jellyContext.setVariable("h", new hudson.Functions());
+    	jellyContext.setVariable("resURL", Jenkins.RESOURCE_PATH);
+    	jellyContext.setVariable("imagesURL", Jenkins.RESOURCE_PATH + "/images");
     	jellyContext.setVariable("it", it);
+
+		return jellyContext;
+    }
+
+    public byte[] runJellyScript(URL jellyFile, Object it) throws IOException, JellyException {
+    	JellyContext jellyContext = createJellyScript(it);
 
 		ByteArrayOutputStream html = new ByteArrayOutputStream();
 		XMLOutput xmlOutput = XMLOutput.createXMLOutput(html);
