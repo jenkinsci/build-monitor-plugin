@@ -57,33 +57,33 @@
 
             <script src="${resourcesURL}/vendor/angular-slider-5.4.0/rzslider.min.js"></script>
 
-            <script>
-                window['ga-disable-UA-61694827-4'] = ${!it.collectAnonymousUsageStatistics()};
+            <j:if test="${it.collectAnonymousUsageStatistics()}">
+                <script>
+                    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 
-                window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+                    ga('create', 'UA-61694827-4', 'auto', {
+                        'userId':     '${it.installation.anonymousCorrelationId()}',
+                        'sampleRate': 1
+                    });
 
-                ga('create', 'UA-61694827-4', 'auto', {
-                    'userId':     '${it.installation.anonymousCorrelationId()}',
-                    'sampleRate': 1
-                });
+                    ga('set', {
+                        'forceSSL':       true,
+                        'appName':        'Build Monitor',
+                        'appId':          'build-monitor-plugin',
 
-                ga('set', {
-                    'forceSSL':       true,
-                    'appName':        'Build Monitor',
-                    'appId':          'build-monitor-plugin',
+                        'appVersion':     '${it.installation.buildMonitorVersion()}',
+                        'appInstallerId': '${h.version}',
 
-                    'appVersion':     '${it.installation.buildMonitorVersion()}',
-                    'appInstallerId': '${h.version}',
+                        'dimension1':     '${it.installation.size()}',
+                        'dimension2':     '${it.items.size()}',
+                        'dimension3':     '${it.installation.audience()}',
+                        'dimension4':     '${it.installation.anonymousCorrelationId()}'
+                    });
 
-                    'dimension1':     '${it.installation.size()}',
-                    'dimension2':     '${it.items.size()}',
-                    'dimension3':     '${it.installation.audience()}',
-                    'dimension4':     '${it.installation.anonymousCorrelationId()}'
-                });
-
-                ga('send', 'screenview', {screenName: 'Dashboard'});
-            </script>
-            <script async="async" src='//www.google-analytics.com/analytics.js'></script>
+                    ga('send', 'screenview', {screenName: 'Dashboard'});
+                </script>
+                <script async="async" src='//www.google-analytics.com/analytics.js'></script>
+            </j:if>
         </head>
         <body class="build-monitor dashboard industrial"
               data-ng-app="buildMonitor"
