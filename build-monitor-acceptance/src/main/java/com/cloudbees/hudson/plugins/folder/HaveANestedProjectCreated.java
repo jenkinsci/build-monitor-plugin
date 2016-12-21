@@ -11,6 +11,12 @@ import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class HaveANestedProjectCreated implements Task {
 
+    private final String projectName;
+
+    public HaveANestedProjectCreated(String projectName) {
+        this.projectName = projectName;
+    }
+
     public static Task called(String name) {
         return instrumented(HaveANestedProjectCreated.class, name);
     }
@@ -24,9 +30,5 @@ public class HaveANestedProjectCreated implements Task {
         );
     }
 
-    public HaveANestedProjectCreated(String projectName) {
-        this.projectName = projectName;
-    }
 
-    private final String projectName;
 }

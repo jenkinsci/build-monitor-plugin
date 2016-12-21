@@ -9,6 +9,12 @@ import net.serenitybdd.screenplay.Question;
 
 public class ProjectWidget {
 
+    private final String projectOfInterest;
+
+    public ProjectWidget(String projectOfInterest) {
+        this.projectOfInterest = projectOfInterest;
+    }
+
     public static ProjectWidget of(String projectOfInterest) {
         return new ProjectWidget(projectOfInterest);
     }
@@ -25,9 +31,4 @@ public class ProjectWidget {
         return new ProjectWidgetDetails(projectOfInterest);
     }
 
-    public ProjectWidget(String projectOfInterest) {
-        this.projectOfInterest = projectOfInterest;
-    }
-
-    private final String projectOfInterest;
 }
