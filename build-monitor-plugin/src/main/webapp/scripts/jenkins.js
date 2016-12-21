@@ -89,6 +89,24 @@ angular.module('jenkins', []).
         };
     }]).
 
+    factory('sanitiseJobsHTML', ['$sce', function($sce) {
+        return function (response) {
+            var jobs = response.data.data;
+            
+            for (var i = 0; i < jobs.length; i++) {
+            	
+            	// Sanitise the Badges
+                if( jobs[i].badges ) {
+                	for (var j = 0; j < jobs[i].badges.length; j++) {
+                		jobs[i].badges[j] = $sce.trustAsHtml(jobs[i].badges[j]);
+                	}
+                }
+            }
+
+            return response;
+        };
+    }]).
+
     config(function ($httpProvider) {
         $httpProvider.interceptors.push('responseCodeStandardsIntroducer');
     });

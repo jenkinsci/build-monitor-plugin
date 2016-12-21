@@ -11,8 +11,8 @@ angular.
         'ngSanitize'
     ]).
 
-    controller('JobViews', ['$scope', '$rootScope', '$window', 'connectivityStrategist', 'every', 'proxy',
-        function ($scope, $rootScope, $window, connectivityStrategist, every, proxy) {
+    controller('JobViews', ['$scope', '$rootScope', '$window', 'connectivityStrategist', 'every', 'proxy', 'sanitiseJobsHTML', 
+        function ($scope, $rootScope, $window, connectivityStrategist, every, proxy, sanitiseJobsHTML) {
             var tryToRecover  = connectivityStrategist.decideOnStrategy,
                 fetchJobViews = proxy.buildMonitor.fetchJobViews;
 
@@ -21,10 +21,10 @@ angular.
 
             every(5000, function () {
 
-                return fetchJobViews().then(function (response) {
+                return fetchJobViews().then(sanitiseJobsHTML).then(function (response) {
 
                     $scope.jobs = response.data.data;
-
+                    
                     $rootScope.$broadcast('jenkins:data-fetched', response.data.meta);
 
                     $scope.fontSize = fontSizeFor($scope.jobs, $rootScope.settings.numberOfColumns);

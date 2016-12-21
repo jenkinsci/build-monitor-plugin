@@ -6,6 +6,7 @@ import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
+import hudson.model.BuildBadgeAction;
 import hudson.model.Result;
 import hudson.model.User;
 import hudson.plugins.claim.ClaimBuildAction;
@@ -20,6 +21,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -30,12 +32,15 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
 
     private AbstractBuild<?, ?> build;
+    
+    private List<BuildBadgeAction> badges = new ArrayList<BuildBadgeAction>();
 
     public BuildStateRecipe() {
         build = mock(AbstractBuild.class);
 
         AbstractProject parent = mock(AbstractProject.class);
-        when(build.getParent()).thenReturn(parent);
+        doReturn(parent).when(build).getParent();
+        when(build.getBadgeActions()).thenReturn(badges);
     }
 
     public BuildStateRecipe hasNumber(int number) {
@@ -194,6 +199,12 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         FoundFailureCause failure = mock(FoundFailureCause.class);
         when(failure.getDescription()).thenReturn(name);
         return failure;
+    }
+    
+    public BuildStateRecipe hasBadge(BadgeRecipe badge) {
+    	badges.add(badge.get());
+    	
+    	return this;
     }
 
     public BuildStateRecipe and() {
