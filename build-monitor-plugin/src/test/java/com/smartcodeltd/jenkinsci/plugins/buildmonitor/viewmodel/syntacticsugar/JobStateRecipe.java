@@ -95,7 +95,7 @@ public class JobStateRecipe implements Supplier<Job<?,?>> {
 
         // pick the first build from the build history and make it the "last build"
         if (buildHistory.size() == 1) {
-            when(job.getLastBuild()).thenReturn(buildHistory.pop());
+        	doReturn(buildHistory.pop()).when(job).getLastBuild();
         }
 
         return job;

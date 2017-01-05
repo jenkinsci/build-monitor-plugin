@@ -12,6 +12,8 @@ import hudson.plugins.claim.ClaimBuildAction;
 import hudson.scm.ChangeLogSet;
 import jenkins.model.CauseOfInterruption;
 import jenkins.model.InterruptedBuildAction;
+
+import org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildAction;
 import org.powermock.api.mockito.PowerMockito;
 
 import java.text.SimpleDateFormat;
@@ -20,6 +22,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -35,7 +38,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         build = mock(AbstractBuild.class);
 
         AbstractProject parent = mock(AbstractProject.class);
-        when(build.getParent()).thenReturn(parent);
+        doReturn(parent).when(build).getParent();
     }
 
     public BuildStateRecipe hasNumber(int number) {
@@ -194,6 +197,16 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         FoundFailureCause failure = mock(FoundFailureCause.class);
         when(failure.getDescription()).thenReturn(name);
         return failure;
+    }
+    
+    public BuildStateRecipe hasBadges(BadgeRecipe... badges) {
+    	List<GroovyPostbuildAction> actions = new ArrayList<GroovyPostbuildAction>();
+    	for (int i = 0; i < badges.length; i++) {
+    		actions.add(badges[i].get());
+    	}
+    	when(build.getActions(GroovyPostbuildAction.class)).thenReturn(actions);
+    	
+    	return this;
     }
 
     public BuildStateRecipe and() {
