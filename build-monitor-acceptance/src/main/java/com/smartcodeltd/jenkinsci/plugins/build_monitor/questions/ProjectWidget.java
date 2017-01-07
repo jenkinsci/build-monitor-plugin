@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.questions;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectInformation;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectBadgesState;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectWidgetDetails;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectWidgetInformation;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectWidgetState;
@@ -23,6 +24,10 @@ public class ProjectWidget {
 
     public Question<String> details() {
         return new ProjectWidgetDetails(projectOfInterest);
+    }
+
+    public Question<WebElementState> badges() {
+        return new ProjectBadgesState(projectOfInterest);
     }
 
     public ProjectWidget(String projectOfInterest) {

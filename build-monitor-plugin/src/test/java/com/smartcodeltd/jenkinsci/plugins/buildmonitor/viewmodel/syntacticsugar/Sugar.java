@@ -21,6 +21,10 @@ public class Sugar {
         return new BuildStateRecipe();
     }
 
+    public static BadgeRecipe badge() {
+        return new BadgeRecipe();
+    }
+
     public static <X> X a(Supplier<X> recipe) {
         return recipe.get();
     }

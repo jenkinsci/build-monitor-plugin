@@ -15,6 +15,7 @@ import static com.google.common.collect.Lists.newArrayList;
 public class JobViews {
     public static final String Claim = "claim";
     public static final String Build_Failure_Analyzer = "build-failure-analyzer";
+    public static final String Groovy_Post_Build = "groovy-postbuild";
 
     private final StaticJenkinsAPIs jenkins;
     private final com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config;
@@ -37,6 +38,10 @@ public class JobViews {
 
         if (jenkins.hasPlugin(Build_Failure_Analyzer)) {
             viewFeatures.add(new CanBeDiagnosedForProblems());
+        }
+
+        if (jenkins.hasPlugin(Groovy_Post_Build)) {
+        	viewFeatures.add(new HasBadges());
         }
 
         return JobView.of(job, viewFeatures);
