@@ -44,7 +44,7 @@ public class ShouldDisplayBadges {
     }
 
     @Test
-    public void display_build_badges() throws Exception {
+    public void displaying_build_badges() throws Exception {
         givenThat(paul).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAProjectCreated.called("My App").andConfiguredTo(
