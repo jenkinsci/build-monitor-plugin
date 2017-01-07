@@ -195,7 +195,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
 
     private FoundFailureCause failure(String name) {
         FoundFailureCause failure = mock(FoundFailureCause.class);
-        when(failure.getDescription()).thenReturn(name);
+        when(failure.getName()).thenReturn(name);
         return failure;
     }
     

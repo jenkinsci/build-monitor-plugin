@@ -40,7 +40,7 @@ public class CanBeDiagnosedForProblems implements Feature<CanBeDiagnosedForProbl
 
         public Problems(FailureCauseBuildAction action) {
             for (FoundFailureCause failure : action.getFoundFailureCauses()) {
-                failures.add(failure.getDescription());
+                failures.add(failure.getName());
             }
         }
 
