@@ -36,7 +36,7 @@ public class HeadlineOfFixed implements CandidateHeadline {
 
         return Lister.describe(
                 "Back in the green!",
-                "Fixed after %s committed their changes :-)",
+                "Fixed after %s committed some changes :-)",
                 newLinkedList(committersOf(lastBuild))
         );
     }
