@@ -22,6 +22,7 @@ Current functionality of the Build Monitor plugin:
 * Supports [View Job Filters](https://wiki.jenkins-ci.org/display/JENKINS/View+Job+Filters), so that you can easily create Build Monitors for "slow builds", "only failing", etc.
 * Supports [Build Failure Analyzer](https://wiki.jenkins-ci.org/display/JENKINS/Build+Failure+Analyzer), so that you know not only *who*, but also *what* broke the build; [learn more](http://bit.ly/JBMBuild102)
 * Supports [CloudBees Folders Plugin](https://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Folders+Plugin), so that you can have project- and team-specific nested Build Monitors; [learn more](http://bit.ly/JBMBuild117)
+* Supports [Pipeline Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin), so that the currently executing stage(s) are shown.
 * The number of columns and size of the font used is easily customisable, making it trivial to accommodate screens of different sizes.
 * UI configuration is stored in a cookie, making it possible to display different number of columns and using different font size on each of the screens at your office.
 * Can work in a colour-blind-friendly mode; [learn more](https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/30#issuecomment-35849019)
@@ -31,7 +32,7 @@ All the previous releases together with their change logs are [listed here](http
 ## Requirements
 
 To use Build Monitor you'll need:
-* [Jenkins CI](http://jenkins-ci.org/) version 1.609.3 or newer - please note that for production installations I recommend using a [Long-Term Support release](http://jenkins-ci.org/changelog-stable)
+* [Jenkins CI](http://jenkins-ci.org/) version 1.642.3 or newer - please note that for production installations I recommend using a [Long-Term Support release](http://jenkins-ci.org/changelog-stable)
 * A modern web browser - to avoid unnecessary complexity when implementing the view layer I decided to use CSS 3 flexbox.
 The standard is currently supported by [most modern web browsers](http://caniuse.com/flexbox), so if your browser doesn't support this feature - [consider upgrading](http://browsehappy.com/) :)
 

@@ -1,15 +1,20 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.pipeline.WorkflowNodeTraversal;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.DurationInMilliseconds;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.HumanReadableDuration;
 import hudson.model.*;
 import hudson.scm.ChangeLogSet;
+import org.jenkinsci.plugins.workflow.flow.FlowExecution;
+import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -22,19 +27,17 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 public class BuildView implements BuildViewModel {
 
     private final Run<?,?> build;
+    private final boolean isPipeline;
     private final RelativeLocation parentJobLocation;
     private final Date systemTime;
 
-    public static BuildView of(Run<?, ?> build) {
-        return new BuildView(build, RelativeLocation.of(build.getParent()), new Date());
+    @VisibleForTesting
+    static BuildView of(Run<?, ?> build) {
+        return new BuildView(build, false, RelativeLocation.of(build.getParent()), new Date());
     }
 
-    public static BuildView of(Run<?, ?> build, Date systemTime) {
-        return new BuildView(build, RelativeLocation.of(build.getParent()), systemTime);
-    }
-
-    public static BuildView of(Run<?, ?> build, RelativeLocation parentJobLocation, Date systemTime) {
-        return new BuildView(build, parentJobLocation, systemTime);
+    public static BuildView of(Run<?, ?> build, boolean isPipeline, RelativeLocation parentJobLocation, Date systemTime) {
+        return new BuildView(build, isPipeline, parentJobLocation, systemTime);
     }
 
     @Override
@@ -107,6 +110,24 @@ public class BuildView implements BuildViewModel {
         return getOrElse(build.getDescription(), "");
     }
 
+    @Override
+    public boolean isPipeline() {
+        return isPipeline;
+    }
+
+    @Override
+    public List<String> pipelineStages() {
+        WorkflowRun currentBuild = (WorkflowRun) this.build;
+        FlowExecution execution = currentBuild.getExecution();
+        if (execution != null) {
+            WorkflowNodeTraversal traversal = new WorkflowNodeTraversal();
+            traversal.start(execution.getCurrentHeads());
+            return traversal.getStages();
+        }
+
+        return Collections.emptyList();
+    }
+
     private boolean isTakingLongerThanUsual() {
         return elapsedTime().greaterThan(estimatedDuration());
     }
@@ -118,7 +139,7 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public BuildViewModel previousBuild() {
-        return new BuildView(build.getPreviousBuild(), this.parentJobLocation, systemTime);
+        return new BuildView(build.getPreviousBuild(), isPipeline, this.parentJobLocation, systemTime);
     }
 
     @Override
@@ -180,8 +201,9 @@ public class BuildView implements BuildViewModel {
     }
 
 
-    private BuildView(Run<?, ?> build, RelativeLocation parentJobLocation, Date systemTime) {
+    private BuildView(Run<?, ?> build, boolean isPipeline, RelativeLocation parentJobLocation, Date systemTime) {
         this.build = build;
+        this.isPipeline = isPipeline;
         this.parentJobLocation = parentJobLocation;
         this.systemTime = systemTime;
     }
