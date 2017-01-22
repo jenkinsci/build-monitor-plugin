@@ -13,8 +13,9 @@ import static com.google.common.collect.Lists.newArrayList;
  * @author Jan Molak
  */
 public class JobViews {
-    public static final String Claim = "claim";
-    public static final String Build_Failure_Analyzer = "build-failure-analyzer";
+    private static final String Claim = "claim";
+    private static final String Build_Failure_Analyzer = "build-failure-analyzer";
+    private static final String Pipeline_Plugin = "workflow-aggregator";
 
     private final StaticJenkinsAPIs jenkins;
     private final com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config;
@@ -37,6 +38,10 @@ public class JobViews {
 
         if (jenkins.hasPlugin(Build_Failure_Analyzer)) {
             viewFeatures.add(new CanBeDiagnosedForProblems());
+        }
+
+        if (jenkins.hasPlugin(Pipeline_Plugin)) {
+            viewFeatures.add(new HasPipeline());
         }
 
         return JobView.of(job, viewFeatures);

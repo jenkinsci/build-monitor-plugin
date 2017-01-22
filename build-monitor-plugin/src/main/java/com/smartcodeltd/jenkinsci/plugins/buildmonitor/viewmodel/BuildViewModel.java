@@ -5,6 +5,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Durati
 import hudson.model.Action;
 import hudson.model.Result;
 
+import java.util.List;
 import java.util.Set;
 
 public interface BuildViewModel {
@@ -19,6 +20,7 @@ public interface BuildViewModel {
     Duration estimatedDuration();
     int progress();
     String description();
+    List<String> stages();
 
     boolean hasPreviousBuild();
     BuildViewModel previousBuild();

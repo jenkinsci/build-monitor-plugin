@@ -22,6 +22,7 @@
                 <li data-ng-show="!  project.claim.active">{{ project.headline }}</li>
                 <li data-ng-show="!! project.lastBuild.description" class="build-description description-setter-plugin">{{ project.lastBuild.description }}</li>
                 <li data-ng-show="!! project.claim.active" class="claim-plugin">Claimed by <strong>{{ project.claim.author }}</strong>: {{ project.claim.reason }}</li>
+                <li data-ng-show="!! project.pipeline.currentStages" class="pipeline-stage">Currently executing: {{ project.pipeline.currentStages }}</li>
                 <li data-ng-show="!! project.problems" class="build-failure-analyzer-plugin possible-failure-cause">
                     <span>
                         <ng-pluralize

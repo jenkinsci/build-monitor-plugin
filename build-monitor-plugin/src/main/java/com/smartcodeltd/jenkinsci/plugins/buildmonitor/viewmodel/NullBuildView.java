@@ -5,7 +5,9 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Durati
 import hudson.model.Action;
 import hudson.model.Result;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class NullBuildView implements BuildViewModel {
@@ -58,6 +60,11 @@ public class NullBuildView implements BuildViewModel {
     @Override
     public String description() {
         return "";
+    }
+
+    @Override
+    public List<String> stages() {
+        return new ArrayList<String>();
     }
 
     @Override

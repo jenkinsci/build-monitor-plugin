@@ -9,8 +9,17 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Durati
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.HumanReadableDuration;
 import hudson.model.*;
 import hudson.scm.ChangeLogSet;
+import org.jenkinsci.plugins.workflow.cps.nodes.StepStartNode;
+import org.jenkinsci.plugins.workflow.graph.FlowNode;
+import org.jenkinsci.plugins.workflow.job.WorkflowRun;
+import org.jenkinsci.plugins.workflow.support.steps.StageStep;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -106,6 +115,21 @@ public class BuildView implements BuildViewModel {
         return getOrElse(build.getDescription(), "");
     }
 
+    @Override
+    public List<String> stages() {
+        if (this.build instanceof WorkflowRun) {
+            WorkflowRun currentBuild = (WorkflowRun) this.build;
+
+            if (currentBuild.isBuilding()) {
+                StageTraversal traversal = new StageTraversal();
+                traversal.start(currentBuild.getExecution().getCurrentHeads());
+                return traversal.getStages();
+            }
+        }
+
+        return Collections.emptyList();
+    }
+
     private boolean isTakingLongerThanUsual() {
         return elapsedTime().greaterThan(estimatedDuration());
     }
@@ -193,5 +217,33 @@ public class BuildView implements BuildViewModel {
         }
 
         return users;
+    }
+
+    private static class StageTraversal {
+
+        private final Queue<FlowNode> nodesToAccess;
+        private final List<String> stages;
+
+        public StageTraversal() {
+            this.nodesToAccess = new LinkedList<FlowNode>();
+            this.stages = new ArrayList<String>();
+        }
+
+        public void start(List<FlowNode> nodes) {
+            nodesToAccess.addAll(nodes);
+            while (!nodesToAccess.isEmpty()) {
+                FlowNode flowNode = nodesToAccess.remove();
+                if (flowNode instanceof StepStartNode
+                        && ((StepStartNode) flowNode).getDescriptor().isSubTypeOf(StageStep.class)) {
+                    stages.add(flowNode.getDisplayName());
+                } else {
+                    nodesToAccess.addAll(flowNode.getParents());
+                }
+            }
+        }
+
+        public List<String> getStages() {
+            return stages;
+        }
     }
 }

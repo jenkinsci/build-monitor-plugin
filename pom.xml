@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <jenkins.version>1.609.3</jenkins.version>
+        <jenkins.version>1.642.3</jenkins.version>
         <jenkins-test-harness.version>2.5</jenkins-test-harness.version>
     </properties>
 
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.609.3</version>
+        <version>1.642.3</version>
     </parent>
 
     <groupId>org.jenkins-ci.plugins</groupId>

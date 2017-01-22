@@ -15,7 +15,7 @@
 
     <properties>
         <encoding>UTF-8</encoding>
-        <serenity.version>1.1.36</serenity.version>
+        <serenity.version>1.2.2</serenity.version>
         <aether.version>1.0.0.v20140518</aether.version>
 
         <webdriver.driver>firefox</webdriver.driver>
@@ -131,8 +131,8 @@
         </dependency>
         <dependency>
             <groupId>net.serenity-bdd</groupId>
-            <artifactId>browse-the-web</artifactId>
-            <version>1.1.34</version>
+            <artifactId>serenity-screenplay-webdriver</artifactId>
+            <version>${serenity.version}</version>
         </dependency>
         <dependency>
             <groupId>net.serenity-bdd</groupId>
@@ -194,7 +194,7 @@
                     <environmentVariables>
                         <!-- todo: remove when the acceptance-test-harness is gone -->
                         <BROWSER>htmlunit</BROWSER>
-                        <JENKINS_VERSION>1.609.3</JENKINS_VERSION>
+                        <JENKINS_VERSION>1.642.3</JENKINS_VERSION>
                         <PLUGINS_DIR>${project.parent.basedir}/build-monitor-plugin/target</PLUGINS_DIR>
                         <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
                     </environmentVariables>
