@@ -161,7 +161,11 @@
             <st:bind var="window.bindings['buildMonitor']" value="${it}" />
             <script>
                 window.makeStaplerProxy = window.originalMakeStaplerProxy;
-                delete window.originalMakeStaplerProxy;
+                try {
+                    delete window.originalMakeStaplerProxy;
+                } catch(e) {
+                    window["originalMakeStaplerProxy"] = undefined;
+                }
             </script>
 
             <!-- todo: use require.js and bundle it all up -->
