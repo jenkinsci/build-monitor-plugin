@@ -1,12 +1,20 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
+import com.google.common.base.Predicate;
 import com.google.common.base.Supplier;
 import hudson.model.AbstractBuild;
 import hudson.model.ItemGroup;
 import hudson.model.Job;
 import hudson.model.ViewJob;
+import hudson.util.RunList;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Stack;
+
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import static org.mockito.Mockito.*;
 
@@ -15,10 +23,13 @@ import static org.mockito.Mockito.*;
  */
 public class JobStateRecipe implements Supplier<Job<?,?>> {
     private Job<?, ?> job;
+    private RunList<?> runList;
     private Stack<AbstractBuild> buildHistory = new Stack<AbstractBuild>();
+    private List<AbstractBuild> allBuilds = new ArrayList<AbstractBuild>();
 
     public JobStateRecipe() {
         job = mock(Job.class);
+        runList = mock(RunList.class);
 
         when(job.isBuildable()).thenReturn(Boolean.TRUE);
     }
@@ -97,18 +108,26 @@ public class JobStateRecipe implements Supplier<Job<?,?>> {
         if (buildHistory.size() == 1) {
         	doReturn(buildHistory.pop()).when(job).getLastBuild();
         }
+        
+        // mock the necessary methods to get the currentBuilds
+        // it will return the full list so make sure it contains only building builds
+        doReturn(runList).when(job).getNewBuilds();
+        doReturn(runList).when(runList).filter(any(Predicate.class));
+        doReturn(allBuilds.iterator()).when(runList).iterator();
 
         return job;
     }
 
     private JobStateRecipe updatedWithEarliestHistoryEntryFor(AbstractBuild build) {
         buildHistory.push(build);
+        allBuilds.add(build);
 
         return this;
     }
 
     private JobStateRecipe updatedWithOnlyOneHistoryEntryFor(AbstractBuild build) {
         buildHistory.clear();
+        allBuilds.clear();
 
         return updatedWithEarliestHistoryEntryFor(build);
     }

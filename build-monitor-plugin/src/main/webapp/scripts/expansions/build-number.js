@@ -13,16 +13,32 @@ directive('buildNumber', [function () {
             project: '='
         },
         template: [
-            '<a',
-                'data-ng-show="!!project.lastBuild.name"',
-                'class="build-name"',
-                'title="Details of {{project.name}}, build {{project.lastBuild.name}}"',
-                'href="{{project.lastBuild.url}}"',
-            '>',
-                '<span>',
-                    '{{project.lastBuild.name}}',
-                '</span>',
-            '</a>\n'
+            '<div>',
+                '<div data-ng-show="!!project.estimatedDuration && project.progress > 0" data-ng-repeat="build in project.currentBuilds track by $index">',
+                    '<a',
+                        'data-ng-show="!!build.name"',
+                        'class="build-name"',
+                        'title="Details of {{project.name}}, build {{build.name}}"',
+                        'href="{{build.url}}"',
+                    '>',
+                        '<span>',
+                            '{{build.name}}',
+                        '</span>',
+                    '</a>',
+                '</div>',
+                '<div data-ng-show="!!project.lastCompletedBuild.timeElapsedSince && project.progress == 0">',
+                    '<a',
+                        'data-ng-show="!!project.lastCompletedBuild.name"',
+                        'class="build-name"',
+                        'title="Details of {{project.name}}, build {{project.lastCompletedBuild.name}}"',
+                        'href="{{project.lastCompletedBuild.url}}"',
+                    '>',
+                        '<span>',
+                            '{{project.lastCompletedBuild.name}}',
+                        '</span>',
+                    '</a>',
+                '</div>',
+            '</div>\n'
         ].join('\n')
     }
 }]);

@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
@@ -8,9 +9,12 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.Featur
 import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.Run;
+import hudson.util.RunList;
+
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -122,6 +126,19 @@ public class JobView {
 
     // --
 
+    @SuppressWarnings("unchecked")
+	public List<BuildViewModel> currentBuilds() {
+    	List<BuildViewModel> currentBuilds = newArrayList();
+    	
+    	RunList<Run<?, ?>> runList = ((RunList<Run<?, ?>>)job.getNewBuilds()).filter(BuildingPredicate.INSTANCE);
+
+    	for (Iterator<Run<?, ?>> i = runList.iterator(); i.hasNext(); ) {
+    		currentBuilds.add(buildViewOf(i.next()));
+    	}
+    	
+        return currentBuilds;
+    }
+
     public BuildViewModel lastBuild() {
         return buildViewOf(job.getLastBuild());
     }
@@ -140,6 +157,6 @@ public class JobView {
             return new NullBuildView();
         }
 
-        return BuildView.of(job.getLastBuild(), relative, systemTime);
+        return BuildView.of(build, relative, systemTime);
     }
 }
