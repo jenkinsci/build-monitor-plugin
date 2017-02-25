@@ -1,10 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.questions;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectInformation;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectBadgesState;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectWidgetDetails;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectWidgetInformation;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.ProjectWidgetState;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.project_widget.*;
 import net.serenitybdd.core.pages.WebElementState;
 import net.serenitybdd.screenplay.Question;
 
@@ -13,6 +10,8 @@ public class ProjectWidget {
     public static ProjectWidget of(String projectOfInterest) {
         return new ProjectWidget(projectOfInterest);
     }
+
+    public Question<String> executedBuilds() { return new ProjectWidgetBuilds(projectOfInterest); }
 
     public Question<ProjectInformation> information() {
         return new ProjectWidgetInformation(projectOfInterest);

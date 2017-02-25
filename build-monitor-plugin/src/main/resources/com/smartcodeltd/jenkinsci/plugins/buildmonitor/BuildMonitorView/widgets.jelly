@@ -22,8 +22,8 @@
             </h2>
             <ul class="details">
                 <li data-ng-show="!  project.claim.active">{{ project.headline }}</li>
-                <li data-ng-show="!! project.lastBuild.description" class="build-description description-setter-plugin"
-                    ng-bind-html="project.lastBuild.description" />
+                <li data-ng-show="!! project.lastCompletedBuild.description" class="build-description description-setter-plugin"
+                    ng-bind-html="project.lastCompletedBuild.description" />
                 <li data-ng-show="!! project.claim.active" class="claim-plugin">Claimed by <strong>{{ project.claim.author }}</strong>: {{ project.claim.reason }}</li>
                 <li data-ng-show="!! project.problems" class="build-failure-analyzer-plugin possible-failure-cause">
                     <span>
