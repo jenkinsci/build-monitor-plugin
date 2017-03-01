@@ -70,8 +70,8 @@
   </f:radioBlock>
 
   <f:radioBlock title="${%Specify order}" name="order" checked="${it.currentOrder()=='ExplicitOrder'}" value="explicit">
-    <f:entry title="${%Order of jobs:}">
-      <f:textbox name="explicitOrder" field="explicitOrder" />
+    <f:entry title="${%Order of jobs:}" help="${descriptor.getHelpFile('explicitOrder')}">
+      <f:textbox name="explicitOrder" field="explicitOrder" value="${it.explicitOrder()}" />
     </f:entry>
   </f:radioBlock>
 
