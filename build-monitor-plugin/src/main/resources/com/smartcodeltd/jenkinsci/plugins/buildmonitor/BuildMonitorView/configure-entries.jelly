@@ -68,7 +68,7 @@
   </f:radioBlock>
 
   <f:radioBlock title="${%Explicit order}" name="order" checked="${it.currentOrder()=='ExplicitOrder'}" value="explicit">
-    <f:entry title="${Order of jobs:}">
+    <f:entry title="${%Order of jobs:}">
       <f:textbox name="explicitOrder" field="explicitOrder" />
     </f:entry>
   </f:radioBlock>
