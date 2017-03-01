@@ -87,6 +87,11 @@ public class BuildMonitorView extends ListView {
     }
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public String explicitOrder() {
+        return currentConfig().getExplicitOrder();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public boolean isDisplayCommitters() {
         return currentConfig().shouldDisplayCommitters();
     }
@@ -111,8 +116,11 @@ public class BuildMonitorView extends ListView {
 
         synchronized (this) {
 
-            String requestedOrdering = req.getParameter("order");
-            title                    = req.getParameter("title");
+            String requestedOrdering = req.getParameter("orderSelect");
+            if ("explicit".equals(req.getParameter("order"))) {
+                requestedOrdering = "ExplicitOrder";
+            }
+            title = req.getParameter("title");
 
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
 
@@ -121,6 +129,7 @@ public class BuildMonitorView extends ListView {
             } catch (Exception e) {
                 throw new FormException("Can't order projects by " + requestedOrdering, "order");
             }
+            currentConfig().setExplicitOrder(req.getParameter("explicitOrder"));
         }
     }
 

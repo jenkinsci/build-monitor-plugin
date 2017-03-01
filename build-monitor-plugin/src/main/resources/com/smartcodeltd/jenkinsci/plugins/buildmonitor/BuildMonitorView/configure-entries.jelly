@@ -56,8 +56,8 @@
     <f:textbox name="title" value="${it.title}"/>
   </f:entry>
 
-  <f:entry title="${%Ordered by}">
-    <select name="order" class="setting-input">
+  <f:radioBlock title="${%Ordered by}" name="order" checked="${it.currentOrder()!='ExplicitOrder'}" value="sorted">
+    <select name="orderSelect" class="setting-input">
       <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
       <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
       <f:option value="ByFullName" selected="${it.currentOrder()=='ByFullName'}">${%Full name}</f:option>
@@ -65,7 +65,13 @@
       <f:option value="ByLastBuildTime" selected="${it.currentOrder()=='ByLastBuildTime'}">${%Last build time}</f:option>
       <f:option value="ByEstimatedDuration" selected="${it.currentOrder()=='ByEstimatedDuration'}">${%Estimated duration}</f:option>
     </select>
-  </f:entry>
+  </f:radioBlock>
+
+  <f:radioBlock title="${%Explicit order}" name="order" checked="${it.currentOrder()=='ExplicitOrder'}" value="explicit">
+    <f:entry title="${Order of jobs:}">
+      <f:textbox name="explicitOrder" field="explicitOrder" />
+    </f:entry>
+  </f:radioBlock>
 
   </f:section>
 
