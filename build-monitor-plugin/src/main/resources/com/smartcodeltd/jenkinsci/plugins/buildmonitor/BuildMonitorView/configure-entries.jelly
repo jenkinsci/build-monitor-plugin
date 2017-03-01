@@ -57,7 +57,7 @@
   </f:entry>
 
   <f:radioBlock title="${%Sort jobs}" name="order" checked="${it.currentOrder()!='ExplicitOrder'}" value="sorted">
-    <f:entry title="${Ordered by}">
+    <f:entry title="${%Ordered by}">
       <select name="orderSelect" class="setting-input">
         <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
         <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
