@@ -45,6 +45,15 @@ public class HasBadgesTest {
         assertThat(serialisedBadgesDetailsOf(job).value(), hasSize(1));
     }
 
+    @Test
+    public void should_report_badges_from_latest_build() throws Exception {
+    	job = a(jobView().which(new HasBadges()).of(
+                a(job().whereTheLast(build().isStillBuilding().hasBadges(badge().withText("badge1")))
+                		.andThePrevious(build().hasBadges(badge().withText("badge1"), badge().withText("badge2"))))));
+
+        assertThat(serialisedBadgesDetailsOf(job).value(), hasSize(1));
+    }
+
     private HasBadges.Badges serialisedBadgesDetailsOf(JobView job) {
         return job.which(HasBadges.class).asJson();
     }
