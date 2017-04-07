@@ -18,7 +18,7 @@
         <header>
             <h2>
                 <a title="{{project.name}}"
-                   href="{{project.url}}">{{project.name}}</a>
+                   href="{{project.url}}">{{project.nameFilter != project.name ? project.nameFilter : project.name}}</a>
             </h2>
             <ul class="details">
                 <li data-ng-show="!  project.claim.active">{{ project.headline }}</li>

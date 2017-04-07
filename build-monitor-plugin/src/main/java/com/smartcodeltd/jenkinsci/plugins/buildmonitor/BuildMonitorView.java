@@ -103,6 +103,21 @@ public class BuildMonitorView extends ListView {
         return descriptor.getPermissionToCollectAnonymousUsageStatistics();
     }
 
+    @SuppressWarnings("unused") // used in .jelly
+    public String getFilterPrefix() {
+        return currentConfig().getFilterPrefix();
+    }
+
+    @SuppressWarnings("unused") // used in .jelly
+    public String getFilterSuffix() {
+        return currentConfig().getFilterSuffix();
+    }
+
+    @SuppressWarnings("unused") // used in .jelly
+    public String getFilterRegex() {
+        return currentConfig().getFilterRegex();
+    }
+
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
@@ -113,7 +128,13 @@ public class BuildMonitorView extends ListView {
 
             String requestedOrdering = req.getParameter("order");
             title                    = req.getParameter("title");
+            String filterPrefix      = req.getParameter("filterPrefix");
+            String filterSuffix      = req.getParameter("filterSuffix");
+            String filterRegex       = req.getParameter("filterRegex");
 
+            currentConfig().setFilterPrefix(filterPrefix);
+            currentConfig().setFilterSuffix(filterSuffix);
+            currentConfig().setFilterRegex(filterRegex);
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
 
             try {

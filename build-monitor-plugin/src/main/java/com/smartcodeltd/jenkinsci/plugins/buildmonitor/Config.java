@@ -11,6 +11,31 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 public class Config {
 
     private boolean displayCommitters;
+    private String filterPrefix, filterSuffix, filterRegex;
+
+    public void setFilterPrefix(String filterPrefix) {
+        this.filterPrefix = filterPrefix;
+    }
+
+    public void setFilterSuffix(String filterSuffix) {
+        this.filterSuffix = filterSuffix;
+    }
+
+    public void setFilterRegex(String filterRegex) {
+        this.filterRegex = filterRegex;
+    }
+
+    public String getFilterPrefix() {
+        return getOrElse(this.filterPrefix,"");
+    }
+
+    public String getFilterSuffix() {
+        return getOrElse(this.filterSuffix,"");
+    }
+
+    public String getFilterRegex() {
+        return getOrElse(this.filterRegex,"");
+    }
 
     public static Config defaultConfig() {
         return new Config();
@@ -27,6 +52,7 @@ public class Config {
 
         return getOrElse(order, new ByName());
     }
+
 
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;

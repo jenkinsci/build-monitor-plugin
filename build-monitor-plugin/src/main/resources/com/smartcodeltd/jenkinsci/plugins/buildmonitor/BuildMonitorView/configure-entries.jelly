@@ -40,6 +40,27 @@
     </f:entry>
   </f:optionalBlock>
 
+  <f:optionalBlock name="usefilterprefix" title="${%Exclude a prefix from the job name on display}"
+                   checked="${it.filterPrefix != null}" help="/help/view-config/filterprefix.html">
+    <f:entry title="${%Prefix filter}">
+      <f:textbox name="filterPrefix" field="filterPrefix"/>
+    </f:entry>
+  </f:optionalBlock>
+
+  <f:optionalBlock name="usefiltersuffix" title="${%Exclude a suffix from the job name on display}"
+                   checked="${it.filterSuffix != null}" help="/help/view-config/filtersuffix.html">
+    <f:entry title="${%Suffix filter}">
+      <f:textbox name="filterSuffix" field="filterSuffix"/>
+    </f:entry>
+  </f:optionalBlock>
+
+  <f:optionalBlock name="usefilterregex" title="${%Match a regex and exclude it from the name from the job name on display}"
+                   checked="${it.filterRegex != null}" help="/help/view-config/filterregex.html">
+    <f:entry title="${%Regex filter}">
+      <f:textbox name="filterRegex" field="filterRegex"/>
+    </f:entry>
+  </f:optionalBlock>
+
   <j:if test="${it.hasJobFilterExtensions()}">
     <f:block>
       <f:repeatableHeteroProperty field="jobFilters" hasHeader="true" addCaption="${%Add Job Filter}" />
