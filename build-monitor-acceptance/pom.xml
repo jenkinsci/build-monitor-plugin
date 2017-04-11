@@ -185,7 +185,7 @@
                         <include>**/features/*Test.java</include>
                         <include>**/features/*Should*.java</include>
                     </includes>
-                    <argLine>-Xmx512m</argLine>
+                    <argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
                     <systemPropertyVariables>
                         <webdriver.driver>${webdriver.driver}</webdriver.driver>
                         <browserstack.url>${browserstack.url}</browserstack.url>
@@ -199,7 +199,7 @@
                         <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
                     </environmentVariables>
                     <forkCount>1C</forkCount>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
                 </configuration>
                 <executions>
                     <execution>
