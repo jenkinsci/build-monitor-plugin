@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
@@ -7,7 +8,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Durati
 
 import static com.google.common.collect.Lists.newArrayList;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,10 +35,17 @@ public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDeta
         return new CurrentBuilds(job.currentBuilds());
     }
 
-    private static String formatted(Duration duration) {
+    private static String formattedDuration(Duration duration) {
         return null != duration
                 ? duration.value()
                 : "";
+    }
+
+    private static String formattedStages(List<String> stages) {
+        if (!stages.isEmpty()) {
+            return "[" + Joiner.on(", ").join(stages) + "]";
+        }
+        return "";
     }
 
     public static class CurrentBuilds {
@@ -75,12 +82,20 @@ public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDeta
 
         @JsonProperty
         public final String duration() {
-            return formatted(build.elapsedTime());
+            return formattedDuration(build.elapsedTime());
         }
 
         @JsonProperty
         public final String description() {
             return build.description();
+        }
+
+        @JsonProperty
+        public final String pipelineStages() {
+            if (build.isPipeline()) {
+                return formattedStages(build.pipelineStages());
+            }
+            return "";
         }
     }
 }

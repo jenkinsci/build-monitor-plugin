@@ -64,6 +64,16 @@ public class NullBuildView implements BuildViewModel {
     }
 
     @Override
+    public boolean isPipeline() {
+        return false;
+    }
+
+    @Override
+    public List<String> pipelineStages() {
+        return new ArrayList<String>();
+    }
+
+    @Override
     public boolean hasPreviousBuild() {
         return false;
     }

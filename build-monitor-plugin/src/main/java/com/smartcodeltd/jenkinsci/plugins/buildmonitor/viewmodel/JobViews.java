@@ -4,6 +4,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.*;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
 import hudson.model.Job;
+import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 
 import java.util.List;
 
@@ -13,9 +14,10 @@ import static com.google.common.collect.Lists.newArrayList;
  * @author Jan Molak
  */
 public class JobViews {
-    public static final String Claim = "claim";
-    public static final String Build_Failure_Analyzer = "build-failure-analyzer";
-    public static final String Groovy_Post_Build = "groovy-postbuild";
+    private static final String Claim                  = "claim";
+    private static final String Build_Failure_Analyzer = "build-failure-analyzer";
+    private static final String Groovy_Post_Build      = "groovy-postbuild";
+    private static final String Pipeline               = "workflow-aggregator";
 
     private final StaticJenkinsAPIs jenkins;
     private final com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config;
@@ -45,6 +47,8 @@ public class JobViews {
         	viewFeatures.add(new HasBadges());
         }
 
-        return JobView.of(job, viewFeatures);
+        boolean isPipelineJob = jenkins.hasPlugin(Pipeline) && job instanceof WorkflowJob;
+
+        return JobView.of(job, viewFeatures, isPipelineJob);
     }
 }

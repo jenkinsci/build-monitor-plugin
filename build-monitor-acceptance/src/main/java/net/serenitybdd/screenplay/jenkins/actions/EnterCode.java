@@ -21,6 +21,10 @@ public class EnterCode {
         return instrumented(EnterCodeIntoCodeMirrorEditor.class, editorField, Joiner.on(System.lineSeparator()).join(lines));
     }
 
+    public Action intoThePipelineEditor(Target editorField) {
+        return instrumented(EnterCodeIntoPipelineEditor.class, editorField, Joiner.on(System.lineSeparator()).join(lines));
+    }
+
     public EnterCode(List<String> lines) {
         this.lines = lines;
     }
@@ -61,5 +65,23 @@ public class EnterCode {
         private String escapeNewLineCharacters(String code) {
             return code.replaceAll("\n", "\\\\n");
         }
+    }
+
+    private static class EnterCodeIntoPipelineEditor implements Action {
+
+        private final Target target;
+        private final String code;
+
+        public EnterCodeIntoPipelineEditor(Target target, String code) {
+            this.target = target;
+            this.code  = code;
+        }
+
+        @Override
+        @Step("{0} enters '#code' into the pipeline editor field")
+        public <T extends Actor> void performAs(T actor) {
+            target.resolveFor(actor).type(code);
+        }
+
     }
 }

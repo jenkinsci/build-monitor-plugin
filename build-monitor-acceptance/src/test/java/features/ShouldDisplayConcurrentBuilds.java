@@ -49,7 +49,7 @@ public class ShouldDisplayConcurrentBuilds {
                 Navigate.to(jenkins.url()),
                 HaveAProjectCreated.called(My_App).andConfiguredTo(
                         Enable.executingConcurrentBuilds(),
-                        ExecuteAShellScript.that(sleepsFor(60))
+                        ExecuteAShellScript.that(sleepsFor(300))
                 ),
                 ScheduleABuild.of(My_App),
                 ScheduleABuild.of(My_App)
