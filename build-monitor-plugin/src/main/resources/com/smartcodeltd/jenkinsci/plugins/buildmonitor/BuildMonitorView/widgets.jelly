@@ -9,7 +9,8 @@
         id="{{ project.name | slugify }}"
     >
         <div class="progress"
-             animate-on-change="project.progress"
+             data-ng-if="project.estimatedDuration &amp;&amp; project.progress &gt; 0"
+             animate-on-change="project.lastCompletedBuild.timeElapsedSince"
              data-ng-style="{ 'width': project.progress + '%' }"
         >
             <span class="value">{{project.progress}}%</span>
