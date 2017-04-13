@@ -1,16 +1,15 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
-import com.google.common.collect.Iterables;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.culprits.BuildCulpritsRetriever;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.pipeline.WorkflowNodeTraversal;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.DurationInMilliseconds;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.HumanReadableDuration;
 import hudson.model.*;
-import hudson.scm.ChangeLogSet;
 import org.jenkinsci.plugins.workflow.flow.FlowExecution;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
@@ -18,10 +17,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
-import static com.google.common.collect.Iterables.transform;
-import static com.google.common.collect.Lists.newArrayList;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafety.getOrElse;
 
 public class BuildView implements BuildViewModel {
@@ -30,6 +26,7 @@ public class BuildView implements BuildViewModel {
     private final boolean isPipeline;
     private final RelativeLocation parentJobLocation;
     private final Date systemTime;
+    private final BuildCulpritsRetriever buildCulpritsRetriever;
 
     @VisibleForTesting
     static BuildView of(Run<?, ?> build) {
@@ -144,36 +141,12 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public Set<String> culprits() {
-        return getUsers(new Reader() {
-            @Override
-            public Iterable<String> readUsersFrom(AbstractBuild<?, ?> jenkinsBuild) {
-                return transform(jenkinsBuild.getCulprits(), new Function<User, String>() {
-                    @Override
-                    public String apply(User culprit) {
-                        return culprit.getFullName();
-                    }
-                });
-            }
-        });
+        return buildCulpritsRetriever.getCulprits(build);
     }
 
     @Override
     public Set<String> committers() {
-        return getUsers(new Reader() {
-            @Override
-            public Iterable<String> readUsersFrom(AbstractBuild<?, ?> jenkinsBuild) {
-                return transform(nonNullIterable(jenkinsBuild.getChangeSet()), new Function<ChangeLogSet.Entry, String>() {
-                    @Override
-                    public String apply(ChangeLogSet.Entry entry) {
-                        return entry.getAuthor().getFullName();
-                    }
-                });
-            }
-
-            private <T> T nonNullIterable(T list) {
-                return (T) getOrElse(list, newArrayList());
-            }
-        });
+        return buildCulpritsRetriever.getCommitters(build);
     }
 
     @Override
@@ -182,15 +155,14 @@ public class BuildView implements BuildViewModel {
     }
     
     @Override
-	public <A extends Action> List<A> allDetailsOf(Class<A> jenkinsAction) {
-    	return build.getActions(jenkinsAction);
-	}
+    public <A extends Action> List<A> allDetailsOf(Class<A> jenkinsAction) {
+        return build.getActions(jenkinsAction);
+    }
 
     @Override
     public String toString() {
         return name();
     }
-
 
     private long now() {
         return systemTime.getTime();
@@ -206,21 +178,6 @@ public class BuildView implements BuildViewModel {
         this.isPipeline = isPipeline;
         this.parentJobLocation = parentJobLocation;
         this.systemTime = systemTime;
-    }
-
-    private interface Reader {
-        Iterable<String> readUsersFrom(AbstractBuild<?, ?> jenkinsBuild);
-    }
-
-    private Set<String> getUsers(Reader reader) {
-        Set<String> users = new TreeSet<String>();
-
-        if (build instanceof AbstractBuild<?, ?>) {
-            AbstractBuild<?, ?> jenkinsBuild = (AbstractBuild<?, ?>) build;
-
-            Iterables.addAll(users, reader.readUsersFrom(jenkinsBuild));
-        }
-
-        return users;
+        this.buildCulpritsRetriever = new BuildCulpritsRetriever(new StaticJenkinsAPIs());
     }
 }
