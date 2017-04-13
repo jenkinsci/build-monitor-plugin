@@ -20,9 +20,7 @@ public interface BuildViewModel {
     Duration estimatedDuration();
     int progress();
     String description();
-
-    boolean isPipeline();
-    List<String> pipelineStages();
+    String status();
 
     boolean hasPreviousBuild();
     BuildViewModel previousBuild();

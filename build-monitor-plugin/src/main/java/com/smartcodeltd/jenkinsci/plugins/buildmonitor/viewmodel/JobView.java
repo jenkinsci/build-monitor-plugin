@@ -1,7 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
@@ -27,18 +26,16 @@ import static java.lang.String.format;
 public class JobView {
     private final Date systemTime;
     private final Job<?, ?> job;
-    private final boolean isPipelineJob;
     private final RelativeLocation relative;
 
     private final List<Feature> features = newArrayList();
 
-    public static JobView of(Job<?, ?> job, List<Feature> features, boolean isPipelineJob) {
-        return new JobView(job, features, isPipelineJob, RelativeLocation.of(job), new Date());
+    public static JobView of(Job<?, ?> job, List<Feature> features) {
+        return new JobView(job, features, RelativeLocation.of(job), new Date());
     }
 
-    public JobView(Job<?, ?> job, List<Feature> features, boolean isPipelineJob, RelativeLocation relative, Date systemTime) {
+    public JobView(Job<?, ?> job, List<Feature> features, RelativeLocation relative, Date systemTime) {
         this.job           = job;
-        this.isPipelineJob = isPipelineJob;
         this.relative      = relative;
         this.systemTime    = systemTime;
 
@@ -159,6 +156,6 @@ public class JobView {
             return new NullBuildView();
         }
 
-        return BuildView.of(build, isPipelineJob, relative, systemTime);
+        return BuildView.of(build, relative, systemTime);
     }
 }

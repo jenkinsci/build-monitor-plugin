@@ -91,11 +91,8 @@ public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDeta
         }
 
         @JsonProperty
-        public final String pipelineStages() {
-            if (build.isPipeline()) {
-                return formattedStages(build.pipelineStages());
-            }
-            return "";
+        public final String status() {
+            return build.status();
         }
     }
 }
