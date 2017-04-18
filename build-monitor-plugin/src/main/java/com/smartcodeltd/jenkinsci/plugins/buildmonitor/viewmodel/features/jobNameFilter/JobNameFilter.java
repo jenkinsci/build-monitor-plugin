@@ -1,14 +1,14 @@
-package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.nameFilter;
+package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.jobNameFilter;
 
 import org.codehaus.jackson.annotate.JsonValue;
 
 /**
  * @author Vincent & Robert
  */
-public class NameFilter {
+public class JobNameFilter {
     private final String value;
 
-    public NameFilter(String value) {
+    public JobNameFilter(String value) {
         this.value = value;
     }
 
@@ -17,7 +17,7 @@ public class NameFilter {
         return value;
     }
 
-    public NameFilter asJson() {
+    public JobNameFilter asJson() {
         return this;
     }
 }

@@ -3,7 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.*;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.nameFilter.NameFilterConfig;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.jobNameFilter.JobNameFilterConfig;
 import hudson.model.Job;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class JobViews {
         viewFeatures.add(new HasHeadline(new HeadlineConfig(config.shouldDisplayCommitters())));
         viewFeatures.add(new KnowsLastCompletedBuildDetails());
         viewFeatures.add(new KnowsCurrentBuildsDetails());
-        viewFeatures.add(new HasNameFilter(new NameFilterConfig(config.getFilterPrefix(), config.getFilterSuffix(), config.getFilterRegex())));
+        viewFeatures.add(new HasNameFilter(new JobNameFilterConfig(config.getFilterPrefix(), config.getFilterSuffix(), config.getFilterRegex())));
 
         if (jenkins.hasPlugin(Claim)) {
             viewFeatures.add(new CanBeClaimed());

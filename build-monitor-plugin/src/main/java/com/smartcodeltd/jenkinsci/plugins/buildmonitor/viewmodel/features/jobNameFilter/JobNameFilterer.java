@@ -1,4 +1,4 @@
-package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.nameFilter;
+package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.jobNameFilter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,15 +6,15 @@ import java.util.regex.Pattern;
 /**
  * Contains methods used to filter the job name with specified prefix, suffix and regex
  */
-public class NameFilterer {
+public class JobNameFilterer {
 
     private String jobName;
 
-    public NameFilterer(String jobName) {
+    public JobNameFilterer(String jobName) {
         this.jobName = jobName;
     }
 
-    public NameFilterer filterSuffix(String suffix) {
+    public JobNameFilterer filterSuffix(String suffix) {
         if (suffix.length() <= 0) {
             return this;
         }
@@ -22,14 +22,14 @@ public class NameFilterer {
         if (jobName.substring(jobName.length() - suffix.length(), jobName.length()).equals(suffix.substring(0, suffix.length()))) {
             String filteredName = jobName.substring(0, jobName.length() - suffix.length());
 
-            return new NameFilterer(filteredName);
+            return new JobNameFilterer(filteredName);
         }
 
         return this;
     }
 
 
-    public NameFilterer filterPrefix(String prefix) {
+    public JobNameFilterer filterPrefix(String prefix) {
         if (prefix.length() <= 0) {
             return this;
         }
@@ -37,13 +37,13 @@ public class NameFilterer {
         if (jobName.substring(0, prefix.length()).equals(prefix.substring(0, prefix.length()))) {
             String filteredName = jobName.substring(prefix.length(), jobName.length());
 
-            return new NameFilterer(filteredName);
+            return new JobNameFilterer(filteredName);
         }
 
         return this;
     }
 
-    public NameFilterer filterRegex(String regex) {
+    public JobNameFilterer filterRegex(String regex) {
         if (regex.length() <= 0) {
             return this;
         }
@@ -54,7 +54,7 @@ public class NameFilterer {
         Matcher m = p.matcher(jobName);
         filteredName = m.replaceAll("");
 
-        return new NameFilterer(filteredName);
+        return new JobNameFilterer(filteredName);
     }
 
     public String getJobName() {

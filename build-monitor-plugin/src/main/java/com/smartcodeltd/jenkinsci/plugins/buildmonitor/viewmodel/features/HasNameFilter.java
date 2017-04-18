@@ -1,16 +1,13 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.nameFilter.*;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.jobNameFilter.*;
 
-import static com.google.common.collect.Iterables.filter;
-import static com.google.common.collect.Lists.newArrayList;
-
-public class HasNameFilter implements Feature<NameFilter> {
+public class HasNameFilter implements Feature<JobNameFilter> {
     private JobView job;
-    private NameFilterConfig config;
+    private JobNameFilterConfig config;
 
-    public HasNameFilter(NameFilterConfig config) {
+    public HasNameFilter(JobNameFilterConfig config) {
         this.config = config;
     }
 
@@ -22,15 +19,15 @@ public class HasNameFilter implements Feature<NameFilter> {
     }
 
     @Override
-    public NameFilter asJson() {
-        NameFilterer nameFilterer = new NameFilterer(job.name());
+    public JobNameFilter asJson() {
+        JobNameFilterer nameFilterer = new JobNameFilterer(job.name());
 
         nameFilterer = nameFilterer
                 .filterPrefix(config.prefix)
                 .filterSuffix(config.suffix)
                 .filterRegex(config.regex);
 
-        return new NameFilter(nameFilterer.getJobName());
+        return new JobNameFilter(nameFilterer.getJobName());
     }
 
 }
