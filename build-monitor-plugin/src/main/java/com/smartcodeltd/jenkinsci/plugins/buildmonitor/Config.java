@@ -52,8 +52,7 @@ public class Config {
 
         return getOrElse(order, new ByName());
     }
-
-
+    
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
     }
