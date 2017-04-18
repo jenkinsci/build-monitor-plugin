@@ -50,15 +50,15 @@
 
   <f:section title="${%Job display name filters}">
 
-    <f:entry title="${%Prefix filter}" help="${descriptor.getHelpFile('filterName')}">
+    <f:entry title="${%Prefix filter}" help="${descriptor.getHelpFile('filterNamePrefix')}">
       <f:textbox name="filterPrefix" field="filterPrefix"/>
     </f:entry>
 
-    <f:entry title="${%Suffix filter}" help="${descriptor.getHelpFile('filterName')}">
+    <f:entry title="${%Suffix filter}" help="${descriptor.getHelpFile('filterNameSuffix')}">
       <f:textbox name="filterSuffix" field="filterSuffix"/>
     </f:entry>
 
-    <f:entry title="${%Regex filter}" help="${descriptor.getHelpFile('filterName')}">
+    <f:entry title="${%Regex filter}" help="${descriptor.getHelpFile('filterNameRegex')}">
       <f:textbox name="filterRegex" field="filterRegex"/>
     </f:entry>
 
