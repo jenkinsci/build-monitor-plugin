@@ -3,7 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.jobNameFilter.*;
 
-public class HasNameFilter implements Feature<JobNameFilter> {
+public class HasNameFilter implements Feature<JobNameFiltered> {
     private JobView job;
     private JobNameFilterConfig config;
 
@@ -19,7 +19,7 @@ public class HasNameFilter implements Feature<JobNameFilter> {
     }
 
     @Override
-    public JobNameFilter asJson() {
+    public JobNameFiltered asJson() {
         JobNameFilterer nameFilterer = new JobNameFilterer(job.name());
 
         nameFilterer = nameFilterer
@@ -27,7 +27,6 @@ public class HasNameFilter implements Feature<JobNameFilter> {
                 .filterSuffix(config.suffix)
                 .filterRegex(config.regex);
 
-        return new JobNameFilter(nameFilterer.getJobName());
+        return new JobNameFiltered(nameFilterer.getJobName());
     }
-
 }

@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
  * Contains methods used to filter the job name with specified prefix, suffix and regex
  */
 public class JobNameFilterer {
-
     private String jobName;
 
     public JobNameFilterer(String jobName) {
@@ -27,7 +26,6 @@ public class JobNameFilterer {
 
         return this;
     }
-
 
     public JobNameFilterer filterPrefix(String prefix) {
         if (prefix.length() <= 0) {
@@ -60,5 +58,4 @@ public class JobNameFilterer {
     public String getJobName() {
         return jobName;
     }
-
 }

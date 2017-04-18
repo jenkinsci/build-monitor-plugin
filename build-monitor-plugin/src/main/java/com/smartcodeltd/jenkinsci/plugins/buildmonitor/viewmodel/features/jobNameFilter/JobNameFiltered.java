@@ -5,10 +5,10 @@ import org.codehaus.jackson.annotate.JsonValue;
 /**
  * @author Vincent & Robert
  */
-public class JobNameFilter {
+public class JobNameFiltered {
     private final String value;
 
-    public JobNameFilter(String value) {
+    public JobNameFiltered(String value) {
         this.value = value;
     }
 
@@ -17,7 +17,7 @@ public class JobNameFilter {
         return value;
     }
 
-    public JobNameFilter asJson() {
+    public JobNameFiltered asJson() {
         return this;
     }
 }
