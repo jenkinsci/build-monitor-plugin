@@ -18,8 +18,20 @@
         <header>
             <h2>
                 <a title="{{project.name}}"
-                   href="{{project.url}}">{{project.jobNameFiltered != project.name ? project.jobNameFiltered : project.name}}</a>
+                   href="{{project.url}}">
+                    {{project.name}}
+<!--
+                    {{ project.jobNameFiltered != project.name
+                    &amp;&amp; (!project.strippedMostCommonPrefix
+                    || !project.strippedMostCommonSuffix)
+                    ?
+                    project.jobNameFiltered :
+                    }}
+-->
+
+                </a>
             </h2>
+            <p>{{project}}</p>
             <ul class="details">
                 <li data-ng-show="!  project.claim.active">{{ project.headline }}</li>
                 <li data-ng-show="!! project.lastCompletedBuild.description" class="build-description description-setter-plugin"

@@ -22,10 +22,7 @@ public class HasNameFilter implements Feature<JobNameFiltered> {
     public JobNameFiltered asJson() {
         JobNameFilterer nameFilterer = new JobNameFilterer(job.name());
 
-        nameFilterer = nameFilterer
-                .filterPrefix(config.prefix)
-                .filterSuffix(config.suffix)
-                .filterRegex(config.regex);
+        nameFilterer = nameFilterer.filterRegex(config.regex);
 
         return new JobNameFiltered(nameFilterer.getJobName());
     }

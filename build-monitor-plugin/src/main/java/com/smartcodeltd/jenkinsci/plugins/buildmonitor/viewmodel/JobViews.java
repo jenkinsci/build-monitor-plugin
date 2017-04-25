@@ -2,6 +2,8 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.*;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.StripMostCommons.StripMostCommonPrefixConfig;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.StripMostCommons.StripMostCommonSuffixConfig;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.jobNameFilter.JobNameFilterConfig;
 import hudson.model.Job;
@@ -31,9 +33,11 @@ public class JobViews {
 
         // todo: a more elegant way of assembling the features would be nice
         viewFeatures.add(new HasHeadline(new HeadlineConfig(config.shouldDisplayCommitters())));
+        viewFeatures.add(new shouldStripMostCommonPrefix(new StripMostCommonPrefixConfig(config.ShouldStripCommonPrefix())));
+        viewFeatures.add(new shouldStripMostCommonSuffix(new StripMostCommonSuffixConfig(config.ShouldStripCommonSuffix())));
         viewFeatures.add(new KnowsLastCompletedBuildDetails());
         viewFeatures.add(new KnowsCurrentBuildsDetails());
-        viewFeatures.add(new HasNameFilter(new JobNameFilterConfig(config.getFilterPrefix(), config.getFilterSuffix(), config.getFilterRegex())));
+        viewFeatures.add(new HasNameFilter(new JobNameFilterConfig(config.getFilterRegex())));
 
         if (jenkins.hasPlugin(Claim)) {
             viewFeatures.add(new CanBeClaimed());

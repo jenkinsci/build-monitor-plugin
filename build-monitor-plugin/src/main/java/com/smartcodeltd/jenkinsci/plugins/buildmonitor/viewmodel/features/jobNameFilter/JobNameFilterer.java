@@ -13,34 +13,6 @@ public class JobNameFilterer {
         this.jobName = jobName;
     }
 
-    public JobNameFilterer filterSuffix(String suffix) {
-        if (suffix.length() <= 0) {
-            return this;
-        }
-
-        if (jobName.substring(jobName.length() - suffix.length(), jobName.length()).equals(suffix.substring(0, suffix.length()))) {
-            String filteredName = jobName.substring(0, jobName.length() - suffix.length());
-
-            return new JobNameFilterer(filteredName);
-        }
-
-        return this;
-    }
-
-    public JobNameFilterer filterPrefix(String prefix) {
-        if (prefix.length() <= 0) {
-            return this;
-        }
-
-        if (jobName.substring(0, prefix.length()).equals(prefix.substring(0, prefix.length()))) {
-            String filteredName = jobName.substring(prefix.length(), jobName.length());
-
-            return new JobNameFilterer(filteredName);
-        }
-
-        return this;
-    }
-
     public JobNameFilterer filterRegex(String regex) {
         if (regex.length() <= 0) {
             return this;

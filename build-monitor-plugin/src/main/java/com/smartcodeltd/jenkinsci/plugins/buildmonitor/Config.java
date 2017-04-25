@@ -10,27 +10,25 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 
 public class Config {
 
-    private boolean displayCommitters;
-    private String filterPrefix, filterSuffix, filterRegex;
+    private boolean displayCommitters,shouldStripCommonPrefix,shouldStripCommonSuffix;
+    private String filterRegex;
 
-    public void setFilterPrefix(String filterPrefix) {
-        this.filterPrefix = filterPrefix;
+    public void setStripCommonPrefix(boolean strip){
+        this.shouldStripCommonPrefix = strip;
     }
 
-    public void setFilterSuffix(String filterSuffix) {
-        this.filterSuffix = filterSuffix;
+    public void setStripCommonSuffix(boolean strip){
+        this.shouldStripCommonSuffix = strip;
+    }
+    public Boolean ShouldStripCommonPrefix(){
+        return getOrElse(shouldStripCommonPrefix,false);
+    }
+    public Boolean ShouldStripCommonSuffix(){
+        return getOrElse(shouldStripCommonSuffix,false);
     }
 
     public void setFilterRegex(String filterRegex) {
         this.filterRegex = filterRegex;
-    }
-
-    public String getFilterPrefix() {
-        return getOrElse(this.filterPrefix,"");
-    }
-
-    public String getFilterSuffix() {
-        return getOrElse(this.filterSuffix,"");
     }
 
     public String getFilterRegex() {
