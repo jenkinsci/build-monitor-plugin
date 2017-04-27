@@ -20,6 +20,8 @@ public class JobViewSerialiser extends JsonSerializer<JobView> {
         jgen.writeObjectField("hashCode",           job.hashCode());
         jgen.writeObjectField("progress",           job.progress());
         jgen.writeObjectField("estimatedDuration",  job.estimatedDuration());
+        /*jgen.writeObjectField("buildExceedsEstimatedDuration",    job.buildExceedsEstimatedDuration());*/
+        jgen.writeObjectField("hasQueuedItem",      job.hasQueuedItem());
 
         for (Feature<?> feature : job.features()) {
             Object serialised = feature.asJson();

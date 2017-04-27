@@ -12,6 +12,7 @@ public class Config {
 
     private boolean displayCommitters,shouldStripCommonPrefix,shouldStripCommonSuffix;
     private String filterRegex;
+    private double overtimeFactor;
 
     public void setStripCommonPrefix(boolean strip){
         this.shouldStripCommonPrefix = strip;
@@ -25,6 +26,13 @@ public class Config {
     }
     public Boolean ShouldStripCommonSuffix(){
         return getOrElse(shouldStripCommonSuffix,false);
+    }
+    public void setOvertimeFactor(double overtimeFactor){
+        this.overtimeFactor = overtimeFactor;
+    }
+
+    public double getOvertimeFactor() {
+        return getOrElse(this.overtimeFactor, 1.0);
     }
 
     public void setFilterRegex(String filterRegex) {

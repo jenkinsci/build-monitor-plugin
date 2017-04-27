@@ -42,6 +42,7 @@ angular.
               /*
               TODO extract into widget.
               */
+
             function getFreqOfJobs(itemsOnScreen){
               var namesOnScreen = [];
               for(var i = 0; i < itemsOnScreen.length;i++){
@@ -50,20 +51,17 @@ angular.
               }
                   var sharedStartString,sharedEndString;
 
-              if($scope.jobs[0].strippedMostCommonPrefix && $scope.jobs[0].strippedMostCommonPrefix != null){
+              if($scope.jobs[0].strippedMostCommonPrefix){
                  sharedStartString = sharedStart(namesOnScreen);
                  for(var i = 0; i < namesOnScreen.length; i++){
                    $scope.jobs[i].name = namesOnScreen[i].substring(sharedStartString.length,namesOnScreen[i].length);
                  }
 
               }
-              if($scope.jobs[0].strippedMostCommonSuffix && $scope.jobs[0].strippedMostCommonSuffix != null){
+              if($scope.jobs[0].strippedMostCommonSuffix){
                   sharedEndString = sharedEnd(namesOnScreen);
                   for(var i = 0; i < itemsOnScreen.length;i++){
-                    if($scope.jobs[i].name.substring($scope.jobs[i].name.length-sharedEndString.length,$scope.jobs[i].name.length)==reverse(sharedEndString)){
-                      $scope.jobs[i].name = $scope.jobs[i].name.substring(0,$scope.jobs[i].name.length-sharedEndString.length);
-
-                    }
+                    $scope.jobs[i].name = $scope.jobs[i].name.substring(0,$scope.jobs[i].name.length-sharedEndString.length);
                   }
               }
             }
@@ -71,17 +69,18 @@ angular.
             function reverse(s){
                 return s.split("").reverse().join("");
             }
-            function sharedStart(array){
-                  var A= array.concat().sort(),
-                  a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
+            function sharedStart(array,bool){
+                  array = array.sort(),
+                  a1= array[0], a2= array[array.length-1], L= a1.length, i= 0;
+
                   while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
                   return a1.substring(0, i);
               }
             function sharedEnd(array){
-              var A= array.concat().sort(),
-              a1= reverse(A[0]), a2= reverse(A[A.length-1]), L= a1.length, i= 0;
-              while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
-              return a1.substring(0, i);
+                  var A= array.sort(),
+                  a1= reverse(A[0]), a2= reverse(A[A.length-1]), L= a1.length, i= 0;
+                  while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
+                  return a1.substring(0, i);
             }
             /*
             end of inset.

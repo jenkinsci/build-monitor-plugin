@@ -37,6 +37,7 @@ public class JobViews {
         viewFeatures.add(new shouldStripMostCommonSuffix(new StripMostCommonSuffixConfig(config.ShouldStripCommonSuffix())));
         viewFeatures.add(new KnowsLastCompletedBuildDetails());
         viewFeatures.add(new KnowsCurrentBuildsDetails());
+        viewFeatures.add(new BuildExceedsEstimatedDuration(config.getOvertimeFactor()));
         viewFeatures.add(new HasNameFilter(new JobNameFilterConfig(config.getFilterRegex())));
 
         if (jenkins.hasPlugin(Claim)) {

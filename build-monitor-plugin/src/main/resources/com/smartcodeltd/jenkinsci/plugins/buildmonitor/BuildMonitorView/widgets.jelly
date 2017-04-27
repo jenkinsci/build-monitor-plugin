@@ -20,18 +20,12 @@
                 <a title="{{project.name}}"
                    href="{{project.url}}">
                     {{project.name}}
-<!--
-                    {{ project.jobNameFiltered != project.name
-                    &amp;&amp; (!project.strippedMostCommonPrefix
-                    || !project.strippedMostCommonSuffix)
-                    ?
-                    project.jobNameFiltered :
-                    }}
--->
-
                 </a>
             </h2>
-            <p>{{project}}</p>
+            <p>
+                {{project}}
+            </p>
+
             <ul class="details">
                 <li data-ng-show="!  project.claim.active">{{ project.headline }}</li>
                 <li data-ng-show="!! project.lastCompletedBuild.description" class="build-description description-setter-plugin"
@@ -53,6 +47,12 @@
                           data-ng-style="{ 'border': badge.border + ' solid ' + badge.borderColor, 'background': badge.background, 'color': badge.color }">
                         {{ badge.text }}
                     </span>
+                </li>
+                <li  data-ng-show=" project.hasQueuedItem &amp;&amp; settings.showQueueStatus == 1">job has build in queue</li>
+                <li  data-ng-show=" settings.notifyIfBuildTimeExceedsEstimated == 1 &amp;&amp; project.buildExceeds">
+
+
+                    Job is taking longer than expected too complete.
                 </li>
             </ul>
         </header>

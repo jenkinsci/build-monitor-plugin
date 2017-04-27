@@ -57,8 +57,11 @@
     <f:entry title="${%Regex filter}" help="${descriptor.getHelpFile('filterNameRegex')}">
       <f:textbox name="filterRegex" field="filterRegex"/>
     </f:entry>
-
+    <f:entry title="${%overTime factor e.g 1.2 = if build goes 120%}">
+      <f:textbox name="overtimeFactor" field="overtimeFactor"/>
+    </f:entry>
   </f:section>
+
 
   <!-- END cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.532/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
 

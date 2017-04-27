@@ -159,4 +159,7 @@ public class JobView {
 
         return BuildView.of(build, relative, systemTime);
     }
+    public boolean hasQueuedItem() {
+        return job.getQueueItem() != null;
+    }
 }
