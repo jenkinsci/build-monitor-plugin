@@ -22,10 +22,6 @@
                     {{project.name}}
                 </a>
             </h2>
-            <p>
-                {{project}}
-            </p>
-
             <ul class="details">
                 <li data-ng-show="!  project.claim.active">{{ project.headline }}</li>
                 <li data-ng-show="!! project.lastCompletedBuild.description" class="build-description description-setter-plugin"

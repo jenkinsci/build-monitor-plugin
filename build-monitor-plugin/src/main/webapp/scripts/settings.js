@@ -11,7 +11,7 @@ angular.
             $scope.settings.reduceMotion    = cookieJar.get('reduceMotion',    0);
             $scope.settings.showBadges      = cookieJar.get('showBadges',      0);
             $scope.settings.showQueueStatus         = cookieJar.get('showQueueStatus',                      1);
-                        $scope.settings.notifyIfBuildTimeExceedsEstimated         = cookieJar.get('notifyIfBuildTimeExceedsEstimated',    1);
+            $scope.settings.notifyIfBuildTimeExceedsEstimated         = cookieJar.get('notifyIfBuildTimeExceedsEstimated',    1);
             angular.forEach($scope.settings, function(value, name) {
                 $scope.$watch('settings.' + name, function(currentValue) {
                     cookieJar.put(name, currentValue);
