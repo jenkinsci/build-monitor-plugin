@@ -161,4 +161,7 @@ public class JobView {
 
         return BuildView.of(build, isPipelineJob, relative, systemTime);
     }
+    public boolean hasQueuedItem() {
+        return job.getQueueItem() != null;
+    }
 }

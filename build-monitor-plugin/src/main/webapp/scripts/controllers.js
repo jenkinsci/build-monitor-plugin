@@ -24,6 +24,8 @@ angular.
                 return fetchJobViews().then(function (response) {
 
                     $scope.jobs = response.data.data;
+                    //required.
+                    getFreqOfJobs($scope.jobs);
 
                     $rootScope.$broadcast('jenkins:data-fetched', response.data.meta);
 
@@ -36,6 +38,54 @@ angular.
             $rootScope.$watch('settings.numberOfColumns', function(newColumnCount) {
                 $scope.fontSize = fontSizeFor($scope.jobs, newColumnCount);
             });
+
+              /*
+              TODO extract into widget.
+              */
+
+            function getFreqOfJobs(itemsOnScreen){
+              var namesOnScreen = [];
+              for(var i = 0; i < itemsOnScreen.length;i++){
+                namesOnScreen.push(itemsOnScreen[i].jobNameFiltered);
+                $scope.jobs[i].name = itemsOnScreen[i].jobNameFiltered;
+              }
+                  var sharedStartString,sharedEndString;
+
+              if($scope.jobs[0].strippedMostCommonPrefix){
+                 sharedStartString = sharedStart(namesOnScreen);
+                 for(var i = 0; i < namesOnScreen.length; i++){
+                   $scope.jobs[i].name = namesOnScreen[i].substring(sharedStartString.length,namesOnScreen[i].length);
+                 }
+
+              }
+              if($scope.jobs[0].strippedMostCommonSuffix){
+                  sharedEndString = sharedEnd(namesOnScreen);
+                  for(var i = 0; i < itemsOnScreen.length;i++){
+                    $scope.jobs[i].name = $scope.jobs[i].name.substring(0,$scope.jobs[i].name.length-sharedEndString.length);
+                  }
+              }
+            }
+            //shameful copy and paste from SO
+            function reverse(s){
+                return s.split("").reverse().join("");
+            }
+            function sharedStart(array,bool){
+                  array = array.sort(),
+                  a1= array[0], a2= array[array.length-1], L= a1.length, i= 0;
+
+                  while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
+                  return a1.substring(0, i);
+              }
+            function sharedEnd(array){
+                  var A= array.sort(),
+                  a1= reverse(A[0]), a2= reverse(A[A.length-1]), L= a1.length, i= 0;
+                  while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
+                  return a1.substring(0, i);
+            }
+            /*
+            end of inset.
+            */
+
 
             // todo: extract into a 'widget' directive; this shouldn't be a responsibility of a controller to calculate the size of the font...
             function fontSizeFor(itemsOnScreen, numberOfColumns) {
@@ -208,6 +258,5 @@ angular.
             $rootScope.$on('jenkins:unknown-communication-error', function (event, error) {
                 notifyUser.about(error.status);
             });
-
             townCrier.start();
         }]);

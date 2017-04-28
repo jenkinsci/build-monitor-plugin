@@ -48,6 +48,21 @@
 
   </f:section>
 
+  <f:section title="${%Job display name filters}">
+    <f:entry title="${%Strip most common prefix}" help="${descriptor.getHelpFile('displayCommitters')}">
+      <f:checkbox id="stripPrefix" field="stripPrefix" />
+    </f:entry> <f:entry title="${%Strip most common suffix}" help="${descriptor.getHelpFile('displayCommitters')}">
+      <f:checkbox id="stripSuffix" field="stripSuffix" />
+    </f:entry>
+    <f:entry title="${%Regex filter}" help="${descriptor.getHelpFile('filterNameRegex')}">
+      <f:textbox name="filterRegex" field="filterRegex"/>
+    </f:entry>
+    <f:entry title="${%overTime factor e.g 1.2 = if build goes 120%}">
+      <f:textbox name="overtimeFactor" field="overtimeFactor"/>
+    </f:entry>
+  </f:section>
+
+
   <!-- END cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.532/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
 
   <f:section title="${%Build Monitor - View Settings}">

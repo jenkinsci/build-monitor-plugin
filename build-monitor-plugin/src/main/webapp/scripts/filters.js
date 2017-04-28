@@ -1,8 +1,11 @@
 'use strict';
 
 angular.
-    module('buildMonitor.filters', []).
-
+    module('buildMonitor.filters', []).filter('findMostCommonPrefix',function(){
+        return function (){
+          return "rust funciton";
+        }
+    }).
     filter('estimatedTimeElapsedSince', function() {
         var seconds = 1000,
             minutes = 60 * seconds,

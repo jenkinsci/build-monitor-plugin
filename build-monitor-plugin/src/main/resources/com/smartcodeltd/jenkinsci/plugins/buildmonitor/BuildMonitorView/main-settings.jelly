@@ -41,6 +41,24 @@
                            id="settings-show-badges" type="checkbox" />
                     <label for="settings-show-badges" title="Show the last build badges">Show badges?</label>
                 </li>
+                <li class="settings-option">
+                    <input ng-model="settings.showQueueStatus"
+                           ng-false-value="'0'"
+                           ng-true-value="'1'"
+                           id = "setting-for-showQueueStatus"
+                           type="checkbox"/>
+                    <label for="setting-for-showQueueStatus"
+                           title="Show if this job has a queued item">Show queue status?</label>
+                </li>
+                <li class="settings-option">
+                    <input ng-model="settings.notifyIfBuildTimeExceedsEstimated"
+                           ng-false-value="'0'"
+                           ng-true-value="'1'"
+                           id = "setting-for-notifyIfBuildTimeExceedsEstimated"
+                           type="checkbox"/>
+                    <label for="setting-for-notifyIfBuildTimeExceedsEstimated"
+                           title="Show a notification if the build duration exceeds estimated duration, configurable on configuration page.">Notify if build time exceeds estimated?</label>
+                </li>
                 <li class="buttons">
                     <a class="btn"
                        href="configure"

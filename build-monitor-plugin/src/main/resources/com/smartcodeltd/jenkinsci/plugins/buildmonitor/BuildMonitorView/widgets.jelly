@@ -19,7 +19,9 @@
         <header>
             <h2>
                 <a title="{{project.name}}"
-                   href="{{project.url}}">{{project.name}}</a>
+                   href="{{project.url}}">
+                    {{project.name}}
+                </a>
             </h2>
             <ul class="details">
                 <li data-ng-show="!  project.claim.active">{{ project.headline }}</li>
@@ -42,6 +44,12 @@
                           data-ng-style="{ 'border': badge.border + ' solid ' + badge.borderColor, 'background': badge.background, 'color': badge.color }">
                         {{ badge.text }}
                     </span>
+                </li>
+                <li  data-ng-show=" project.hasQueuedItem &amp;&amp; settings.showQueueStatus == 1">job has build in queue</li>
+                <li  data-ng-show=" settings.notifyIfBuildTimeExceedsEstimated == 1 &amp;&amp; project.buildExceeds">
+
+
+                    Job is taking longer than expected too complete.
                 </li>
             </ul>
         </header>

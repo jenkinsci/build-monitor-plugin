@@ -10,7 +10,38 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 
 public class Config {
 
-    private boolean displayCommitters;
+    private boolean displayCommitters,shouldStripCommonPrefix,shouldStripCommonSuffix;
+    private String filterRegex;
+    private double overtimeFactor;
+
+    public void setStripCommonPrefix(boolean strip){
+        this.shouldStripCommonPrefix = strip;
+    }
+
+    public void setStripCommonSuffix(boolean strip){
+        this.shouldStripCommonSuffix = strip;
+    }
+    public Boolean ShouldStripCommonPrefix(){
+        return getOrElse(shouldStripCommonPrefix,false);
+    }
+    public Boolean ShouldStripCommonSuffix(){
+        return getOrElse(shouldStripCommonSuffix,false);
+    }
+    public void setOvertimeFactor(double overtimeFactor){
+        this.overtimeFactor = overtimeFactor;
+    }
+
+    public double getOvertimeFactor() {
+        return getOrElse(this.overtimeFactor, 1.0);
+    }
+
+    public void setFilterRegex(String filterRegex) {
+        this.filterRegex = filterRegex;
+    }
+
+    public String getFilterRegex() {
+        return getOrElse(this.filterRegex,"");
+    }
 
     public static Config defaultConfig() {
         return new Config();
