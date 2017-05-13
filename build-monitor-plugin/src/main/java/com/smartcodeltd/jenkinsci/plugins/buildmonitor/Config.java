@@ -10,7 +10,8 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 
 public class Config {
 
-    private boolean displayCommitters;
+    private boolean displayCommittersOnBuildFailure;
+    private boolean displayCommittersOnFixedBuild;
 
     public static Config defaultConfig() {
         return new Config();
@@ -32,12 +33,20 @@ public class Config {
         this.order = order;
     }
 
-    public boolean shouldDisplayCommitters() {
-        return getOrElse(displayCommitters, true);
+    public boolean shouldDisplayCommittersOnBuildFailure() {
+        return getOrElse(displayCommittersOnBuildFailure, true);
     }
 
-    public void setDisplayCommitters(boolean flag) {
-        this.displayCommitters = flag;
+    public void setDisplayCommittersOnBuildFailure(boolean flag) {
+        this.displayCommittersOnBuildFailure = flag;
+    }
+
+    public boolean shouldDisplayCommittersOnFixedBuild() {
+        return getOrElse(displayCommittersOnFixedBuild, false);
+    }
+
+    public void setDisplayCommittersOnFixedBuild(boolean flag) {
+        this.displayCommittersOnFixedBuild = flag;
     }
 
     @Override
