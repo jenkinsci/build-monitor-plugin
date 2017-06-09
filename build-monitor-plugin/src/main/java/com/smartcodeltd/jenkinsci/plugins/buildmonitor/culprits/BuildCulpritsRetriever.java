@@ -27,6 +27,8 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 public class BuildCulpritsRetriever {
 
   private static final String Pipeline = "workflow-aggregator";
+  private static final String workflowRunClass = "org.jenkinsci.plugins.workflow.job.WorkflowRun";
+  private static Boolean hasWorkflowClass = null;
   private final StaticJenkinsAPIs staticJenkinsAPIs;
 
   public BuildCulpritsRetriever(StaticJenkinsAPIs staticJenkinsAPIs) {
@@ -34,7 +36,7 @@ public class BuildCulpritsRetriever {
   }
 
   public Set<String> getCulprits(Run<?, ?> build) {
-    if (staticJenkinsAPIs.hasPlugin(Pipeline) && build instanceof WorkflowRun) {
+    if (isWorkflowRun(build)) {
       return getCulpritsForWorkflowRun((WorkflowRun) build);
     } else if (build instanceof AbstractBuild) {
       return getCulpritsForAbstractBuild((AbstractBuild<?, ?>) build);
@@ -46,7 +48,7 @@ public class BuildCulpritsRetriever {
 
   public Set<String> getCommitters(Run<?, ?> build) {
     Set<String> committers;
-    if (staticJenkinsAPIs.hasPlugin(Pipeline) && build instanceof WorkflowRun) {
+    if (isWorkflowRun(build)) {
       committers = getCommittersForWorkflowRun((WorkflowRun) build);
     } else if (build instanceof AbstractBuild<?, ?>) {
       committers = getCommittersForAbstractBuild((AbstractBuild<?, ?>) build);
@@ -65,6 +67,20 @@ public class BuildCulpritsRetriever {
       }
     }
     return committers;
+  }
+
+  private boolean isWorkflowRun(Run<?, ?> build) {
+    //Cache class lookup
+    if (hasWorkflowClass == null) {
+      try {
+        Class.forName(workflowRunClass);
+        hasWorkflowClass = true;
+      } catch (ClassNotFoundException e) {
+        hasWorkflowClass = false;
+        return false;
+      }
+    }
+    return hasWorkflowClass && staticJenkinsAPIs.hasPlugin(Pipeline) && build instanceof WorkflowRun;
   }
 
   private Set<String> getCulpritsForAbstractBuild(AbstractBuild<?, ?> build) {
