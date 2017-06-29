@@ -78,7 +78,7 @@ before it's available in the Jenkins Update Centre, you can [download it](https:
 ## (A)TDD
 
 If you'd like to understand more about the logic behind the Build Monitor Plugin,
-have a look at the [tests that drove the design](/src/test/java/com/smartcodeltd/jenkinsci/plugins/).
+have a look at the [tests that drove the design](/build-monitor-plugin/src/test/java/com/smartcodeltd/jenkinsci/plugins).
 
 ## FAQ
 
@@ -116,7 +116,7 @@ There's a colour blind mode you can [enable in the Settings](https://github.com/
 Build Monitor is continuously delivered to a Jenkins near you thanks to:
 * the time and commitment of [the author](http://smartcodeltd.co.uk/) and [the contributors](https://github.com/jan-molak/jenkins-build-monitor-plugin/graphs/contributors)
 * [build infrastructure](https://smartcode-opensource.ci.cloudbees.com/) provided by [CloudBees](http://bit.ly/JBMFOSS)
-* a battery of browsers provided by [BrowserStack](https://www.browserstack.com) and powering the [acceptance tests](/src/test/java/com/smartcodeltd/jenkinsci/plugins/buildmonitor_acceptance)
+* a battery of browsers provided by [BrowserStack](https://www.browserstack.com) and powering the [acceptance tests](/build-monitor-acceptance/src/test/java)
 
 [![built on dev@cloud](https://www.cloudbees.com/sites/default/files/styles/large/public/Button-Built-on-CB-1.png?itok=3Tnkun-C)](http://bit.ly/JBMFOSS)
 [![tested on BrowserStack](docs/browserstack-logo.png)](http://bit.ly/JBMBS)
