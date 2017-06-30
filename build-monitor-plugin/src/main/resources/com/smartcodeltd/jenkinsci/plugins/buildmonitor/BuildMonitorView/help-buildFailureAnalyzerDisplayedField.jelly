@@ -1,0 +1,9 @@
+<div>
+    <p>
+        If you use the Build Failure Analyzer Plugin you have the option to display either the 'name' or the
+        'description' field of the failure cause or display it not at all.
+    </p>
+    <p>
+        By default the 'name' field will be displayed.
+    </p>
+</div>

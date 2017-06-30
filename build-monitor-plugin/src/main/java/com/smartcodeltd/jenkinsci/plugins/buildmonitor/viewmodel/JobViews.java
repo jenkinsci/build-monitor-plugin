@@ -40,7 +40,7 @@ public class JobViews {
         }
 
         if (jenkins.hasPlugin(Build_Failure_Analyzer)) {
-            viewFeatures.add(new CanBeDiagnosedForProblems());
+            viewFeatures.add(new CanBeDiagnosedForProblems(config.getBuildFailureAnalyzerDisplayedField()));
         }
 
         if (jenkins.hasPlugin(Groovy_Post_Build)) {
