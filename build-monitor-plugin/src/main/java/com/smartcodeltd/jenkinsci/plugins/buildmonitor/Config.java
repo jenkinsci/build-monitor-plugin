@@ -11,7 +11,8 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 public class Config {
 
     private boolean displayCommitters;
-
+    private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
+    
     public static Config defaultConfig() {
         return new Config();
     }
@@ -31,7 +32,15 @@ public class Config {
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
     }
-
+    
+    public BuildFailureAnalyzerDisplayedField getBuildFailureAnalyzerDisplayedField() {
+        return getOrElse(buildFailureAnalyzerDisplayedField, BuildFailureAnalyzerDisplayedField.Name);
+    }
+    
+    public void setBuildFailureAnalyzerDisplayedField(String buildFailureAnalyzerDisplayedField) {
+        this.buildFailureAnalyzerDisplayedField = BuildFailureAnalyzerDisplayedField.valueOf(buildFailureAnalyzerDisplayedField);
+    }
+    
     public boolean shouldDisplayCommitters() {
         return getOrElse(displayCommitters, true);
     }
@@ -39,7 +48,7 @@ public class Config {
     public void setDisplayCommitters(boolean flag) {
         this.displayCommitters = flag;
     }
-
+    
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -49,5 +58,21 @@ public class Config {
 
     // --
 
+    public enum BuildFailureAnalyzerDisplayedField {
+        Name("name"),
+        Description("description"),
+        None("none");
+    
+        private final String value;
+        BuildFailureAnalyzerDisplayedField(String value) {
+            this.value = value;
+        }
+    
+        public String getValue() { return value; }
+    
+        @Override
+        public String toString() { return value; }
+    }
+    
     private Comparator<Job<?, ?>> order;
 }
