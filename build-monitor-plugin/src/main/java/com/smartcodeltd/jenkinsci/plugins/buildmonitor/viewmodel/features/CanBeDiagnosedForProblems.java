@@ -41,8 +41,8 @@ public class CanBeDiagnosedForProblems implements Feature<CanBeDiagnosedForProbl
         private final List<String> failures = newArrayList();
 
         public Problems(FailureCauseBuildAction action, BuildFailureAnalyzerDisplayedField displayedField) {
-            for (FoundFailureCause failure : action.getFoundFailureCauses()) {
-                if (displayedField != BuildFailureAnalyzerDisplayedField.None) {
+            if (displayedField != BuildFailureAnalyzerDisplayedField.None) {
+                for (FoundFailureCause failure : action.getFoundFailureCauses()) {
                     failures.add(displayedField == BuildFailureAnalyzerDisplayedField.Description ? failure.getDescription() : failure.getName());
                 }
             }
