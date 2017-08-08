@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 
@@ -22,13 +23,26 @@ public class BreadthFirstNodeTraversalTest {
                         withParent(normalNode("C4")))),
                 withParent(normalNode("B3")));
 
-        BreadthFirstNodeTraversal<TestNode> traversal = new BreadthFirstTestNodeTraversal();
-
-        traversal.start(Collections.singletonList(head));
-
-        List<String> stages = traversal.getStages();
+        List<String> stages = findStages(head);
 
         assertThat(stages, containsInAnyOrder("B1", "B2"));
+    }
+
+    @Test
+    public void stages_should_not_be_repeated() {
+        TestNode head = normalNode("A1",
+                withParent(stageNode("B1")),
+                withParent(stageNode("B1")));
+
+        List<String> stages = findStages(head);
+
+        assertThat(stages, contains("B1"));
+    }
+
+    private List<String> findStages(TestNode head) {
+        BreadthFirstNodeTraversal<TestNode> traversal = new BreadthFirstTestNodeTraversal();
+        traversal.start(Collections.singletonList(head));
+        return traversal.getStages();
     }
 
     private enum Type {

@@ -2,18 +2,20 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.pipeline;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 public abstract class BreadthFirstNodeTraversal<N> {
 
     private final Queue<N> nodesToAccess;
-    private final List<String> stages;
+    private final Set<String> stages;
 
     public BreadthFirstNodeTraversal() {
         this.nodesToAccess = new LinkedList<N>();
-        this.stages = new ArrayList<String>();
+        this.stages = new LinkedHashSet<String>();
     }
 
     public void start(List<N> nodes) {
@@ -35,6 +37,6 @@ public abstract class BreadthFirstNodeTraversal<N> {
     protected abstract Collection<N> getParents(N node);
 
     public List<String> getStages() {
-        return stages;
+        return new ArrayList<String>(stages);
     }
 }
