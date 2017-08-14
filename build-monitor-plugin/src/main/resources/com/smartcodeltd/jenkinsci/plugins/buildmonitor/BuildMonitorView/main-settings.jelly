@@ -14,7 +14,7 @@
                 </li>
                 <li class="settings-option">
                     <span class="slider-label">Text scale</span>
-                    <rzslider rz-slider-model="settings.fontSize" rz-slider-options="{ floor: 0.3, ceil: 2, step: 0.1, precision: 1 }"></rzslider>
+                    <rzslider rz-slider-model="settings.fontSize" rz-slider-options="{ floor: 0.1, ceil: 2, step: 0.1, precision: 1 }"></rzslider>
                 </li>
                 <li class="settings-option">
                     <span class="slider-label">Maximum number of columns</span>

@@ -41,6 +41,7 @@ public class Config {
     public void setBuildFailureAnalyzerDisplayedField(String buildFailureAnalyzerDisplayedField) {
         this.buildFailureAnalyzerDisplayedField = BuildFailureAnalyzerDisplayedField.valueOf(buildFailureAnalyzerDisplayedField);
     }
+  
     public boolean shouldDisplayCommittersOnBuildFailure() {
         return getOrElse(displayCommittersOnBuildFailure, true);
     }
@@ -56,7 +57,7 @@ public class Config {
     public void setDisplayCommittersOnFixedBuild(boolean flag) {
         this.displayCommittersOnFixedBuild = flag;
     }
-
+    
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -66,5 +67,21 @@ public class Config {
 
     // --
 
+    public enum BuildFailureAnalyzerDisplayedField {
+        Name("name"),
+        Description("description"),
+        None("none");
+    
+        private final String value;
+        BuildFailureAnalyzerDisplayedField(String value) {
+            this.value = value;
+        }
+    
+        public String getValue() { return value; }
+    
+        @Override
+        public String toString() { return value; }
+    }
+    
     private Comparator<Job<?, ?>> order;
 }

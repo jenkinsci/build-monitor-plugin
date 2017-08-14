@@ -85,6 +85,11 @@ public class BuildMonitorView extends ListView {
     public String currentOrder() {
         return currentConfig().getOrder().getClass().getSimpleName();
     }
+    
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public String currentbuildFailureAnalyzerDisplayedField() {
+        return currentConfig().getBuildFailureAnalyzerDisplayedField().getValue();
+    }
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public boolean isDisplayCommittersOnBuildFailure() {

@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config.BuildFailureAnalyzerDisplayedField;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class CanBeDiagnosedForProblemsTest {
     public void should_describe_known_problems() {
         String rogueAi = "Pod bay doors didn't open";
 
-        job = a(jobView().which(new CanBeDiagnosedForProblems()).of(
+        job = a(jobView().which(new CanBeDiagnosedForProblems(BuildFailureAnalyzerDisplayedField.Name)).of(
                 a(job().whereTheLast(build().finishedWith(FAILURE).and().knownProblems(rogueAi)))));
 
         assertThat(diagnosedFailuresOf(job).value(), hasItem(rogueAi));
