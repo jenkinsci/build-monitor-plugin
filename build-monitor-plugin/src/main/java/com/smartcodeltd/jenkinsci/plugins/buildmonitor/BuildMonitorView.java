@@ -121,6 +121,7 @@ public class BuildMonitorView extends ListView {
 
             currentConfig().setDisplayCommittersOnBuildFailure(json.optBoolean("displayCommittersOnBuildFailure", true));
             currentConfig().setDisplayCommittersOnFixedBuild(json.optBoolean("displayCommittersOnFixedBuild", true));
+            currentConfig().setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
 
             try {
                 currentConfig().setOrder(orderIn(requestedOrdering));

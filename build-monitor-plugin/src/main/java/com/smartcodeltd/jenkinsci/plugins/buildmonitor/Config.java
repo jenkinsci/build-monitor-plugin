@@ -12,6 +12,7 @@ public class Config {
 
     private boolean displayCommittersOnBuildFailure;
     private boolean displayCommittersOnFixedBuild;
+    private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
 
     public static Config defaultConfig() {
         return new Config();
@@ -32,7 +33,14 @@ public class Config {
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
     }
-
+    
+    public BuildFailureAnalyzerDisplayedField getBuildFailureAnalyzerDisplayedField() {
+        return getOrElse(buildFailureAnalyzerDisplayedField, BuildFailureAnalyzerDisplayedField.Name);
+    }
+    
+    public void setBuildFailureAnalyzerDisplayedField(String buildFailureAnalyzerDisplayedField) {
+        this.buildFailureAnalyzerDisplayedField = BuildFailureAnalyzerDisplayedField.valueOf(buildFailureAnalyzerDisplayedField);
+    }
     public boolean shouldDisplayCommittersOnBuildFailure() {
         return getOrElse(displayCommittersOnBuildFailure, true);
     }
