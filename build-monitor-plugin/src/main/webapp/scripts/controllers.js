@@ -17,20 +17,34 @@ angular.
                 fetchJobViews = proxy.buildMonitor.fetchJobViews;
 
             $scope.jobs         = [];
+            $scope.successfulJobs = [];
             $scope.fontSize     = fontSizeFor($scope.jobs, $rootScope.settings.numberOfColumns);
 
-            every(5000, function () {
+    var divideJobs = function(){
+        $scope.successfulJobs = [];
+        $scope.allNonSuccessfulJobs = [];
+        for(var i=0; i<$scope.jobs.length; i++){
+            if($scope.jobs[i].status === "successful"){
+                $scope.successfulJobs.push($scope.jobs[i]);
+            }
+            else{
+                $scope.allNonSuccessfulJobs.push($scope.jobs[i]);
+            }
+        }
+    };
+    var populateJobsArray = function (response) {
+        $scope.jobs = response.data.data;
 
-                return fetchJobViews().then(function (response) {
+        $rootScope.$broadcast('jenkins:data-fetched', response.data.meta);
 
-                    $scope.jobs = response.data.data;
+        $scope.fontSize = fontSizeFor($scope.jobs, $rootScope.settings.numberOfColumns);
+    };
 
-                    $rootScope.$broadcast('jenkins:data-fetched', response.data.meta);
+    var updateJobs = function() {
+        fetchJobViews().then(populateJobsArray, tryToRecover).then(divideJobs);
+    };
 
-                    $scope.fontSize = fontSizeFor($scope.jobs, $rootScope.settings.numberOfColumns);
-
-                }, tryToRecover());
-            });
+    every(5000, updateJobs);
 
             // todo: extract the below as a configuration service, don't rely on $rootScope.settings and make the dependency explicit
             $rootScope.$watch('settings.numberOfColumns', function(newColumnCount) {
