@@ -59,6 +59,8 @@ Simple, right? :-) You can have as many Build Monitor Views as you want - the mo
 ![Three columns view](docs/2_Three_columns_view.png)
 ![Supports Claim and Build Failure Analyzer plugins](docs/3_Two_columns_view_with_claim_and_build_failure_analyzer_plugins.png)
 ![Colour-blind mode](docs/4_Colour_blind_mode.png)
+![All-Builds-Passing Summary Badge](docs/5_All_builds_passing_fullscreen_summary_widget.png)
+![Not-All-Builds-Passing Summary Badge](docs/6_Not_all_builds_passing_summary_widget.png)
 
 ## Roadmap and work in progress
 
@@ -98,6 +100,7 @@ You have several options here:
 
 1. **review the granularity of your jobs**: If you have too many low-level jobs displayed on one screen, consider consolidating them using [Promoted Builds Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Promoted+Builds+Plugin) or [MultiJob Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Multijob+Plugin)
 1. **use job filters**: Build Monitor supports Jenkins [View Job Filters Plugin](https://wiki.jenkins-ci.org/display/JENKINS/View+Job+Filters), if you have it installed
+1. collapse successful builds: if you only want to see the jobs that aren't passing, consider collapsing all successful jobs into a single summary widget
 1. get a bigger screen ...
 
 ### Red and green colours are lovely, but I'm colour blind ...
