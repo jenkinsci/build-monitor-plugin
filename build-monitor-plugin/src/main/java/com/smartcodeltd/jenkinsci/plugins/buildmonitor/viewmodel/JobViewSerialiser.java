@@ -6,30 +6,35 @@ import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Jan Molak
  */
 public class JobViewSerialiser extends JsonSerializer<JobView> {
     @Override
-    public void serialize(JobView job, JsonGenerator jgen, SerializerProvider provider) throws IOException {
-        jgen.writeStartObject();
-        jgen.writeObjectField("name",               job.name());
-        jgen.writeObjectField("url",                job.url());
-        jgen.writeObjectField("status",             job.status());
-        jgen.writeObjectField("hashCode",           job.hashCode());
-        jgen.writeObjectField("progress",           job.progress());
-        jgen.writeObjectField("estimatedDuration",  job.estimatedDuration());
+    public void serialize(JobView parentJob, JsonGenerator jgen, SerializerProvider provider) throws IOException {
+        List<JobView> jobs = parentJob.getJobs();
 
-        for (Feature<?> feature : job.features()) {
-            Object serialised = feature.asJson();
+        for(JobView job : jobs) {
+            jgen.writeStartObject();
+            jgen.writeObjectField("name", job.name());
+            jgen.writeObjectField("url", job.url());
+            jgen.writeObjectField("status", job.status());
+            jgen.writeObjectField("hashCode", job.hashCode());
+            jgen.writeObjectField("progress", job.progress());
+            jgen.writeObjectField("estimatedDuration", job.estimatedDuration());
 
-            if (serialised != null) {
-                jgen.writeObjectField(nameOf(serialised), serialised);
+            for (Feature<?> feature : job.features()) {
+                Object serialised = feature.asJson();
+
+                if (serialised != null) {
+                    jgen.writeObjectField(nameOf(serialised), serialised);
+                }
             }
-        }
 
-        jgen.writeEndObject();
+            jgen.writeEndObject();
+        }
     }
 
     private String nameOf(Object serialised) {

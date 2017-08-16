@@ -17,7 +17,7 @@ import org.codehaus.jackson.annotate.JsonValue;
 /**
  * @author Jan Molak
  */
-public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDetails.CurrentBuilds> {
+public class KnowsCurrentBuildsDetails extends BaseFeature<KnowsCurrentBuildsDetails.CurrentBuilds> {
     private JobView job;
 
     public KnowsCurrentBuildsDetails(/* config */) {

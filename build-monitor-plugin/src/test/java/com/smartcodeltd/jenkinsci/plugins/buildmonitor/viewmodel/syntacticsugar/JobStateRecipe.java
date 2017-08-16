@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
  * @author Jan Molak
  */
 public class JobStateRecipe implements Supplier<Job<?,?>> {
-    private Job<?, ?> job;
+    protected Job<?, ?> job;
     private RunList<?> runList;
     private Stack<AbstractBuild> buildHistory = new Stack<AbstractBuild>();
     private List<AbstractBuild> allBuilds = new ArrayList<AbstractBuild>();
