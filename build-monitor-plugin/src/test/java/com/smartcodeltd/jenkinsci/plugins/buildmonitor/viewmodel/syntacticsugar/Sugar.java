@@ -4,6 +4,8 @@ import com.google.common.base.Supplier;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 
+import java.util.List;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,6 +17,10 @@ public class Sugar {
 
     public static JobStateRecipe job() {
         return new JobStateRecipe();
+    }
+
+    public static JobStateRecipe matrixProject(List<JobStateRecipe> matrixConfigurationStateRecipes) {
+        return new MatrixProjectStateRecipe(matrixConfigurationStateRecipes);
     }
 
     public static BuildStateRecipe build() {

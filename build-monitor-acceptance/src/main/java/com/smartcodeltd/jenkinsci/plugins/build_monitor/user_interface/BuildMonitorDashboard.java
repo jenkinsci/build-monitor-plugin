@@ -11,6 +11,9 @@ public class BuildMonitorDashboard {
     public static final Target Project_Widget_Badges          = Target.the("Project Widget Badges").locatedBy("//li[header/h2[.='{0}']]//*[@class='badges']");
     public static final Target Project_Widget_Pipeline_Stages = Target.the("Project Widget Builds").locatedBy("//li[header/h2[.='{0}']]//*[contains(@class, 'build-stages')]");
 
+    public static final Target Multi_Config_1                 = Target.the("Multi Config Badge One").locatedBy("//*[@id='multiproject-1']/header/h2/a");
+    public static final Target Multi_Config_2                 = Target.the("Multi Config Badge Two").locatedBy("//*[@id='multiproject-2']/header/h2/a");
+
     public static final Target Control_Panel = Target.the("Control Panel").locatedBy("//label[@for='settings-toggle']");
     public static final Target Show_Badges = Target.the("Show Badges Toggle").locatedBy("//input[@id='settings-show-badges']");
 }

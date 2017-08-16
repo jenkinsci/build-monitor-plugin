@@ -67,6 +67,10 @@
     </select>
   </f:entry>
 
+  <f:entry title="${%Show matrix project configurations}" field="multiConfig" help="${descriptor.getHelpFile('showMatrixProjectConfigurations')}">
+    <f:checkbox id="multiConfig" name="displayMultiConfigJobs" checked="${it.isDisplayMultiConfigJob()}"/>
+  </f:entry>
+
   </f:section>
 
   <f:section title="${%Build Monitor - Widget Settings}">

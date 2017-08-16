@@ -3,6 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.*;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
+import hudson.matrix.MatrixProject;
 import hudson.model.Job;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 
@@ -27,7 +28,7 @@ public class JobViews {
         this.config  = config;
     }
 
-    public JobView viewOf(Job<?, ?> job) {
+    public List<JobView> viewsOf(Job<?, ?> job) {
         List<Feature> viewFeatures = newArrayList();
 
         // todo: a more elegant way of assembling the features would be nice
@@ -47,7 +48,12 @@ public class JobViews {
         	viewFeatures.add(new HasBadges());
         }
 
+        if (job instanceof MatrixProject && config.shouldDisplayMultiConfigJobs()) {
+            viewFeatures.add(new ShowMatrixConfigurations());
+        }
+
         boolean isPipelineJob = jenkins.hasPlugin(Pipeline) && job instanceof WorkflowJob;
+
 
         return JobView.of(job, viewFeatures, isPipelineJob);
     }
