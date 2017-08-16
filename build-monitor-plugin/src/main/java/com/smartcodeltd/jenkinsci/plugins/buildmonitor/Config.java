@@ -11,6 +11,7 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 public class Config {
 
     private boolean displayCommitters;
+    private boolean displayMultiConfigJobs;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     
     public static Config defaultConfig() {
@@ -47,6 +48,18 @@ public class Config {
 
     public void setDisplayCommitters(boolean flag) {
         this.displayCommitters = flag;
+    }
+
+    public void setDisplayMultiConfigJobs(String key) {
+        if(key == null) {
+            this.displayMultiConfigJobs = false;
+        } else {
+            this.displayMultiConfigJobs = true;
+        }
+    }
+
+    public boolean shouldDisplayMultiConfigJobs() {
+        return this.displayMultiConfigJobs;
     }
     
     @Override

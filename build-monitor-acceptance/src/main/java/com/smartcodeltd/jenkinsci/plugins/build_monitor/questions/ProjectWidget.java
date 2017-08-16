@@ -37,5 +37,9 @@ public class ProjectWidget {
         this.projectOfInterest = projectOfInterest;
     }
 
+    public Question<String> multiConfigBadgeNames() {
+        return new ProjectMultiConfigWidget();
+    }
+
     private final String projectOfInterest;
 }

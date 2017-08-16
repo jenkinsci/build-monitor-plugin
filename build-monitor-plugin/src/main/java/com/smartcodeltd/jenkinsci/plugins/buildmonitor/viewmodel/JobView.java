@@ -1,7 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
@@ -13,11 +12,13 @@ import hudson.util.RunList;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static hudson.Util.filter;
 import static java.lang.String.format;
 
 /**
@@ -32,8 +33,15 @@ public class JobView {
 
     private final List<Feature> features = newArrayList();
 
-    public static JobView of(Job<?, ?> job, List<Feature> features, boolean isPipelineJob) {
-        return new JobView(job, features, isPipelineJob, RelativeLocation.of(job), new Date());
+    // A Feature() instance may add to this list if it is designed to create multiple widgets from a single Job()
+    private final List<JobView> jobs = newArrayList();
+
+    public static List<JobView> of(Job<?, ?> job, List<Feature> features, boolean isPipelineJob) {
+        List<JobView> displayJobs = new ArrayList<JobView>();
+
+        displayJobs.add(new JobView(job, features, isPipelineJob, RelativeLocation.of(job), new Date()));
+
+        return displayJobs;
     }
 
     public JobView(Job<?, ?> job, List<Feature> features, boolean isPipelineJob, RelativeLocation relative, Date systemTime) {
@@ -45,7 +53,18 @@ public class JobView {
         for (Feature feature : features) {
             this.features.add(feature.of(this));
         }
+
+        for (Feature feature : features) {
+            this.jobs.addAll(feature.jobs(this, job));
+        }
+
+        // All instances of Feature() get the first opportunity to
+        if (this.jobs.isEmpty()) {
+            this.jobs.add(this);
+        }
     }
+
+    public List<JobView> getJobs() { return ImmutableList.copyOf(jobs); }
 
     public List<Feature> features() {
         return ImmutableList.copyOf(features);

@@ -12,7 +12,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class CanBeDiagnosedForProblems implements Feature<CanBeDiagnosedForProblems.Problems> {
+public class CanBeDiagnosedForProblems extends BaseFeature<CanBeDiagnosedForProblems.Problems> {
     private JobView job;
     private BuildFailureAnalyzerDisplayedField displayedField;
     

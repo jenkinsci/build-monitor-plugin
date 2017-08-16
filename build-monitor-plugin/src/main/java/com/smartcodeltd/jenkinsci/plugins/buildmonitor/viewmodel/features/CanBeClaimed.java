@@ -5,7 +5,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import hudson.plugins.claim.ClaimBuildAction;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class CanBeClaimed implements Feature {
+public class CanBeClaimed extends BaseFeature {
     private JobView job;
 
     @Override
