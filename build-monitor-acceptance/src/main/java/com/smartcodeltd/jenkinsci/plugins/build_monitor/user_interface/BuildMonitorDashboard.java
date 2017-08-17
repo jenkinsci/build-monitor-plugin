@@ -9,7 +9,7 @@ public class BuildMonitorDashboard {
     public static final Target Project_Widget_Builds          = Target.the("Project Widget Builds").locatedBy("//li[header/h2[.='{0}']]//*[contains(@class, 'build-number')]");
     public static final Target Project_Widget_Details         = Target.the("Project Widget Details").locatedBy("//li[header/h2[.='{0}']]//*[@class='details']");
     public static final Target Project_Widget_Badges          = Target.the("Project Widget Badges").locatedBy("//li[header/h2[.='{0}']]//*[@class='badges']");
-    public static final Target Project_Widget_Pipeline_Stages = Target.the("Project Widget Builds").locatedBy("//li[header/h2[.='{0}']]//*[contains(@class, 'build-stages')]");
+    public static final Target Project_Widget_Pipeline_Stages = Target.the("Project Widget Builds").locatedBy("//li[header/h2[.='{0}']]//*[contains(@class, 'build-status')]");
 
     public static final Target Control_Panel = Target.the("Control Panel").locatedBy("//label[@for='settings-toggle']");
     public static final Target Show_Badges = Target.the("Show Badges Toggle").locatedBy("//input[@id='settings-show-badges']");

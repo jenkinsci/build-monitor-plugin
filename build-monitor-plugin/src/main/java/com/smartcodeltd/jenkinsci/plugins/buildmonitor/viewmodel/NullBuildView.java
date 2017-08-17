@@ -3,7 +3,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 import com.google.common.base.Optional;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import hudson.model.Action;
-import hudson.model.BuildBadgeAction;
 import hudson.model.Result;
 
 import java.util.ArrayList;
@@ -64,13 +63,8 @@ public class NullBuildView implements BuildViewModel {
     }
 
     @Override
-    public boolean isPipeline() {
-        return false;
-    }
-
-    @Override
-    public List<String> pipelineStages() {
-        return new ArrayList<String>();
+    public String status() {
+        return "";
     }
 
     @Override

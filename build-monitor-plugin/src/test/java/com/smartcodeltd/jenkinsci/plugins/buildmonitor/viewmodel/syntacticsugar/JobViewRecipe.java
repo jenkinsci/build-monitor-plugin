@@ -17,7 +17,6 @@ public class JobViewRecipe implements Supplier<JobView> {
     private RelativeLocation relative;
     private Date systemTime = new Date();
     private List<Feature> features = newArrayList();
-    private boolean isPipeline;
 
     public JobViewRecipe of(Job<?, ?> job) {
         this.job = job;
@@ -27,11 +26,6 @@ public class JobViewRecipe implements Supplier<JobView> {
 
     public JobViewRecipe which(Feature... features) {
         this.features = Arrays.asList(features);
-        return this;
-    }
-
-    public JobViewRecipe isAPipeline() {
-        this.isPipeline = true;
         return this;
     }
 
@@ -48,6 +42,6 @@ public class JobViewRecipe implements Supplier<JobView> {
 
     @Override
     public JobView get() {
-        return new JobView(job, features, isPipeline, relative, systemTime);
+        return new JobView(job, features, relative, systemTime);
     }
 }
