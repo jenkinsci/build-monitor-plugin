@@ -55,6 +55,8 @@ public class BuildMonitorView extends ListView {
 
     private String title;
 
+    private static final StaticJenkinsAPIs jenkinsAPIs = new StaticJenkinsAPIs();
+
     /**
      * @param name  Name of the view to be displayed on the Views tab
      * @param title Title to be displayed on the Build Monitor; defaults to 'name' if not set
@@ -214,6 +216,11 @@ public class BuildMonitorView extends ListView {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
         return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).newInstance();
+    }
+
+    @SuppressWarnings("unused") // Used in configure-entries.jelly
+    public Boolean containsMatrixProjectPlugin() {
+        return jenkinsAPIs.hasPlugin("matrix-project");
     }
 
     private Config config;

@@ -19,6 +19,7 @@ public class JobViews {
     private static final String Build_Failure_Analyzer = "build-failure-analyzer";
     private static final String Groovy_Post_Build      = "groovy-postbuild";
     private static final String Pipeline               = "workflow-aggregator";
+    private static final String Matrix_Project         = "matrix-project";
 
     private final StaticJenkinsAPIs jenkins;
     private final com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config;
@@ -48,7 +49,7 @@ public class JobViews {
         	viewFeatures.add(new HasBadges());
         }
 
-        if (job instanceof MatrixProject && config.shouldDisplayMultiConfigJobs()) {
+        if (jenkins.hasPlugin(Matrix_Project) && job instanceof MatrixProject && config.shouldDisplayMultiConfigJobs()) {
             viewFeatures.add(new ShowMatrixConfigurations());
         }
 
