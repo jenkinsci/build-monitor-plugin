@@ -302,7 +302,7 @@
                         </goals>
                         <configuration>
                             <outputTemplate>version={{ version }}</outputTemplate>
-                            <outputUri>file://${project.basedir}/target/classes/build-monitor.properties</outputUri>
+                            <outputUri>${project.baseUri}/target/classes/build-monitor.properties</outputUri>
                         </configuration>
                     </execution>
                 </executions>
