@@ -146,6 +146,12 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>matrix-project</artifactId>
+            <version>1.2.1</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>com.sonyericsson.jenkins.plugins.bfa</groupId>
             <artifactId>build-failure-analyzer</artifactId>
             <version>1.9.0</version>

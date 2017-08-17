@@ -48,7 +48,7 @@ class CreateAProject implements Task {
         this.name = jobName;
     }
 
-    private final String   name;
-    private final TodoList configureTheProject = TodoList.empty();
-    private       Target projectType;
+    private final String    name;
+    private final TodoList  configureTheProject = TodoList.empty();
+    private       Target    projectType;
 }

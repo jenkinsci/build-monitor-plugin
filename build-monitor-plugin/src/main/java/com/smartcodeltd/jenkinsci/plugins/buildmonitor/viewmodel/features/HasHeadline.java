@@ -13,7 +13,7 @@ import static com.google.common.collect.Lists.newArrayList;
 /**
  * @author Jan Molak
  */
-public class HasHeadline implements Feature<Headline> {
+public class HasHeadline extends BaseFeature<Headline> {
 
     private final HeadlineConfig config;
     private JobView job;

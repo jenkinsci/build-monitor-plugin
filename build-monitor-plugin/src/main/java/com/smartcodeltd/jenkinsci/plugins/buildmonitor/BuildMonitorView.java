@@ -55,6 +55,8 @@ public class BuildMonitorView extends ListView {
 
     private String title;
 
+    private static final StaticJenkinsAPIs jenkinsAPIs = new StaticJenkinsAPIs();
+
     /**
      * @param name  Name of the view to be displayed on the Views tab
      * @param title Title to be displayed on the Build Monitor; defaults to 'name' if not set
@@ -96,6 +98,11 @@ public class BuildMonitorView extends ListView {
         return currentConfig().shouldDisplayCommitters();
     }
 
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public boolean isDisplayMultiConfigJob() {
+        return currentConfig().shouldDisplayMultiConfigJobs();
+    }
+
     private static final BuildMonitorInstallation installation = new BuildMonitorInstallation();
 
     @SuppressWarnings("unused") // used in index.jelly
@@ -121,6 +128,7 @@ public class BuildMonitorView extends ListView {
 
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
             currentConfig().setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
+            currentConfig().setDisplayMultiConfigJobs(req.getParameter("displayMultiConfigJobs"));
             
             try {
                 currentConfig().setOrder(orderIn(requestedOrdering));
@@ -158,7 +166,7 @@ public class BuildMonitorView extends ListView {
         Collections.sort(projects, currentConfig().getOrder());
 
         for (Job project : projects) {
-            jobs.add(views.viewOf(project));
+            jobs.addAll(views.viewsOf(project));
         }
 
         return jobs;
@@ -208,6 +216,11 @@ public class BuildMonitorView extends ListView {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
         return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).newInstance();
+    }
+
+    @SuppressWarnings("unused") // Used in configure-entries.jelly
+    public Boolean containsMatrixProjectPlugin() {
+        return jenkinsAPIs.hasPlugin("matrix-project");
     }
 
     private Config config;

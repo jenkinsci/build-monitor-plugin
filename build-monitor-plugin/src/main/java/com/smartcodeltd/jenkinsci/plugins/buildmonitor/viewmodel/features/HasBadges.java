@@ -17,7 +17,7 @@ import org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildAction;
 /**
  * @author Daniel Beland
  */
-public class HasBadges implements Feature<HasBadges.Badges> {
+public class HasBadges extends BaseFeature<HasBadges.Badges> {
 	private ActionFilter filter = new ActionFilter();
 	private JobView job;
 
