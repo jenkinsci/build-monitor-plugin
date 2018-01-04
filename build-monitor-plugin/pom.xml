@@ -136,13 +136,13 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>cloudbees-folder</artifactId>
-            <version>4.2.3</version>
+            <version>5.16</version>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>credentials</artifactId>
-            <version>1.14</version>
+            <version>2.1.10</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -167,6 +167,12 @@
             <groupId>org.jvnet.hudson.plugins</groupId>
             <artifactId>groovy-postbuild</artifactId>
             <version>2.3.1</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-aggregator</artifactId>
+            <version>2.4</version>
             <optional>true</optional>
         </dependency>
         <!-- /Jenkins CI plugins supported by the Build Monitor -->
@@ -296,7 +302,7 @@
                         </goals>
                         <configuration>
                             <outputTemplate>version={{ version }}</outputTemplate>
-                            <outputUri>file://${project.basedir}/target/classes/build-monitor.properties</outputUri>
+                            <outputUri>${project.baseUri}/target/classes/build-monitor.properties</outputUri>
                         </configuration>
                     </execution>
                 </executions>

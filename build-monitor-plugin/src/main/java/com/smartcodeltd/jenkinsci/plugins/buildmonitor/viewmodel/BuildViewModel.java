@@ -3,7 +3,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 import com.google.common.base.Optional;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import hudson.model.Action;
-import hudson.model.BuildBadgeAction;
 import hudson.model.Result;
 
 import java.util.List;
@@ -21,6 +20,9 @@ public interface BuildViewModel {
     Duration estimatedDuration();
     int progress();
     String description();
+
+    boolean isPipeline();
+    List<String> pipelineStages();
 
     boolean hasPreviousBuild();
     BuildViewModel previousBuild();

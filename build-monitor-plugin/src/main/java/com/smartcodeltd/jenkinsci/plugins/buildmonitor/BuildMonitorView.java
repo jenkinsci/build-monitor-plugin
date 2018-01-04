@@ -85,6 +85,11 @@ public class BuildMonitorView extends ListView {
     public String currentOrder() {
         return currentConfig().getOrder().getClass().getSimpleName();
     }
+    
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public String currentbuildFailureAnalyzerDisplayedField() {
+        return currentConfig().getBuildFailureAnalyzerDisplayedField().getValue();
+    }
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public String explicitOrder() {
@@ -123,7 +128,8 @@ public class BuildMonitorView extends ListView {
             title = req.getParameter("title");
 
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
-
+            currentConfig().setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
+            
             try {
                 currentConfig().setOrder(orderIn(requestedOrdering));
             } catch (Exception e) {

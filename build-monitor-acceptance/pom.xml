@@ -185,7 +185,7 @@
                         <include>**/features/*Test.java</include>
                         <include>**/features/*Should*.java</include>
                     </includes>
-                    <argLine>-Xmx512m</argLine>
+                    <argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
                     <systemPropertyVariables>
                         <webdriver.driver>${webdriver.driver}</webdriver.driver>
                         <browserstack.url>${browserstack.url}</browserstack.url>
@@ -194,12 +194,12 @@
                     <environmentVariables>
                         <!-- todo: remove when the acceptance-test-harness is gone -->
                         <BROWSER>htmlunit</BROWSER>
-                        <JENKINS_VERSION>1.609.3</JENKINS_VERSION>
+                        <JENKINS_VERSION>1.642.3</JENKINS_VERSION>
                         <PLUGINS_DIR>${project.parent.basedir}/build-monitor-plugin/target</PLUGINS_DIR>
                         <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
                     </environmentVariables>
-                    <forkCount>1C</forkCount>
-                    <reuseForks>false</reuseForks>
+                    <forkCount>2</forkCount>
+                    <reuseForks>true</reuseForks>
                 </configuration>
                 <executions>
                     <execution>

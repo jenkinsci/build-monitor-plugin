@@ -9,7 +9,8 @@
         id="{{ project.name | slugify }}"
     >
         <div class="progress"
-             animate-on-change="project.progress"
+             data-ng-if="project.estimatedDuration &amp;&amp; project.progress &gt; 0"
+             animate-on-change="project.lastCompletedBuild.timeElapsedSince"
              data-ng-style="{ 'width': project.progress + '%' }"
         >
             <span class="value">{{project.progress}}%</span>
@@ -25,7 +26,7 @@
                 <li data-ng-show="!! project.lastCompletedBuild.description" class="build-description description-setter-plugin"
                     ng-bind-html="project.lastCompletedBuild.description" />
                 <li data-ng-show="!! project.claim.active" class="claim-plugin">Claimed by <strong>{{ project.claim.author }}</strong>: {{ project.claim.reason }}</li>
-                <li data-ng-show="!! project.problems" class="build-failure-analyzer-plugin possible-failure-cause">
+                <li data-ng-show="!! project.problems &amp;&amp; project.problems.length > 0" class="build-failure-analyzer-plugin possible-failure-cause">
                     <span>
                         <ng-pluralize
                             count="project.problems.length"

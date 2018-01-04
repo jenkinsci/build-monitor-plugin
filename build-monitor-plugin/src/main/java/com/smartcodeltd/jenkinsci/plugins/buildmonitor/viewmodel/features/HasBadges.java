@@ -33,7 +33,7 @@ public class HasBadges implements Feature<HasBadges.Badges> {
 
 	@Override
 	public Badges asJson() {
-		Iterator<GroovyPostbuildAction> badges = Iterables.filter(job.lastCompletedBuild().allDetailsOf(GroovyPostbuildAction.class), filter).iterator();
+		Iterator<GroovyPostbuildAction> badges = Iterables.filter(job.lastBuild().allDetailsOf(GroovyPostbuildAction.class), filter).iterator();
 
 		return badges.hasNext()
 				? new Badges(badges)

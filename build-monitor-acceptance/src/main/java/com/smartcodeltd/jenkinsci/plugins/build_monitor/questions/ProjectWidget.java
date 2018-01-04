@@ -29,6 +29,10 @@ public class ProjectWidget {
         return new ProjectBadgesState(projectOfInterest);
     }
 
+    public Question<String> pipelineStages() {
+        return new ProjectWidgetPipelineStages(projectOfInterest);
+    }
+
     public ProjectWidget(String projectOfInterest) {
         this.projectOfInterest = projectOfInterest;
     }
