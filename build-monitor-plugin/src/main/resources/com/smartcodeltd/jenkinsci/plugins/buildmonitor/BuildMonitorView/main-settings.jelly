@@ -44,7 +44,7 @@
                 <li class="buttons">
                     <a class="btn"
                        href="configure"
-                       title="Configure the '${it.displayName}' view">Add/Remove Jobs</a>
+                       title="Configure the '${it.displayName}' view">Configure</a>
                 </li>
                 <li>
                     <button class="btn btn-primary" data-ng-click="toggleSettings=false">Done</button>
