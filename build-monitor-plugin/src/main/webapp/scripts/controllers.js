@@ -43,7 +43,7 @@ angular.
                     itemsCount    = itemsOnScreen && itemsOnScreen.length || 1,
                     actualColumns = Math.min(itemsCount, numberOfColumns);
 
-                return (baseFontSizePercentage / Math.max(1, actualColumns));
+                return (baseFontSizePercentage / actualColumns);
             }
         }]).
 
