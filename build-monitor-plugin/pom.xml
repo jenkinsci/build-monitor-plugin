@@ -172,7 +172,7 @@
         <dependency>
             <groupId>org.jvnet.hudson.plugins</groupId>
             <artifactId>groovy-postbuild</artifactId>
-            <version>2.3.1</version>
+            <version>2.4</version>
             <optional>true</optional>
         </dependency>
         <dependency>
