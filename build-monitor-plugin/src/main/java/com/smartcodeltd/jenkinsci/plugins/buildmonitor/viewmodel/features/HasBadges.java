@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonValue;
-import org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildAction;
+import com.jenkinsci.plugins.badge.action.BadgeAction;
 
 /**
  * @author Daniel Beland
@@ -33,7 +33,7 @@ public class HasBadges implements Feature<HasBadges.Badges> {
 
 	@Override
 	public Badges asJson() {
-		Iterator<GroovyPostbuildAction> badges = Iterables.filter(job.lastBuild().allDetailsOf(GroovyPostbuildAction.class), filter).iterator();
+		Iterator<BadgeAction> badges = Iterables.filter(job.lastBuild().allDetailsOf(BadgeAction.class), filter).iterator();
 
 		return badges.hasNext()
 				? new Badges(badges)
@@ -43,25 +43,25 @@ public class HasBadges implements Feature<HasBadges.Badges> {
 	public static class Badges {
 		private final List<Badge> badges = newArrayList();
 
-		public Badges(Iterator<GroovyPostbuildAction> badgeActions) {
+		public Badges(Iterator<BadgeAction> badgeActions) {
         	while (badgeActions.hasNext()) {
         		badges.add(new Badge(badgeActions.next()));
         	}
 		}
-		
+
 		@JsonValue
 		public List<Badge> value() {
 			return ImmutableList.copyOf(badges);
 		}
 	}
-	
+
 	public static class Badge {
-		private final GroovyPostbuildAction badge;
-		
-		public Badge(GroovyPostbuildAction badge) {
+		private final BadgeAction badge;
+
+		public Badge(BadgeAction badge) {
         	this.badge = badge;
 		}
-		
+
         @JsonProperty
         public final String text() {
             return badge.getText();
@@ -87,10 +87,10 @@ public class HasBadges implements Feature<HasBadges.Badges> {
             return badge.getBorderColor();
         }
 	}
-	
-	private static class ActionFilter implements Predicate<GroovyPostbuildAction> {
+
+	private static class ActionFilter implements Predicate<BadgeAction> {
 		@Override
-		public boolean apply(GroovyPostbuildAction action) {
+		public boolean apply(BadgeAction action) {
 			return action.getIconPath() == null;
 		}
 	}
