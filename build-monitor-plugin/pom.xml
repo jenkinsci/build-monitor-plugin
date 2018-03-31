@@ -170,9 +170,9 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.jvnet.hudson.plugins</groupId>
-            <artifactId>groovy-postbuild</artifactId>
-            <version>2.4</version>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>badge</artifactId>
+            <version>1.2</version>
             <optional>true</optional>
         </dependency>
         <dependency>
