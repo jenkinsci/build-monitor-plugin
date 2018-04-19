@@ -41,13 +41,45 @@ public class JenkinsProcess {
         env.put("JENKINS_HOME", jenkinsHome.toAbsolutePath().toString());
         env.put("JAVA_HOME",    java.getParent().getParent().toAbsolutePath().toString());
 
-        process = process(java,
-                "-Duser.language=en",
+        List<String> arguments = new ArrayList<>();
+        String httpProxy = System.getProperty("http.proxyHost");
+        String httpProxyPort = System.getProperty("http.proxyPort");
+        String httpProxyUser = System.getProperty("http.proxyUser");
+        String httpProxyPassword = System.getProperty("http.proxyPassword");
+        String httpsProxy = System.getProperty("https.proxyHost");
+        String httpsProxyPort = System.getProperty("https.proxyPort");
+        String httpsProxyUser = System.getProperty("https.proxyUser");
+        String httpsProxyPassword = System.getProperty("https.proxyPassword");
+        if (httpProxy != null) {
+            arguments.add("-Dhttp.proxyHost=" + httpProxy);
+        }
+        if (httpProxyPort != null) {
+            arguments.add("-Dhttp.proxyPort=" + httpProxyPort);
+        }
+        if (httpProxyUser != null) {
+            arguments.add("-Dhttp.proxyUser=" + httpProxyUser);
+        }
+        if (httpProxyPassword != null) {
+            arguments.add("-Dhttp.proxyPassword=" + httpProxyPassword);
+        }
+        if (httpsProxy != null) {
+            arguments.add("-Dhttps.proxyHost=" + httpsProxy);
+        }
+        if (httpsProxyPort != null) {
+            arguments.add("-Dhttps.proxyPort=" + httpsProxyPort);
+        }
+        if (httpsProxyUser != null) {
+            arguments.add("-Dhttps.proxyUser=" + httpsProxyUser);
+        }
+        if (httpsProxyPassword != null) {
+            arguments.add("-Dhttps.proxyPassword=" + httpsProxyPassword);
+        }
+        arguments.addAll(Arrays.asList("-Duser.language=en",
                 "-Dhudson.Main.development=true",
                 "-jar", jenkinsWar.toString(),
                 "--ajp13Port=-1",
-                "--httpPort=" + port
-        ).directory(jenkinsHome.toFile());
+                "--httpPort=" + port));
+        process = process(java, arguments).directory(jenkinsHome.toFile());
 
         process.environment().putAll(Collections.unmodifiableMap(env));
         process.redirectErrorStream(true);
@@ -100,9 +132,9 @@ public class JenkinsProcess {
         Log.info("Jenkins stopped");
     }
 
-    private ProcessBuilder process(Path executable, String... arguments) {
+    private ProcessBuilder process(Path executable, List<String> arguments) {
         List<String> args = new ArrayList<>(windowsOrUnix(executable));
-        args.addAll(asList(arguments));
+        args.addAll(arguments);
 
         return new ProcessBuilder(args);
     }
