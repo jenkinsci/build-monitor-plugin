@@ -5,8 +5,8 @@ node('hi-speed') {
 
     git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'master'
 
-    use_jdk    '1.7.latest'
-    use_nodejs '0.10.26'
+    use_jdk    '1.8.latest'
+    use_nodejs '8.11.1'
 
     mvn "release-candidate:updateVersion"
     mvn "clean package --projects build-monitor-plugin"
@@ -130,7 +130,7 @@ def use_jdk (version) {
 }
 
 def use_nodejs (version) {
-    exec 'wget --quiet https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/node/use-node -O use-node', 'Downloading Node.js installer'
+    exec 'curl -s -o use-node https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/node/use-node', 'Downloading Node.js installer'
     exec "NODE_VERSION=${version} . ./use-node", "Installing Node.js ${version}"
 
     def node_home = exec 'dirname `which node`'
