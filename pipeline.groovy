@@ -6,7 +6,7 @@ node('hi-speed') {
 
     git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'master'
 
-    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "PATH+EXTRA=${tool 'maven-3.2.5'}/bin:${env.JAVA_HOME}/bin:${tool 'node-8.11.1'}/bin"]) {
+    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "PATH+EXTRA=${tool 'maven-3.2.5'}/bin:${env.JAVA_HOME}/bin"]) {
 
         mvn "release-candidate:updateVersion"
         mvn "clean package --projects build-monitor-plugin"
