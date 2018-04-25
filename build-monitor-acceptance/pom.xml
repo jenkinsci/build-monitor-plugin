@@ -210,7 +210,7 @@
                         <include>**/features/*Test.java</include>
                         <include>**/features/*Should*.java</include>
                     </includes>
-                    <argLine>-Xmx512m -XX:MaxPermSize=512m</argLine>
+                    <argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
                     <systemPropertyVariables>
                         <webdriver.driver>${webdriver.driver}</webdriver.driver>
                         <browserstack.url>${browserstack.url}</browserstack.url>
@@ -223,7 +223,7 @@
                         <PLUGINS_DIR>${project.parent.basedir}/build-monitor-plugin/target</PLUGINS_DIR>
                         <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
                     </environmentVariables>
-                    <forkCount>1</forkCount>
+                    <forkCount>2</forkCount>
                     <reuseForks>true</reuseForks>
                     <rerunFailingTestsCount>${surefire.rerunFailingTestsCount}</rerunFailingTestsCount>
                     <redirectTestOutputToFile>false</redirectTestOutputToFile>
