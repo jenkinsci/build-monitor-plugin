@@ -124,9 +124,10 @@ def stop (name) {
 def use_jdk (version) {
     echo "> Using JDK ${version}"
 
-    env.JAVA_HOME="/opt/jdk/jdk${version}"
-
-    env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+    environment {
+        PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+        JAVA_HOME = "/opt/jdk/jdk${version}"
+    }
 }
 
 def use_nodejs (version) {
@@ -134,14 +135,21 @@ def use_nodejs (version) {
     exec "NODE_VERSION=${version} . ./use-node", "Installing Node.js ${version}"
 
     def node_home = exec 'dirname `which node`'
-    env.PATH="${node_home}:${env.PATH}"
+
+    environment {
+        PATH = "${node_home}:${env.PATH}"
+    }
 
     echo "> Using node.js at: ${node_home}"
 }
 
 def mvn (command) {
     def maven_version = '3.2.5'
-    env.M2_HOME  = "/opt/maven/apache-maven-${maven_version}"
+
+    environment {
+        M2_HOME  = "/opt/maven/apache-maven-${maven_version}"
+    }
+
     def mvn_home = tool "Maven (${maven_version})"
 
     // `sh` instead of `exec` as we actually do care about the output
