@@ -30,9 +30,11 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurr
 
 @RunWith(SerenityRunner.class)
 //Broken
-public class ShouldDisplayBadges extends AbstractTestBase {
+public class ShouldDisplayBadges {
 
     Actor paul = Actor.named("Paul");
+
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter("buildtriggerbadge", "groovy-postbuild")
@@ -40,7 +42,7 @@ public class ShouldDisplayBadges extends AbstractTestBase {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        paul.can(BrowseTheWeb.with(getWebDriver()));
+        paul.can(BrowseTheWeb.with(browser));
     }
 
     @Test

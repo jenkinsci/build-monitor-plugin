@@ -23,9 +23,11 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.containsString;
 
 @RunWith(SerenityRunner.class)
-public class ShouldTellWhatBrokeTheBuild extends AbstractTestBase {
+public class ShouldTellWhatBrokeTheBuild {
 
     Actor dave = Actor.named("Dave");
+
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter("cloudbees-folder", "build-failure-analyzer")
@@ -33,7 +35,7 @@ public class ShouldTellWhatBrokeTheBuild extends AbstractTestBase {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        dave.can(BrowseTheWeb.with(getWebDriver()));
+        dave.can(BrowseTheWeb.with(browser));
     }
 
     @Test

@@ -27,9 +27,11 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(SerenityRunner.class)
-public class ShouldTellWhoIsFixingTheBrokenBuild extends AbstractTestBase {
+public class ShouldTellWhoIsFixingTheBrokenBuild {
 
     JenkinsUser ben = JenkinsUser.named("Ben");
+
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter("claim"),
@@ -38,7 +40,7 @@ public class ShouldTellWhoIsFixingTheBrokenBuild extends AbstractTestBase {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        ben.can(BrowseTheWeb.with(getWebDriver()));
+        ben.can(BrowseTheWeb.with(browser));
     }
 
     @Test

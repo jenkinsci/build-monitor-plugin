@@ -25,10 +25,12 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SerenityRunner.class)
-public class ShouldDisplayConcurrentBuilds extends AbstractTestBase {
+public class ShouldDisplayConcurrentBuilds {
     private static String My_App = "My App";
 
     Actor dave = Actor.named("Dave");
+
+    @Managed public WebDriver browser;
 
     @Rule
     public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
@@ -37,7 +39,7 @@ public class ShouldDisplayConcurrentBuilds extends AbstractTestBase {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        dave.can(BrowseTheWeb.with(getWebDriver()));
+        dave.can(BrowseTheWeb.with(browser));
     }
 
     @Test

@@ -25,9 +25,11 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 @RunWith(SerenityRunner.class)
-public class ShouldSupportCloudBeesFolders extends AbstractTestBase {
+public class ShouldSupportCloudBeesFolders {
 
     Actor anna = Actor.named("Anna");
+
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter("cloudbees-folder")
@@ -35,7 +37,7 @@ public class ShouldSupportCloudBeesFolders extends AbstractTestBase {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        anna.can(BrowseTheWeb.with(getWebDriver()));
+        anna.can(BrowseTheWeb.with(browser));
     }
 
     @Test

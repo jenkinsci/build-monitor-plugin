@@ -23,15 +23,17 @@ import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStat
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
 @RunWith(SerenityRunner.class)
-public class ProjectStatusShouldBeEasyToDetermine extends AbstractTestBase {
+public class ProjectStatusShouldBeEasyToDetermine {
 
     private Actor anna = Actor.named("Anna");
+
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().create();
 
     @Before
     public void actorCanBrowseTheWeb() {
-        anna.can(BrowseTheWeb.with(getWebDriver()));
+        anna.can(BrowseTheWeb.with(browser));
     }
 
     @Test

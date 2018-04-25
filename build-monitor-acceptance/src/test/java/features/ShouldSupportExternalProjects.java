@@ -25,9 +25,11 @@ import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStat
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
 @RunWith(SerenityRunner.class)
-public class ShouldSupportExternalProjects extends AbstractTestBase {
+public class ShouldSupportExternalProjects {
 
     Actor maggie = Actor.named("Maggie");
+
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
       InstallPlugins.fromUpdateCenter("external-monitor-job")
@@ -35,7 +37,7 @@ public class ShouldSupportExternalProjects extends AbstractTestBase {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        maggie.can(BrowseTheWeb.with(getWebDriver()))
+        maggie.can(BrowseTheWeb.with(browser))
               .can(InteractWithJenkinsAPI.using(jenkins.client()));
     }
 
