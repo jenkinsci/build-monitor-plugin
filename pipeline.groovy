@@ -1,3 +1,4 @@
+// docs: https://jenkins.io/doc/pipeline/examples/
 def version = 'unknown'
 
 stage 'Build'
@@ -5,15 +6,15 @@ node('hi-speed') {
 
     git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'master'
 
-    use_jdk    '1.8.latest'
-    use_nodejs '8.11.1'
+    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "PATH+EXTRA=${tool 'maven-3.2.5'}/bin:${env.JAVA_HOME}/bin:${tool 'node-8.11.1'}/bin"]) {
 
-    mvn "release-candidate:updateVersion"
-    mvn "clean package --projects build-monitor-plugin"
+        mvn "release-candidate:updateVersion"
+        mvn "clean package --projects build-monitor-plugin"
 
-    version = read_property('version', 'build-monitor-plugin/target/classes/build-monitor.properties');
+        version = read_property('version', 'build-monitor-plugin/target/classes/build-monitor.properties');
 
-    assign_build_name version
+        assign_build_name version
+    }
 
     archive_junit_results 'build-monitor-plugin/target/surefire-reports/TEST-*.xml,build-monitor-plugin/target/javascript/test-results.xml'
 
@@ -25,10 +26,10 @@ node('hi-speed') {
 
     unstash 'sources'
 
-    use_jdk '1.7.latest'
-
-    with_browser_stack 'linux-x64', {
-        mvn "clean verify --projects build-monitor-acceptance"
+    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "PATH+EXTRA=${tool 'maven-3.2.5'}/bin:${env.JAVA_HOME}/bin"]) {
+        with_browser_stack 'linux-x64', {
+            mvn "clean verify --projects build-monitor-acceptance"
+        }
     }
 
     archive_artifacts     'build-monitor-plugin/target/*.hpi,pom.xml,build-monitor-plugin/pom.xml,build-monitor-acceptance/pom.xml,build-monitor-acceptance/target/failsafe-reports/*-output.txt'
@@ -121,39 +122,9 @@ def stop (name) {
     exec "rm /var/tmp/${name}.pid", "Removing the PID file for ${name}"
 }
 
-def use_jdk (version) {
-    echo "> Using JDK ${version}"
-
-    environment {
-        PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
-        JAVA_HOME = "/opt/jdk/jdk${version}"
-    }
-}
-
-def use_nodejs (version) {
-    exec 'curl -s -o use-node https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/node/use-node', 'Downloading Node.js installer'
-    exec "NODE_VERSION=${version} . ./use-node", "Installing Node.js ${version}"
-
-    def node_home = exec 'dirname `which node`'
-
-    environment {
-        PATH = "${node_home}:${env.PATH}"
-    }
-
-    echo "> Using node.js at: ${node_home}"
-}
-
 def mvn (command) {
-    def maven_version = '3.2.5'
-
-    environment {
-        M2_HOME  = "/opt/maven/apache-maven-${maven_version}"
-    }
-
-    def mvn_home = tool "Maven (${maven_version})"
-
     // `sh` instead of `exec` as we actually do care about the output
-    sh "${mvn_home}/bin/mvn -B -e -q ${command}"
+    sh "mvn -B -e -q ${command}"
 }
 
 def create_and_push_release_branch_for(version) {
