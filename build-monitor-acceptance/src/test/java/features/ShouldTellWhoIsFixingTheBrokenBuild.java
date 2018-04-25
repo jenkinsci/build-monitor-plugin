@@ -31,7 +31,7 @@ public class ShouldTellWhoIsFixingTheBrokenBuild {
 
     JenkinsUser ben = JenkinsUser.named("Ben");
 
-    @Managed public WebDriver hisBrowser;
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter("claim"),
@@ -40,7 +40,7 @@ public class ShouldTellWhoIsFixingTheBrokenBuild {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        ben.can(BrowseTheWeb.with(hisBrowser));
+        ben.can(BrowseTheWeb.with(browser));
     }
 
     @Test

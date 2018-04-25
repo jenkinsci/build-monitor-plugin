@@ -20,6 +20,7 @@ import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
@@ -28,11 +29,12 @@ import static net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
 @RunWith(SerenityRunner.class)
+//Broken
 public class ShouldDisplayBadges {
 
     Actor paul = Actor.named("Paul");
 
-    @Managed public WebDriver hisBrowser;
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter("buildtriggerbadge", "groovy-postbuild")
@@ -40,7 +42,7 @@ public class ShouldDisplayBadges {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        paul.can(BrowseTheWeb.with(hisBrowser));
+        paul.can(BrowseTheWeb.with(browser));
     }
 
     @Test

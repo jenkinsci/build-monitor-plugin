@@ -4,17 +4,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <jenkins.version>1.642.3</jenkins.version>
-        <jenkins-test-harness.version>2.5</jenkins-test-harness.version>
+        <jenkins.version>2.46.3</jenkins.version>
+        <jenkins-test-harness.version>2.38</jenkins-test-harness.version>
+        <java.level>8</java.level>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.642.3</version>
+        <version>3.8</version>
     </parent>
 
-    <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>build-monitor</artifactId>
     <version>1.12-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -109,7 +112,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>1.4.1</version>
+                    <version>3.0.0-M1</version>
                 </plugin>
             </plugins>
         </pluginManagement>

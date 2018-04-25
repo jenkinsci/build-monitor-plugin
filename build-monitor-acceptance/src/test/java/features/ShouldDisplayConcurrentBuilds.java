@@ -30,8 +30,7 @@ public class ShouldDisplayConcurrentBuilds {
 
     Actor dave = Actor.named("Dave");
 
-    @Managed
-    public WebDriver hisBrowser;
+    @Managed public WebDriver browser;
 
     @Rule
     public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
@@ -40,7 +39,7 @@ public class ShouldDisplayConcurrentBuilds {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        dave.can(BrowseTheWeb.with(hisBrowser));
+        dave.can(BrowseTheWeb.with(browser));
     }
 
     @Test

@@ -7,13 +7,12 @@ import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.jenkins.actions.Choose;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
 import net.serenitybdd.screenplay.jenkins.user_interface.NewJobPage;
+import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Buttons;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.SidePanel;
 import net.serenitybdd.screenplay.targets.Target;
 import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
-import static net.serenitybdd.screenplay.jenkins.user_interface.navigation.Buttons.Save;
-import static org.openqa.selenium.Keys.ENTER;
 
 class CreateAProject implements Task {
     public static CreateAProject called(String name) {
@@ -37,10 +36,11 @@ class CreateAProject implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 Click.on(SidePanel.New_Item_Link),
+                Enter.theValue(name).into(NewJobPage.Item_Name_Field),
                 Choose.the(projectType),
-                Enter.theValue(name).into(NewJobPage.Item_Name_Field).thenHit(ENTER),
+                Click.on(Buttons.OK),
                 configureTheProject,
-                Click.on(Save)
+                Click.on(Buttons.Save)
         );
     }
 

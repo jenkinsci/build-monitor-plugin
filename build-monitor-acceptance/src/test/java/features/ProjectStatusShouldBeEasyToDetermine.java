@@ -25,15 +25,15 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 @RunWith(SerenityRunner.class)
 public class ProjectStatusShouldBeEasyToDetermine {
 
-    Actor anna = Actor.named("Anna");
+    private Actor anna = Actor.named("Anna");
 
-    @Managed public WebDriver herBrowser;
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().create();
 
     @Before
     public void actorCanBrowseTheWeb() {
-        anna.can(BrowseTheWeb.with(herBrowser));
+        anna.can(BrowseTheWeb.with(browser));
     }
 
     @Test

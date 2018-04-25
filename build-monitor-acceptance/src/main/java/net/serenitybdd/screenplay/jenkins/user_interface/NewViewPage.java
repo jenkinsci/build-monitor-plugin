@@ -8,6 +8,6 @@ import net.thucydides.core.annotations.DefaultUrl;
 
 @DefaultUrl("/newView")
 public class NewViewPage extends PageObject {
-    public static final Target View_Name          = Setting.defining("View name");
+    public static final Target View_Name          = Target.the("View name").locatedBy("//*[@id='name']");
     public static final Target Build_Monitor_View = RadioButton.withLabel("Build Monitor View");
 }

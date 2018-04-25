@@ -5,16 +5,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 
-class JenkinsLogWatcher implements AutoCloseable, Runnable {
+public class JenkinsLogWatcher implements AutoCloseable, Runnable {
 
     private static final Logger Log = LoggerFactory.getLogger(JenkinsLogWatcher.class);
 
     private final InputStream jenkinsOutput;
     private final List<JenkinsLogLineWatcher> watchers = new CopyOnWriteArrayList<>();
+    private boolean stop = false;
 
     public JenkinsLogWatcher(InputStream jenkinsOutput) {
         this.jenkinsOutput = jenkinsOutput;
@@ -30,12 +32,14 @@ class JenkinsLogWatcher implements AutoCloseable, Runnable {
 
     @Override
     public void close() throws Exception {
+        stop = true;
         jenkinsOutput.close();
+        watchers.clear();
     }
 
     @Override
     public void run() {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(jenkinsOutput))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(jenkinsOutput, Charset.forName("UTF-8")))) {
             String line;
             while ((line = reader.readLine()) != null) {
 
@@ -48,7 +52,11 @@ class JenkinsLogWatcher implements AutoCloseable, Runnable {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Jenkins output stream is already closed", e);
+            if (stop && "Stream closed".equals(e.getMessage())) {
+                Log.debug("Jenkins OutputStream was closed, but that was expected since we're stopping the log watcher.");
+            } else {
+                throw new RuntimeException("Jenkins output stream is already closed", e);
+            }
         }
     }
 }

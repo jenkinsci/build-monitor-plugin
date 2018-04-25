@@ -27,11 +27,9 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SerenityRunner.class)
 public class ShouldDescribeEachProject {
 
+    private Actor dave = Actor.named("Dave");
 
-    Actor dave = Actor.named("Dave");
-
-    @Managed
-    public WebDriver hisBrowser;
+    @Managed public WebDriver browser;
 
     @Rule
     public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
@@ -40,7 +38,7 @@ public class ShouldDescribeEachProject {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        dave.can(BrowseTheWeb.with(hisBrowser));
+        dave.can(BrowseTheWeb.with(browser));
     }
 
     @Test

@@ -5,9 +5,12 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface.BuildMoni
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
+import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 public class ShowBadges implements Task {
     public static Task onTheDashboard() {
@@ -18,7 +21,8 @@ public class ShowBadges implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                Click.on(BuildMonitorDashboard.Show_Badges)
+            WaitUntil.the(BuildMonitorDashboard.Show_Badges, isVisible()),
+            Click.on(BuildMonitorDashboard.Show_Badges)
         );
     }
 }

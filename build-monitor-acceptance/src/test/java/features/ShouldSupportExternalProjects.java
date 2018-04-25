@@ -4,6 +4,7 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
 import environment.JenkinsSandbox;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -15,6 +16,7 @@ import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
@@ -27,13 +29,15 @@ public class ShouldSupportExternalProjects {
 
     Actor maggie = Actor.named("Maggie");
 
-    @Managed public WebDriver herBrowser;
+    @Managed public WebDriver browser;
 
-    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().create();
+    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
+      InstallPlugins.fromUpdateCenter("external-monitor-job")
+    ).create();
 
     @Before
     public void actorCanBrowseTheWeb() {
-        maggie.can(BrowseTheWeb.with(herBrowser))
+        maggie.can(BrowseTheWeb.with(browser))
               .can(InteractWithJenkinsAPI.using(jenkins.client()));
     }
 

@@ -15,11 +15,13 @@
 
     <properties>
         <encoding>UTF-8</encoding>
-        <serenity.version>1.2.1-rc.6</serenity.version>
+        <serenity.version>1.9.8</serenity.version>
         <aether.version>1.0.0.v20140518</aether.version>
 
         <webdriver.driver>chrome</webdriver.driver>
         <browserstack.url></browserstack.url>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <profiles>
@@ -115,7 +117,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.3.4</version>
+            <version>4.5.5</version>
         </dependency>
 
         <!-- serenity -->
@@ -123,6 +125,12 @@
             <groupId>net.serenity-bdd</groupId>
             <artifactId>serenity-core</artifactId>
             <version>${serenity.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-text</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.serenity-bdd</groupId>
@@ -148,6 +156,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.zafarkhaja</groupId>
+            <artifactId>java-semver</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
@@ -167,20 +180,32 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <skip>true</skip>
+                    <includes>
+                        <include>**/*UnitTest.java</include>
+                    </includes>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
+                    <excludes>
+                        <exclude>**/*UnitTest.java</exclude>
+                    </excludes>
                     <includes>
                         <include>**/features/*Test.java</include>
                         <include>**/features/*Should*.java</include>
@@ -194,12 +219,14 @@
                     <environmentVariables>
                         <!-- todo: remove when the acceptance-test-harness is gone -->
                         <BROWSER>htmlunit</BROWSER>
-                        <JENKINS_VERSION>1.642.3</JENKINS_VERSION>
+                        <JENKINS_VERSION>${jenkins.version}</JENKINS_VERSION>
                         <PLUGINS_DIR>${project.parent.basedir}/build-monitor-plugin/target</PLUGINS_DIR>
                         <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
                     </environmentVariables>
                     <forkCount>2</forkCount>
                     <reuseForks>true</reuseForks>
+                    <rerunFailingTestsCount>${surefire.rerunFailingTestsCount}</rerunFailingTestsCount>
+                    <redirectTestOutputToFile>false</redirectTestOutputToFile>
                 </configuration>
                 <executions>
                     <execution>
@@ -221,6 +248,28 @@
                         <goals>
                             <goal>aggregate</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>display-info</id>
+                        <configuration>
+                            <rules>
+                                <requireUpperBoundDeps>
+                                    <excludes combine.children="append">
+                                        <exclude>org.springframework:spring-core</exclude>
+                                        <exclude>org.springframework:spring-beans</exclude>
+                                        <exclude>org.eclipse.jetty.websocket:websocket-client</exclude>
+                                        <exclude>org.jenkins-ci:trilead-ssh2</exclude>
+                                        <exclude>commons-io:commons-io</exclude>
+                                        <exclude>commons-codec:commons-codec</exclude>
+                                    </excludes>
+                                </requireUpperBoundDeps>
+                            </rules>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

@@ -15,7 +15,7 @@ public class AddABuildStep implements Task {
 
     @Step("{0} adds the '#buildStepName' build step")
     @Override
-    public <T extends Actor> void performAs(T actor) {
+    public <T extends Actor> void performAs(final T actor) {
         actor.attemptsTo(
                 Scroll.to(ProjectConfigurationPage.Add_Build_Step),
                 Click.on(ProjectConfigurationPage.Add_Build_Step),

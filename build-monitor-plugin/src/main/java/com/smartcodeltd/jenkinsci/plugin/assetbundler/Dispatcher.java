@@ -2,12 +2,12 @@ package com.smartcodeltd.jenkinsci.plugin.assetbundler;
 
 import com.smartcodeltd.jenkinsci.plugin.assetbundler.filters.LessCSS;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Extension;
 import hudson.Plugin;
 import hudson.util.PluginServletFilter;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 /*
@@ -28,11 +28,12 @@ public class Dispatcher extends Plugin {
         PluginServletFilter.addFilter(new LessCSS("/build-monitor-plugin/style.css", pathTo("less/index.less"), new StaticJenkinsAPIs()));
     }
 
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Can never be null as build-monitor-plugin refers to self")
     private URL baseResourceURL() {
         return getWrapper().parent.getPlugin("build-monitor-plugin").baseResourceURL;
     }
 
-    private File pathTo(String asset) throws URISyntaxException {
+    private File pathTo(String asset) {
         return new PathToAsset(baseResourceURL(), asset).toFile();
     }
 }
