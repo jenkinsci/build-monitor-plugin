@@ -6,15 +6,19 @@ node('hi-speed') {
 
     git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'master'
 
-    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "PATH+EXTRA=${tool 'maven-3.2.5'}/bin:${env.JAVA_HOME}/bin"]) {
+    tool 'jdk-1.8.latest'
+    tool 'maven-3.2.5'
+    tool 'node-8.11.1'
 
-        mvn "release-candidate:updateVersion"
-        mvn "clean package --projects build-monitor-plugin"
+//    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "PATH+EXTRA=${tool 'maven-3.2.5'}/bin:${env.JAVA_HOME}/bin:${tool 'node-8.11.1'}/bin"]) {
 
-        version = read_property('version', 'build-monitor-plugin/target/classes/build-monitor.properties');
+    mvn "release-candidate:updateVersion"
+    mvn "clean package --projects build-monitor-plugin"
 
-        assign_build_name version
-    }
+    version = read_property('version', 'build-monitor-plugin/target/classes/build-monitor.properties');
+
+    assign_build_name version
+//    }
 
     archive_junit_results 'build-monitor-plugin/target/surefire-reports/TEST-*.xml,build-monitor-plugin/target/javascript/test-results.xml'
 
@@ -26,11 +30,14 @@ node('hi-speed') {
 
     unstash 'sources'
 
-    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "PATH+EXTRA=${tool 'maven-3.2.5'}/bin:${env.JAVA_HOME}/bin"]) {
+    tool 'jdk-1.8.latest'
+    tool 'maven-3.2.5'
+
+//    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "PATH+EXTRA=${tool 'maven-3.2.5'}/bin:${env.JAVA_HOME}/bin"]) {
         with_browser_stack 'linux-x64', {
             mvn "clean verify --projects build-monitor-acceptance"
         }
-    }
+//    }
 
     archive_artifacts     'build-monitor-plugin/target/*.hpi,pom.xml,build-monitor-plugin/pom.xml,build-monitor-acceptance/pom.xml,build-monitor-acceptance/target/failsafe-reports/*-output.txt'
     archive_junit_results 'build-monitor-acceptance/target/failsafe-reports/TEST-*.xml'
