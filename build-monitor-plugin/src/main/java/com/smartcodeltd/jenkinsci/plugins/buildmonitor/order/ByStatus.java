@@ -4,9 +4,10 @@ import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.Run;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class ByStatus implements Comparator<Job<?, ?>> {
+public class ByStatus implements Comparator<Job<?, ?>>, Serializable {
     @Override
     public int compare(Job<?, ?> a, Job<?, ?> b) {
         return bothProjectsHaveBuildHistory(a, b)
@@ -37,7 +38,13 @@ public class ByStatus implements Comparator<Job<?, ?>> {
         Result lastResultOfA = a.getLastCompletedBuild().getResult();
         Result lastResultOfB = b.getLastCompletedBuild().getResult();
 
-        if (lastResultOfA.isWorseThan(lastResultOfB)) {
+        if (lastResultOfA == null && lastResultOfB == null) {
+            return 0;
+        } else if (lastResultOfA == null) {
+            return -1;
+        } else if (lastResultOfB == null) {
+            return 1;
+        } else if (lastResultOfA.isWorseThan(lastResultOfB)) {
             return -1;
         } else if (lastResultOfA.isBetterThan(lastResultOfB)) {
             return 1;

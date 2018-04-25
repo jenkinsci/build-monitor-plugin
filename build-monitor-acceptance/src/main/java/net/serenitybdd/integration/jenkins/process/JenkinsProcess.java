@@ -1,5 +1,6 @@
 package net.serenitybdd.integration.jenkins.process;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.jdeferred.Promise;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ public class JenkinsProcess {
     private JenkinsLogWatcher jenkinsLogWatcher;
     private Thread jenkinsLogWatcherThread;
 
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "FindBugs does not like the JAVA_HOME resolve")
     public JenkinsProcess(@NotNull Path java, @NotNull Path jenkinsWar, @NotNull int port, @NotNull Path jenkinsHome) {
         Log.debug("jenkins.war:  {}", jenkinsWar.toAbsolutePath());
         Log.debug("JENKINS_HOME: {}", jenkinsHome.toAbsolutePath());
@@ -44,6 +46,8 @@ public class JenkinsProcess {
         process = process(java,
                 "-Duser.language=en",
                 "-Dhudson.Main.development=true",
+                "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug",
+                "-Djava.util.logging=DEBUG",
                 "-jar", jenkinsWar.toString(),
                 "--ajp13Port=-1",
                 "--httpPort=" + port
@@ -122,5 +126,9 @@ public class JenkinsProcess {
         return OS.contains("win")
                 ? asList("cmd.exe", "/C", command.toString())
                 : asList(command.toString());
+    }
+
+    public JenkinsLogWatcher getJenkinsLogWatcher() {
+        return jenkinsLogWatcher;
     }
 }

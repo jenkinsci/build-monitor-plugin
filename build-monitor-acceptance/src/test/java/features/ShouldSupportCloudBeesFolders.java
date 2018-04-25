@@ -17,6 +17,7 @@ import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
@@ -24,11 +25,9 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 @RunWith(SerenityRunner.class)
-public class ShouldSupportCloudBeesFolders {
+public class ShouldSupportCloudBeesFolders extends AbstractTestBase {
 
     Actor anna = Actor.named("Anna");
-
-    @Managed public WebDriver herBrowser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter("cloudbees-folder")
@@ -36,7 +35,7 @@ public class ShouldSupportCloudBeesFolders {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        anna.can(BrowseTheWeb.with(herBrowser));
+        anna.can(BrowseTheWeb.with(getWebDriver()));
     }
 
     @Test

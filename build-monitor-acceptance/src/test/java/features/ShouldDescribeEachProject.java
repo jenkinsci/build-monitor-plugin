@@ -25,13 +25,9 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SerenityRunner.class)
-public class ShouldDescribeEachProject {
+public class ShouldDescribeEachProject extends AbstractTestBase {
 
-
-    Actor dave = Actor.named("Dave");
-
-    @Managed
-    public WebDriver hisBrowser;
+    private Actor dave = Actor.named("Dave");
 
     @Rule
     public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
@@ -40,7 +36,7 @@ public class ShouldDescribeEachProject {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        dave.can(BrowseTheWeb.with(hisBrowser));
+        dave.can(BrowseTheWeb.with(getWebDriver()));
     }
 
     @Test

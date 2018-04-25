@@ -15,6 +15,7 @@ import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
@@ -22,11 +23,9 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.containsString;
 
 @RunWith(SerenityRunner.class)
-public class ShouldTellWhatBrokeTheBuild {
+public class ShouldTellWhatBrokeTheBuild extends AbstractTestBase {
 
     Actor dave = Actor.named("Dave");
-
-    @Managed public WebDriver hisBrowser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter("cloudbees-folder", "build-failure-analyzer")
@@ -34,7 +33,7 @@ public class ShouldTellWhatBrokeTheBuild {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        dave.can(BrowseTheWeb.with(hisBrowser));
+        dave.can(BrowseTheWeb.with(getWebDriver()));
     }
 
     @Test

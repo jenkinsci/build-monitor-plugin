@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.model;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 
@@ -24,7 +25,7 @@ public class ProjectInformation {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("name", name)
                 .add("status", status)
                 .toString();

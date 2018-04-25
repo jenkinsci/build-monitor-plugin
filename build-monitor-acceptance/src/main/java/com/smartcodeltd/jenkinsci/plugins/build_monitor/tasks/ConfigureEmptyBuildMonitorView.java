@@ -22,7 +22,6 @@ public class ConfigureEmptyBuildMonitorView implements Task {
     @Step("{0} configures the Build Monitor View")
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                AddProjects.toAnEmptyBuildMonitor(),
                 configureTheView,
                 SaveTheChangesToBuildMonitor.andExitTheConfigurationScreen()
         );

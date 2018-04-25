@@ -2,10 +2,11 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.order;
 
 import hudson.model.AbstractProject;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
-public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>> {
+public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>>, Serializable {
 
     @Override
     public int compare(AbstractProject<?, ?> a, AbstractProject<?,?> b) {

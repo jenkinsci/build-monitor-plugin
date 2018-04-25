@@ -16,6 +16,7 @@ import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
@@ -23,12 +24,9 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.containsString;
 
 @RunWith(SerenityRunner.class)
-public class ShouldDisplayPipelineStage {
+public class ShouldDisplayPipelineStage extends AbstractTestBase {
 
     Actor donald = Actor.named("Donald");
-
-    @Managed
-    public WebDriver hisBrowser;
 
     @Rule
     public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
@@ -37,7 +35,7 @@ public class ShouldDisplayPipelineStage {
 
     @Before
     public void actorCanBrowseTheWeb() {
-        donald.can(BrowseTheWeb.with(hisBrowser));
+        donald.can(BrowseTheWeb.with(getWebDriver()));
     }
 
     @Test

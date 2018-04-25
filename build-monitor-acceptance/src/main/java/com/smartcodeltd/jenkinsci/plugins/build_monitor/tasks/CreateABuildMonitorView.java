@@ -8,10 +8,10 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
+import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Buttons;
 import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
-import static org.openqa.selenium.Keys.ENTER;
 
 public class CreateABuildMonitorView implements Task {
     public static CreateABuildMonitorView called(String name) {
@@ -29,8 +29,9 @@ public class CreateABuildMonitorView implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 Click.on(JenkinsHomePage.New_View_link),
+                Enter.theValue(buildMonitorName).into(NewViewPage.View_Name),
                 Click.on(NewViewPage.Build_Monitor_View),
-                Enter.theValue(buildMonitorName).into(NewViewPage.View_Name).thenHit(ENTER),
+                Click.on(Buttons.OK),
                 configureBuildMonitor,
                 SaveTheChangesToBuildMonitor.andExitTheConfigurationScreen()
         );

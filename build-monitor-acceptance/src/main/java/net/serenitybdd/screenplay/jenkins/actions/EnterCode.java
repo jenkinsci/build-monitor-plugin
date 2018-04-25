@@ -3,6 +3,8 @@ package net.serenitybdd.screenplay.jenkins.actions;
 import com.google.common.base.Joiner;
 import net.serenitybdd.screenplay.Action;
 import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplayx.actions.Scroll;
 import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplayx.actions.Evaluate;
 import net.thucydides.core.annotations.Step;
@@ -44,7 +46,9 @@ public class EnterCode {
         @Override
         @Step("{0} enters '#code' into the code editor field")
         public <T extends Actor> void performAs(T actor) {
-            actor.attemptsTo(Evaluate.javascript(
+            actor.attemptsTo(
+              Click.on(target),
+              Evaluate.javascript(
                     setCodeMirrorValueTo(code),
                     target.resolveFor(actor)
             ));

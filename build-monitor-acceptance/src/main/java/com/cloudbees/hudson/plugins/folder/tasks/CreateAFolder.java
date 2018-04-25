@@ -24,7 +24,7 @@ public class CreateAFolder implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 Click.on(SidePanel.New_Item_Link),
-                Choose.the(RadioButton.withLabel("Folder")),
+                Choose.the(NewJobPage.Folder),
                 Enter.theValue(name).into(NewJobPage.Item_Name_Field).thenHit(ENTER),
                 Click.on(Save)
         );

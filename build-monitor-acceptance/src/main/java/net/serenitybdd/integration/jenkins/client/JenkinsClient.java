@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -22,6 +23,8 @@ import static net.serenitybdd.integration.jenkins.process.JenkinsProcess.JENKINS
 public class JenkinsClient {
     private static final Logger logger = LoggerFactory.getLogger(JenkinsClient.class);
     private static final int Max_Wait_Time = 5 * 60 * 1000;
+    private static String OS = System.getProperty("os.name").toLowerCase();
+    private static String OS_VERSION = System.getProperty("os.version").toLowerCase();
 
     private final JenkinsProcess process;
     private final JenkinsClientExecutor executor;
@@ -30,7 +33,6 @@ public class JenkinsClient {
         this.executor = executor;
         this.process = process;
     }
-
 
     // user accounts
     // https://gist.github.com/hayderimran7/50cb1244cc1e856873a4
@@ -91,10 +93,35 @@ public class JenkinsClient {
             executeCommand("install-plugin", pluginName);
         }
 
-        safeRestart();
+        restart();
     }
 
-    public void safeRestart() {
+    private void restart() {
+        //Both Windows and WSL needs hard restart
+        if (OS.contains("win") || OS_VERSION.contains("microsoft")) {
+            hardRestart();
+        } else {
+            safeRestart();
+        }
+    }
+
+    private void hardRestart() {
+        try {
+            safeShutdown();
+            process.start();
+            //Note: Do NOT wait here for Jenkins startup as that is handled within process.start()
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void safeShutdown() throws Exception {
+        process.getJenkinsLogWatcher().close();
+        executeCommand("safe-shutdown");
+        process.stop();
+    }
+
+    private void safeRestart() {
         executeCommand("safe-restart");
 
         process.waitUntil(JENKINS_IS_FULLY_UP_AND_RUNNING);
