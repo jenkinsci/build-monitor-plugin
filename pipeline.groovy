@@ -28,8 +28,11 @@ node('hi-speed') {
 
     unstash 'sources'
 
-    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "M2_HOME=${tool 'maven-3.2.5'}", "PATH+EXTRA=${env.M2_HOME}/bin:${env.JAVA_HOME}/bin"]) {
-        with_browser_stack 'linux-x64', {
+    with_browser_stack 'linux-x64', {
+        withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "M2_HOME=${tool 'maven-3.2.5'}", "PATH+EXTRA=${env.M2_HOME}/bin:${env.JAVA_HOME}/bin"]) {
+
+            mvn "-version"
+
             mvn "clean verify --projects build-monitor-acceptance"
         }
     }
