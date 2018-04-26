@@ -15,7 +15,6 @@ import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
@@ -27,7 +26,7 @@ public class ShouldTellWhatBrokeTheBuild {
 
     Actor dave = Actor.named("Dave");
 
-    @Managed public WebDriver browser;
+    @Managed(driver = "chrome", options = "--lang=en") public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter("cloudbees-folder", "build-failure-analyzer")

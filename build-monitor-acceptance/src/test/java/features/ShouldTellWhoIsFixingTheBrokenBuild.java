@@ -31,7 +31,7 @@ public class ShouldTellWhoIsFixingTheBrokenBuild {
 
     JenkinsUser ben = JenkinsUser.named("Ben");
 
-    @Managed public WebDriver browser;
+    @Managed(driver = "chrome", options = "--lang=en") public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter("claim"),

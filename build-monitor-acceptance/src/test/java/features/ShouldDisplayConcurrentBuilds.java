@@ -30,7 +30,7 @@ public class ShouldDisplayConcurrentBuilds {
 
     Actor dave = Actor.named("Dave");
 
-    @Managed public WebDriver browser;
+    @Managed(driver = "chrome", options = "--lang=en") public WebDriver browser;
 
     @Rule
     public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
