@@ -13,6 +13,7 @@ import hudson.scm.ChangeLogSet;
 import jenkins.model.CauseOfInterruption;
 import jenkins.model.InterruptedBuildAction;
 
+import com.jenkinsci.plugins.badge.action.BadgeAction;
 import org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildAction;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
@@ -227,14 +228,24 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return failure;
     }
 
-    public BuildStateRecipe hasBadges(BadgeRecipe... badges) {
-    	List<GroovyPostbuildAction> actions = new ArrayList<GroovyPostbuildAction>();
-    	for (int i = 0; i < badges.length; i++) {
-    		actions.add(badges[i].get());
-    	}
-    	when(build.getActions(GroovyPostbuildAction.class)).thenReturn(actions);
-    	
-    	return this;
+    public BuildStateRecipe hasBadgesGroovyPostbuildPlugin(BadgeGroovyPostbuildRecipe... badges) {
+        List<GroovyPostbuildAction> actions = new ArrayList<GroovyPostbuildAction>();
+        for (int i = 0; i < badges.length; i++) {
+            actions.add(badges[i].get());
+        }
+        when(build.getActions(GroovyPostbuildAction.class)).thenReturn(actions);
+
+        return this;
+    }
+
+    public BuildStateRecipe hasBadgesBadgePlugin(BadgeBadgePluginRecipe... badges) {
+        List<BadgeAction> actions = new ArrayList<BadgeAction>();
+        for (int i = 0; i < badges.length; i++) {
+            actions.add(badges[i].get());
+        }
+        when(build.getActions(BadgeAction.class)).thenReturn(actions);
+
+        return this;
     }
 
     public BuildStateRecipe and() {

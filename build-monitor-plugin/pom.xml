@@ -170,6 +170,12 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.jvnet.hudson.plugins</groupId>
+            <artifactId>groovy-postbuild</artifactId>
+            <version>2.3.1</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>badge</artifactId>
             <version>1.2</version>
@@ -190,13 +196,13 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>structs</artifactId>
-            <version>1.5</version>
+            <version>1.14</version>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>script-security</artifactId>
-            <version>1.21</version>
+            <version>1.39</version>
             <optional>true</optional>
         </dependency>
         <!-- /Jenkins CI plugins supported by the Build Monitor -->
