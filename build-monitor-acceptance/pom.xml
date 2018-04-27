@@ -253,7 +253,6 @@
             </plugin>
             <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M1</version>
                 <executions>
                     <execution>
                         <id>display-info</id>
