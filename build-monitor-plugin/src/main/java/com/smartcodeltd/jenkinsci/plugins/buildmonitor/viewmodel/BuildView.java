@@ -5,13 +5,11 @@ import com.google.common.base.Optional;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.culprits.BuildCulpritsRetriever;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.pipeline.WorkflowNodeTraversal;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.pipeline.PipelineHelper;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.DurationInMilliseconds;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.HumanReadableDuration;
 import hudson.model.*;
-import org.jenkinsci.plugins.workflow.flow.FlowExecution;
-import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
 import java.util.Collections;
 import java.util.Date;
@@ -114,14 +112,9 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public List<String> pipelineStages() {
-        WorkflowRun currentBuild = (WorkflowRun) this.build;
-        FlowExecution execution = currentBuild.getExecution();
-        if (execution != null) {
-            WorkflowNodeTraversal traversal = new WorkflowNodeTraversal();
-            traversal.start(execution.getCurrentHeads());
-            return traversal.getStages();
+        if (PipelineHelper.isWorkflowRun(build, new StaticJenkinsAPIs())) {
+            return PipelineHelper.getPipelines(build);
         }
-
         return Collections.emptyList();
     }
 
@@ -178,6 +171,6 @@ public class BuildView implements BuildViewModel {
         this.isPipeline = isPipeline;
         this.parentJobLocation = parentJobLocation;
         this.systemTime = systemTime;
-        this.buildCulpritsRetriever = new BuildCulpritsRetriever(new StaticJenkinsAPIs());
+        this.buildCulpritsRetriever = BuildCulpritsRetriever.getInstanceForRun(build, new StaticJenkinsAPIs());
     }
 }
