@@ -6,7 +6,7 @@ node('hi-speed') {
 
     git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'master'
 
-    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "M2_HOME=${tool 'maven-3.2.5'}", "PATH+EXTRA=${env.M2_HOME}/bin:${env.JAVA_HOME}/bin:${tool 'node-8.11.1'}/bin"]) {
+    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "M2_HOME=${tool 'maven-3.5.3'}", "PATH+EXTRA=${env.M2_HOME}/bin:${env.JAVA_HOME}/bin:${tool 'node-8.11.1'}/bin"]) {
 
         mvn "-version"
 
@@ -29,7 +29,7 @@ node('hi-speed') {
     unstash 'sources'
 
     with_browser_stack 'linux-x64', {
-        withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "M2_HOME=${tool 'maven-3.2.5'}", "PATH+EXTRA=${env.M2_HOME}/bin:${env.JAVA_HOME}/bin"]) {
+        withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "M2_HOME=${tool 'maven-3.5.3'}", "PATH+EXTRA=${env.M2_HOME}/bin:${env.JAVA_HOME}/bin"]) {
 
             mvn "-version"
 
