@@ -37,9 +37,10 @@ node('hi-speed') {
         }
     }
 
-    archive_artifacts     'build-monitor-plugin/target/*.hpi,pom.xml,build-monitor-plugin/pom.xml,build-monitor-acceptance/pom.xml,build-monitor-acceptance/target/failsafe-reports/*-output.txt'
-    archive_junit_results 'build-monitor-acceptance/target/failsafe-reports/TEST-*.xml'
-    archive_html          'Serenity', 'build-monitor-acceptance/target/site/serenity'
+    archive_artifacts     'build-monitor-plugin/target/*.hpi,pom.xml,build-monitor-plugin/pom.xml,build-monitor-acceptance/pom.xml,build-monitor-acceptance/build-monitor-acceptance-base/pom.xml,build-monitor-acceptance/build-monitor-acceptance-latest/pom.xml,build-monitor-acceptance/build-monitor-acceptance-base/target/failsafe-reports/*-output.txt,build-monitor-acceptance/build-monitor-acceptance-latest/target/failsafe-reports/*-output.txt'
+    archive_junit_results 'build-monitor-acceptance/build-monitor-accpetance-base/target/failsafe-reports/TEST-*.xml,build-monitor-acceptance/build-monitor-accpetance-latest/target/failsafe-reports/TEST-*.xml'
+    archive_html          'Serenity base', 'build-monitor-acceptance/build-monitor-acceptance-base/target/site/serenity'
+    archive_html          'Serenity latest', 'build-monitor-acceptance/build-monitor-acceptance-latest/target/site/serenity'
 }
 
 stage 'Publish to GitHub'

@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>build-monitor-acceptance</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>Build Monitor Acceptance Tests</name>
 
@@ -19,10 +19,13 @@
         <aether.version>1.0.0.v20140518</aether.version>
 
         <webdriver.driver>chrome</webdriver.driver>
-        <browserstack.url></browserstack.url>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <browserstack.url/>
     </properties>
+
+    <modules>
+        <module>build-monitor-acceptance-base</module>
+        <module>build-monitor-acceptance-latest</module>
+    </modules>
 
     <profiles>
         <profile>
@@ -176,103 +179,89 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <includes>
-                        <include>**/*UnitTest.java</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*UnitTest.java</exclude>
-                    </excludes>
-                    <includes>
-                        <include>**/features/*Test.java</include>
-                        <include>**/features/*Should*.java</include>
-                    </includes>
-                    <argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
-                    <systemPropertyVariables>
-                        <webdriver.driver>${webdriver.driver}</webdriver.driver>
-                        <browserstack.url>${browserstack.url}</browserstack.url>
-                        <project.root>${project.parent.basedir}/</project.root>
-                    </systemPropertyVariables>
-                    <environmentVariables>
-                        <!-- todo: remove when the acceptance-test-harness is gone -->
-                        <BROWSER>htmlunit</BROWSER>
-                        <JENKINS_VERSION>${jenkins.version}</JENKINS_VERSION>
-                        <PLUGINS_DIR>${project.parent.basedir}/build-monitor-plugin/target</PLUGINS_DIR>
-                        <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
-                    </environmentVariables>
-                    <forkCount>2</forkCount>
-                    <reuseForks>true</reuseForks>
-                    <rerunFailingTestsCount>${surefire.rerunFailingTestsCount}</rerunFailingTestsCount>
-                    <redirectTestOutputToFile>false</redirectTestOutputToFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>net.serenity-bdd.maven.plugins</groupId>
-                <artifactId>serenity-maven-plugin</artifactId>
-                <version>${serenity.version}</version>
-                <executions>
-                    <execution>
-                        <id>serenity-reports</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>display-info</id>
-                        <configuration>
-                            <rules>
-                                <requireUpperBoundDeps>
-                                    <excludes combine.children="append">
-                                        <exclude>org.springframework:spring-core</exclude>
-                                        <exclude>org.springframework:spring-beans</exclude>
-                                        <exclude>org.eclipse.jetty.websocket:websocket-client</exclude>
-                                        <exclude>org.jenkins-ci:trilead-ssh2</exclude>
-                                        <exclude>commons-io:commons-io</exclude>
-                                        <exclude>commons-codec:commons-codec</exclude>
-                                    </excludes>
-                                </requireUpperBoundDeps>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <configuration>
+                        <excludes>
+                            <exclude>**/*UnitTest.java</exclude>
+                        </excludes>
+                        <includes>
+                            <include>**/features/*Test.java</include>
+                            <include>**/features/*Should*.java</include>
+                        </includes>
+                        <argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
+                        <systemPropertyVariables>
+                            <webdriver.driver>${webdriver.driver}</webdriver.driver>
+                            <browserstack.url>${browserstack.url}</browserstack.url>
+                            <project.root>../../</project.root>
+                        </systemPropertyVariables>
+                        <environmentVariables>
+                            <!-- todo: remove when the acceptance-test-harness is gone -->
+                            <BROWSER>htmlunit</BROWSER>
+                            <JENKINS_VERSION>${jenkins.version}</JENKINS_VERSION>
+                            <PLUGINS_DIR>../../build-monitor-plugin/target</PLUGINS_DIR>
+                            <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
+                        </environmentVariables>
+                        <forkCount>2</forkCount>
+                        <reuseForks>true</reuseForks>
+                        <rerunFailingTestsCount>${surefire.rerunFailingTestsCount}</rerunFailingTestsCount>
+                        <redirectTestOutputToFile>false</redirectTestOutputToFile>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>net.serenity-bdd.maven.plugins</groupId>
+                    <artifactId>serenity-maven-plugin</artifactId>
+                    <version>${serenity.version}</version>
+                    <executions>
+                        <execution>
+                            <id>serenity-reports</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>aggregate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>display-info</id>
+                            <configuration>
+                                <rules>
+                                    <requireUpperBoundDeps>
+                                        <excludes combine.children="append">
+                                            <exclude>org.springframework:spring-core</exclude>
+                                            <exclude>org.springframework:spring-beans</exclude>
+                                            <exclude>org.eclipse.jetty.websocket:websocket-client</exclude>
+                                            <exclude>org.jenkins-ci:trilead-ssh2</exclude>
+                                            <exclude>commons-io:commons-io</exclude>
+                                            <exclude>commons-codec:commons-codec</exclude>
+                                        </excludes>
+                                    </requireUpperBoundDeps>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

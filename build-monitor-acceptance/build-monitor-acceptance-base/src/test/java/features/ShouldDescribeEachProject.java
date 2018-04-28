@@ -47,7 +47,7 @@ public class ShouldDescribeEachProject {
                 Navigate.to(jenkins.url()),
                 HaveAProjectCreated.called("Example Github Project").andConfiguredTo(
                         ExecuteAShellScript.that(outputsGithubProjectLog()),
-                        SetBuildDescription.to("Revision: \\1").basedOnLogLineMatching("Checking out Revision ([^\\s]{6})")
+                        SetBuildDescription.to("Revision: \\1").basedOnLogLineMatching("Checking out Revision ([^\\w]{6})")
                 ),
                 ScheduleABuild.of("Example Github Project")
         );

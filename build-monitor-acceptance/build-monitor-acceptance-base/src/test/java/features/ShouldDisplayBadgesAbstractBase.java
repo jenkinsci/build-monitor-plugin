@@ -23,21 +23,25 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
-import static net.serenitybdd.screenplay.GivenWhenThen.*;
+import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.then;
+import static net.serenitybdd.screenplay.GivenWhenThen.when;
 import static net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScriptThat.Finishes_With_Success;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
 @RunWith(SerenityRunner.class)
-//Broken
-public class ShouldDisplayBadges {
+public abstract class ShouldDisplayBadgesAbstractBase {
 
     Actor paul = Actor.named("Paul");
 
     @Managed(driver = "chrome", options = "--lang=en") public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
-            InstallPlugins.fromUpdateCenter("buildtriggerbadge", "groovy-postbuild")
+            InstallPlugins.fromUpdateCenter(getPlugins())
     ).create();
+
+    abstract String[] getPlugins();
 
     @Before
     public void actorCanBrowseTheWeb() {
