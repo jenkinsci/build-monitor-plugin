@@ -8,7 +8,9 @@ import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
 import org.eclipse.aether.connector.basic.BasicRepositoryConnectorFactory;
 import org.eclipse.aether.impl.DefaultServiceLocator;
+import org.eclipse.aether.repository.Authentication;
 import org.eclipse.aether.repository.LocalRepository;
+import org.eclipse.aether.repository.Proxy;
 import org.eclipse.aether.resolution.ArtifactRequest;
 import org.eclipse.aether.resolution.ArtifactResolutionException;
 import org.eclipse.aether.resolution.ArtifactResult;
@@ -16,6 +18,7 @@ import org.eclipse.aether.spi.connector.RepositoryConnectorFactory;
 import org.eclipse.aether.spi.connector.transport.TransporterFactory;
 import org.eclipse.aether.transport.file.FileTransporterFactory;
 import org.eclipse.aether.transport.http.HttpTransporterFactory;
+import org.eclipse.aether.util.repository.AuthenticationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,14 +108,38 @@ public class ArtifactTransporter {
     private List<org.eclipse.aether.repository.RemoteRepository> repositories(RepositorySystem system, RepositorySystemSession session) {
         List<org.eclipse.aether.repository.RemoteRepository> repositories = new ArrayList<>();
 
+        Proxy httpProxy = getProxy("http");
+        Proxy httpsProxy = getProxy("https");
         for (RemoteRepository location : remoteLocations) {
-            repositories.add(new org.eclipse.aether.repository.RemoteRepository.Builder(
+            org.eclipse.aether.repository.RemoteRepository.Builder builder = new org.eclipse.aether.repository.RemoteRepository.Builder(
                     location.id(),
                     location.type(),
-                    location.url()
-            ).build());
+                    location.url());
+            if (location.url().startsWith("http") && httpProxy != null) {
+                builder.setProxy(httpProxy);
+            } else if (location.url().startsWith("https") && httpsProxy != null) {
+                builder.setProxy(httpsProxy);
+            }
+            repositories.add(builder.build());
         }
 
         return repositories;
+    }
+
+    private Proxy getProxy(String protocol) {
+        String proxyHost = System.getProperty(protocol + ".proxyHost");
+        String proxyPort = System.getProperty(protocol + ".proxyPort");
+        if (proxyHost != null && proxyPort != null) {
+            String proxyUser = System.getProperty(protocol + ".proxyUser");
+            String proxyPassword = System.getProperty(protocol + ".proxyPassword");
+            Authentication authentication = null;
+            if (proxyUser != null) {
+                String password = proxyPassword != null ? proxyPassword : "";
+                authentication = new AuthenticationBuilder().addUsername(proxyUser).addPassword(password).build();
+            }
+            return new Proxy("http", proxyHost, Integer.parseInt(proxyPort), authentication);
+        } else {
+            return null;
+        }
     }
 }
