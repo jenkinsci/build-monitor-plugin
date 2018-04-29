@@ -52,7 +52,7 @@ import static hudson.Util.filter;
 public class BuildMonitorView extends ListView {
     @Extension
     public static final BuildMonitorDescriptor descriptor = new BuildMonitorDescriptor();
-
+    private boolean collapseToSummaryBadge;
     private String title;
 
     /**
@@ -64,6 +64,8 @@ public class BuildMonitorView extends ListView {
         super(name);
 
         this.title = title;
+
+        this.collapseToSummaryBadge = false;
     }
 
     @SuppressWarnings("unused") // used in .jelly
@@ -108,6 +110,18 @@ public class BuildMonitorView extends ListView {
         return descriptor.getPermissionToCollectAnonymousUsageStatistics();
     }
 
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public boolean getCollapseToSummaryBadge(){
+        return collapseToSummaryBadge;
+    }
+
+    public boolean getCollapseToSummaryBadgeValue(String str){
+        if(str == null){
+            return false;
+        }
+        return true;
+    }
+
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
@@ -118,6 +132,7 @@ public class BuildMonitorView extends ListView {
 
             String requestedOrdering = req.getParameter("order");
             title                    = req.getParameter("title");
+            collapseToSummaryBadge   = getCollapseToSummaryBadgeValue(req.getParameter("collapse"));
 
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
             currentConfig().setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));

@@ -12,6 +12,10 @@
     </select>
   </f:entry>
 
+  <f:entry title="${%Collapse Successful Builds}" field="collapse">
+    <f:checkbox name="collapse" checked="${it.collapseToSummaryBadge}" id="collapse"/>
+  </f:entry>
+
   <f:entry title="${%Recurse in subfolders}" field="recurse">
     <f:checkbox id="recurse"/>
   </f:entry>

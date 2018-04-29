@@ -11,6 +11,9 @@ public class BuildMonitorDashboard {
     public static final Target Project_Widget_Badges          = Target.the("Project Widget Badges").locatedBy("//li[header/h2[.='{0}']]//*[@class='badges']");
     public static final Target Project_Widget_Pipeline_Stages = Target.the("Project Widget Builds").locatedBy("//li[header/h2[.='{0}']]//*[contains(@class, 'build-stages')]");
 
+    public static final Target Collapse_Fill = Target.the("Success Summary Badge").locatedBy("//*[@id=\"full-summary-badge\"]/p");
+    public static final Target Collapse_Partial = Target.the("Success Summary Badge").locatedBy("//*[@id=\"partial-summary-badge\"]/header/h2[2]");
+
     public static final Target Control_Panel = Target.the("Control Panel").locatedBy("//label[@for='settings-toggle']");
     public static final Target Show_Badges = Target.the("Show Badges Toggle").locatedBy("//input[@id='settings-show-badges']");
 }

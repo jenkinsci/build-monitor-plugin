@@ -37,5 +37,14 @@ public class ProjectWidget {
         this.projectOfInterest = projectOfInterest;
     }
 
+    public Question<String> fullScreenSummaryBadgeDescription() {
+        return new CollapseFill();
+    }
+
+    public Question<String> partialScreenSummaryBadgeDescription() {
+        return new CollapsePartial();
+    }
+
     private final String projectOfInterest;
+
 }
