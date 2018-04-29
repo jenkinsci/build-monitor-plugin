@@ -13,7 +13,7 @@ import hudson.scm.ChangeLogSet;
 import jenkins.model.CauseOfInterruption;
 import jenkins.model.InterruptedBuildAction;
 
-import org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildAction;
+import com.jenkinsci.plugins.badge.action.BadgeAction;
 import org.powermock.api.mockito.PowerMockito;
 
 import java.text.SimpleDateFormat;
@@ -198,14 +198,14 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         when(failure.getName()).thenReturn(name);
         return failure;
     }
-    
+
     public BuildStateRecipe hasBadges(BadgeRecipe... badges) {
-    	List<GroovyPostbuildAction> actions = new ArrayList<GroovyPostbuildAction>();
+    	List<BadgeAction> actions = new ArrayList<BadgeAction>();
     	for (int i = 0; i < badges.length; i++) {
     		actions.add(badges[i].get());
     	}
-    	when(build.getActions(GroovyPostbuildAction.class)).thenReturn(actions);
-    	
+    	when(build.getActions(BadgeAction.class)).thenReturn(actions);
+
     	return this;
     }
 
