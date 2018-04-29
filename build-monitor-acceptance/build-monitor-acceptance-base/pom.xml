@@ -12,10 +12,6 @@
 
     <name>Build Monitor Acceptance Tests (Jenkins ${jenkins.version})</name>
 
-    <properties>
-
-    </properties>
-
     <build>
         <plugins>
             <plugin>

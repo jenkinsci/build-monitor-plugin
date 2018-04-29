@@ -65,10 +65,8 @@ public class JenkinsInstance implements TestRule {
         return pluginUnderTest.version();
     }
 
-    //todo investigate impact of this
     public String version() {
         return System.getenv("JENKINS_VERSION");
-        //return pluginUnderTest.requiredJenkinsVersion();
     }
 
     public Path home() {
