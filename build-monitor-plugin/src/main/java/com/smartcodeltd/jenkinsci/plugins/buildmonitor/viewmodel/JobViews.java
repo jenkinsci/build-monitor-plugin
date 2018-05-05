@@ -14,10 +14,12 @@ import static com.google.common.collect.Lists.newArrayList;
  * @author Jan Molak
  */
 public class JobViews {
-    private static final String Claim                  = "claim";
-    private static final String Build_Failure_Analyzer = "build-failure-analyzer";
-    private static final String Groovy_Post_Build      = "groovy-postbuild";
-    private static final String Pipeline               = "workflow-aggregator";
+    private static final String Claim                       = "claim";
+    private static final String Build_Failure_Analyzer      = "build-failure-analyzer";
+    private static final String Groovy_Post_Build           = "groovy-postbuild";
+    private static final String Badge_Plugin                = "badge";
+    private static final String Pipeline                    = "workflow-aggregator";
+    private static final String GroovyPostbuildActionClass  = "org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildAction";
 
     private final StaticJenkinsAPIs jenkins;
     private final com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config;
@@ -43,12 +45,23 @@ public class JobViews {
             viewFeatures.add(new CanBeDiagnosedForProblems(config.getBuildFailureAnalyzerDisplayedField()));
         }
 
-        if (jenkins.hasPlugin(Groovy_Post_Build)) {
-        	viewFeatures.add(new HasBadges());
+        if (jenkins.hasPlugin(Badge_Plugin)) {
+            viewFeatures.add(new HasBadgesBadgePlugin());
+        } else if (jenkins.hasPlugin(Groovy_Post_Build) && hasGroovyPostbuildActionClass()) {
+            viewFeatures.add(new HasBadgesGroovyPostbuildPlugin());
         }
 
         boolean isPipelineJob = jenkins.hasPlugin(Pipeline) && job instanceof WorkflowJob;
 
         return JobView.of(job, viewFeatures, isPipelineJob);
+    }
+
+    private boolean hasGroovyPostbuildActionClass() {
+        try {
+            Class.forName(GroovyPostbuildActionClass);
+            return true;
+        } catch (ClassNotFoundException ignore) {
+            return false;
+        }
     }
 }

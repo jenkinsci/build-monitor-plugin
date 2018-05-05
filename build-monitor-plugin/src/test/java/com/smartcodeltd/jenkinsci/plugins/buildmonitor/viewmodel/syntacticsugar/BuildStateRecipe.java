@@ -13,7 +13,9 @@ import hudson.scm.ChangeLogSet;
 import jenkins.model.CauseOfInterruption;
 import jenkins.model.InterruptedBuildAction;
 
+import com.jenkinsci.plugins.badge.action.BadgeAction;
 import org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildAction;
+import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 
 import java.text.SimpleDateFormat;
@@ -35,7 +37,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     private AbstractBuild<?, ?> build;
 
     public BuildStateRecipe() {
-        build = mock(AbstractBuild.class);
+        build = PowerMockito.mock(AbstractBuild.class);
 
         AbstractProject parent = mock(AbstractProject.class);
         doReturn(parent).when(build).getParent();
@@ -64,7 +66,18 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe withChangesFrom(String... authors) {
+    public BuildStateRecipe withChangesFrom(String... authors) throws Exception {
+        boolean newJenkins = false;
+        try {
+            build.getClass().getMethod("shouldCalculateCulprits");
+            newJenkins = true;
+        } catch (NoSuchMethodException ignore) {
+            //If old Jenkins, variable "newJenkins" will still be false
+        }
+        return newJenkins ? withChangesFromForJenkins2_107AndNewer(authors) : withChangesFromForJenkins2_46(authors);
+    }
+
+    private BuildStateRecipe withChangesFromForJenkins2_46(String... authors) {
         ChangeLogSet changeSet = changeSetBasedOn(entriesBy(authors));
         when(build.getChangeSet()).thenReturn(changeSet);
 
@@ -75,14 +88,29 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe succeededThanksTo(String... authors) {
+    //PowerMockito reflective call to handle methods not available in Jenkins 2.46 which is used as dependency
+    private BuildStateRecipe withChangesFromForJenkins2_107AndNewer(String... authors) throws Exception {
+        ChangeLogSet changeSet = changeSetBasedOn(entriesBy(authors));
+        when(build.getChangeSet()).thenReturn(changeSet);
+        PowerMockito.doReturn(true).when(build, "shouldCalculateCulprits");
+
+        // any methods that use getChangeSet as their source of data should be called normally
+        // (build is a partial mock in this case)
+        when(build.getChangeSets()).thenCallRealMethod();
+        when(build.getCulprits()).thenCallRealMethod();
+        PowerMockito.doCallRealMethod().when(build, "calculateCulprits");
+
+        return this;
+    }
+
+    public BuildStateRecipe succeededThanksTo(String... authors) throws Exception {
         finishedWith(Result.SUCCESS);
         withChangesFrom(authors);
 
         return this;
     }
 
-    public BuildStateRecipe wasBrokenBy(String... culprits) {
+    public BuildStateRecipe wasBrokenBy(String... culprits) throws Exception {
         finishedWith(Result.FAILURE);
         withChangesFrom(culprits);
 
@@ -154,7 +182,8 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         User user = userCalled(username);
 
         mockStatic(User.class);
-        PowerMockito.when(User.get(user.getId())).thenReturn(user);
+        PowerMockito.when(User.get(user.getId())).thenReturn(user); //For older Jenins versions
+        PowerMockito.when(User.get(Mockito.eq(user.getId()), Mockito.eq(false), Mockito.anyMap())).thenReturn(user); //For newer Jenkins versions
 
         final InterruptedBuildAction action = interruptedBuildAction(user);
         when(build.getAction(InterruptedBuildAction.class)).thenReturn(action);
@@ -198,15 +227,25 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         when(failure.getName()).thenReturn(name);
         return failure;
     }
-    
-    public BuildStateRecipe hasBadges(BadgeRecipe... badges) {
-    	List<GroovyPostbuildAction> actions = new ArrayList<GroovyPostbuildAction>();
-    	for (int i = 0; i < badges.length; i++) {
-    		actions.add(badges[i].get());
-    	}
-    	when(build.getActions(GroovyPostbuildAction.class)).thenReturn(actions);
-    	
-    	return this;
+
+    public BuildStateRecipe hasBadgesGroovyPostbuildPlugin(BadgeGroovyPostbuildRecipe... badges) {
+        List<GroovyPostbuildAction> actions = new ArrayList<GroovyPostbuildAction>();
+        for (int i = 0; i < badges.length; i++) {
+            actions.add(badges[i].get());
+        }
+        when(build.getActions(GroovyPostbuildAction.class)).thenReturn(actions);
+
+        return this;
+    }
+
+    public BuildStateRecipe hasBadgesBadgePlugin(BadgeBadgePluginRecipe... badges) {
+        List<BadgeAction> actions = new ArrayList<BadgeAction>();
+        for (int i = 0; i < badges.length; i++) {
+            actions.add(badges[i].get());
+        }
+        when(build.getActions(BadgeAction.class)).thenReturn(actions);
+
+        return this;
     }
 
     public BuildStateRecipe and() {
