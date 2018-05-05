@@ -1,55 +1,36 @@
 // docs: https://jenkins.io/doc/pipeline/examples/
 def version = 'unknown'
 
-stage 'Build'
 node('hi-speed') {
 
     git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'master'
 
-    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "M2_HOME=${tool 'maven-3.5.3'}", "PATH+EXTRA=${env.M2_HOME}/bin:${env.JAVA_HOME}/bin:${tool 'node-8.11.1'}/bin"]) {
-
-        mvn "-version"
-
-        mvn "release-candidate:updateVersion"
-        mvn "clean package --projects build-monitor-plugin"
-
-        version = read_property('version', 'build-monitor-plugin/target/classes/build-monitor.properties');
-
-        assign_build_name version
-    }
-
-    archive_junit_results 'build-monitor-plugin/target/surefire-reports/TEST-*.xml,build-monitor-plugin/target/javascript/test-results.xml'
-
-    stash name: 'sources', includes: '**,build-monitor-plugin/target/*.hpi', excludes: 'build-monitor-plugin/target/*,**/node_modules/*'
-}
-
-stage 'Verify'
-node('hi-speed') {
-
-    unstash 'sources'
-
     with_browser_stack 'linux-x64', {
-        withEnv(["JAVA_HOME=${ tool 'jdk-1.8.latest' }", "M2_HOME=${tool 'maven-3.5.3'}", "PATH+EXTRA=${env.M2_HOME}/bin:${env.JAVA_HOME}/bin"]) {
+        withEnv(["JAVA_HOME=${tool 'jdk-1.8.latest'}", "M2_HOME=${tool 'maven-3.5.3'}", "PATH+EXTRA=${env.M2_HOME}/bin:${env.JAVA_HOME}/bin:${tool 'node-8.11.1'}/bin"]) {
 
             mvn "-version"
 
-            mvn "clean verify --projects build-monitor-acceptance"
+            mvn "release-candidate:updateVersion"
+
+            stage 'Build'
+
+            mvn "clean verify"
+
+            version = read_property('version', 'build-monitor-plugin/target/classes/build-monitor.properties');
+
+            assign_build_name version
+
+            archive_junit_results 'build-monitor-plugin/target/surefire-reports/TEST-*.xml,build-monitor-plugin/target/javascript/test-results.xml'
+            archive_artifacts     'build-monitor-plugin/target/*.hpi,pom.xml,build-monitor-plugin/pom.xml,build-monitor-acceptance/pom.xml,build-monitor-acceptance/build-monitor-acceptance-base/pom.xml,build-monitor-acceptance/build-monitor-acceptance-latest/pom.xml,build-monitor-acceptance/build-monitor-acceptance-base/target/failsafe-reports/*-output.txt,build-monitor-acceptance/build-monitor-acceptance-latest/target/failsafe-reports/*-output.txt'
+            archive_junit_results 'build-monitor-acceptance/build-monitor-acceptance-base/target/failsafe-reports/TEST-*.xml,build-monitor-acceptance/build-monitor-accpetance-latest/target/failsafe-reports/TEST-*.xml'
+            archive_html          'Serenity', 'build-monitor-acceptance/target/site/serenity'
+
+            stage 'Publish to GitHub'
+
+            create_and_push_release_branch_for version
         }
     }
-
-    archive_artifacts     'build-monitor-plugin/target/*.hpi,pom.xml,build-monitor-plugin/pom.xml,build-monitor-acceptance/pom.xml,build-monitor-acceptance/build-monitor-acceptance-base/pom.xml,build-monitor-acceptance/build-monitor-acceptance-latest/pom.xml,build-monitor-acceptance/build-monitor-acceptance-base/target/failsafe-reports/*-output.txt,build-monitor-acceptance/build-monitor-acceptance-latest/target/failsafe-reports/*-output.txt'
-    archive_junit_results 'build-monitor-acceptance/build-monitor-acceptance-base/target/failsafe-reports/TEST-*.xml,build-monitor-acceptance/build-monitor-accpetance-latest/target/failsafe-reports/TEST-*.xml'
-    archive_html          'Serenity', 'build-monitor-acceptance/target/site/serenity'
 }
-
-stage 'Publish to GitHub'
-node('hi-speed') {
-
-    unstash 'sources'
-
-    create_and_push_release_branch_for version
-}
-
 // --
 
 def assign_build_name (new_name) {
