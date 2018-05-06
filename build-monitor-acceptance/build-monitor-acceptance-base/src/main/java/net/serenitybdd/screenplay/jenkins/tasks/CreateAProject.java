@@ -10,6 +10,7 @@ import net.serenitybdd.screenplay.jenkins.user_interface.NewJobPage;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Buttons;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.SidePanel;
 import net.serenitybdd.screenplay.targets.Target;
+import net.serenitybdd.screenplayx.actions.Scroll;
 import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
@@ -38,6 +39,7 @@ class CreateAProject implements Task {
                 Click.on(SidePanel.New_Item_Link),
                 Enter.theValue(name).into(NewJobPage.Item_Name_Field),
                 Choose.the(projectType),
+                Scroll.to(Buttons.OK),
                 Click.on(Buttons.OK),
                 configureTheProject,
                 Click.on(Buttons.Save)
