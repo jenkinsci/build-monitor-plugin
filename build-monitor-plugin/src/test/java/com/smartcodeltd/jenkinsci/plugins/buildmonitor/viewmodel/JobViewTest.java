@@ -1,7 +1,14 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
+import jenkins.model.Jenkins;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.List;
 
@@ -18,6 +25,8 @@ import static org.mockito.Mockito.*;
 /**
  * @author Jan Molak
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Jenkins.class})
 public class JobViewTest {
 
     private static final String theName = "some-TLAs-followed-by-a-project-name";
@@ -25,6 +34,15 @@ public class JobViewTest {
 
     private RelativeLocation relativeLocation = mock(RelativeLocation.class); // TODO recipe builder
     private JobView view;
+
+    @Mock
+    private Jenkins jenkins;
+
+    @Before
+    public void setup() {
+        PowerMockito.mockStatic(Jenkins.class);
+        PowerMockito.when(Jenkins.getInstance()).thenReturn(jenkins);
+    }
 
     /*
      * By the way, if you were not aware of this: the configuration page of each job has an "Advanced Project Options"
