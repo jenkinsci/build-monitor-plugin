@@ -77,7 +77,7 @@ def with_browser_stack(version, actions) {
     def auth_key = env.BROWSERSTACK_AUTOMATION_KEY
 
     if (!fileExists("/var/tmp/BrowserStackLocal")) {
-        exec "curl -sS https://www.browserstack.com/browserstack-local/BrowserStackLocal-${version}.zip > /var/tmp/BrowserStackLocal.zip", 'Downloading BrowserStackLocal'
+        exec "curl -k -v -sS https://www.browserstack.com/browserstack-local/BrowserStackLocal-${version}.zip > /var/tmp/BrowserStackLocal.zip", 'Downloading BrowserStackLocal'
         exec "unzip -o /var/tmp/BrowserStackLocal.zip -d /var/tmp", 'Unpacking BrowserStackLocal'
         exec "chmod +x /var/tmp/BrowserStackLocal", 'Making the BrowserStackLocal binary executable'
     }
