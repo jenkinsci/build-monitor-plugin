@@ -1,7 +1,7 @@
 // docs: https://jenkins.io/doc/pipeline/examples/
 def version = 'unknown'
 
-node('hi-speed') {
+node('hi-speed && lxc-fedora25') {
 
     git url: 'git@github.com:jan-molak/jenkins-build-monitor-plugin.git', branch: 'master'
 
