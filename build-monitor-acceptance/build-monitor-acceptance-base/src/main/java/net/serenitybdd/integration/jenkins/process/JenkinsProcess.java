@@ -48,6 +48,7 @@ public class JenkinsProcess {
                 "-Dhudson.Main.development=true",
                 "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug",
                 "-Djava.util.logging=DEBUG",
+				"-Dhudson.DNSMultiCast.disabled=true",
                 "-jar", jenkinsWar.toString(),
                 "--ajp13Port=-1",
                 "--httpPort=" + port
