@@ -21,7 +21,8 @@ public class UpdateCenter {
     private static final Logger Log = LoggerFactory.getLogger(UpdateCenter.class);
 
     private static final String Update_Center_URL_Template
-            = "https://updates.jenkins-ci.org/stable-%s/update-center.json";
+            // = "http://updates.jenkins-ci.org/stable-%s/update-center.json";
+            = "https://ftp-chi.osuosl.org/pub/jenkins/updates/stable-%s/update-center.json";
     private final Path tempDir;
 
     private List<Version> jenkinsLTSVersions = Arrays.asList(
