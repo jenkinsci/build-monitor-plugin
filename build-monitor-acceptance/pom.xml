@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>build-monitor</artifactId>
-        <version>1.12-SNAPSHOT</version>
+        <version>1.12+build.201806122247</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
