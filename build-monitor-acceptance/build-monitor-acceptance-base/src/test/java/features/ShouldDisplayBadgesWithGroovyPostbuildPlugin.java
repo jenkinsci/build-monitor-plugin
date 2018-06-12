@@ -22,6 +22,6 @@ public class ShouldDisplayBadgesWithGroovyPostbuildPlugin extends ShouldDisplayB
 
     @Override
     String[] getPlugins() {
-        return new String[] {"buildtriggerbadge", "groovy-postbuild"};
+        return new String[] {"workflow-aggregator", "buildtriggerbadge", "groovy-postbuild"};
     }
 }

@@ -28,7 +28,7 @@ public class ShouldSupportExternalProjects {
 
     Actor maggie = Actor.named("Maggie");
 
-    @Managed(driver = "chrome", options = "--lang=en") public WebDriver browser;
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
       InstallPlugins.fromUpdateCenter("external-monitor-job")

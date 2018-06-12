@@ -10,11 +10,10 @@ import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
+import net.serenitybdd.screenplay.jenkins.HaveAPipelineProjectCreated;
 import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
-import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.AddAGroovyPostbuildScript;
-import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ExecuteAShellScript;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.GroovyScriptThat;
+import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.SetPipelineDefinition;
 import net.serenitybdd.screenplayx.actions.Navigate;
 import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
@@ -27,7 +26,6 @@ import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.GivenWhenThen.then;
 import static net.serenitybdd.screenplay.GivenWhenThen.when;
-import static net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScriptThat.Finishes_With_Success;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
 @RunWith(SerenityRunner.class)
@@ -35,7 +33,7 @@ public abstract class ShouldDisplayBadgesAbstractBase {
 
     Actor paul = Actor.named("Paul");
 
-    @Managed(driver = "chrome", options = "--lang=en") public WebDriver browser;
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
             InstallPlugins.fromUpdateCenter(getPlugins())
@@ -52,10 +50,10 @@ public abstract class ShouldDisplayBadgesAbstractBase {
     public void displaying_build_badges() throws Exception {
         givenThat(paul).wasAbleTo(
                 Navigate.to(jenkins.url()),
-                HaveAProjectCreated.called("My App").andConfiguredTo(
-                        ExecuteAShellScript.that(Finishes_With_Success),
-                        AddAGroovyPostbuildScript.that(GroovyScriptThat.Adds_A_Badge)
+                HaveAPipelineProjectCreated.called("My App").andConfiguredTo(
+                        SetPipelineDefinition.asFollows(GroovyScriptThat.Adds_A_Badge.code())
                 ),
+
                 ScheduleABuild.of("My App"),
                 HaveABuildMonitorViewCreated.showingAllTheProjects()
         );

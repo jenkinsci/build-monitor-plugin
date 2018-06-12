@@ -28,7 +28,7 @@ public class BuildMonitorShouldBeEasyToSetUp {
 
     Actor anna = Actor.named("Anna");
 
-    @Managed(driver = "chrome", options = "--lang=en") public WebDriver browser;
+    @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().create();
 
