@@ -21,6 +21,7 @@ public class JobViews {
     private static final String Badge_Plugin                = "badge";
     private static final String Pipeline                    = "workflow-aggregator";
     private static final String GroovyPostbuildActionClass  = "org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildAction";
+    private static final String Junit_Realtime              = "junit-realtime-test-reporter";
 
     private final StaticJenkinsAPIs jenkins;
     private final com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config;
@@ -53,6 +54,10 @@ public class JobViews {
             } else if (jenkins.hasPlugin(Groovy_Post_Build) && hasGroovyPostbuildActionClass()) {
                 viewFeatures.add(new HasBadgesGroovyPostbuildPlugin(config));
             }
+        }
+
+        if (config.shouldDisplayJUnitProgress() && jenkins.hasPlugin(Junit_Realtime)) {
+        	viewFeatures.add(new HasJunitRealtime());
         }
 
         boolean isPipelineJob = jenkins.hasPlugin(Pipeline) && job instanceof WorkflowJob;

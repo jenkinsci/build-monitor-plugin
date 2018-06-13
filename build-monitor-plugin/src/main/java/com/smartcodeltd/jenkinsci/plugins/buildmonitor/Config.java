@@ -16,7 +16,8 @@ public class Config {
     private DisplayOptions displayBadges;
     private GetBuildViewModel displayBadgesFrom;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
-    
+    private boolean displayJUnitProgress;
+
     public static Config defaultConfig() {
         return new Config();
     }
@@ -36,15 +37,15 @@ public class Config {
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
     }
-    
+
     public BuildFailureAnalyzerDisplayedField getBuildFailureAnalyzerDisplayedField() {
         return getOrElse(buildFailureAnalyzerDisplayedField, BuildFailureAnalyzerDisplayedField.Name);
     }
-    
+
     public void setBuildFailureAnalyzerDisplayedField(String buildFailureAnalyzerDisplayedField) {
         this.buildFailureAnalyzerDisplayedField = BuildFailureAnalyzerDisplayedField.valueOf(buildFailureAnalyzerDisplayedField);
     }
-    
+
     public boolean shouldDisplayCommitters() {
         return getOrElse(displayCommitters, true);
     }
@@ -60,13 +61,21 @@ public class Config {
     public void setDisplayBadges(String option) {
         this.displayBadges = DisplayOptions.valueOf(option);
     }
-    
+
     public GetBuildViewModel getDisplayBadgesFrom() {
         return getOrElse(displayBadgesFrom, new GetLastBuild());
     }
 
     public void setDisplayBadgesFrom(GetBuildViewModel displayBadgesFrom) {
         this.displayBadgesFrom = displayBadgesFrom;
+    }
+
+    public boolean shouldDisplayJUnitProgress() {
+        return getOrElse(displayJUnitProgress, true);
+    }
+
+    public void setDisplayJUnitProgress(boolean flag) {
+        this.displayJUnitProgress = flag;
     }
 
     @Override
@@ -82,18 +91,18 @@ public class Config {
         Name("name"),
         Description("description"),
         None("none");
-    
+
         private final String value;
         BuildFailureAnalyzerDisplayedField(String value) {
             this.value = value;
         }
-    
+
         public String getValue() { return value; }
-    
+
         @Override
         public String toString() { return value; }
     }
-    
+
     public enum DisplayOptions {
         Always, Never, UserSetting;
     }

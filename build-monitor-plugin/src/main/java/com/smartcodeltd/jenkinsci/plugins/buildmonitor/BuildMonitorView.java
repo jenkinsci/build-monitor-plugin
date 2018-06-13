@@ -86,7 +86,7 @@ public class BuildMonitorView extends ListView {
     public String currentOrder() {
         return currentConfig().getOrder().getClass().getSimpleName();
     }
-    
+
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public String currentbuildFailureAnalyzerDisplayedField() {
         return currentConfig().getBuildFailureAnalyzerDisplayedField().getValue();
@@ -105,6 +105,11 @@ public class BuildMonitorView extends ListView {
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public String currentDisplayBadgesFrom() {
         return currentConfig().getDisplayBadgesFrom().getClass().getSimpleName();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public boolean isDisplayJUnitProgress() {
+        return currentConfig().shouldDisplayJUnitProgress();
     }
 
     private static final BuildMonitorInstallation installation = new BuildMonitorInstallation();
@@ -138,7 +143,8 @@ public class BuildMonitorView extends ListView {
             currentConfig().setDisplayBadges(req.getParameter("displayBadges"));
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
             currentConfig().setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
-            
+            currentConfig().setDisplayJUnitProgress(json.optBoolean("displayJUnitProgress", true));
+
             try {
                 currentConfig().setOrder(orderIn(requestedOrdering));
             } catch (Exception e) {

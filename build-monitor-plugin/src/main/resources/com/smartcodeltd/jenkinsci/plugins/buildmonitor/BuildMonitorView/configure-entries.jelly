@@ -99,6 +99,10 @@
       </select>
     </f:entry>
 
+    <f:entry title="${%Display Junit Realtime progress}" help="${descriptor.getHelpFile('displayJUnitProgress')}">
+      <f:checkbox id="displayJUnitProgress" field="displayJUnitProgress" />
+    </f:entry>
+
   </f:section>
 
   <script>
