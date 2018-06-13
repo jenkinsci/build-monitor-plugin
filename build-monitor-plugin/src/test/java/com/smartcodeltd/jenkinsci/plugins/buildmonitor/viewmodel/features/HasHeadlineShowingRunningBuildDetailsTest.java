@@ -2,16 +2,34 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
+import jenkins.model.Jenkins;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Jenkins.class})
 public class HasHeadlineShowingRunningBuildDetailsTest {
 
     private JobView view;
+
+    @Mock
+    private Jenkins jenkins;
+
+    @Before
+    public void setup() {
+        PowerMockito.mockStatic(Jenkins.class);
+        PowerMockito.when(Jenkins.getInstance()).thenReturn(jenkins);
+    }
 
     @Test
     public void should_say_nothing_if_no_builds_were_executed_and_one_is_running_now() throws Exception {
