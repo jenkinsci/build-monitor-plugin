@@ -7,6 +7,7 @@ It easily accommodates different computer screen sizes and is ideal as an Extrem
 
 [![Build Status](https://smartcode-opensource.ci.cloudbees.com/job/build-monitor/badge/icon)](https://smartcode-opensource.ci.cloudbees.com/job/build-monitor/)
 [![Stories in Backlog](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=backlog&title=Backlog)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
+[![Join the chat at https://gitter.im/jenkins-build-monitor-plugin/Lobby](https://badges.gitter.im/jenkins-build-monitor-plugin/Lobby.svg)](https://gitter.im/jenkins-build-monitor-plugin/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Have a question? Perhaps it's already been answered - check the [FAQ](#faq) section below.
 
