@@ -119,4 +119,4 @@ Build Monitor is continuously delivered to a Jenkins near you thanks to:
 * a battery of browsers provided by [BrowserStack](https://www.browserstack.com) and powering the [acceptance tests](/build-monitor-acceptance/src/test/java)
 
 [![built on dev@cloud](https://www.cloudbees.com/sites/default/files/styles/large/public/Button-Built-on-CB-1.png?itok=3Tnkun-C)](http://bit.ly/JBMFOSS)
-[![tested on BrowserStack](docs/browserstack-logo.png)](http://bit.ly/JBMBS)
+[![tested on BrowserStack](docs/browserstack-logo.png)](http://bit.ly/JBMBS) [![Join the chat at https://gitter.im/jenkins-build-monitor-plugin/Lobby](https://badges.gitter.im/jenkins-build-monitor-plugin/Lobby.svg)](https://gitter.im/jenkins-build-monitor-plugin/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
