@@ -2,6 +2,6 @@
 
 pushd build-monitor-plugin
 
-MAVEN_OPTS="-Xmx4096m -XX:MaxPermSize=2048m" jenv exec mvn clean && jenv exec mvn hpi:run -Dhudson.Main.development=true
+MAVEN_OPTS="-Xmx4096m -XX:MaxPermSize=2048m" mvn clean && mvn hpi:run -Dhudson.Main.development=true
 
 popd
