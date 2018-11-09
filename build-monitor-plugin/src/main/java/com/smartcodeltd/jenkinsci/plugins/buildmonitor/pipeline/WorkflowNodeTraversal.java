@@ -6,6 +6,7 @@ import org.jenkinsci.plugins.workflow.graph.FlowNode;
 import org.jenkinsci.plugins.workflow.support.steps.StageStep;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class WorkflowNodeTraversal extends BreadthFirstNodeTraversal<FlowNode> {
 
@@ -23,6 +24,6 @@ public class WorkflowNodeTraversal extends BreadthFirstNodeTraversal<FlowNode> {
 
     @Override
     protected Collection<FlowNode> getParents(FlowNode node) {
-        return node.getParents();
+        return node != null ? node.getParents() : Collections.EMPTY_LIST;
     }
 }
