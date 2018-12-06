@@ -24,6 +24,6 @@ public class WorkflowNodeTraversal extends BreadthFirstNodeTraversal<FlowNode> {
 
     @Override
     protected Collection<FlowNode> getParents(FlowNode node) {
-        return node != null ? node.getParents() : Collections.EMPTY_LIST;
+        return node != null ? node.getParents() : Collections.<FlowNode>emptyList();
     }
 }
