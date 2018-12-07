@@ -1,12 +1,12 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.pipeline;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.jenkinsci.plugins.workflow.cps.nodes.StepStartNode;
 import org.jenkinsci.plugins.workflow.graph.FlowNode;
 import org.jenkinsci.plugins.workflow.support.steps.StageStep;
 
 import java.util.Collection;
-import java.util.Collections;
 
 public class WorkflowNodeTraversal extends BreadthFirstNodeTraversal<FlowNode> {
 
@@ -23,7 +23,7 @@ public class WorkflowNodeTraversal extends BreadthFirstNodeTraversal<FlowNode> {
     }
 
     @Override
-    protected Collection<FlowNode> getParents(FlowNode node) {
-        return node != null ? node.getParents() : Collections.<FlowNode>emptyList();
+    protected Collection<FlowNode> getParents(@NonNull FlowNode node) {
+        return node.getParents();
     }
 }
