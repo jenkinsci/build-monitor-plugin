@@ -22,6 +22,7 @@ module.exports = function(config) {
             'src/main/webapp/vendor/angular-slider-5.4.0/rzslider.js',
             'src/main/webapp/vendor/ng-lodash-3.10.1.min.js',
             'src/main/webapp/vendor/ui-*.js',
+            '../node_modules/url-search-params/build/url-search-params.js',
             'src/test/resources/vendor/angular-mocks-1.5.8.js',
             'src/test/resources/vendor/sinon-1.7.3.js',
             'src/test/resources/vendor/jasmine-sinon-0.4.0.js',

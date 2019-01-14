@@ -1,18 +1,25 @@
 angular.
     module('buildMonitor.settings', [ 'buildMonitor.services', 'rzModule']).
 
-    controller('controlPanel', ['$scope', 'cookieJar', 'townCrier',
-        function ($scope, cookieJar, townCrier) {
+    controller('controlPanel', ['$scope', 'params', 'cookieJar', 'townCrier',
+        function ($scope, params, cookieJar, townCrier) {
             'use strict';
 
-            $scope.settings.fontSize        = cookieJar.get('fontSize',        1);
-            $scope.settings.numberOfColumns = cookieJar.get('numberOfColumns', 2);
-            $scope.settings.colourBlind     = cookieJar.get('colourBlind',     0);
-            $scope.settings.reduceMotion    = cookieJar.get('reduceMotion',    0);
-            $scope.settings.showBadges      = cookieJar.get('showBadges',      0);
+            var fontSize        = (params) ? params.get('fontSize')          : cookieJar.get('fontSize',        1);
+            var numberOfColumns = (params) ? params.get('numberOfColumns')   : cookieJar.get('numberOfColumns', 2);
+            var colourBlind     = (params) ? params.get('colourBlind')       : cookieJar.get('colourBlind',     0);
+            var reduceMotion    = (params) ? params.get('reduceMotion')      : cookieJar.get('reduceMotion',    0);
+            var showBadges      = (params) ? params.get('showBadges')        : cookieJar.get('showBadges',      0);
+
+            $scope.settings.fontSize        = fontSize;
+            $scope.settings.numberOfColumns = numberOfColumns;
+            $scope.settings.colourBlind     = colourBlind;
+            $scope.settings.reduceMotion    = reduceMotion;
+            $scope.settings.showBadges      = showBadges;
 
             angular.forEach($scope.settings, function(value, name) {
                 $scope.$watch('settings.' + name, function(currentValue) {
+                    params.set(name, currentValue);
                     cookieJar.put(name, currentValue);
                 });
             });
@@ -21,4 +28,5 @@ angular.
             townCrier.uponNewVersion(function() {
                 $scope.newVersionAvailable = true;
             });
-        }]);
+        }
+    ]);
