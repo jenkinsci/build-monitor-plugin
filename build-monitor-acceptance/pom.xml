@@ -20,6 +20,7 @@
 
         <webdriver.driver>chrome</webdriver.driver>
         <browserstack.url/>
+        <enforcer.skip>true</enforcer.skip>
     </properties>
 
     <modules>
