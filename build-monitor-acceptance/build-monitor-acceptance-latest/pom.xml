@@ -15,7 +15,7 @@
 
     <properties>
         <!-- Update this as new LTS versions are released -->
-        <jenkins.version>2.107.2</jenkins.version>
+        <jenkins.version>2.176.1</jenkins.version>
     </properties>
 
     <dependencies>
