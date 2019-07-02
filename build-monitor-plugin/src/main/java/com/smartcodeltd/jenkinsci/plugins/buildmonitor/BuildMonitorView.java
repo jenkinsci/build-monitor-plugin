@@ -109,6 +109,10 @@ public class BuildMonitorView extends ListView {
     }
 
     @Override
+    protected void initColumns() {
+    }
+
+    @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
         super.submit(req);
 
