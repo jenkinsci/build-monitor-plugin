@@ -1,6 +1,6 @@
 package net.serenitybdd.integration.utils;
 
-import javax.validation.constraints.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class Nulls {
     public static <T> T coalesce(T... items) {

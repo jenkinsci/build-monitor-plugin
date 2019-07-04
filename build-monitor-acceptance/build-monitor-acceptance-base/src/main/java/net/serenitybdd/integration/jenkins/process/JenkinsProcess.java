@@ -2,10 +2,10 @@ package net.serenitybdd.integration.jenkins.process;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.jdeferred.Promise;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
