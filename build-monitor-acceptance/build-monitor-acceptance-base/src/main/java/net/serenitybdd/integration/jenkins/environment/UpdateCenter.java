@@ -26,6 +26,11 @@ public class UpdateCenter {
     private final Path tempDir;
 
     private List<Version> jenkinsLTSVersions = Arrays.asList(
+      Version.valueOf("2.176.1"),
+      Version.valueOf("2.164.3"),
+      Version.valueOf("2.150.3"),
+      Version.valueOf("2.138.4"),
+      Version.valueOf("2.121.3"),
       Version.valueOf("2.107.0"),
       Version.valueOf("2.89.0"),
       Version.valueOf("2.73.0"),
