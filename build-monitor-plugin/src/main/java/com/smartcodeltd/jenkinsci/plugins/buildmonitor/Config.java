@@ -10,7 +10,12 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 
 public class Config {
 
+    private boolean colourBlindMode;
     private boolean displayCommitters;
+    private boolean reduceMotion;
+    private boolean showBadges;
+    private int maxColumns;
+    private Double textScale;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     
     public static Config defaultConfig() {
@@ -32,15 +37,23 @@ public class Config {
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
     }
-    
+
     public BuildFailureAnalyzerDisplayedField getBuildFailureAnalyzerDisplayedField() {
         return getOrElse(buildFailureAnalyzerDisplayedField, BuildFailureAnalyzerDisplayedField.Name);
     }
-    
+
     public void setBuildFailureAnalyzerDisplayedField(String buildFailureAnalyzerDisplayedField) {
         this.buildFailureAnalyzerDisplayedField = BuildFailureAnalyzerDisplayedField.valueOf(buildFailureAnalyzerDisplayedField);
     }
-    
+
+    public boolean inColourBlindMode() {
+        return getOrElse(colourBlindMode, false);
+    }
+
+    public void setColourBlindMode(boolean flag) {
+        this.colourBlindMode = flag;
+    }
+
     public boolean shouldDisplayCommitters() {
         return getOrElse(displayCommitters, true);
     }
@@ -48,7 +61,39 @@ public class Config {
     public void setDisplayCommitters(boolean flag) {
         this.displayCommitters = flag;
     }
-    
+
+    public boolean reduceMotion() {
+        return getOrElse(reduceMotion, false);
+    }
+
+    public void setReduceMotion(boolean flag) {
+        this.reduceMotion = flag;
+    }
+
+    public boolean showBadges() {
+        return getOrElse(showBadges, false);
+    }
+
+    public void setShowBadges(boolean flag) {
+        this.showBadges = flag;
+    }
+
+    public int getMaxColumns() {
+        return getOrElse(maxColumns, 2);
+    }
+
+    public void setMaxColumns(int maxColumns) {
+        this.maxColumns = maxColumns;
+    }
+
+    public Double getTextScale() {
+        return getOrElse(textScale, 1.0);
+    }
+
+    public void setTextScale(Double scale) {
+        this.textScale = scale;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -62,17 +107,17 @@ public class Config {
         Name("name"),
         Description("description"),
         None("none");
-    
+
         private final String value;
         BuildFailureAnalyzerDisplayedField(String value) {
             this.value = value;
         }
-    
+
         public String getValue() { return value; }
-    
+
         @Override
         public String toString() { return value; }
     }
-    
+
     private Comparator<Job<?, ?>> order;
 }
