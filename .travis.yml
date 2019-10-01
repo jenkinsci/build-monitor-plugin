@@ -22,4 +22,5 @@ services:
 env:
   - MAVEN_OPTS=-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 
-script: xvfb-run --server-args="-screen 0 1920x1080x24" mvn -B clean verify failsafe:verify
+script:
+  - mvn -B clean verify failsafe:verify
