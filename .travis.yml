@@ -1,14 +1,16 @@
-language: java
+# VM overview: https://docs.travis-ci.com/user/reference/overview/
 
-# To get more memory: https://docs.travis-ci.com/user/reference/overview/
+# don't build tags, it's redundant
+if: tag IS blank
+
+language: java
+jdk: openjdk8
 sudo: false
+install: mvn dependency:resolve
 
 cache:
   directories:
     - $HOME/.m2
-
-jdk:
-  - openjdk8
 
 addons:
   chrome: stable
