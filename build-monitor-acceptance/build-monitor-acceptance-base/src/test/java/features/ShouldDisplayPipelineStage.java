@@ -31,7 +31,7 @@ public class ShouldDisplayPipelineStage {
 
     @Rule
     public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
-            InstallPlugins.fromUpdateCenter("workflow-aggregator")
+            InstallPlugins.fromUpdateCenter("workflow-cps", "workflow-step-api", "workflow-job")
     ).create();
 
     @Before
