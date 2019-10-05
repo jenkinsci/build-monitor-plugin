@@ -31,7 +31,7 @@ public class UpdateCenter {
       Version.valueOf("2.150.3"),
       Version.valueOf("2.138.4"),
       Version.valueOf("2.121.3"),
-      Version.valueOf("2.107.0"),
+      Version.valueOf("2.107.3"),
       Version.valueOf("2.89.0"),
       Version.valueOf("2.73.0"),
       Version.valueOf("2.60.0"),
