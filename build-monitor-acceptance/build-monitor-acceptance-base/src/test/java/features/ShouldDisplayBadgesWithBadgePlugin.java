@@ -8,6 +8,6 @@ public class ShouldDisplayBadgesWithBadgePlugin extends ShouldDisplayBadgesAbstr
 
     @Override
     String[] getPlugins() {
-        return new String[] {"workflow-cps", "workflow-step-api", "workflow-job", "buildtriggerbadge", "badge", "groovy-postbuild"};
+        return new String[] {"workflow-aggregator", "buildtriggerbadge", "badge", "groovy-postbuild"};
     }
 }
