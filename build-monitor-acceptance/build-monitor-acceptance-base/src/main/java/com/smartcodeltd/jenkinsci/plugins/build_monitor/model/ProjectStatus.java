@@ -4,14 +4,15 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 import static java.lang.String.format;
-import static org.hibernate.validator.internal.util.CollectionHelper.newArrayList;
+import static java.util.stream.Collectors.toList;
 
 public enum ProjectStatus {
     Successful("successful"),
@@ -33,7 +34,7 @@ public enum ProjectStatus {
 
     public static List<ProjectStatus> fromMultiple(String cssClasses) {
         // todo: Java 8?
-        List<ProjectStatus> statuses = newArrayList();
+        List<ProjectStatus> statuses = new ArrayList<>();
 
         for(String statusClass : Sets.intersection(projectStatusClasses(), setOf(split(cssClasses)))) {
             statuses.add(ProjectStatus.from(statusClass));
@@ -68,14 +69,9 @@ public enum ProjectStatus {
     }
 
     private static <T> List<String> stringRepresentationsOf(Collection<T> items) {
-        // todo: Java 8?
-        List<String> values = newArrayList();
-
-        for (T item : items) {
-            values.add(item.toString());
-        }
-
-        return values;
+        return items.stream()
+                .map(Object::toString)
+                .collect(toList());
     }
 
 
