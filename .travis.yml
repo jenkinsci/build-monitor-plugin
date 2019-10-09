@@ -6,7 +6,7 @@ if: tag IS blank
 language: java
 jdk: openjdk8
 sudo: false
-install: mvn dependency:resolve
+install: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn dependency:resolve
 
 cache:
   directories:
