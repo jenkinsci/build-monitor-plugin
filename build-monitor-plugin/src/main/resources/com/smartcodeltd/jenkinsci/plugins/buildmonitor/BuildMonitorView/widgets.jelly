@@ -1,3 +1,4 @@
+<?jelly escape-by-default='true'?>
 <ul id="widgets"
     data-viewport-units=""
     data-ng-style="{ 'font-size': (fontSize * settings.fontSize) + vmax}"

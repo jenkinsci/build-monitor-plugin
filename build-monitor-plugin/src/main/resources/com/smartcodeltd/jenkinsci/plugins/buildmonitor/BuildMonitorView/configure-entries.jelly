@@ -1,4 +1,5 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
 
   <!-- BEGIN cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.532/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
 
@@ -74,7 +75,7 @@
     <f:entry title="${%Display committers}" help="${descriptor.getHelpFile('displayCommitters')}">
       <f:checkbox id="displayCommitters" field="displayCommitters" />
     </f:entry>
-    
+
     <f:entry title="${%Failure Analyzer Plugin: Field to display}" help="${descriptor.getHelpFile('buildFailureAnalyzerDisplayedField')}">
           <select name="buildFailureAnalyzerDisplayedField" class="setting-input">
 			<f:option value="Name" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='Name'}">${%Name}</f:option>

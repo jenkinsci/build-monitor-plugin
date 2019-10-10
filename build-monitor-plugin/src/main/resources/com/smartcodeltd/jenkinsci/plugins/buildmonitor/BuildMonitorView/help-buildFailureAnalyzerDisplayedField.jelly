@@ -1,3 +1,4 @@
+<?jelly escape-by-default='true'?>
 <div>
     <p>
         If you use the Build Failure Analyzer Plugin you have the option to display either the 'name' or the
