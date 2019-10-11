@@ -193,7 +193,7 @@
                             <include>**/features/*Test.java</include>
                             <include>**/features/*Should*.java</include>
                         </includes>
-                        <argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
+                        <argLine>-Xmx2048m</argLine>
                         <systemPropertyVariables>
                             <webdriver.driver>${webdriver.driver}</webdriver.driver>
                             <browserstack.url>${browserstack.url}</browserstack.url>

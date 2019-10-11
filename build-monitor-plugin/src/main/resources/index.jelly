@@ -1,3 +1,4 @@
+<?jelly escape-by-default='true'?>
 <div>
     Provides a highly visible view of the status of selected Jenkins jobs.
     It easily accommodates different computer screen sizes and is ideal as an Extreme Feedback Device to be

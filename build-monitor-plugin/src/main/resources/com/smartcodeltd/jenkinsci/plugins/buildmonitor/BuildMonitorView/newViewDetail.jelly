@@ -1,3 +1,4 @@
+<?jelly escape-by-default='true'?>
 <div>
     Shows a highly visible status of selected jobs.
     Ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.

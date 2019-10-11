@@ -1,4 +1,5 @@
-<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" >
     <p>
         By sharing <strong>anonymous</strong> usage and performance statistics with the Build Monitor development team
         you help us make the plugin better.

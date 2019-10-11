@@ -25,7 +25,7 @@
         </license>
     </licenses>
 
-    <url>http://wiki.jenkins-ci.org/display/JENKINS/Build+Monitor+Plugin</url>
+    <url>https://wiki.jenkins-ci.org/display/JENKINS/Build+Monitor+Plugin</url>
 
     <developers>
         <developer>
@@ -50,19 +50,6 @@
     </scm>
 
     <properties>
-        <!--
-            Build Monitor has an optional dependency on the Build Failure Analyzer (BFA) plugin:
-            https://wiki.jenkins-ci.org/display/JENKINS/Build+Failure+Analyzer
-
-            Since BFA doesn't specify its dependency on the git plugin correctly:
-            https://issues.jenkins-ci.org/browse/JENKINS-18544,
-            the automatically generated test fails with NPE...
-
-            To work around this issue Build Monitor comes with other integration tests
-            you can find in com.smartcodeltd.jenkinsci.plugins.buildmonitor_acceptancetest package
-        -->
-        <maven-hpi-plugin.disabledTestInjection>true</maven-hpi-plugin.disabledTestInjection>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -267,13 +254,13 @@
             <artifactId>phantomjsdriver</artifactId>
             <version>1.1.0</version>
             <scope>test</scope>
-        </dependency>
-        <!-- similar issue to https://code.google.com/p/selenium/issues/detail?id=5245 -->
-        <dependency>
-            <groupId>org.jenkins-ci.main</groupId>
-            <artifactId>jenkins-test-harness</artifactId>
-            <version>${jenkins-test-harness.version}</version>
-            <scope>test</scope>
+            <exclusions>
+                <!-- Remove old htmlunit dependency coming from old selenium dependency JTH uses a much newer one -->
+                <exclusion>
+                    <groupId>net.sourceforge.htmlunit</groupId>
+                    <artifactId>htmlunit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Because Jenkins relies on global objects and static methods. A lot. -->
@@ -326,25 +313,6 @@
                             <value>33849</value>
                         </property>
                     </systemProperties>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jenkins-ci.tools</groupId>
-                <artifactId>maven-hpi-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <disabledTestInjection>true</disabledTestInjection>
-                    <jenkinsHome>${project.parent.basedir}/work</jenkinsHome>
-                    <warSourceDirectory>${project.parent.basedir}/build-monitor-plugin/src/main/webapp</warSourceDirectory>
                 </configuration>
             </plugin>
             <plugin>
