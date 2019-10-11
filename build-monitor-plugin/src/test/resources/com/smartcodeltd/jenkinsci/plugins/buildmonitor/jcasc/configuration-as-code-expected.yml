@@ -1,0 +1,5 @@
+- buildMonitor:
+    includeRegex: ".+\\/(my-job-.*)\\/(master|demo)"
+    name: "My-Monitor"
+    recurse: true
+    title: "My Monitor"
