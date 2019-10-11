@@ -5,8 +5,7 @@ Build Monitor Plugin provides a highly visible view of the status of selected Je
 It easily accommodates different computer screen sizes and is ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
 (Inspired by the no longer maintained [RadiatorView](https://wiki.jenkins-ci.org/display/JENKINS/Radiator+View+Plugin) plugin).
 
-[![Build Status](https://smartcode-opensource.ci.cloudbees.com/job/build-monitor/badge/icon)](https://smartcode-opensource.ci.cloudbees.com/job/build-monitor/)
-[![Stories in Backlog](https://badge.waffle.io/jan-molak/jenkins-build-monitor-plugin.png?label=backlog&title=Backlog)](https://waffle.io/jan-molak/jenkins-build-monitor-plugin)
+[![Build Status](https://travis-ci.org/jan-molak/jenkins-build-monitor-plugin.svg?branch=master)](https://travis-ci.org/jan-molak/jenkins-build-monitor-plugin)
 [![Join the chat at https://gitter.im/jenkins-build-monitor-plugin/Lobby](https://badges.gitter.im/jenkins-build-monitor-plugin/Lobby.svg)](https://gitter.im/jenkins-build-monitor-plugin/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Have a question? Perhaps it's already been answered - check the [FAQ](#faq) section below.
@@ -45,8 +44,6 @@ Found a bug? Raise [an issue](https://github.com/jan-molak/jenkins-build-monitor
 or submit a pull request ([start with this mini-dev guide](https://github.com/jan-molak/jenkins-build-monitor-plugin/wiki/Development-Guide), it might come in handy).
 
 Have feedback? Let me know on twitter: [@JanMolak](https://twitter.com/JanMolak)
-
-[![Flattr Button](http://api.flattr.com/button/button-static-50x60.png "Flattr This!")](https://flattr.com/submit/auto?user_id=JanMolak&url=https%3A%2F%2Fgithub.com%2Fjan-molak%2Fjenkins-build-monitor-plugin "Jenkins Build Monitor Plugin")
 
 ## Setting up
 
