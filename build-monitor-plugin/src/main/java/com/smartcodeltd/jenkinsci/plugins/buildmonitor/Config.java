@@ -15,7 +15,7 @@ public class Config {
     private boolean reduceMotion;
     private boolean showBadges;
     private int maxColumns;
-    private Double textScale;
+    private double textScale;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     
     public static Config defaultConfig() {
@@ -86,11 +86,11 @@ public class Config {
         this.maxColumns = maxColumns;
     }
 
-    public Double getTextScale() {
+    public double getTextScale() {
         return getOrElse(textScale, 1.0);
     }
 
-    public void setTextScale(Double scale) {
+    public void setTextScale(double scale) {
         this.textScale = scale;
     }
 
