@@ -72,12 +72,12 @@
 
   <f:section title="${%Build Monitor - Default Display Settings}">
 
-    <f:entry title="${%Text scale}">
-      <f:textbox name="textScale" value="${it.textScale}" clazz="required"/>
+    <f:entry title="${%Text scale}" field="textScale">
+      <f:textbox name="textScale" value="${it.textScale}" />
     </f:entry>
 
-    <f:entry title="${%Maximum number of columns}">
-      <f:textbox name="maxColumns" value="${it.maxColumns}" clazz="required number"/>
+    <f:entry title="${%Maximum number of columns}" field="maxColumns">
+      <f:textbox name="maxColumns" value="${it.maxColumns}" />
     </f:entry>
 
     <f:entry title="${%Enable Colour blind mode}">
