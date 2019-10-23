@@ -19,7 +19,16 @@ public class Config {
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     
     public static Config defaultConfig() {
-        return new Config();
+        Config defaultConfig = new Config();
+
+        // Set default values
+        defaultConfig.setColourBlindMode(false);
+        defaultConfig.setDisplayCommitters(false);
+        defaultConfig.setShowBadges(false);
+        defaultConfig.setMaxColumns(2);
+        defaultConfig.setTextScale(1.0);
+
+        return defaultConfig;
     }
 
     public Comparator<Job<?, ?>> getOrder() {
@@ -47,7 +56,7 @@ public class Config {
     }
 
     public boolean inColourBlindMode() {
-        return getOrElse(colourBlindMode, false);
+        return colourBlindMode;
     }
 
     public void setColourBlindMode(boolean flag) {
@@ -55,7 +64,7 @@ public class Config {
     }
 
     public boolean shouldDisplayCommitters() {
-        return getOrElse(displayCommitters, true);
+        return displayCommitters;
     }
 
     public void setDisplayCommitters(boolean flag) {
@@ -63,7 +72,7 @@ public class Config {
     }
 
     public boolean reduceMotion() {
-        return getOrElse(reduceMotion, false);
+        return reduceMotion;
     }
 
     public void setReduceMotion(boolean flag) {
@@ -71,7 +80,7 @@ public class Config {
     }
 
     public boolean showBadges() {
-        return getOrElse(showBadges, false);
+        return showBadges;
     }
 
     public void setShowBadges(boolean flag) {
@@ -79,7 +88,7 @@ public class Config {
     }
 
     public int getMaxColumns() {
-        return getOrElse(maxColumns, 2);
+        return maxColumns;
     }
 
     public void setMaxColumns(int maxColumns) {
@@ -87,7 +96,7 @@ public class Config {
     }
 
     public double getTextScale() {
-        return getOrElse(textScale, 1.0);
+        return textScale;
     }
 
     public void setTextScale(double scale) {
