@@ -136,7 +136,7 @@
         <dependency>
             <groupId>com.sonyericsson.jenkins.plugins.bfa</groupId>
             <artifactId>build-failure-analyzer</artifactId>
-            <version>1.19.2</version>
+            <version>1.26.0</version>
             <optional>true</optional>
         </dependency>
         <dependency>
