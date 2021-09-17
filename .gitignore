@@ -11,7 +11,7 @@
 .java-version
 
 target
-work*
+work
 
 node_modules
 
