@@ -16,7 +16,7 @@ work*
 node_modules
 
 use-node
-.*
+.DS_Store
 
 chromedriver.exe
 
