@@ -1,6 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
-import com.google.common.base.Objects;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
 import hudson.model.Job;
 
@@ -51,9 +50,7 @@ public class Config {
     
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
-                .add("order", order.getClass().getSimpleName())
-                .toString();
+        return "Config{order=%s}".format(order.getClass().getSimpleName());
     }
 
     // --
