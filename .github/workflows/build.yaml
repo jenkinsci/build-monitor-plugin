@@ -1,0 +1,25 @@
+name: Release Pipeline
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    types: [ opened, synchronize ]
+
+jobs:
+
+  build:
+    if:       "!contains(github.event.head_commit.message, 'ci skip')"
+    runs-on:  ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+          cache: 'maven'
+      - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots verify
