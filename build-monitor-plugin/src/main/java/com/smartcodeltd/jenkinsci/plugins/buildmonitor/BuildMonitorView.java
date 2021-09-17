@@ -107,6 +107,10 @@ public class BuildMonitorView extends ListView {
     public boolean collectAnonymousUsageStatistics() {
         return descriptor.getPermissionToCollectAnonymousUsageStatistics();
     }
+    
+    @Override
+    protected void initColumns() {
+    }
 
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {

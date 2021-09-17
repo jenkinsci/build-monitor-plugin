@@ -56,6 +56,7 @@
         <npm-executable>npm</npm-executable>
         <selenium.version>2.43.0</selenium.version>
         <build.number>DEV</build.number>
+        <configuration-as-code.version>1.32</configuration-as-code.version>
     </properties>
 
     <profiles>
@@ -218,6 +219,20 @@
             <version>1.39</version>
             <scope>test</scope>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jenkins</groupId>
+            <artifactId>configuration-as-code</artifactId>
+            <version>${configuration-as-code.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jenkins</groupId>
+            <artifactId>configuration-as-code</artifactId>
+            <version>${configuration-as-code.version}</version>
+            <scope>test</scope>
+            <classifier>tests</classifier>
         </dependency>
         <!-- /Jenkins CI plugins supported by the Build Monitor -->
 
