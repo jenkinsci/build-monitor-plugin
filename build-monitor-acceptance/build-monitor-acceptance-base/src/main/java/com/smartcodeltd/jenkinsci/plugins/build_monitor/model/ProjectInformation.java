@@ -1,10 +1,9 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.model;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProjectInformation {
     private final String name;
@@ -25,9 +24,6 @@ public class ProjectInformation {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("name", name)
-                .add("status", status)
-                .toString();
+        return "ProjectInformation{name=%s, status={%s}}".format(name, status.stream().map(Object::toString).collect(Collectors.joining(", ")));
     }
 }

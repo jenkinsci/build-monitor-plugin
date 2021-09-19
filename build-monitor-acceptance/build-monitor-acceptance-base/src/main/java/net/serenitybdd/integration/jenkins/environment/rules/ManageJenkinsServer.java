@@ -4,7 +4,6 @@ import com.smartcodeltd.aether.ArtifactTransporter;
 import net.serenitybdd.integration.jenkins.JenkinsArtifactTransporter;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.integration.jenkins.client.JenkinsClient;
-import net.serenitybdd.integration.jenkins.client.JenkinsClientExecutor;
 import net.serenitybdd.integration.jenkins.process.JenkinsProcess;
 import net.serenitybdd.integration.utils.CommandLineTools;
 import org.junit.rules.TestRule;
@@ -46,8 +45,7 @@ public class ManageJenkinsServer implements ApplicativeTestRule<JenkinsInstance>
                     throw new RuntimeException("Couldn't start Jenkins", e);
                 }
 
-                JenkinsClientExecutor executor = new JenkinsClientExecutor(jenkins.url());
-                jenkins.setClient(new JenkinsClient(executor, process));
+                jenkins.setClient(new JenkinsClient(process));
             }
 
             @Override
