@@ -1,6 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.model;
 
-import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
@@ -9,6 +8,8 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.jetbrains.annotations.NotNull;
 
 import static java.lang.String.format;
@@ -61,7 +62,7 @@ public enum ProjectStatus {
     }
 
     private static List<String> split(String spaceSeparatedItems) {
-        return Splitter.on(" ").splitToList(spaceSeparatedItems);
+        return Stream.of(spaceSeparatedItems.split("\\s+")).collect(Collectors.toList());
     }
 
     private static <T> Set<T> setOf(List<T> items) {

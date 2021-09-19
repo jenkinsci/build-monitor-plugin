@@ -177,13 +177,6 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                    </configuration>
-                </plugin>
-                <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <configuration>
                         <excludes>
@@ -236,28 +229,6 @@
                                 <generateOutcomes>true</generateOutcomes>
                                 <outputDirectory>../target/site/serenity</outputDirectory>
                                 <sourceDirectory>../target/site/serenity</sourceDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>display-info</id>
-                            <configuration>
-                                <rules>
-                                    <requireUpperBoundDeps>
-                                        <excludes combine.children="append">
-                                            <exclude>org.springframework:spring-core</exclude>
-                                            <exclude>org.springframework:spring-beans</exclude>
-                                            <exclude>org.eclipse.jetty.websocket:websocket-client</exclude>
-                                            <exclude>org.jenkins-ci:trilead-ssh2</exclude>
-                                            <exclude>commons-io:commons-io</exclude>
-                                            <exclude>commons-codec:commons-codec</exclude>
-                                        </excludes>
-                                    </requireUpperBoundDeps>
-                                </rules>
                             </configuration>
                         </execution>
                     </executions>

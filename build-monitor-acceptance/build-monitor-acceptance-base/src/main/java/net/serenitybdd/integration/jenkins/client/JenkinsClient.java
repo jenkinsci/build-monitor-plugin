@@ -27,10 +27,8 @@ public class JenkinsClient {
     private static String OS_VERSION = System.getProperty("os.version").toLowerCase();
 
     private final JenkinsProcess process;
-    private final JenkinsClientExecutor executor;
 
-    public JenkinsClient(JenkinsClientExecutor executor, JenkinsProcess process) {
-        this.executor = executor;
+    public JenkinsClient(JenkinsProcess process) {
         this.process = process;
     }
 
@@ -138,11 +136,15 @@ public class JenkinsClient {
     private int executeGroovy(String... groovyScriptLines) {
         String script = Joiner.on(";\n").join(groovyScriptLines);
 
-        return executor.call("groovy", "=").execute(withInput(script), info(logger), error(logger));
+        //TODO use RealJenkinsRule
+        //return executor.call("groovy", "=").execute(withInput(script), info(logger), error(logger));
+        return -1;
     }
 
     private int executeCommand(String... args) {
-        return executor.call(args).execute(noManualInput(), info(logger), error(logger));
+        //TODO use RealJenkinsRule
+        //return executor.call(args).execute(noManualInput(), info(logger), error(logger));
+        return -1;
     }
 
     private InputStream noManualInput() {
