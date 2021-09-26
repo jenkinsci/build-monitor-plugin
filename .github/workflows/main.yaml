@@ -45,9 +45,9 @@ jobs:
             build-monitor-acceptance/build-monitor-acceptance-latest/pom.xml
             build-monitor-acceptance/build-monitor-acceptance-base/target/failsafe-reports/*-output.txt
             build-monitor-acceptance/build-monitor-acceptance-latest/target/failsafe-reports/*-output.txt
-#      - name: Release (master only
+      - name: Release (master only)
 #        if: github.ref == 'refs/heads/master'
-#        run: |
-#          git checkout -b release-${version}
-#          git commit -a -m \"Release candidate v${version}\"
-#          git push origin release-${version}
+        run: |
+          git checkout -b "release-${version}"
+          git commit -a -m "Release candidate v$version"
+          git push origin "release-$version"
