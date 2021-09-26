@@ -21,8 +21,12 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
           cache: 'maven'
-      - name: Set version
-        run: mvn --batch-mode release-candidate:updateVersion
+      - name: Set version (master only)
+#        if: github.ref == 'refs/heads/master'
+        run: |
+          mvn --batch-mode release-candidate:updateVersion
+          cat build-monitor-plugin/target/classes/build-monitor.properties >> $GITHUB_ENV
+          echo $version
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
       - uses: actions/upload-artifact@v2
@@ -38,3 +42,9 @@ jobs:
             build-monitor-acceptance/build-monitor-acceptance-latest/pom.xml
             build-monitor-acceptance/build-monitor-acceptance-base/target/failsafe-reports/*-output.txt
             build-monitor-acceptance/build-monitor-acceptance-latest/target/failsafe-reports/*-output.txt
+#      - name: Release (master only
+#        if: github.ref == 'refs/heads/master'
+#        run: |
+#          git checkout -b release-${version}
+#          git commit -a -m \"Release candidate v${version}\"
+#          git push origin release-${version}
