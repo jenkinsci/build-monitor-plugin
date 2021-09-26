@@ -23,10 +23,13 @@ jobs:
           cache: 'maven'
       - name: Set version (master only)
 #        if: github.ref == 'refs/heads/master'
-        run: |
-          mvn --batch-mode release-candidate:updateVersion
-          cat build-monitor-plugin/target/classes/build-monitor.properties >> $GITHUB_ENV
-          echo $version
+        run: mvn --batch-mode release-candidate:updateVersion
+      - name: Read $version (master only)
+#        if: github.ref == 'refs/heads/master'
+        run: cat build-monitor-plugin/target/classes/build-monitor.properties >> $GITHUB_ENV
+      - name: Print $version (master only)
+        #        if: github.ref == 'refs/heads/master'
+        run: echo $version
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
       - uses: actions/upload-artifact@v2
