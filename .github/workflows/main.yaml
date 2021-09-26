@@ -21,5 +21,20 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
           cache: 'maven'
+      - name: Set version
+        run: mvn --batch-mode release-candidate:updateVersion
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
+      - uses: actions/upload-artifact@v2
+        with:
+          retention-days: 3
+          name: artifacts
+          path: |
+            build-monitor-plugin/target/*.hpi
+            pom.xml
+            build-monitor-plugin/pom.xml
+            build-monitor-acceptance/pom.xml
+            build-monitor-acceptance/build-monitor-acceptance-base/pom.xml
+            build-monitor-acceptance/build-monitor-acceptance-latest/pom.xml
+            build-monitor-acceptance/build-monitor-acceptance-base/target/failsafe-reports/*-output.txt
+            build-monitor-acceptance/build-monitor-acceptance-latest/target/failsafe-reports/*-output.txt
