@@ -16,7 +16,7 @@ runs:
   using: 'composite'
   steps:
 
-  - name: Configure Lerna
+  - name: Configure Git
     shell: bash
     run: |
       git config --global user.email ${{ inputs.git_user_email }}
