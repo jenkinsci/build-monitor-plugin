@@ -18,7 +18,7 @@
     </parent>
 
     <artifactId>build-monitor</artifactId>
-    <version>1.12-SNAPSHOT</version>
+    <version>1.12+build.202109262026</version>
     <packaging>pom</packaging>
 
     <name>Build Monitor</name>
