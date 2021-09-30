@@ -17,25 +17,31 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
           java-version: '8'
           distribution: 'adopt'
           cache: 'maven'
+
       - uses: ./.github/actions/setup-git
         with:
           github_token:   ${{ secrets.GITHUB_TOKEN }}
           git_user_email: ${{ secrets.RELEASE_GH_EMAIL }}
           git_username:   ${{ secrets.RELEASE_GH_USERNAME }}
+
       - name: Set version (master only)
         if: github.ref == 'refs/heads/master'
         run: mvn --batch-mode release-candidate:updateVersion
+
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
+
       - name: Read $version (master only)
         if: github.ref == 'refs/heads/master'
         run: cat build-monitor-plugin/target/classes/build-monitor.properties >> $GITHUB_ENV
+
       - uses: actions/upload-artifact@v2
         with:
           retention-days: 3
@@ -49,14 +55,16 @@ jobs:
             build-monitor-acceptance/build-monitor-acceptance-latest/pom.xml
             build-monitor-acceptance/build-monitor-acceptance-base/target/failsafe-reports/*-output.txt
             build-monitor-acceptance/build-monitor-acceptance-latest/target/failsafe-reports/*-output.txt
+
       - name: Create Release Branch (master only)
         if: github.ref == 'refs/heads/master'
         run: |
           git checkout -b "release-${version}"
           git commit -a -m "Release candidate v$version"
           git push origin "release-$version"
-      - name: Setup https://repo.jenkins-ci.org/
-        #        if: github.ref == 'refs/heads/master'
+
+      - name: Setup https://repo.jenkins-ci.org/ (master only)
+        if: github.ref == 'refs/heads/master'
         uses: actions/setup-java@v2
         with:
           java-version: '8'
@@ -65,11 +73,12 @@ jobs:
           server-id: 'repo.jenkins-ci.org'
           server-username: JENKINS_REPO_USERNAME
           server-password: JENKINS_REPO_TOKEN
-#      - name: Publish (master only)
-#        if: github.ref == 'refs/heads/master'
-#        run: |
-#          mvn --batch-mode deploy:deploy-file -DpomFile=pom.xml \
-#            -Dfile=build-monitor-plugin/target/build-monitor-plugin.hpi \
-#            -DrepositoryId=repo.jenkins-ci.org \
-#            -Durl=https://repo.jenkins-ci.org/public/
+
+      - name: Publish (master only)
+        if: github.ref == 'refs/heads/master'
+        run: |
+          mvn --batch-mode deploy:deploy-file -DpomFile=pom.xml \
+            -Dfile=build-monitor-plugin/target/build-monitor-plugin.hpi \
+            -DrepositoryId=repo.jenkins-ci.org \
+            -Durl=https://repo.jenkins-ci.org/public/
 
