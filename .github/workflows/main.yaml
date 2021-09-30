@@ -63,7 +63,7 @@ jobs:
           git commit -a -m "Release candidate v$version"
           git push origin "release-$version"
 
-      - name: Setup https://repo.jenkins-ci.org/ (master only)
+      - name: Setup repo.jenkins-ci.org (master only)
         if: github.ref == 'refs/heads/master'
         uses: actions/setup-java@v2
         with:
@@ -80,4 +80,5 @@ jobs:
           mvn --batch-mode deploy:deploy-file -DpomFile=build-monitor-plugin/pom.xml \
             -Dfile=build-monitor-plugin/target/build-monitor-plugin.hpi \
             -DrepositoryId=repo.jenkins-ci.org \
-            -Durl=https://repo.jenkins-ci.org/artifactory/public/
+            -Durl=https://repo.jenkins-ci.org/artifactory/releases/ \
+            -DrepositoryId=releases
