@@ -55,6 +55,16 @@ jobs:
           git checkout -b "release-${version}"
           git commit -a -m "Release candidate v$version"
           git push origin "release-$version"
+      - name: Setup https://repo.jenkins-ci.org/
+        #        if: github.ref == 'refs/heads/master'
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+          cache: 'maven'
+          server-id: 'repo.jenkins-ci.org'
+          server-username: JENKINS_REPO_USERNAME
+          server-password: JENKINS_REPO_TOKEN
 #      - name: Publish (master only)
 #        if: github.ref == 'refs/heads/master'
 #        run: |
@@ -62,5 +72,4 @@ jobs:
 #            -Dfile=build-monitor-plugin/target/build-monitor-plugin.hpi \
 #            -DrepositoryId=repo.jenkins-ci.org \
 #            -Durl=https://repo.jenkins-ci.org/public/
-#            -Dtoken=...
 
