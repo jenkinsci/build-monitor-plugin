@@ -76,6 +76,9 @@ jobs:
           server-username: ${{ secrets.JENKINS_REPO_USERNAME }}
           server-password: ${{ secrets.JENKINS_REPO_TOKEN }}
 
+      - name: debug
+        run: cat /home/runner/.m2/settings.xml
+
       - name: Publish (master only)
         if: github.ref == 'refs/heads/master'
         run: |
