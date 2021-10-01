@@ -76,13 +76,11 @@ jobs:
           server-username: JENKINS_REPO_USERNAME
           server-password: JENKINS_REPO_TOKEN
 
-      - name: Debug settings.xml
-        run: cat /home/runner/.m2/settings.xml
-
       - name: Publish (master only)
         if: github.ref == 'refs/heads/master'
         run: |
-          mvn --batch-mode deploy:deploy-file -DpomFile=build-monitor-plugin/pom.xml \
+          mvn --batch-mode deploy:deploy-file --settings /home/runner/.m2/settings.xml \
+            -DpomFile=build-monitor-plugin/pom.xml \
             -Dfile=build-monitor-plugin/target/build-monitor-plugin.hpi \
             -DrepositoryId=repo.jenkins-ci.org \
             -Durl=https://repo.jenkins-ci.org/releases/
