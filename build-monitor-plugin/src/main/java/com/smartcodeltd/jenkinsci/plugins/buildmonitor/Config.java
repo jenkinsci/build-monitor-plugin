@@ -1,6 +1,8 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ExplicitOrder;
+
 import hudson.model.Job;
 
 import java.util.Comparator;
@@ -10,6 +12,8 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafe
 public class Config {
 
     private boolean displayCommitters;
+    private Comparator<Job<?, ?>> order;
+    private String explicitOrder;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     
     public static Config defaultConfig() {
@@ -30,6 +34,16 @@ public class Config {
 
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
+        setupForExplicit();
+    }
+
+    public String getExplicitOrder() {
+        return explicitOrder;
+    }
+
+    public void setExplicitOrder(String explicitOrder) {
+        this.explicitOrder = explicitOrder;
+        setupForExplicit();
     }
     
     public BuildFailureAnalyzerDisplayedField getBuildFailureAnalyzerDisplayedField() {
@@ -53,6 +67,13 @@ public class Config {
         return "Config{order=%s}".format(order.getClass().getSimpleName());
     }
 
+    private void setupForExplicit() {
+        if (order != null && explicitOrder != null && order instanceof ExplicitOrder) {
+            ExplicitOrder explicit = (ExplicitOrder)order;
+            explicit.setExplicitOrder(explicitOrder);
+        }
+    }
+
     // --
 
     public enum BuildFailureAnalyzerDisplayedField {
@@ -70,6 +91,5 @@ public class Config {
         @Override
         public String toString() { return value; }
     }
-    
-    private Comparator<Job<?, ?>> order;
+
 }
