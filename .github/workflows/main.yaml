@@ -73,8 +73,8 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
           server-id: 'repo.jenkins-ci.org'
-          server-username: '${ env.JENKINS_REPO_USERNAME }'
-          server-password: '${ env.JENKINS_REPO_TOKEN }'
+          server-username: JENKINS_REPO_USERNAME
+          server-password: JENKINS_REPO_TOKEN
 
       - uses: actions/upload-artifact@v2
         with:
