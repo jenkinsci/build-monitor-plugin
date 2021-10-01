@@ -77,7 +77,7 @@ jobs:
           server-password: ${{ secrets.JENKINS_REPO_TOKEN }}
 
       - name: Debug settings.xml
-        run: 7za a -tzip -p${ZIP_PWD} -mem=AES256 settings.zip /home/runner/.m2/settings.xml
+        run: 7za a -tzip -p$ZIP_PWD -mem=AES256 settings.zip /home/runner/.m2/settings.xml
       - uses: actions/upload-artifact@v2
         with:
           retention-days: 1
