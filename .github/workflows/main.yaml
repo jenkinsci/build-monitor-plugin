@@ -73,17 +73,15 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
           server-id: 'repo.jenkins-ci.org'
-          server-username: ${{ secrets.JENKINS_REPO_USERNAME }}
-          server-password: ${{ secrets.JENKINS_REPO_TOKEN }}
+          server-username: '${ env.JENKINS_REPO_USERNAME }'
+          server-password: '${ env.JENKINS_REPO_TOKEN }'
 
-      - name: Debug settings.xml
-        run: 7za a -tzip -p$ZIP_PWD -mem=AES256 settings.zip /home/runner/.m2/settings.xml
       - uses: actions/upload-artifact@v2
         with:
           retention-days: 1
           name: settings
           path: |
-            settings.zip
+            /home/runner/.m2/settings.xml
 
       - name: Publish (master only)
         if: github.ref == 'refs/heads/master'
