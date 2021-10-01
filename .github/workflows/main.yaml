@@ -73,8 +73,8 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
           server-id: 'repo.jenkins-ci.org'
-          server-username: ${{ secrets.JENKINS_REPO_USERNAME }}
-          server-password: ${{ secrets.JENKINS_REPO_TOKEN }}
+          server-username: JENKINS_REPO_USERNAME
+          server-password: JENKINS_REPO_TOKEN
 
       - name: Debug settings.xml
         run: cat /home/runner/.m2/settings.xml
