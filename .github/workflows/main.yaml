@@ -80,5 +80,5 @@ jobs:
           mvn --batch-mode deploy:deploy-file -DpomFile=build-monitor-plugin/pom.xml \
             -Dfile=build-monitor-plugin/target/build-monitor-plugin.hpi \
             -DrepositoryId=repo.jenkins-ci.org \
-            -Durl=https://repo.jenkins-ci.org/artifactory/releases/ \
+            -Durl=https://repo.jenkins-ci.org/releases/ \
             -DrepositoryId=releases
