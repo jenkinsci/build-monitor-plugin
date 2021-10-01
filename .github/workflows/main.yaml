@@ -25,7 +25,9 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
 
-      - uses: ./.github/actions/setup-git
+      - name: Setup git (master only)
+        uses: ./.github/actions/setup-git
+        if: github.ref == 'refs/heads/master'
         with:
           github_token:   ${{ secrets.GITHUB_TOKEN }}
           git_user_email: ${{ secrets.RELEASE_GH_EMAIL }}
