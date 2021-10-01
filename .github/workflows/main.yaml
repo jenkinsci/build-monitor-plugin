@@ -78,8 +78,11 @@ jobs:
 
       - name: Publish (master only)
         if: github.ref == 'refs/heads/master'
+        env:
+          JENKINS_REPO_USERNAME: ${{ secrets.JENKINS_REPO_USERNAME }}
+          JENKINS_REPO_TOKEN: ${{ secrets.JENKINS_REPO_TOKEN }}
         run: |
-          mvn --batch-mode deploy:deploy-file --settings /home/runner/.m2/settings.xml \
+          mvn --batch-mode deploy:deploy-file \
             -DpomFile=build-monitor-plugin/pom.xml \
             -Dfile=build-monitor-plugin/target/build-monitor-plugin.hpi \
             -DrepositoryId=repo.jenkins-ci.org \
