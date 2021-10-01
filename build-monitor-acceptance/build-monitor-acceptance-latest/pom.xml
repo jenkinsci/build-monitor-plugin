@@ -5,7 +5,7 @@
     <parent>
         <artifactId>build-monitor-acceptance</artifactId>
         <groupId>org.jenkins-ci.plugins</groupId>
-        <version>1.13-SNAPSHOT</version>
+        <version>1.13+build.202110011151</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
