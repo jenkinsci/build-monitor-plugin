@@ -2,38 +2,44 @@ package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
-import environment.JenkinsSandbox;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
-import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAPipelineProjectCreated;
 import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.SetPipelineDefinition;
 import net.serenitybdd.screenplayx.actions.Navigate;
-import net.thucydides.core.annotations.Managed;
+import net.thucydides.junit.annotations.TestData;
+
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.containsString;
 
-@RunWith(SerenityRunner.class)
-public class ShouldDisplayPipelineStage {
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public class ShouldDisplayPipelineStage extends BuildMonitorAbstractBase {
 
     Actor donald = Actor.named("Donald");
 
-    @Managed public WebDriver browser;
+    public ShouldDisplayPipelineStage(String jenkinsVersion) {
+        super(jenkinsVersion);
+    }
 
-    @Rule
-    public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
-            InstallPlugins.fromUpdateCenter("workflow-aggregator")
-    ).create();
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
+        return Arrays.asList(InstallPlugins.fromUpdateCenter("workflow-aggregator"));
+    }
 
+    @TestData
+    public static Collection<Object[]> testData(){
+        return BuildMonitorAbstractBase.testData();
+    }
+    
     @Before
     public void actorCanBrowseTheWeb() {
         donald.can(BrowseTheWeb.with(browser));

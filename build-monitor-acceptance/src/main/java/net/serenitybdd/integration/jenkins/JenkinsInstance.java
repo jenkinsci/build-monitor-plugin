@@ -66,7 +66,7 @@ public class JenkinsInstance implements TestRule {
     }
 
     public String version() {
-        return System.getenv("JENKINS_VERSION");
+        return System.getProperty("jenkins.version");
     }
 
     public Path home() {

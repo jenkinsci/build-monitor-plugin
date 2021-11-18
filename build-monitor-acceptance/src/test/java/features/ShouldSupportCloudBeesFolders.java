@@ -6,34 +6,41 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayNestedProjects;
-import environment.JenkinsSandbox;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
-import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplayx.actions.Navigate;
-import net.thucydides.core.annotations.Managed;
+import net.thucydides.junit.annotations.TestData;
+
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
-@RunWith(SerenityRunner.class)
-public class ShouldSupportCloudBeesFolders {
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public class ShouldSupportCloudBeesFolders extends BuildMonitorAbstractBase {
 
     Actor anna = Actor.named("Anna");
 
-    @Managed public WebDriver browser;
+    public ShouldSupportCloudBeesFolders(String jenkinsVersion) {
+        super(jenkinsVersion);
+    }
 
-    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
-            InstallPlugins.fromUpdateCenter("cloudbees-folder")
-    ).create();
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
+        return Arrays.asList(InstallPlugins.fromUpdateCenter("cloudbees-folder"));
+    }
 
+    @TestData
+    public static Collection<Object[]> testData(){
+        return BuildMonitorAbstractBase.testData();
+    }
+    
     @Before
     public void actorCanBrowseTheWeb() {
         anna.can(BrowseTheWeb.with(browser));
