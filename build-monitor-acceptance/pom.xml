@@ -9,11 +9,14 @@
     </parent>
 
     <artifactId>build-monitor-acceptance</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>Build Monitor Acceptance Tests</name>
 
     <properties>
+        <!-- Update this as new LTS versions are released -->
+        <jenkins.latest.version>2.303.1</jenkins.latest.version>
+
         <encoding>UTF-8</encoding>
         <serenity.version>2.4.51</serenity.version>
         <aether.version>1.0.0.v20140518</aether.version>
@@ -23,11 +26,6 @@
         <enforcer.skip>true</enforcer.skip>
         <spotbugs.skip>true</spotbugs.skip>
     </properties>
-
-    <modules>
-        <module>build-monitor-acceptance-base</module>
-        <module>build-monitor-acceptance-latest</module>
-    </modules>
 
     <profiles>
         <profile>
@@ -179,66 +177,80 @@
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <configuration>
-                        <excludes>
-                            <exclude>**/*UnitTest.java</exclude>
-                        </excludes>
-                        <includes>
-                            <include>**/features/*Test.java</include>
-                            <include>**/features/*Should*.java</include>
-                        </includes>
-                        <argLine>-Xmx2048m</argLine>
-                        <systemPropertyVariables>
-                            <webdriver.driver>${webdriver.driver}</webdriver.driver>
-                            <browserstack.url>${browserstack.url}</browserstack.url>
-                            <project.root>../../</project.root>
-                            <context>jenkins-${jenkins.version}</context>
-                        </systemPropertyVariables>
-                        <environmentVariables>
-                            <!-- todo: remove when the acceptance-test-harness is gone -->
-                            <BROWSER>htmlunit</BROWSER>
-                            <JENKINS_VERSION>${jenkins.version}</JENKINS_VERSION>
-                            <PLUGINS_DIR>../../build-monitor-plugin/target</PLUGINS_DIR>
-                            <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
-                        </environmentVariables>
-                        <forkCount>2</forkCount>
-                        <reuseForks>false</reuseForks>
-                        <rerunFailingTestsCount>${surefire.rerunFailingTestsCount}</rerunFailingTestsCount>
-                        <redirectTestOutputToFile>false</redirectTestOutputToFile>
-                        <reportNameSuffix>${jenkins.version}</reportNameSuffix>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>integration-test</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>net.serenity-bdd.maven.plugins</groupId>
-                    <artifactId>serenity-maven-plugin</artifactId>
-                    <version>${serenity.version}</version>
-                    <executions>
-                        <execution>
-                            <id>serenity-reports</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>aggregate</goal>
-                            </goals>
-                            <configuration>
-                                <generateOutcomes>true</generateOutcomes>
-                                <outputDirectory>../target/site/serenity</outputDirectory>
-                                <sourceDirectory>../target/site/serenity</sourceDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/*UnitTest.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*UnitTest.java</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/features/*Test.java</include>
+                        <include>**/features/*Should*.java</include>
+                    </includes>
+                    <argLine>-Xmx2048m</argLine>
+                    <systemPropertyVariables>
+                        <webdriver.driver>${webdriver.driver}</webdriver.driver>
+                        <browserstack.url>${browserstack.url}</browserstack.url>
+                        <project.root>../</project.root>
+                        <context>jenkins-${jenkins.version}</context>
+                    </systemPropertyVariables>
+                    <environmentVariables>
+                        <!-- todo: remove when the acceptance-test-harness is gone -->
+                        <BROWSER>htmlunit</BROWSER>
+                        <JENKINS_VERSION>${jenkins.version}</JENKINS_VERSION>
+                        <PLUGINS_DIR>../build-monitor-plugin/target</PLUGINS_DIR>
+                        <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
+                    </environmentVariables>
+                    <forkCount>2</forkCount>
+                    <reuseForks>false</reuseForks>
+                    <rerunFailingTestsCount>${surefire.rerunFailingTestsCount}</rerunFailingTestsCount>
+                    <redirectTestOutputToFile>false</redirectTestOutputToFile>
+                    <reportNameSuffix>${jenkins.version}</reportNameSuffix>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>net.serenity-bdd.maven.plugins</groupId>
+                <artifactId>serenity-maven-plugin</artifactId>
+                <version>${serenity.version}</version>
+                <executions>
+                    <execution>
+                        <id>serenity-reports</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                        <configuration>
+                            <generateOutcomes>true</generateOutcomes>
+                            <outputDirectory>target/site/serenity</outputDirectory>
+                            <sourceDirectory>target/site/serenity</sourceDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>
