@@ -14,11 +14,10 @@ public class UpdateCenterUnitTest {
 
     @Test
     public void getUpdateVersionToUse() {
-        Assert.assertEquals("2.46", updateCenter.getUpdateVersionToUse("2.46.0"));
-        Assert.assertEquals("2.46", updateCenter.getUpdateVersionToUse("2.47.0"));
-        Assert.assertEquals("2.60", updateCenter.getUpdateVersionToUse("2.72.0"));
-        Assert.assertEquals("2.73", updateCenter.getUpdateVersionToUse("2.88.0"));
-        Assert.assertEquals("2.89", updateCenter.getUpdateVersionToUse("2.106.9999"));
-        Assert.assertEquals("2.107", updateCenter.getUpdateVersionToUse("2.108.0"));
+        Assert.assertEquals("2.249.3", updateCenter.getUpdateVersionToUse("2.249.3"));
+        Assert.assertEquals("2.249.3", updateCenter.getUpdateVersionToUse("2.250.0"));
+        Assert.assertEquals("2.263.4", updateCenter.getUpdateVersionToUse("2.276.0"));
+        Assert.assertEquals("2.289.3", updateCenter.getUpdateVersionToUse("2.289.9999"));
+        Assert.assertEquals("2.303.1", updateCenter.getUpdateVersionToUse("2.304.0"));
     }
 }

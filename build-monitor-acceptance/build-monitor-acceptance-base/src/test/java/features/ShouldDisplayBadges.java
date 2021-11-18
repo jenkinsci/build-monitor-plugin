@@ -29,17 +29,15 @@ import static net.serenitybdd.screenplay.GivenWhenThen.when;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
 @RunWith(SerenityRunner.class)
-public abstract class ShouldDisplayBadgesAbstractBase {
+public class ShouldDisplayBadges {
 
     Actor paul = Actor.named("Paul");
 
     @Managed public WebDriver browser;
 
     @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
-            InstallPlugins.fromUpdateCenter(getPlugins())
+            InstallPlugins.fromUpdateCenter("workflow-aggregator", "buildtriggerbadge", "badge", "groovy-postbuild")
     ).create();
-
-    abstract String[] getPlugins();
 
     @Before
     public void actorCanBrowseTheWeb() {

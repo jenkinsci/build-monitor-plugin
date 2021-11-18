@@ -15,7 +15,7 @@
 
     <properties>
         <encoding>UTF-8</encoding>
-        <serenity.version>2.4.20</serenity.version>
+        <serenity.version>2.4.51</serenity.version>
         <aether.version>1.0.0.v20140518</aether.version>
 
         <webdriver.driver>chrome</webdriver.driver>
@@ -149,6 +149,11 @@
         <!-- / serenity -->
 
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.0.1-jre</version>
+        </dependency>
+        <dependency>
             <groupId>org.jdeferred</groupId>
             <artifactId>jdeferred-core</artifactId>
         </dependency>
@@ -201,7 +206,7 @@
                             <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
                         </environmentVariables>
                         <forkCount>2</forkCount>
-                        <reuseForks>true</reuseForks>
+                        <reuseForks>false</reuseForks>
                         <rerunFailingTestsCount>${surefire.rerunFailingTestsCount}</rerunFailingTestsCount>
                         <redirectTestOutputToFile>false</redirectTestOutputToFile>
                         <reportNameSuffix>${jenkins.version}</reportNameSuffix>

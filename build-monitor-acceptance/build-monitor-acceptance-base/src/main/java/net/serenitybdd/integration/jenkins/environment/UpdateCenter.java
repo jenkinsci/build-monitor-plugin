@@ -22,7 +22,7 @@ public class UpdateCenter {
 
     private static final String Update_Center_URL_Template
             // = "http://updates.jenkins-ci.org/stable-%s/update-center.json";
-            = "https://ftp-chi.osuosl.org/pub/jenkins/updates/stable-%s/update-center.json";
+            = "https://updates.jenkins.io/update-center.json?version=%s";
     private final Path tempDir;
 
     private List<Version> jenkinsLTSVersions = Arrays.asList(
@@ -30,21 +30,7 @@ public class UpdateCenter {
       Version.valueOf("2.289.3"),
       Version.valueOf("2.277.4"),
       Version.valueOf("2.263.4"),
-      Version.valueOf("2.249.3"),
-      Version.valueOf("2.235.5"),
-      Version.valueOf("2.222.4"),
-      Version.valueOf("2.204.6"),
-      Version.valueOf("2.190.3"),
-      Version.valueOf("2.176.4"),
-      Version.valueOf("2.164.3"),
-      Version.valueOf("2.150.3"),
-      Version.valueOf("2.138.4"),
-      Version.valueOf("2.121.3"),
-      Version.valueOf("2.107.3"),
-      Version.valueOf("2.89.0"),
-      Version.valueOf("2.73.0"),
-      Version.valueOf("2.60.0"),
-      Version.valueOf("2.46.0")
+      Version.valueOf("2.249.3")
     );
 
 
@@ -86,7 +72,7 @@ public class UpdateCenter {
             }
         }
         assert versionToUse != null; //versionToUse should never be null since we already made sure jenkinsVersion isn't lower than the lowest LTS.
-        return versionToUse.getMajorVersion() + "." + versionToUse.getMinorVersion();
+        return versionToUse.getNormalVersion();
     }
 
     private String stripJSONPEnvelope(Path jsonp) throws IOException {

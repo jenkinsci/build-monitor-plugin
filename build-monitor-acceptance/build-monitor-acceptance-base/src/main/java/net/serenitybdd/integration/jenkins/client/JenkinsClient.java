@@ -1,19 +1,19 @@
 package net.serenitybdd.integration.jenkins.client;
 
 import com.google.common.base.Joiner;
-import net.serenitybdd.integration.jenkins.logging.ErrorWitness;
-import net.serenitybdd.integration.jenkins.logging.InfoWitness;
-import net.serenitybdd.integration.jenkins.logging.LoggerOutputStream;
+
+import hudson.cli.CLI;
 import net.serenitybdd.integration.jenkins.process.JenkinsProcess;
 import org.jdeferred.Promise;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -27,9 +27,11 @@ public class JenkinsClient {
     private static String OS_VERSION = System.getProperty("os.version").toLowerCase();
 
     private final JenkinsProcess process;
+    private final URL jenkinsUrl;
 
-    public JenkinsClient(JenkinsProcess process) {
+    public JenkinsClient(URL jenkinsUrl, JenkinsProcess process) {
         this.process = process;
+        this.jenkinsUrl = jenkinsUrl;
     }
 
     // user accounts
@@ -41,17 +43,15 @@ public class JenkinsClient {
 
         Promise<Matcher, ?, ?> promise = process.promiseWhen("defining beans \\[authenticationManager\\]");
 
-        executeGroovy(
-                "def instance         = jenkins.model.Jenkins.getInstance()",
-                "def usersCanRegister = true",
-                "def realm            = new hudson.security.HudsonPrivateSecurityRealm(usersCanRegister)",
-                format("realm.createAccount(\"%s\",\"%s\")", username, password),
-                "instance.setSecurityRealm(realm)",
-                "instance.save()"
-        );
-
         try {
-            promise.waitSafely(Max_Wait_Time);
+            executeGroovy(promise,
+                    "def instance         = jenkins.model.Jenkins.getInstance()",
+                    "def usersCanRegister = true",
+                    "def realm            = new hudson.security.HudsonPrivateSecurityRealm(usersCanRegister)",
+                    format("realm.createAccount(\"%s\",\"%s\")", username, password),
+                    "instance.setSecurityRealm(realm)",
+                    "instance.save()"
+            );
             logger.info("Account for '{}' created", username);
         } catch (InterruptedException e) {
             throw new RuntimeException("Couldn't enable Jenkins Security", e);
@@ -63,15 +63,13 @@ public class JenkinsClient {
 
         Promise<Matcher, ?, ?> promise = process.promiseWhen("Obtained the latest update center data file for UpdateSource default");
 
-        executeGroovy(
-            "def ucUrl = new URL('http://updates.jenkins-ci.org/update-center.json')",
-            "def json  = hudson.model.DownloadService.loadJSON(ucUrl)",
-            "def site  = jenkins.model.Jenkins.instance.updateCenter.getById('default')",
-            "site.updateData(json, false)"
-        );
-
         try {
-            promise.waitSafely(Max_Wait_Time);
+            executeGroovy(promise,
+                    "def ucUrl = new URL('http://updates.jenkins-ci.org/update-center.json')",
+                    "def json  = hudson.model.DownloadService.loadJSON(ucUrl)",
+                    "def site  = jenkins.model.Jenkins.instance.updateCenter.getById('default')",
+                    "site.updateData(json, false)"
+                );
             logger.info("UPDATE CENTER RELOADED");
         } catch (InterruptedException e) {
             throw new RuntimeException("Couldn't update the Update Center caches.", e);
@@ -113,7 +111,13 @@ public class JenkinsClient {
         }
     }
 
-    private void safeShutdown() throws Exception {
+    public void shutdown() {
+        process.getJenkinsLogWatcher().close();
+        executeCommand("shutdown");
+        process.stop();
+    }
+
+    public void safeShutdown() {
         process.getJenkinsLogWatcher().close();
         executeCommand("safe-shutdown");
         process.stop();
@@ -133,33 +137,39 @@ public class JenkinsClient {
         );
     }
 
-    private int executeGroovy(String... groovyScriptLines) {
+    private synchronized int executeGroovy(Promise<Matcher, ?, ?> promise, String... groovyScriptLines) throws InterruptedException {
         String script = Joiner.on(";\n").join(groovyScriptLines);
 
         //TODO use RealJenkinsRule
         //return executor.call("groovy", "=").execute(withInput(script), info(logger), error(logger));
-        return -1;
+        
+        InputStream stdIn = System.in;
+        try {
+	        System.setIn(withInput(script));
+	        int result = executeCommand("groovy", "=");
+	
+	        promise.waitSafely(Max_Wait_Time);
+	        
+	        return result;
+        } finally {
+        	System.setIn(stdIn);
+        }
     }
 
     private int executeCommand(String... args) {
         //TODO use RealJenkinsRule
         //return executor.call(args).execute(noManualInput(), info(logger), error(logger));
-        return -1;
-    }
-
-    private InputStream noManualInput() {
-        return withInput("");
+        try {
+        	List<String> cliArgs = new ArrayList<String>(Arrays.asList("-s", jenkinsUrl.toString(), "-http"));
+        	cliArgs.addAll(Arrays.asList(args));
+        	
+        	return CLI._main(cliArgs.toArray(new String[cliArgs.size()]));
+        } catch (Exception e) {
+            throw new RuntimeException(String.format("Couldn't connect to Jenkins at '%s'", jenkinsUrl), e);
+        }
     }
 
     private InputStream withInput(String text) {
         return new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
-    }
-
-    private OutputStream info(Logger logger) {
-        return new LoggerOutputStream(new InfoWitness(logger));
-    }
-
-    private OutputStream error(Logger logger) {
-        return new LoggerOutputStream(new ErrorWitness(logger));
     }
 }
