@@ -52,7 +52,7 @@ public class ManageJenkinsServer implements ApplicativeTestRule<JenkinsInstance>
 
             @Override
             protected void finished(Description description) {
-            	client.safeShutdown();
+            	client.shutdown();
             }
         };
     }

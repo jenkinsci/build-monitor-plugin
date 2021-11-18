@@ -4,6 +4,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.jenkins.actions.Choose;
 import net.serenitybdd.screenplay.jenkins.user_interface.ViewConfigurationPage;
+import net.serenitybdd.screenplayx.actions.Scroll;
 import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
@@ -17,6 +18,9 @@ public class DisplayNestedProjects implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
+            Scroll.to(ViewConfigurationPage.Recurse_In_Subfolders),
+            // In case we scroll up and field is under the breadcrumb overlay
+            Scroll.to(ViewConfigurationPage.Status_Filter),
             Choose.the(ViewConfigurationPage.Recurse_In_Subfolders)
         );
     }

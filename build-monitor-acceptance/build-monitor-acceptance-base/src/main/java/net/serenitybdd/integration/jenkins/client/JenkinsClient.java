@@ -41,7 +41,8 @@ public class JenkinsClient {
     public void registerAccount(String username, String password) {
         logger.info("Enabling Jenkins Security and registering account for '{}', identified by '{}'", username, password);
 
-        Promise<Matcher, ?, ?> promise = process.promiseWhen("defining beans \\[authenticationManager\\]");
+        String endScriptMessage = format("Account for '%s' created", username);
+        Promise<Matcher, ?, ?> promise = process.promiseWhen(endScriptMessage);
 
         try {
             executeGroovy(promise,
@@ -50,9 +51,13 @@ public class JenkinsClient {
                     "def realm            = new hudson.security.HudsonPrivateSecurityRealm(usersCanRegister)",
                     format("realm.createAccount(\"%s\",\"%s\")", username, password),
                     "instance.setSecurityRealm(realm)",
-                    "instance.save()"
+                    "instance.save()",
+                    "",
+                    "import java.util.logging.Logger",
+                    "Logger rootLogger = Logger.getLogger('')",
+                    format("rootLogger.info(\"%s\")", endScriptMessage)
             );
-            logger.info("Account for '{}' created", username);
+            logger.info(endScriptMessage);
         } catch (InterruptedException e) {
             throw new RuntimeException("Couldn't enable Jenkins Security", e);
         }
@@ -61,16 +66,21 @@ public class JenkinsClient {
     public void populateUpdateCenterCaches() {
         logger.info("FETCHING UPDATE CENTER");
 
-        Promise<Matcher, ?, ?> promise = process.promiseWhen("Obtained the latest update center data file for UpdateSource default");
+        String endScriptMessage = "UPDATE CENTER RELOADED";
+        Promise<Matcher, ?, ?> promise = process.promiseWhen(endScriptMessage);
 
         try {
             executeGroovy(promise,
                     "def ucUrl = new URL('http://updates.jenkins-ci.org/update-center.json')",
                     "def json  = hudson.model.DownloadService.loadJSON(ucUrl)",
                     "def site  = jenkins.model.Jenkins.instance.updateCenter.getById('default')",
-                    "site.updateData(json, false)"
+                    "site.updateData(json, false)",
+                    "",
+                    "import java.util.logging.Logger",
+                    "Logger rootLogger = Logger.getLogger('')",
+                    format("rootLogger.info(\"%s\")", endScriptMessage)
                 );
-            logger.info("UPDATE CENTER RELOADED");
+            logger.info(endScriptMessage);
         } catch (InterruptedException e) {
             throw new RuntimeException("Couldn't update the Update Center caches.", e);
         }
