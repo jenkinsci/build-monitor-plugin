@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <jenkins.version>2.249.3</jenkins.version>
+        <jenkins.version>2.263.3</jenkins.version>
         <java.level>8</java.level>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jetty.version>9.4.19.v20190610</jetty.version> <!-- TODO Starting with 9.4.20.v20190813, JellyTestSuiteBuilder$JellyTestSuite starts failing with com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException: 500 Server Error -->
@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.25</version>
+        <version>4.31</version>
         <relativePath />
     </parent>
 
@@ -59,7 +59,7 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.249.x</artifactId>
+                <artifactId>bom-2.263.x</artifactId>
                 <version>950.v396cb834de1e</version>
                 <scope>import</scope>
                 <type>pom</type>

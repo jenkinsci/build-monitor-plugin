@@ -29,8 +29,7 @@ public class UpdateCenter {
       Version.valueOf("2.303.1"),
       Version.valueOf("2.289.3"),
       Version.valueOf("2.277.4"),
-      Version.valueOf("2.263.4"),
-      Version.valueOf("2.249.3")
+      Version.valueOf("2.263.4")
     );
 
 
