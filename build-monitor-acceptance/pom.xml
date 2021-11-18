@@ -322,7 +322,7 @@
                     </environmentVariables>
                     <forkCount>2</forkCount>
                     <reuseForks>false</reuseForks>
-                    <rerunFailingTestsCount>${surefire.rerunFailingTestsCount}</rerunFailingTestsCount>
+                    <rerunFailingTestsCount>2</rerunFailingTestsCount>
                     <redirectTestOutputToFile>false</redirectTestOutputToFile>
                     <reportNameSuffix>${jenkins.version}</reportNameSuffix>
                 </configuration>

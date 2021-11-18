@@ -224,7 +224,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return failure;
     }
 
-    public BuildStateRecipe hasBadgesBadgePlugin(BadgeBadgePluginRecipe... badges) {
+    public BuildStateRecipe hasBadges(BadgeBadgePluginRecipe... badges) {
         List<BadgeAction> actions = new ArrayList<>();
         for (BadgeBadgePluginRecipe badge : badges) {
             actions.add(badge.get());
