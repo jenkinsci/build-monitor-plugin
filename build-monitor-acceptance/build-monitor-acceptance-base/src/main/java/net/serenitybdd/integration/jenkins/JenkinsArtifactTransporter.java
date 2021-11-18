@@ -10,7 +10,7 @@ public class JenkinsArtifactTransporter {
     public static ArtifactTransporter create() {
         return new ArtifactTransporter(
                 pathToLocalMavenRepository(),
-                RemoteRepository.at("http://repo.jenkins-ci.org/public/")
+                RemoteRepository.at("https://repo.jenkins-ci.org/public/")
         );
     }
 

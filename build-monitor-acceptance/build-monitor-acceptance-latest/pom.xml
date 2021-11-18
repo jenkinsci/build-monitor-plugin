@@ -42,7 +42,6 @@
                     <dependenciesToScan>
                         <dependency>org.jenkins-ci.plugins:build-monitor-acceptance-base</dependency>
                     </dependenciesToScan>
-                    <skipITs>true</skipITs> <!-- TODO get integration tests working again -->
                 </configuration>
             </plugin>
             <plugin>

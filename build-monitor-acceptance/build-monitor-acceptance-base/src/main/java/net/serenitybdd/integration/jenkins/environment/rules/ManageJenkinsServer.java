@@ -34,6 +34,7 @@ public class ManageJenkinsServer implements ApplicativeTestRule<JenkinsInstance>
     public TestRule applyTo(final JenkinsInstance jenkins) {
         return new TestWatcher() {
             private JenkinsProcess process;
+            private JenkinsClient client;
 
             @Override
             protected void starting(Description description) {
@@ -45,12 +46,13 @@ public class ManageJenkinsServer implements ApplicativeTestRule<JenkinsInstance>
                     throw new RuntimeException("Couldn't start Jenkins", e);
                 }
 
-                jenkins.setClient(new JenkinsClient(process));
+                client = new JenkinsClient(jenkins.url(), process);
+                jenkins.setClient(client);
             }
 
             @Override
             protected void finished(Description description) {
-                process.stop();
+            	client.safeShutdown();
             }
         };
     }
