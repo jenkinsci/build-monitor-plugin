@@ -5,7 +5,8 @@ import net.serenitybdd.screenplay.targets.Target;
 import static java.lang.String.format;
 
 public class Breadcrumbs {
-    public static final Target Jenkins_Link = Target.the("the 'Jenkins' link").locatedBy("//a[./text()='Jenkins']");
+    // Breadcrumb has been renamed Dashboard in newer Jenkins
+    public static final Target Jenkins_Link = Target.the("the 'Jenkins' link").locatedBy("//a[./text()='Jenkins' or ./text()='Dashboard']");
 
     public static Target linkTo(String name) {
         return Target.the(format("the '%s' breadcrumb link", name))
