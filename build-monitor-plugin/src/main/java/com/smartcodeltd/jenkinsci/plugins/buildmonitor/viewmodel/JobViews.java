@@ -18,6 +18,7 @@ public class JobViews {
     private static final String Build_Failure_Analyzer      = "build-failure-analyzer";
     private static final String Badge_Plugin                = "badge";
     private static final String Pipeline                    = "workflow-aggregator";
+    private static final String Junit_Realtime              = "junit-realtime-test-reporter";
 
     private final StaticJenkinsAPIs jenkins;
     private final com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config;
@@ -48,6 +49,10 @@ public class JobViews {
             if (jenkins.hasPlugin(Badge_Plugin)) {
                 viewFeatures.add(new HasBadgesBadgePlugin(config));
             }
+        }
+
+        if (config.shouldDisplayJUnitProgress() && jenkins.hasPlugin(Junit_Realtime)) {
+            viewFeatures.add(new HasJunitRealtime());
         }
 
         boolean isPipelineJob = jenkins.hasPlugin(Pipeline) && job instanceof WorkflowJob;

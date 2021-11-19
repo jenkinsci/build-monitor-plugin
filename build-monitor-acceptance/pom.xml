@@ -16,7 +16,7 @@
 
     <properties>
         <!-- Update this as new LTS versions are released -->
-        <jenkins.latest.version>2.303.1</jenkins.latest.version>
+        <jenkins.latest.version>2.319.3</jenkins.latest.version>
 
         <encoding>UTF-8</encoding>
         <serenity.version>3.2.0</serenity.version>

@@ -86,7 +86,7 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.289.x</artifactId>
+                <artifactId>bom-2.303.x</artifactId>
                 <version>1148.v7261f385f859</version>
                 <scope>import</scope>
                 <type>pom</type>
@@ -175,6 +175,12 @@
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>script-security</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>junit-realtime-test-reporter</artifactId>
+            <version>82.vc2a_3f0f7a_291</version>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
