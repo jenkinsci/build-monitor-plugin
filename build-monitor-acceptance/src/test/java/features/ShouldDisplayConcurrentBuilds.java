@@ -2,10 +2,9 @@ package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
-import environment.JenkinsSandbox;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
-import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
@@ -14,29 +13,36 @@ import net.serenitybdd.screenplay.jenkins.tasks.configuration.Enable;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ExecuteAShellScript;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScript;
 import net.serenitybdd.screenplayx.actions.Navigate;
-import net.thucydides.core.annotations.Managed;
+import net.thucydides.junit.annotations.TestData;
+
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.is;
 
-@RunWith(SerenityRunner.class)
-public class ShouldDisplayConcurrentBuilds {
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public class ShouldDisplayConcurrentBuilds extends BuilMonitorAcceptanceTest {
     private static String My_App = "My App";
 
     Actor dave = Actor.named("Dave");
 
-    @Managed public WebDriver browser;
+    public ShouldDisplayConcurrentBuilds(String jenkinsVersion) {
+        super(jenkinsVersion);
+    }
 
-    @Rule
-    public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
-            InstallPlugins.fromUpdateCenter("description-setter")
-    ).create();
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
+        return Arrays.asList(InstallPlugins.fromUpdateCenter("description-setter"));
+    }
 
+    @TestData
+    public static Collection<Object[]> testData(){
+        return BuilMonitorAcceptanceTest.testData();
+    }
+    
     @Before
     public void actorCanBrowseTheWeb() {
         dave.can(BrowseTheWeb.with(browser));

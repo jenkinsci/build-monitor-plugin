@@ -2,42 +2,49 @@ package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
-import environment.JenkinsSandbox;
 import hudson.plugins.claim.HaveAFailingClaimableProjectCreated;
 import hudson.plugins.claim.tasks.Claim;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
 import net.serenitybdd.integration.jenkins.environment.rules.RegisterUserAccount;
-import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.JenkinsUser;
 import net.serenitybdd.screenplay.jenkins.tasks.GoBack;
 import net.serenitybdd.screenplay.jenkins.tasks.LogIn;
 import net.serenitybdd.screenplayx.actions.Navigate;
-import net.thucydides.core.annotations.Managed;
+import net.thucydides.junit.annotations.TestData;
+
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
 
 import static com.smartcodeltd.jenkinsci.plugins.build_monitor.matchers.ProjectInformationMatchers.displaysProjectStatusAs;
 import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus.Claimed;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.core.Is.is;
 
-@RunWith(SerenityRunner.class)
-public class ShouldTellWhoIsFixingTheBrokenBuild {
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
-    JenkinsUser ben = JenkinsUser.named("Ben");
+public class ShouldTellWhoIsFixingTheBrokenBuild extends BuilMonitorAcceptanceTest {
 
-    @Managed public WebDriver browser;
+    JenkinsUser ben;
 
-    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
-            InstallPlugins.fromUpdateCenter("claim"),
-            RegisterUserAccount.of(ben)
-    ).create();
+    public ShouldTellWhoIsFixingTheBrokenBuild(String jenkinsVersion) {
+        super(jenkinsVersion);
+    }
 
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
+        ben = JenkinsUser.named("Ben");
+        return Arrays.asList(InstallPlugins.fromUpdateCenter("claim"), RegisterUserAccount.of(ben));
+    }
+
+    @TestData
+    public static Collection<Object[]> testData(){
+        return BuilMonitorAcceptanceTest.testData();
+    }
+    
     @Before
     public void actorCanBrowseTheWeb() {
         ben.can(BrowseTheWeb.with(browser));

@@ -2,20 +2,17 @@ package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
-import environment.JenkinsSandbox;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
-import net.serenitybdd.junit.runners.SerenityRunner;
+import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
 import net.serenitybdd.screenplayx.actions.Navigate;
-import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Title;
+import net.thucydides.junit.annotations.TestData;
+
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
@@ -23,15 +20,27 @@ import static net.serenitybdd.screenplay.GivenWhenThen.then;
 import static net.serenitybdd.screenplay.GivenWhenThen.when;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
-@RunWith(SerenityRunner.class)
-public class BuildMonitorShouldBeEasyToSetUp {
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public class BuildMonitorShouldBeEasyToSetUp extends BuilMonitorAcceptanceTest {
 
     Actor anna = Actor.named("Anna");
 
-    @Managed public WebDriver browser;
+    public BuildMonitorShouldBeEasyToSetUp(String jenkinsVersion) {
+        super(jenkinsVersion);
+    }
 
-    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().create();
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
+        return Arrays.asList();
+    }
 
+    @TestData
+    public static Collection<Object[]> testData(){
+        return BuilMonitorAcceptanceTest.testData();
+    }
+    
     @Before
     public void actorCanBrowseTheWeb() {
         anna.can(BrowseTheWeb.with(browser));

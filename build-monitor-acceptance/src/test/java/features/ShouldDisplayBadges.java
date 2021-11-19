@@ -4,10 +4,9 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.ModifyControlPanelOptions;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.ShowBadges;
-import environment.JenkinsSandbox;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
-import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAPipelineProjectCreated;
@@ -15,12 +14,10 @@ import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.GroovyScriptThat;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.SetPipelineDefinition;
 import net.serenitybdd.screenplayx.actions.Navigate;
-import net.thucydides.core.annotations.Managed;
+import net.thucydides.junit.annotations.TestData;
+
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
@@ -28,17 +25,27 @@ import static net.serenitybdd.screenplay.GivenWhenThen.then;
 import static net.serenitybdd.screenplay.GivenWhenThen.when;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
-@RunWith(SerenityRunner.class)
-public class ShouldDisplayBadges {
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
 
     Actor paul = Actor.named("Paul");
 
-    @Managed public WebDriver browser;
+    public ShouldDisplayBadges(String jenkinsVersion) {
+        super(jenkinsVersion);
+    }
 
-    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(
-            InstallPlugins.fromUpdateCenter("workflow-aggregator", "buildtriggerbadge", "badge", "groovy-postbuild")
-    ).create();
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
+        return Arrays.asList(InstallPlugins.fromUpdateCenter("workflow-aggregator", "buildtriggerbadge", "badge", "groovy-postbuild"));
+    }
 
+    @TestData
+    public static Collection<Object[]> testData(){
+        return BuilMonitorAcceptanceTest.testData();
+    }
+    
     @Before
     public void actorCanBrowseTheWeb() {
         paul.can(BrowseTheWeb.with(browser));
