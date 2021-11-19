@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ShouldDisplayPipelineStage extends BuildMonitorAbstractBase {
+public class ShouldDisplayPipelineStage extends BuilMonitorAcceptanceTest {
 
     Actor donald = Actor.named("Donald");
 
@@ -37,7 +37,7 @@ public class ShouldDisplayPipelineStage extends BuildMonitorAbstractBase {
 
     @TestData
     public static Collection<Object[]> testData(){
-        return BuildMonitorAbstractBase.testData();
+        return BuilMonitorAcceptanceTest.testData();
     }
     
     @Before

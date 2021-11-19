@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ShouldDisplayBadges extends BuildMonitorAbstractBase {
+public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
 
     Actor paul = Actor.named("Paul");
 
@@ -43,7 +43,7 @@ public class ShouldDisplayBadges extends BuildMonitorAbstractBase {
 
     @TestData
     public static Collection<Object[]> testData(){
-        return BuildMonitorAbstractBase.testData();
+        return BuilMonitorAcceptanceTest.testData();
     }
     
     @Before

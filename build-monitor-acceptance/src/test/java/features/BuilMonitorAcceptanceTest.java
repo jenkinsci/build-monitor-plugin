@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RunWith(SerenityParameterizedRunner.class)
-public abstract class BuildMonitorAbstractBase {
+public abstract class BuilMonitorAcceptanceTest {
 
     @Managed public WebDriver browser;
 
@@ -35,7 +35,7 @@ public abstract class BuildMonitorAbstractBase {
         return data;
     }
     
-    protected BuildMonitorAbstractBase(String jenkinsVersion) {
+    protected BuilMonitorAcceptanceTest(String jenkinsVersion) {
         System.setProperty("jenkins.version", jenkinsVersion);
     }
 }

@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class BuildMonitorShouldBeEasyToSetUp extends BuildMonitorAbstractBase {
+public class BuildMonitorShouldBeEasyToSetUp extends BuilMonitorAcceptanceTest {
 
     Actor anna = Actor.named("Anna");
 
@@ -38,7 +38,7 @@ public class BuildMonitorShouldBeEasyToSetUp extends BuildMonitorAbstractBase {
 
     @TestData
     public static Collection<Object[]> testData(){
-        return BuildMonitorAbstractBase.testData();
+        return BuilMonitorAcceptanceTest.testData();
     }
     
     @Before

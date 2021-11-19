@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ShouldTellWhoIsFixingTheBrokenBuild extends BuildMonitorAbstractBase {
+public class ShouldTellWhoIsFixingTheBrokenBuild extends BuilMonitorAcceptanceTest {
 
     JenkinsUser ben;
 
@@ -42,7 +42,7 @@ public class ShouldTellWhoIsFixingTheBrokenBuild extends BuildMonitorAbstractBas
 
     @TestData
     public static Collection<Object[]> testData(){
-        return BuildMonitorAbstractBase.testData();
+        return BuilMonitorAcceptanceTest.testData();
     }
     
     @Before

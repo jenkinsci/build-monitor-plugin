@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ShouldTellWhatBrokeTheBuild extends BuildMonitorAbstractBase {
+public class ShouldTellWhatBrokeTheBuild extends BuilMonitorAcceptanceTest {
 
     Actor dave = Actor.named("Dave");
 
@@ -36,7 +36,7 @@ public class ShouldTellWhatBrokeTheBuild extends BuildMonitorAbstractBase {
 
     @TestData
     public static Collection<Object[]> testData(){
-        return BuildMonitorAbstractBase.testData();
+        return BuilMonitorAcceptanceTest.testData();
     }
     
     @Before

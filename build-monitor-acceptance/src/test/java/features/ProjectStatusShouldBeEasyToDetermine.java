@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ProjectStatusShouldBeEasyToDetermine extends BuildMonitorAbstractBase {
+public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceTest {
 
     private Actor anna = Actor.named("Anna");
 
@@ -37,7 +37,7 @@ public class ProjectStatusShouldBeEasyToDetermine extends BuildMonitorAbstractBa
 
     @TestData
     public static Collection<Object[]> testData(){
-        return BuildMonitorAbstractBase.testData();
+        return BuilMonitorAcceptanceTest.testData();
     }
     
     @Before

@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ShouldDescribeEachProject extends BuildMonitorAbstractBase {
+public class ShouldDescribeEachProject extends BuilMonitorAcceptanceTest {
 
     private Actor dave = Actor.named("Dave");
 
@@ -39,7 +39,7 @@ public class ShouldDescribeEachProject extends BuildMonitorAbstractBase {
 
     @TestData
     public static Collection<Object[]> testData(){
-        return BuildMonitorAbstractBase.testData();
+        return BuilMonitorAcceptanceTest.testData();
     }
     
     @Before

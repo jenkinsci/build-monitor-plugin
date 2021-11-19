@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ShouldDisplayConcurrentBuilds extends BuildMonitorAbstractBase {
+public class ShouldDisplayConcurrentBuilds extends BuilMonitorAcceptanceTest {
     private static String My_App = "My App";
 
     Actor dave = Actor.named("Dave");
@@ -40,7 +40,7 @@ public class ShouldDisplayConcurrentBuilds extends BuildMonitorAbstractBase {
 
     @TestData
     public static Collection<Object[]> testData(){
-        return BuildMonitorAbstractBase.testData();
+        return BuilMonitorAcceptanceTest.testData();
     }
     
     @Before
