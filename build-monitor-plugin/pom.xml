@@ -96,7 +96,6 @@
         <dependency>
             <groupId>org.jenkins-ci.modules</groupId>
             <artifactId>instance-identity</artifactId>
-            <version>2.2</version>
             <scope>provided</scope>
         </dependency>
 
@@ -158,12 +157,6 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.jvnet.hudson.plugins</groupId>
-            <artifactId>groovy-postbuild</artifactId>
-            <version>2.3.1</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>badge</artifactId>
             <version>1.2</version>
@@ -187,7 +180,6 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>pipeline-stage-step</artifactId>
-            <version>2.5</version>
             <optional>true</optional>
         </dependency>
         <dependency>

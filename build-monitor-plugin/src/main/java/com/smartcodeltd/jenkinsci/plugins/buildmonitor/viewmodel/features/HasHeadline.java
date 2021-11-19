@@ -1,13 +1,11 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
-import com.google.common.base.Predicate;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.*;
 
 import java.util.List;
+import java.util.function.Predicate;
 
-import static com.google.common.collect.Iterables.filter;
-import static com.google.common.collect.Iterables.getFirst;
 import static com.google.common.collect.Lists.newArrayList;
 
 /**
@@ -42,11 +40,12 @@ public class HasHeadline implements Feature<Headline> {
                 new HeadlineOfFailing(job, config)
         );
 
-        return getFirst(filter(availableHeadlines, new Predicate<CandidateHeadline>() {
+        
+        return availableHeadlines.stream().filter(new Predicate<CandidateHeadline>() {
             @Override
-            public boolean apply(CandidateHeadline candidateHeadline) {
+            public boolean test(CandidateHeadline candidateHeadline) {
                 return candidateHeadline.isApplicableTo(job);
             }
-        }), new NoHeadline());
+        }).findFirst().orElse(new NoHeadline());
     }
 }
