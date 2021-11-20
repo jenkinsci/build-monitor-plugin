@@ -111,7 +111,7 @@
                 <plugin>
                     <groupId>com.smartcodeltd</groupId>
                     <artifactId>release-candidate-maven-plugin</artifactId>
-                    <version>1.0-201603091838.01dbbbf</version>
+                    <version>1.0-201605132325.9e7d5be</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
