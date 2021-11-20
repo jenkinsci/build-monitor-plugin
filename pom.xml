@@ -7,7 +7,7 @@
         <jenkins.version>2.289.1</jenkins.version>
         <java.level>8</java.level>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.version>9.4.19.v20190610</jetty.version> <!-- TODO Starting with 9.4.20.v20190813, JellyTestSuiteBuilder$JellyTestSuite starts failing with com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException: 500 Server Error -->
+        <jetty.version>9.4.41.v20210516</jetty.version> <!-- TODO Starting with 9.4.20.v20190813, JellyTestSuiteBuilder$JellyTestSuite starts failing with com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException: 500 Server Error -->
     </properties>
 
     <parent>
