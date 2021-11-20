@@ -5,8 +5,8 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headli
 import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.isEmptyString;
-import static org.junit.Assert.assertThat;
 
 public class HasHeadlineWhichShowsNothingTest {
     private JobView view;

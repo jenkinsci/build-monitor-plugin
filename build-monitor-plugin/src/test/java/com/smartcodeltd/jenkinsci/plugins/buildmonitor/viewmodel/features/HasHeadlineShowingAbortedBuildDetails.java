@@ -4,46 +4,50 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
 import hudson.model.User;
 import jenkins.model.Jenkins;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.MockedStatic;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Jenkins.class, User.class})
 public class HasHeadlineShowingAbortedBuildDetails {
 
     private JobView view;
 
-    @Mock
+    private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
     @Before
     public void setup() {
-        PowerMockito.mockStatic(Jenkins.class);
-        PowerMockito.when(Jenkins.getInstance()).thenReturn(jenkins);
+        mockedJenkins = mockStatic(Jenkins.class);
+        jenkins = mock(Jenkins.class);
+        mockedJenkins.when(Jenkins::getInstance).thenReturn(jenkins);
+    }
+
+    @After
+    public void tearDown() {
+        mockedJenkins.close();
     }
 
     @Test
     public void should_tell_who_aborted_the_build() throws Exception {
+        try (MockedStatic<User> mockedUser = mockStatic(User.class)) {
+            view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
+                    a(job().whereTheLast(build().wasAbortedBy("Abe", mockedUser)))));
 
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().wasAbortedBy("Abe")))));
-
-        assertThat(headlineOf(view), is("Execution aborted by Abe"));
+            assertThat(headlineOf(view), is("Execution aborted by Abe"));
+        }
     }
 
     @Test
     public void should_tell_if_a_build_was_aborted() throws Exception {
         view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
-                a(job().whereTheLast(build().wasAbortedBy("Abe")))));
+                a(job().whereTheLast(build().wasAbortedBy("Abe", null)))));
 
         assertThat(headlineOf(view), is("Execution aborted"));
     }

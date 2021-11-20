@@ -4,6 +4,7 @@ import com.jenkinsci.plugins.badge.action.BadgeAction;
 
 import java.util.function.Supplier;
 
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,13 +20,13 @@ public class BadgeBadgePluginRecipe implements Supplier<BadgeAction> {
 
     public BadgeBadgePluginRecipe withText(String text) throws Exception {
         when(badge.getIconPath()).thenReturn(null);
-        when(badge.getText()).thenReturn(text);
+        lenient().when(badge.getText()).thenReturn(text);
         return this;
     }
 
     public BadgeBadgePluginRecipe withIcon(String icon, String text) throws Exception {
         when(badge.getIconPath()).thenReturn(icon);
-        when(badge.getText()).thenReturn(text);
+        lenient().when(badge.getText()).thenReturn(text);
         return this;
     }
 
