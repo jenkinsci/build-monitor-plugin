@@ -31,8 +31,8 @@ public class ShouldDisplayPipelineStage extends BuilMonitorAcceptanceTest {
         super(jenkinsVersion);
     }
 
-    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("workflow-aggregator"));
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
+        return Arrays.asList(InstallPlugins.fromCache(getpluginsCache(), "workflow-aggregator"));
     }
 
     @TestData

@@ -30,8 +30,8 @@ public class ShouldTellWhatBrokeTheBuild extends BuilMonitorAcceptanceTest {
         super(jenkinsVersion);
     }
 
-    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("cloudbees-folder", "build-failure-analyzer"));
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
+        return Arrays.asList(InstallPlugins.fromCache(getpluginsCache(), "workflow-aggregator", "cloudbees-folder", "build-failure-analyzer"));
     }
 
     @TestData

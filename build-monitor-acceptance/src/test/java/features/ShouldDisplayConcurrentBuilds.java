@@ -34,8 +34,8 @@ public class ShouldDisplayConcurrentBuilds extends BuilMonitorAcceptanceTest {
         super(jenkinsVersion);
     }
 
-    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("description-setter"));
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
+        return Arrays.asList(InstallPlugins.fromCache(getpluginsCache(), "workflow-aggregator", "description-setter"));
     }
 
     @TestData

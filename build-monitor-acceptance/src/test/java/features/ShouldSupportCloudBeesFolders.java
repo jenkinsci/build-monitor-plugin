@@ -32,8 +32,8 @@ public class ShouldSupportCloudBeesFolders extends BuilMonitorAcceptanceTest {
         super(jenkinsVersion);
     }
 
-    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("cloudbees-folder"));
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
+        return Arrays.asList(InstallPlugins.fromCache(getpluginsCache(), "cloudbees-folder"));
     }
 
     @TestData

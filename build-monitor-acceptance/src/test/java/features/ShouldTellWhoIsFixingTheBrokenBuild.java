@@ -35,9 +35,13 @@ public class ShouldTellWhoIsFixingTheBrokenBuild extends BuilMonitorAcceptanceTe
         super(jenkinsVersion);
     }
 
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
+        return Arrays.asList(InstallPlugins.fromCache(getpluginsCache(), "claim"));
+    }
+
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
         ben = JenkinsUser.named("Ben");
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("claim"), RegisterUserAccount.of(ben));
+        return Arrays.asList(RegisterUserAccount.of(ben));
     }
 
     @TestData

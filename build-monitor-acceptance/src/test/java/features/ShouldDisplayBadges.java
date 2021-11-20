@@ -37,8 +37,8 @@ public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
         super(jenkinsVersion);
     }
 
-    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("workflow-aggregator", "buildtriggerbadge", "badge", "groovy-postbuild"));
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
+        return Arrays.asList(InstallPlugins.fromCache(getpluginsCache(), "workflow-aggregator", "badge"));
     }
 
     @TestData

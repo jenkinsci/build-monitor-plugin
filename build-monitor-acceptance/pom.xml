@@ -26,6 +26,7 @@
 
         <webdriver.driver>chrome</webdriver.driver>
         <browserstack.url/>
+        <plugins.cache>${project.build.directory}/plugin_cache</plugins.cache>
     </properties>
 
     <profiles>
@@ -239,6 +240,63 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>groovy-maven-plugin</artifactId>
+                <version>2.1.1</version>
+                <executions>
+                    <execution>
+                        <id>download-jenkins-plugins</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                <![CDATA[
+                                    def plugins = properties.plugins.split(",")
+                                    def jenkinsVersions = properties.jenkins_versions.split(",") 
+
+                                    def destDir = new java.io.File(properties.dest_dir)
+
+                                    for (def jenkinsVersion : jenkinsVersions) {
+                                        def jenkinsVersionDestDir = new java.io.File(destDir, jenkinsVersion)
+
+                                        for (def pluginId : plugins) {
+                                            def pluginDest = new java.io.File(jenkinsVersionDestDir, pluginId)
+                                            pluginDest.mkdirs()
+                                            def args = [
+                                                "--jenkins-version", jenkinsVersion,
+                                                "--plugins", pluginId,
+                                                "--plugin-download-directory", pluginDest,
+                                            ] as String[]
+                                            println "Cache plugin ${pluginId} for jenkins version ${jenkinsVersion}"
+                                            io.jenkins.tools.pluginmanager.cli.Main.main(args)
+                                        }
+                                    }
+                                ]]>
+                            </source>
+                            <properties>
+                                <plugins>build-monitor-plugin,description-setter,workflow-aggregator,badge,cloudbees-folder,external-monitor-job,build-failure-analyzer,claim</plugins>
+                                <jenkins_versions>${jenkins.version},${jenkins.latest.version}</jenkins_versions>
+                                <dest_dir>${plugins.cache}</dest_dir>
+                            </properties>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                        <version>2.4.21</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>io.jenkins.plugin-management</groupId>
+                        <artifactId>plugin-management-cli</artifactId>
+                        <version>2.11.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <excludes>
@@ -259,6 +317,7 @@
                         <BROWSER>htmlunit</BROWSER>
                         <JENKINS_VERSIONS>${jenkins.version},${jenkins.latest.version}</JENKINS_VERSIONS>
                         <PLUGINS_DIR>../build-monitor-plugin/target</PLUGINS_DIR>
+                        <PLUGINS_CACHE>${plugins.cache}</PLUGINS_CACHE>
                         <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
                     </environmentVariables>
                     <forkCount>2</forkCount>
