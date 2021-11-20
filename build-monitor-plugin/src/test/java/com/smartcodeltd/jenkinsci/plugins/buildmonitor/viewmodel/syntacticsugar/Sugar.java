@@ -22,6 +22,10 @@ public class Sugar {
         return new BuildStateRecipe();
     }
 
+    public static BadgeGroovyPostbuildRecipe groovyPostbuildBadge() {
+        return new BadgeGroovyPostbuildRecipe();
+    }
+
     public static BadgeBadgePluginRecipe badgePluginBadge() {
         return new BadgeBadgePluginRecipe();
     }
