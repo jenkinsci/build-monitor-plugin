@@ -2,15 +2,15 @@ package net.serenitybdd.integration.jenkins;
 
 import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Arrays.asList;
 
 public class TestEnvironment {
     private final JenkinsInstance instance;
-    private final List<ApplicativeTestRule<JenkinsInstance>> rulesToBeAppliedBeforeJenkinsStart = newArrayList();
-    private final List<ApplicativeTestRule<JenkinsInstance>> rulesToBeAppliedAfterJenkinsStart  = newArrayList();
+    private final List<ApplicativeTestRule<JenkinsInstance>> rulesToBeAppliedBeforeJenkinsStart = new ArrayList<>();
+    private final List<ApplicativeTestRule<JenkinsInstance>> rulesToBeAppliedAfterJenkinsStart  = new ArrayList<>();
 
     public TestEnvironment(JenkinsInstance instance) {
         this.instance = instance;

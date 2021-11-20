@@ -1,7 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.model;
 
-import com.google.common.collect.ImmutableList;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +19,7 @@ public class ProjectInformation {
     }
 
     public List<ProjectStatus> status() {
-        return ImmutableList.copyOf(status);
+        return Collections.unmodifiableList(new ArrayList<>(status));
     }
 
     @Override

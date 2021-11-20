@@ -146,6 +146,7 @@
         </dependency>
         <!-- / serenity -->
 
+        <!-- TODO remove when minimum Jenkins core baseline is 2.321 or higher -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>

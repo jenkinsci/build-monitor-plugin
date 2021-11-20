@@ -1,7 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.google.common.base.Supplier;
-import com.google.common.collect.Lists;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
 import hudson.model.AbstractBuild;
@@ -14,7 +12,6 @@ import jenkins.model.CauseOfInterruption;
 import jenkins.model.InterruptedBuildAction;
 
 import com.jenkinsci.plugins.badge.action.BadgeAction;
-import org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildAction;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 
@@ -23,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -194,9 +192,8 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     private InterruptedBuildAction interruptedBuildAction(User user) {
-        List<CauseOfInterruption> causes = Lists.<CauseOfInterruption>newArrayList(
-                new CauseOfInterruption.UserInterruption(user)
-        );
+        List<CauseOfInterruption> causes = new ArrayList<>();
+        causes.add(new CauseOfInterruption.UserInterruption(user));
 
         InterruptedBuildAction action = mock(InterruptedBuildAction.class);
         when(action.getCauses()).thenReturn(causes);
@@ -226,16 +223,6 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         FoundFailureCause failure = mock(FoundFailureCause.class);
         when(failure.getName()).thenReturn(name);
         return failure;
-    }
-
-    public BuildStateRecipe hasBadgesGroovyPostbuildPlugin(BadgeGroovyPostbuildRecipe... badges) {
-        List<GroovyPostbuildAction> actions = new ArrayList<GroovyPostbuildAction>();
-        for (int i = 0; i < badges.length; i++) {
-            actions.add(badges[i].get());
-        }
-        when(build.getActions(GroovyPostbuildAction.class)).thenReturn(actions);
-
-        return this;
     }
 
     public BuildStateRecipe hasBadgesBadgePlugin(BadgeBadgePluginRecipe... badges) {

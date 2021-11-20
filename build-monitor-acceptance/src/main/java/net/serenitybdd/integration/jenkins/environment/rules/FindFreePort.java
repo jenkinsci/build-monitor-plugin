@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.String.format;
 
 public class FindFreePort implements ApplicativeTestRule<JenkinsInstance> {
@@ -31,7 +30,9 @@ public class FindFreePort implements ApplicativeTestRule<JenkinsInstance> {
     }
 
     public FindFreePort(int rangeStart, int rangeEnd) {
-        checkArgument(rangeStart <= rangeEnd, format("Start of the port range (%d) should be lower than the end of the range (%d)", rangeStart, rangeEnd));
+        if (rangeStart > rangeEnd) {
+          throw new IllegalArgumentException(format("Start of the port range (%d) should be lower than the end of the range (%d)", rangeStart, rangeEnd));
+        }
 
         this.rangeStart = rangeStart;
         this.rangeEnd = rangeEnd;

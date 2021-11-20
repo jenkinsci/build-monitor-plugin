@@ -1,16 +1,17 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.culprits;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import hudson.model.AbstractBuild;
 import hudson.model.Run;
 import hudson.model.User;
 import hudson.scm.ChangeLogSet;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
-
-import static com.google.common.collect.Iterables.transform;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 class BuildCulpritsAbstractBuild extends BuildCulpritsRetriever {
 
@@ -19,30 +20,24 @@ class BuildCulpritsAbstractBuild extends BuildCulpritsRetriever {
     @Override
     public Set<String> getCulprits(Run<?, ?> run) {
         AbstractBuild<?, ?> abstractBuild = (AbstractBuild<?, ?>) run;
-        Set<String> culprits = new TreeSet<String>();
-        Iterable<String> forAbstractBuild = transform(abstractBuild.getCulprits(), new Function<User, String>() {
-            @Override
-            public String apply(User culprit) {
-                return culprit.getFullName();
-            }
-        });
-        Iterables.addAll(culprits, forAbstractBuild);
-        return culprits;
+        return new TreeSet<>(
+                abstractBuild.getCulprits().stream()
+                        .map(User::getFullName)
+                        .collect(Collectors.toSet()));
     }
 
 
     @Override
+    @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
     protected Set<String> getCommittersForRun(Run<?, ?> run) {
         AbstractBuild<?, ?> abstractBuild = (AbstractBuild<?, ?>) run;
-        Set<String> committers = new TreeSet<String>();
-        Iterable<String> iterable = transform(nonNullIterable(((AbstractBuild<?, ?>) abstractBuild)
-            .getChangeSet()), new Function<ChangeLogSet.Entry, String>() {
-            @Override
-            public String apply(ChangeLogSet.Entry entry) {
-                return entry.getAuthor().getFullName();
-            }
-        });
-        Iterables.addAll(committers, iterable);
-        return committers;
+        ChangeLogSet<? extends ChangeLogSet.Entry> cs = abstractBuild.getChangeSet();
+        if (cs == null) {
+            return Collections.emptySet();
+        }
+        return new TreeSet<>(
+                StreamSupport.stream(cs.spliterator(), false)
+                        .map(entry -> entry.getAuthor().getFullName())
+                        .collect(Collectors.toSet()));
     }
 }

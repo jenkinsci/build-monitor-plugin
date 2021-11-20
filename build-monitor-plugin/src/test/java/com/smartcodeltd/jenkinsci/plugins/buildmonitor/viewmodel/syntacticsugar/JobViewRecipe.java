@@ -1,22 +1,21 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.google.common.base.Supplier;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.Feature;
 import hudson.model.Job;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-import static com.google.common.collect.Lists.newArrayList;
+import java.util.function.Supplier;
 
 public class JobViewRecipe implements Supplier<JobView> {
     private Job<?, ?> job;
     private RelativeLocation relative;
     private Date systemTime = new Date();
-    private List<Feature> features = newArrayList();
+    private List<Feature> features = new ArrayList<>();
     private boolean isPipeline;
 
     public JobViewRecipe of(Job<?, ?> job) {

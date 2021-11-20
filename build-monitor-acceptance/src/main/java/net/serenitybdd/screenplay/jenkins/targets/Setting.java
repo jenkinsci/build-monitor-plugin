@@ -1,6 +1,5 @@
 package net.serenitybdd.screenplay.jenkins.targets;
 
-import com.google.common.base.Joiner;
 import net.serenitybdd.screenplay.targets.Target;
 
 import static java.lang.String.format;
@@ -9,14 +8,8 @@ public class Setting {
 	
     public static Target defining(String name) {
         return Target.the(format("the '%s' field", name))
-                .locatedBy(lastElementMatching(either(xpathFor("input"), xpathFor("textarea"), xpathFor("select"), 
-                        xpathForTableLayout("input"), xpathForTableLayout("textarea"), xpathForTableLayout("select"))))
+                .locatedBy(lastElementMatching(either(xpathFor("input"), xpathFor("textarea"), xpathFor("select"))))
                 .of(name);
-    }
-
-    private static String xpathForTableLayout(String fieldType) {
-        // TODO: Deprecated Layout Since 2.277.1
-        return format("//tr[td[contains(@class, 'setting-name') and contains(., '{0}')]]//%s", fieldType);
     }
 
     private static String xpathFor(String fieldType) {
@@ -24,7 +17,7 @@ public class Setting {
     }
 
     private static String either(String... xpaths) {
-        return Joiner.on(" | ").join(xpaths);
+        return String.join(" | ", xpaths);
     }
 
     private static String lastElementMatching(String xpath) {

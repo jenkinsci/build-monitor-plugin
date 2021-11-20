@@ -4,8 +4,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
 import hudson.model.Job;
 
 import java.util.Comparator;
-
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafety.getOrElse;
+import java.util.Optional;
 
 public class Config {
 
@@ -25,7 +24,7 @@ public class Config {
          *  https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/43
          */
 
-        return getOrElse(order, new ByName());
+        return Optional.ofNullable(order).orElse(new ByName());
     }
 
     public void setOrder(Comparator<Job<?, ?>> order) {
@@ -33,7 +32,7 @@ public class Config {
     }
     
     public BuildFailureAnalyzerDisplayedField getBuildFailureAnalyzerDisplayedField() {
-        return getOrElse(buildFailureAnalyzerDisplayedField, BuildFailureAnalyzerDisplayedField.Name);
+        return Optional.ofNullable(buildFailureAnalyzerDisplayedField).orElse(BuildFailureAnalyzerDisplayedField.Name);
     }
     
     public void setBuildFailureAnalyzerDisplayedField(String buildFailureAnalyzerDisplayedField) {
@@ -41,7 +40,7 @@ public class Config {
     }
     
     public boolean shouldDisplayCommitters() {
-        return getOrElse(displayCommitters, true);
+        return Optional.ofNullable(displayCommitters).orElse(true);
     }
 
     public void setDisplayCommitters(boolean flag) {

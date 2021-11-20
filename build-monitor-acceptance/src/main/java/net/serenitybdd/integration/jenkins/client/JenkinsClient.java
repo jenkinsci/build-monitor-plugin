@@ -1,7 +1,5 @@
 package net.serenitybdd.integration.jenkins.client;
 
-import com.google.common.base.Joiner;
-
 import hudson.cli.CLI;
 import net.serenitybdd.integration.jenkins.process.JenkinsProcess;
 import org.jdeferred.Promise;
@@ -148,7 +146,7 @@ public class JenkinsClient {
     }
 
     private synchronized int executeGroovy(Promise<Matcher, ?, ?> promise, String... groovyScriptLines) throws InterruptedException {
-        String script = Joiner.on(";\n").join(groovyScriptLines);
+        String script = String.join(";\n", groovyScriptLines);
 
         //TODO use RealJenkinsRule
         //return executor.call("groovy", "=").execute(withInput(script), info(logger), error(logger));

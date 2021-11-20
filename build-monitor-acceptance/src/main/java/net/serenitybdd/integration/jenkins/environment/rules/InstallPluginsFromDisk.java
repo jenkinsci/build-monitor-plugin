@@ -1,6 +1,5 @@
 package net.serenitybdd.integration.jenkins.environment.rules;
 
-import com.google.common.base.Joiner;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
@@ -12,8 +11,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Arrays.asList;
 
 public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstance> {
@@ -31,7 +30,7 @@ public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstan
             @Override
             protected void starting(Description description) {
                 Path pluginsDir = jenkins.home().resolve("plugins");
-                String plugins  = Joiner.on(", ").join(pluginsToInstall);
+                String plugins  = pluginsToInstall.stream().map(Object::toString).collect(Collectors.joining(", "));
 
                 Log.info("Installing {} into {}", plugins, pluginsDir);
 
@@ -47,7 +46,9 @@ public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstan
             }
 
             private Path existing(Path plugin) {
-                checkArgument(Files.exists(plugin), String.format("Plugin file '%s' doesn't exist and couldn't be installed.", plugin));
+                if (!Files.exists(plugin)) {
+                  throw new IllegalArgumentException(String.format("Plugin file '%s' doesn't exist and couldn't be installed.", plugin));
+                }
 
                 return plugin;
             }
