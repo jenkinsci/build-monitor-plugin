@@ -8,8 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.jenkinsci.plugins.badge.action.BadgeAction;
 
 /**

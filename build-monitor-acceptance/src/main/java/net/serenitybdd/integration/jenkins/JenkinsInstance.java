@@ -38,19 +38,25 @@ public class JenkinsInstance implements TestRule {
     /**
      * @param   pluginUnderTest
      *          Path to the plugin under test, either a .hpi or a .jpi file
+     * @param   jackson2ApiPlugin
+     *          Path to the Jackson 2 API plugin, either a .hpi or a .jpi file
+     * @param   snakeyamlApiPlugin
+     *          Path to the SnakeYAML API plugin, either a .hpi or a .jpi file
      */
-    public JenkinsInstance(Path pluginUnderTest) {
-        this(PluginDescription.of(pluginUnderTest));
+    public JenkinsInstance(Path pluginUnderTest, Path jackson2ApiPlugin, Path snakeyamlApiPlugin) {
+        this(PluginDescription.of(pluginUnderTest), PluginDescription.of(jackson2ApiPlugin), PluginDescription.of(snakeyamlApiPlugin));
     }
 
     /**
      * @param   description
      *          Plugin meta-data derived from the manifest file packaged with the plugin
      */
-    public JenkinsInstance(PluginDescription description) {
+    public JenkinsInstance(PluginDescription description, PluginDescription jackson2ApiPlugin, PluginDescription snakeyamlApiPlugin) {
         this.pluginUnderTest = description;
 
         defaultRules = asList(
+                InstallPlugins.fromDisk(snakeyamlApiPlugin.path()),
+                InstallPlugins.fromDisk(jackson2ApiPlugin.path()),
                 InstallPlugins.fromDisk(pluginUnderTest.path()),
                 new ManageJenkinsServer()
         );

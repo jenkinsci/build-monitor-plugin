@@ -21,7 +21,7 @@
         <encoding>UTF-8</encoding>
         <serenity.version>2.4.51</serenity.version>
         <aether.version>1.0.0.v20140518</aether.version>
-        <bytebuddy.version>1.11.19</bytebuddy.version>
+        <bytebuddy.version>1.12.1</bytebuddy.version>
 
         <webdriver.driver>chrome</webdriver.driver>
         <browserstack.url/>
@@ -85,7 +85,7 @@
             <dependency>
                 <groupId>com.thoughtworks.xstream</groupId>
                 <artifactId>xstream</artifactId>
-                <version>1.4.17</version>
+                <version>1.4.18</version>
             </dependency>
             <dependency>
                 <groupId>commons-net</groupId>
@@ -95,7 +95,7 @@
             <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
-                <version>2.10.5</version>
+                <version>2.10.13</version>
             </dependency>
             <dependency>
                 <groupId>net.bytebuddy</groupId>
