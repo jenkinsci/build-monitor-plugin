@@ -10,6 +10,8 @@ updates:
     ignore:
       # TODO Starting with 9.4.20.v20190813, JellyTestSuiteBuilder$JellyTestSuite starts failing with com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException: 500 Server Error
       - dependency-name: "org.eclipse.jetty:*"
+      # This is the minimum Jenkins version
+      - dependency-name: "org.jenkins-ci.main:cli"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
