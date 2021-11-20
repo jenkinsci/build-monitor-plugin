@@ -133,7 +133,7 @@
         <dependency>
             <groupId>com.github.sommeri</groupId>
             <artifactId>less4j</artifactId>
-            <version>1.8.0</version>
+            <version>1.17.2</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.modules</groupId>
