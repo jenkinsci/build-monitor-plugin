@@ -195,7 +195,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>view-job-filters</artifactId>
-            <version>1.26</version>
+            <version>2.3</version>
             <optional>true</optional>
         </dependency>
         <dependency>
