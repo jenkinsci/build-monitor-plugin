@@ -2,13 +2,10 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import jenkins.model.Jenkins;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.MockedStatic;
 
 import java.util.List;
 
@@ -16,17 +13,19 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacti
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.currentTime;
 import static hudson.model.Result.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Jan Molak
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Jenkins.class})
 public class JobViewTest {
 
     private static final String theName = "some-TLAs-followed-by-a-project-name";
@@ -35,13 +34,19 @@ public class JobViewTest {
     private RelativeLocation relativeLocation = mock(RelativeLocation.class); // TODO recipe builder
     private JobView view;
 
-    @Mock
+    private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
     @Before
     public void setup() {
-        PowerMockito.mockStatic(Jenkins.class);
-        PowerMockito.when(Jenkins.getInstance()).thenReturn(jenkins);
+        mockedJenkins = mockStatic(Jenkins.class);
+        jenkins = mock(Jenkins.class);
+        mockedJenkins.when(Jenkins::getInstance).thenReturn(jenkins);
+    }
+
+    @After
+    public void tearDown() {
+        mockedJenkins.close();
     }
 
     /*

@@ -4,35 +4,38 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.KnowsCurrentBuildsDetails.CurrentBuild;
 
 import jenkins.model.Jenkins;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.MockedStatic;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.assumeThat;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.currentTime;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 
 import java.util.Date;
 import java.util.List;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Jenkins.class})
 public class KnowsCurrentBuildsDetailsTest {
     private JobView view;
 
-    @Mock
+    private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
     @Before
     public void setup() {
-        PowerMockito.mockStatic(Jenkins.class);
-        PowerMockito.when(Jenkins.getInstance()).thenReturn(jenkins);
+        mockedJenkins = mockStatic(Jenkins.class);
+        jenkins = mock(Jenkins.class);
+        mockedJenkins.when(Jenkins::getInstance).thenReturn(jenkins);
+    }
+
+    @After
+    public void tearDown() {
+        mockedJenkins.close();
     }
 
     @Test

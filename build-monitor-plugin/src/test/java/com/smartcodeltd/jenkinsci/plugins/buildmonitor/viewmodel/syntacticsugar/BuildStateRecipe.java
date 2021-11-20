@@ -12,8 +12,8 @@ import jenkins.model.CauseOfInterruption;
 import jenkins.model.InterruptedBuildAction;
 
 import com.jenkinsci.plugins.badge.action.BadgeAction;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,10 +22,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
 
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 /**
  * @author Jan Molak
@@ -35,10 +34,10 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     private AbstractBuild<?, ?> build;
 
     public BuildStateRecipe() {
-        build = PowerMockito.mock(AbstractBuild.class);
+        build = Mockito.mock(AbstractBuild.class);
 
         AbstractProject parent = mock(AbstractProject.class);
-        doReturn(parent).when(build).getParent();
+        lenient().doReturn(parent).when(build).getParent();
     }
 
     public BuildStateRecipe hasNumber(int number) {
@@ -59,7 +58,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     public BuildStateRecipe finishedWith(Result result) {
-        when(build.getResult()).thenReturn(result);
+        lenient().when(build.getResult()).thenReturn(result);
 
         return this;
     }
@@ -86,17 +85,17 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    //PowerMockito reflective call to handle methods not available in Jenkins 2.46 which is used as dependency
+    //Mockito reflective call to handle methods not available in Jenkins 2.46 which is used as dependency
     private BuildStateRecipe withChangesFromForJenkins2_107AndNewer(String... authors) throws Exception {
         ChangeLogSet changeSet = changeSetBasedOn(entriesBy(authors));
         when(build.getChangeSet()).thenReturn(changeSet);
-        PowerMockito.doReturn(true).when(build, "shouldCalculateCulprits");
+        lenient().when(build.shouldCalculateCulprits()).thenReturn(true);
 
         // any methods that use getChangeSet as their source of data should be called normally
         // (build is a partial mock in this case)
-        when(build.getChangeSets()).thenCallRealMethod();
-        when(build.getCulprits()).thenCallRealMethod();
-        PowerMockito.doCallRealMethod().when(build, "calculateCulprits");
+        lenient().when(build.getChangeSets()).thenCallRealMethod();
+        lenient().when(build.getCulprits()).thenCallRealMethod();
+        lenient().when(build.calculateCulprits()).thenCallRealMethod();
 
         return this;
     }
@@ -122,7 +121,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     public BuildStateRecipe isStillBuilding() {
-        when(build.isBuilding()).thenReturn(true);
+        lenient().when(build.isBuilding()).thenReturn(true);
 
         return this;
     }
@@ -169,19 +168,20 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
 
     private ClaimBuildAction claimBuildAction(String author, String reason) {
         ClaimBuildAction action = mock(ClaimBuildAction.class);
-        when(action.isClaimed()).thenReturn(true);
+        lenient().when(action.isClaimed()).thenReturn(true);
         when(action.getClaimedByName()).thenReturn(author);
         when(action.getReason()).thenReturn(reason);
 
         return action;
     }
 
-    public BuildStateRecipe wasAbortedBy(String username) {
+    public BuildStateRecipe wasAbortedBy(String username, MockedStatic<User> mockedUser) {
         User user = userCalled(username);
 
-        mockStatic(User.class);
-        PowerMockito.when(User.get(user.getId())).thenReturn(user); //For older Jenins versions
-        PowerMockito.when(User.get(Mockito.eq(user.getId()), Mockito.eq(false), Mockito.anyMap())).thenReturn(user); //For newer Jenkins versions
+        if (mockedUser != null) {
+            mockedUser.when(() -> User.get(user.getId())).thenReturn(user); //For older Jenkins versions
+            mockedUser.when(() -> User.get(Mockito.eq(user.getId()), Mockito.eq(false), Mockito.anyMap())).thenReturn(user); // For newer Jenkins versions
+        }
 
         final InterruptedBuildAction action = interruptedBuildAction(user);
         when(build.getAction(InterruptedBuildAction.class)).thenReturn(action);
