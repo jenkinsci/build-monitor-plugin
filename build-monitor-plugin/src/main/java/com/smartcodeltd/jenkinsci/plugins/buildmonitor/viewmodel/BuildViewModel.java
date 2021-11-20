@@ -1,11 +1,11 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
-import com.google.common.base.Optional;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import hudson.model.Action;
 import hudson.model.Result;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface BuildViewModel {

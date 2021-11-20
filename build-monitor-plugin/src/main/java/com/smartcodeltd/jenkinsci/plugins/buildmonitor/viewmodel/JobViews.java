@@ -6,9 +6,8 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headli
 import hudson.model.Job;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * @author Jan Molak
@@ -28,7 +27,7 @@ public class JobViews {
     }
 
     public JobView viewOf(Job<?, ?> job) {
-        List<Feature> viewFeatures = newArrayList();
+        List<Feature> viewFeatures = new ArrayList<>();
 
         // todo: a more elegant way of assembling the features would be nice
         viewFeatures.add(new HasHeadline(new HeadlineConfig(config.shouldDisplayCommitters())));

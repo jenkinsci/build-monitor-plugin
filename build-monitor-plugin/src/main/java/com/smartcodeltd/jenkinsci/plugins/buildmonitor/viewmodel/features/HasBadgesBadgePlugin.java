@@ -1,10 +1,9 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
-import com.google.common.collect.ImmutableList;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 
-import static com.google.common.collect.Lists.newArrayList;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -37,7 +36,7 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
     }
 
     public static class Badges {
-        private final List<Badge> badges = newArrayList();
+        private final List<Badge> badges = new ArrayList<>();
 
         public Badges(Iterator<BadgeAction> badgeActions) {
             while (badgeActions.hasNext()) {
@@ -47,7 +46,7 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
 
         @JsonValue
         public List<Badge> value() {
-            return ImmutableList.copyOf(badges);
+            return Collections.unmodifiableList(new ArrayList<>(badges));
         }
     }
 

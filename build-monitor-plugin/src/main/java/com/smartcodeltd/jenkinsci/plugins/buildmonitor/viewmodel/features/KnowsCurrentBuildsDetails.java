@@ -1,13 +1,11 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 
-import static com.google.common.collect.Lists.newArrayList;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,13 +41,13 @@ public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDeta
 
     private static String formattedStages(List<String> stages) {
         if (!stages.isEmpty()) {
-            return "[" + Joiner.on(", ").join(stages) + "]";
+            return "[" + String.join(", ", stages) + "]";
         }
         return "";
     }
 
     public static class CurrentBuilds {
-        private final List<CurrentBuild> builds = newArrayList();
+        private final List<CurrentBuild> builds = new ArrayList<>();
 
         public CurrentBuilds(List<BuildViewModel> currentBuilds) {
         	for (Iterator<BuildViewModel> i = currentBuilds.iterator(); i.hasNext(); ) {
@@ -59,7 +57,7 @@ public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDeta
 
 		@JsonValue
 		public List<CurrentBuild> value() {
-			return ImmutableList.copyOf(builds);
+			return Collections.unmodifiableList(new ArrayList<>(builds));
 		}
     }
 

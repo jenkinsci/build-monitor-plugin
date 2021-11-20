@@ -1,13 +1,12 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline;
 
-import com.google.common.collect.Sets;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Lister;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 public class HeadlineOfExecuting implements CandidateHeadline {
     private final JobView job;
@@ -32,13 +31,13 @@ public class HeadlineOfExecuting implements CandidateHeadline {
         return Lister.describe(
                 "",
                 "Building %s's changes",
-                newArrayList(committersOf(build))
+                new ArrayList<>(committersOf(build))
         );
     }
 
     private Set<String> committersOf(BuildViewModel build) {
         return config.displayCommitters
                 ? build.committers()
-                : Sets.<String>newHashSet();
+                : new HashSet<>();
     }
 }

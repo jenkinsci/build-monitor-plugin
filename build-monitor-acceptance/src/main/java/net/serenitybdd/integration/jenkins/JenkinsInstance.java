@@ -1,6 +1,5 @@
 package net.serenitybdd.integration.jenkins;
 
-import com.beust.jcommander.internal.Lists;
 import net.serenitybdd.integration.jenkins.client.JenkinsClient;
 import net.serenitybdd.integration.jenkins.environment.PluginDescription;
 import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
@@ -17,9 +16,9 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import static com.google.common.collect.ImmutableList.copyOf;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static net.serenitybdd.integration.utils.ListFunctions.concat;
@@ -32,9 +31,9 @@ public class JenkinsInstance implements TestRule {
 
     private JenkinsClient client = null;    // instantiated when the Jenkins server is up and running
 
-    private List<? extends ApplicativeTestRule<JenkinsInstance>> customRulesToApplyBeforeStart = Lists.newArrayList();
+    private List<? extends ApplicativeTestRule<JenkinsInstance>> customRulesToApplyBeforeStart = new ArrayList<>();
     private List<? extends ApplicativeTestRule<JenkinsInstance>> defaultRules;
-    private List<? extends ApplicativeTestRule<JenkinsInstance>> customRulesToApplyAfterStart  = Lists.newArrayList();
+    private List<? extends ApplicativeTestRule<JenkinsInstance>> customRulesToApplyAfterStart  = new ArrayList<>();
 
     /**
      * @param   pluginUnderTest
@@ -102,13 +101,13 @@ public class JenkinsInstance implements TestRule {
     }
 
     public <ATR extends ApplicativeTestRule<JenkinsInstance>> JenkinsInstance beforeStartApply(List<ATR> customRulesToBeApplied) {
-        this.customRulesToApplyBeforeStart = copyOf(customRulesToBeApplied);
+        this.customRulesToApplyBeforeStart = Collections.unmodifiableList(new ArrayList<>(customRulesToBeApplied));
 
         return this;
     }
 
     public <ATR extends ApplicativeTestRule<JenkinsInstance>> JenkinsInstance afterStartApply(List<ATR> customRulesToBeApplied) {
-        this.customRulesToApplyAfterStart = copyOf(customRulesToBeApplied);
+        this.customRulesToApplyAfterStart = Collections.unmodifiableList(new ArrayList<>(customRulesToBeApplied));
 
         return this;
     }

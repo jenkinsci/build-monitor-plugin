@@ -1,7 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.google.common.base.Supplier;
-import com.google.common.collect.Lists;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
 import hudson.model.AbstractBuild;
@@ -22,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -193,9 +192,8 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     private InterruptedBuildAction interruptedBuildAction(User user) {
-        List<CauseOfInterruption> causes = Lists.<CauseOfInterruption>newArrayList(
-                new CauseOfInterruption.UserInterruption(user)
-        );
+        List<CauseOfInterruption> causes = new ArrayList<>();
+        causes.add(new CauseOfInterruption.UserInterruption(user));
 
         InterruptedBuildAction action = mock(InterruptedBuildAction.class);
         when(action.getCauses()).thenReturn(causes);

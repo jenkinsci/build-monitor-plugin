@@ -1,7 +1,6 @@
 package net.serenitybdd.integration.jenkins.environment;
 
 import com.github.zafarkhaja.semver.Version;
-import com.google.common.base.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -77,7 +77,7 @@ public class UpdateCenter {
     }
 
     private String stripJSONPEnvelope(Path jsonp) throws IOException {
-        return Files.readAllLines(jsonp, Charsets.UTF_8).get(1);
+        return Files.readAllLines(jsonp, StandardCharsets.UTF_8).get(1);
     }
 
     private Path download(URL link) throws IOException {

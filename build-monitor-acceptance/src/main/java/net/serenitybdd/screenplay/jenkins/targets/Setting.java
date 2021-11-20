@@ -1,6 +1,5 @@
 package net.serenitybdd.screenplay.jenkins.targets;
 
-import com.google.common.base.Joiner;
 import net.serenitybdd.screenplay.targets.Target;
 
 import static java.lang.String.format;
@@ -18,7 +17,7 @@ public class Setting {
     }
 
     private static String either(String... xpaths) {
-        return Joiner.on(" | ").join(xpaths);
+        return String.join(" | ", xpaths);
     }
 
     private static String lastElementMatching(String xpath) {

@@ -1,17 +1,14 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.culprits;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
 import hudson.model.Result;
 import hudson.model.Run;
-import hudson.scm.ChangeLogSet;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
-import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-
-import static com.google.common.collect.Iterables.transform;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 class BuildCulpritsWorkflowRun extends BuildCulpritsRetriever {
 
@@ -44,18 +41,14 @@ class BuildCulpritsWorkflowRun extends BuildCulpritsRetriever {
     @Override
     protected Set<String> getCommittersForRun(Run<?, ?> run) {
         WorkflowRun workflowRun = (WorkflowRun) run;
-        Set<String> committers = new TreeSet<String>();
-        for (ChangeLogSet<? extends ChangeLogSet.Entry> changeLogSet : workflowRun.getChangeSets()) {
-            Iterables
-                .addAll(committers, transform(nonNullIterable(changeLogSet), new Function<ChangeLogSet.Entry, String>
-                    () {
-                    @Override
-                    public String apply(@Nullable ChangeLogSet.Entry entry) {
-                        return entry != null ? entry.getAuthor().getFullName() : null;
-                    }
-                }));
-        }
-        return committers;
+        return new TreeSet<>(
+                workflowRun.getChangeSets().stream()
+                        .filter(Objects::nonNull)
+                        .flatMap(
+                                changeLogSet ->
+                                        StreamSupport.stream(changeLogSet.spliterator(), false))
+                        .map(entry -> entry != null ? entry.getAuthor().getFullName() : null)
+                        .collect(Collectors.toSet()));
     }
 
     private Set<String> getCulpritsForRun(WorkflowRun from, WorkflowRun to) {
@@ -66,7 +59,7 @@ class BuildCulpritsWorkflowRun extends BuildCulpritsRetriever {
             if (next == null || next.getNumber() >= to.getNumber()) {
                 break;
             }
-            Iterables.addAll(culprits, getCommitters(next));
+            culprits.addAll(getCommitters(next));
         }
         return culprits;
     }

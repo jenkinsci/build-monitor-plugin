@@ -1,11 +1,11 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.google.common.base.Supplier;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import hudson.model.AbstractProject;
 import hudson.model.Job;
 
 import java.util.Comparator;
+import java.util.function.Supplier;
 
 public class ConfigStateRecipe implements Supplier<Config> {
 

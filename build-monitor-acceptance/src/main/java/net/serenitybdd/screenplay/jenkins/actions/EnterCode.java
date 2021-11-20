@@ -1,6 +1,5 @@
 package net.serenitybdd.screenplay.jenkins.actions;
 
-import com.google.common.base.Joiner;
 import net.serenitybdd.screenplay.Action;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actions.Click;
@@ -20,11 +19,11 @@ public class EnterCode {
     }
 
     public Action intoTheCodeMirror(Target editorField) {
-        return instrumented(EnterCodeIntoCodeMirrorEditor.class, editorField, Joiner.on(System.lineSeparator()).join(lines));
+        return instrumented(EnterCodeIntoCodeMirrorEditor.class, editorField, String.join(System.lineSeparator(), lines));
     }
 
     public Action intoThePipelineEditor(Target editorField) {
-        return instrumented(EnterCodeIntoPipelineEditor.class, editorField, Joiner.on(System.lineSeparator()).join(lines));
+        return instrumented(EnterCodeIntoPipelineEditor.class, editorField, String.join(System.lineSeparator(), lines));
     }
 
     public EnterCode(List<String> lines) {

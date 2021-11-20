@@ -1,10 +1,10 @@
 package net.serenitybdd.screenplay.jenkins.tasks.configuration;
 
-import com.beust.jcommander.internal.Lists;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -42,5 +42,5 @@ public class TodoList implements Task {
         return todos.toArray(new Performable[todos.size()]);
     }
 
-    private final List<Performable> todos = Lists.newArrayList();
+    private final List<Performable> todos = new ArrayList<>();
 }

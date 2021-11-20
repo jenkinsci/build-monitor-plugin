@@ -1,16 +1,15 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config.BuildFailureAnalyzerDisplayedField;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
 import org.codehaus.jackson.annotate.JsonValue;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import static com.google.common.collect.Lists.newArrayList;
+import java.util.Optional;
 
 public class CanBeDiagnosedForProblems implements Feature<CanBeDiagnosedForProblems.Problems> {
     private JobView job;
@@ -38,7 +37,7 @@ public class CanBeDiagnosedForProblems implements Feature<CanBeDiagnosedForProbl
     
     public static class Problems {
 
-        private final List<String> failures = newArrayList();
+        private final List<String> failures = new ArrayList<>();
 
         public Problems(FailureCauseBuildAction action, BuildFailureAnalyzerDisplayedField displayedField) {
             if (displayedField != BuildFailureAnalyzerDisplayedField.None) {
@@ -50,7 +49,7 @@ public class CanBeDiagnosedForProblems implements Feature<CanBeDiagnosedForProbl
 
         @JsonValue
         public List<String> value() {
-            return ImmutableList.copyOf(failures);
+            return Collections.unmodifiableList(new ArrayList<>(failures));
         }
     }
 }

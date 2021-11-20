@@ -1,11 +1,10 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.model;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,8 +36,10 @@ public enum ProjectStatus {
         // todo: Java 8?
         List<ProjectStatus> statuses = new ArrayList<>();
 
-        for(String statusClass : Sets.intersection(projectStatusClasses(), setOf(split(cssClasses)))) {
-            statuses.add(ProjectStatus.from(statusClass));
+        for (String statusClass : projectStatusClasses()) {
+            if (setOf(split(cssClasses)).contains(statusClass)) {
+                statuses.add(ProjectStatus.from(statusClass));
+            }
         }
 
         return statuses;
@@ -66,7 +67,7 @@ public enum ProjectStatus {
     }
 
     private static <T> Set<T> setOf(List<T> items) {
-        return ImmutableSet.copyOf(items);
+        return Collections.unmodifiableSet(new HashSet<>(items));
     }
 
     private static <T> List<String> stringRepresentationsOf(Collection<T> items) {

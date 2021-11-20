@@ -1,12 +1,11 @@
 package net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-import static com.google.common.collect.Lists.transform;
 import static java.util.Arrays.asList;
 
 public class ShellScript {
@@ -20,13 +19,13 @@ public class ShellScript {
     }
 
     public ShellScript definedAs(List<String> lines) {
-        this.code = Joiner.on('\n').join(lines);
+        this.code = String.join("\n", lines);
 
         return this;
     }
 
     public ShellScript andOutputs(String... lines) {
-        return definedAs(transform(asList(lines), mapEachLineTo("echo \"%s\";")));
+        return definedAs(Arrays.stream(lines).map(mapEachLineTo("echo \"%s\";")).collect(Collectors.toList()));
     }
 
     public String code() {

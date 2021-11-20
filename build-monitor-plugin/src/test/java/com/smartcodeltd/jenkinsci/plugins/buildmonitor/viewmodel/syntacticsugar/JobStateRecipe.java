@@ -1,6 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.google.common.base.Supplier;
 import hudson.model.AbstractBuild;
 import hudson.model.ItemGroup;
 import hudson.model.Job;
@@ -12,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
