@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.Feature;
@@ -8,8 +9,6 @@ import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.util.RunList;
-
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.Collections;

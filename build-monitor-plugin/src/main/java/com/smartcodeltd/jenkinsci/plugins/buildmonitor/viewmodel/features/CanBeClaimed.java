@@ -1,8 +1,8 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import hudson.plugins.claim.ClaimBuildAction;
-import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.Optional;
 

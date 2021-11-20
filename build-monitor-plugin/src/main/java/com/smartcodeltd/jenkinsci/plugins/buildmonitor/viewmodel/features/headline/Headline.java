@@ -1,6 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline;
 
-import org.codehaus.jackson.annotate.JsonValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * @author Jan Molak

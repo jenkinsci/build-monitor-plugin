@@ -1,10 +1,10 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config.BuildFailureAnalyzerDisplayedField;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
-import org.codehaus.jackson.annotate.JsonValue;
 
 import java.util.ArrayList;
 import java.util.Collections;

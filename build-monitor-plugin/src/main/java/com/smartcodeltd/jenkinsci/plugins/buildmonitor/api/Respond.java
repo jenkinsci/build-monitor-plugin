@@ -1,7 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONObject;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 
