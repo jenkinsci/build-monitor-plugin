@@ -7,7 +7,6 @@
         <jenkins.version>2.289.1</jenkins.version>
         <java.level>8</java.level>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.version>9.4.19.v20190610</jetty.version> <!-- TODO Starting with 9.4.20.v20190813, JellyTestSuiteBuilder$JellyTestSuite starts failing with com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException: 500 Server Error -->
     </properties>
 
     <parent>
@@ -67,51 +66,6 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>3.12.0</version>
             </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-io</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-security</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-server</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-servlet</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-util</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-webapp</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-xml</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty.websocket</groupId>
-                <artifactId>websocket-api</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty.websocket</groupId>
-                <artifactId>websocket-server</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -123,34 +77,7 @@
                     <artifactId>release-candidate-maven-plugin</artifactId>
                     <version>1.0-201605132325.9e7d5be</version>
                 </plugin>
-                <plugin>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>display-info</id>
-                            <configuration>
-                                <rules>
-                                    <requireUpperBoundDeps>
-                                        <excludes combine.children="append">
-                                            <exclude>org.eclipse.jetty:jetty-client</exclude>
-                                            <exclude>org.eclipse.jetty:jetty-http</exclude>
-                                            <exclude>org.eclipse.jetty:jetty-io</exclude>
-                                            <exclude>org.eclipse.jetty:jetty-security</exclude>
-                                            <exclude>org.eclipse.jetty:jetty-server</exclude>
-                                            <exclude>org.eclipse.jetty:jetty-util</exclude>
-                                            <exclude>org.eclipse.jetty:jetty-webapp</exclude>
-                                            <exclude>org.eclipse.jetty:jetty-xml</exclude>
-                                            <exclude>org.eclipse.jetty.websocket:websocket-api</exclude>
-                                            <exclude>org.eclipse.jetty.websocket:websocket-client</exclude>
-                                            <exclude>org.eclipse.jetty.websocket:websocket-common</exclude>
-                                            <exclude>org.eclipse.jetty.websocket:websocket-server</exclude>
-                                        </excludes>
-                                    </requireUpperBoundDeps>
-                                </rules>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
+
             </plugins>
         </pluginManagement>
 

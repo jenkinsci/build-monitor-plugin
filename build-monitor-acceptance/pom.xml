@@ -284,6 +284,34 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>display-info</id>
+                        <configuration>
+                            <rules>
+                                <requireUpperBoundDeps>
+                                    <excludes combine.children="append">
+                                        <exclude>org.eclipse.jetty:jetty-client</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-http</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-io</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-security</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-server</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-util</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-webapp</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-xml</exclude>
+                                        <exclude>org.eclipse.jetty.websocket:websocket-api</exclude>
+                                        <exclude>org.eclipse.jetty.websocket:websocket-client</exclude>
+                                        <exclude>org.eclipse.jetty.websocket:websocket-common</exclude>
+                                        <exclude>org.eclipse.jetty.websocket:websocket-server</exclude>
+                                    </excludes>
+                                </requireUpperBoundDeps>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
