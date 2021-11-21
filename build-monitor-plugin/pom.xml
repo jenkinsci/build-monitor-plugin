@@ -131,11 +131,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.sommeri</groupId>
-            <artifactId>less4j</artifactId>
-            <version>1.17.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.jenkins-ci.modules</groupId>
             <artifactId>instance-identity</artifactId>
             <scope>provided</scope>
@@ -167,13 +162,6 @@
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>git</artifactId>
             <optional>true</optional>
-            <exclusions>
-                <!-- Prefer the version from less4j -->
-                <exclusion>
-                    <groupId>com.google.protobuf</groupId>
-                    <artifactId>protobuf-java</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
@@ -279,6 +267,26 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>biz.gabrys.maven.plugins</groupId>
+                <artifactId>lesscss-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/src/main/webapp/less</sourceDirectory>
+                        <includes>
+                            <include>index.less</include>
+                        </includes>
+                <outputDirectory>${project.build.directory}/${project.build.finalName}/styles</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>compile-less</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>com.github.klieber</groupId>
                 <artifactId>phantomjs-maven-plugin</artifactId>
