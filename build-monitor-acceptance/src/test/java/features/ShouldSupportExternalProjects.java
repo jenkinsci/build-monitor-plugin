@@ -22,6 +22,7 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ShouldSupportExternalProjects extends BuilMonitorAcceptanceTest {
@@ -33,7 +34,7 @@ public class ShouldSupportExternalProjects extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("external-monitor-job"));
+        return Collections.singletonList(InstallPlugins.fromUpdateCenter("external-monitor-job"));
     }
 
     @TestData

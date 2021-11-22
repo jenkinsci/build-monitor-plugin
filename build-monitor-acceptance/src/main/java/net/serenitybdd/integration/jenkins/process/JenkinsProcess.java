@@ -126,7 +126,7 @@ public class JenkinsProcess {
     private List<String> windowsOrUnix(Path command) {
         return OS.contains("win")
                 ? asList("cmd.exe", "/C", command.toString())
-                : asList(command.toString());
+                : Collections.singletonList(command.toString());
     }
 
     public JenkinsLogWatcher getJenkinsLogWatcher() {

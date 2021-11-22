@@ -27,6 +27,7 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurr
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
@@ -38,7 +39,7 @@ public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("workflow-aggregator", "buildtriggerbadge", "badge", "groovy-postbuild"));
+        return Collections.singletonList(InstallPlugins.fromUpdateCenter("workflow-aggregator", "buildtriggerbadge", "badge", "groovy-postbuild"));
     }
 
     @TestData

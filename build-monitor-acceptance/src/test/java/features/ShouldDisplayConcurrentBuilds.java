@@ -23,6 +23,7 @@ import static org.hamcrest.Matchers.is;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ShouldDisplayConcurrentBuilds extends BuilMonitorAcceptanceTest {
@@ -35,7 +36,7 @@ public class ShouldDisplayConcurrentBuilds extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("description-setter"));
+        return Collections.singletonList(InstallPlugins.fromUpdateCenter("description-setter"));
     }
 
     @TestData

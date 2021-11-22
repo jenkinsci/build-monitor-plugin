@@ -21,6 +21,7 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceTest {
@@ -32,7 +33,7 @@ public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceT
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
     @TestData

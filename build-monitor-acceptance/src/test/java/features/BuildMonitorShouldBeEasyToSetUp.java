@@ -22,6 +22,7 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurr
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class BuildMonitorShouldBeEasyToSetUp extends BuilMonitorAcceptanceTest {
@@ -33,7 +34,7 @@ public class BuildMonitorShouldBeEasyToSetUp extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
     @TestData

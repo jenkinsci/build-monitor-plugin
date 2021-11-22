@@ -22,6 +22,7 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisi
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ShouldSupportCloudBeesFolders extends BuilMonitorAcceptanceTest {
@@ -33,7 +34,7 @@ public class ShouldSupportCloudBeesFolders extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("cloudbees-folder"));
+        return Collections.singletonList(InstallPlugins.fromUpdateCenter("cloudbees-folder"));
     }
 
     @TestData
