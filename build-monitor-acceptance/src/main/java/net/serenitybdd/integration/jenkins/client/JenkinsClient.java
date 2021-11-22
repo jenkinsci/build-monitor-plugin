@@ -171,7 +171,7 @@ public class JenkinsClient {
         	List<String> cliArgs = new ArrayList<>(Arrays.asList("-s", jenkinsUrl.toString(), "-http"));
         	cliArgs.addAll(Arrays.asList(args));
         	
-        	return CLI._main(cliArgs.toArray(new String[cliArgs.size()]));
+        	return CLI._main(cliArgs.toArray(new String[0]));
         } catch (Exception e) {
             throw new RuntimeException(String.format("Couldn't connect to Jenkins at '%s'", jenkinsUrl), e);
         }
