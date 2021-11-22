@@ -31,13 +31,7 @@ public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>>, S
     }
 
     private int compareEstimatedDuration(AbstractProject<?, ?> a, AbstractProject<?, ?> b) {
-        if(getTotalEstimatedDuration(a) < getTotalEstimatedDuration(b)) {
-            return -1;
-        } else if (getTotalEstimatedDuration(a) > getTotalEstimatedDuration(b)) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return Long.compare(getTotalEstimatedDuration(a), getTotalEstimatedDuration(b));
 
     }
 }
