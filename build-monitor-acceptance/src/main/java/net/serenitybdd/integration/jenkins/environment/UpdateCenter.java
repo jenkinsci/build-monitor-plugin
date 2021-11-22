@@ -86,17 +86,11 @@ public class UpdateCenter {
         Path destination = Files.createTempFile(tempDir, "", ".tmp");
 
         ReadableByteChannel rbc = Channels.newChannel(link.openStream());
-        FileOutputStream fos = null;
 
-        try {
-            fos = new FileOutputStream(destination.toAbsolutePath().toFile());
+        try (FileOutputStream fos = new FileOutputStream(destination.toAbsolutePath().toFile())) {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 
             return destination;
-        } finally {
-            if (fos != null) {
-                fos.close();
-            }
         }
     }
 
