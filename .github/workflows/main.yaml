@@ -25,6 +25,14 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
 
+      - name: Cache eclipse plugins
+        uses: actions/cache@v2
+        with:
+          path: build-monitor-acceptance/plugin_cache
+          key: eclipse-plugins-${{ hashFiles('build-monitor-acceptance/pom.xml') }}
+          restore-keys: |
+            eclipse-plugins-
+
       - name: Setup git (master only)
         uses: ./.github/actions/setup-git
         if: github.ref == 'refs/heads/master'
