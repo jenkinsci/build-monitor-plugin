@@ -168,10 +168,10 @@ public class JenkinsClient {
         //TODO use RealJenkinsRule
         //return executor.call(args).execute(noManualInput(), info(logger), error(logger));
         try {
-        	List<String> cliArgs = new ArrayList<String>(Arrays.asList("-s", jenkinsUrl.toString(), "-http"));
+        	List<String> cliArgs = new ArrayList<>(Arrays.asList("-s", jenkinsUrl.toString(), "-http"));
         	cliArgs.addAll(Arrays.asList(args));
         	
-        	return CLI._main(cliArgs.toArray(new String[cliArgs.size()]));
+        	return CLI._main(cliArgs.toArray(new String[0]));
         } catch (Exception e) {
             throw new RuntimeException(String.format("Couldn't connect to Jenkins at '%s'", jenkinsUrl), e);
         }

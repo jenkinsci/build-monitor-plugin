@@ -20,8 +20,8 @@ import static net.serenitybdd.screenplay.GivenWhenThen.then;
 import static net.serenitybdd.screenplay.GivenWhenThen.when;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class BuildMonitorShouldBeEasyToSetUp extends BuilMonitorAcceptanceTest {
@@ -33,7 +33,7 @@ public class BuildMonitorShouldBeEasyToSetUp extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
     @TestData

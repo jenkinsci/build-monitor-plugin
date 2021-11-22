@@ -39,7 +39,7 @@ public class TodoList implements Task {
     }
 
     private Performable[] perform(List<Performable> todos) {
-        return todos.toArray(new Performable[todos.size()]);
+        return todos.toArray(new Performable[0]);
     }
 
     private final List<Performable> todos = new ArrayList<>();

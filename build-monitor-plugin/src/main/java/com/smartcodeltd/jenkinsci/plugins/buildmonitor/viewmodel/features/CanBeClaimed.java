@@ -20,9 +20,7 @@ public class CanBeClaimed implements Feature {
     public Claim asJson() {
         Optional<ClaimBuildAction> details = job.lastCompletedBuild().detailsOf(ClaimBuildAction.class);
 
-        return details.isPresent()                  // would be nice to have .map(Claim(_)).orElse(), but hey...
-                ? new Claim(details.get())
-                : null;                             // `null` because we don't want to serialise an empty object
+        return details.map(Claim::new).orElse(null); // `null` because we don't want to serialise an empty object
 
     }
 

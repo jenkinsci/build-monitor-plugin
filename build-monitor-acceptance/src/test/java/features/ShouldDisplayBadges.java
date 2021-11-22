@@ -25,8 +25,8 @@ import static net.serenitybdd.screenplay.GivenWhenThen.then;
 import static net.serenitybdd.screenplay.GivenWhenThen.when;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
@@ -38,7 +38,7 @@ public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("workflow-aggregator", "buildtriggerbadge", "badge", "groovy-postbuild"));
+        return Collections.singletonList(InstallPlugins.fromUpdateCenter("workflow-aggregator", "buildtriggerbadge", "badge", "groovy-postbuild"));
     }
 
     @TestData
@@ -52,7 +52,7 @@ public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void displaying_build_badges() throws Exception {
+    public void displaying_build_badges() {
         givenThat(paul).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAPipelineProjectCreated.called("My App").andConfiguredTo(

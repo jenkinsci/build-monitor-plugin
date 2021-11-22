@@ -19,8 +19,8 @@ import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStat
 import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus.Successful;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceTest {
@@ -32,7 +32,7 @@ public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceT
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
     @TestData
@@ -46,7 +46,7 @@ public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceT
     }
 
     @Test
-    public void visualising_a_successful_project() throws Exception {
+    public void visualising_a_successful_project() {
 
         givenThat(anna).wasAbleTo(
                 Navigate.to(jenkins.url()),
@@ -61,7 +61,7 @@ public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceT
     }
 
     @Test
-    public void visualising_a_failing_project() throws Exception {
+    public void visualising_a_failing_project() {
 
         givenThat(anna).wasAbleTo(
                 Navigate.to(jenkins.url()),

@@ -4,9 +4,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import jenkins.model.Jenkins;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.MockedStatic;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
@@ -20,9 +18,6 @@ import static org.mockito.Mockito.mockStatic;
 public class HasBadgesBadgePluginTest {
     private JobView job;
     
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
@@ -30,7 +25,7 @@ public class HasBadgesBadgePluginTest {
     public void setup() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
-        mockedJenkins.when(Jenkins::getInstance).thenReturn(jenkins);
+        mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
     @After
@@ -39,7 +34,7 @@ public class HasBadgesBadgePluginTest {
     }
 
     @Test
-    public void should_support_job_without_badges() throws Exception {
+    public void should_support_job_without_badges() {
         job = a(jobView().which(new HasBadgesBadgePlugin()).of(
                 a(job())));
 
@@ -47,7 +42,7 @@ public class HasBadgesBadgePluginTest {
     }
 
     @Test
-    public void should_convert_badges_to_json() throws Exception {
+    public void should_convert_badges_to_json() {
         job = a(jobView().which(new HasBadgesBadgePlugin()).of(
             a(job().whereTheLast(build().hasBadgesBadgePlugin(badgePluginBadge().withText("badge1"), badgePluginBadge().withText("badge2"))))));
 
@@ -55,7 +50,7 @@ public class HasBadgesBadgePluginTest {
     }
 
     @Test
-    public void should_ignore_badges_with_icon() throws Exception {
+    public void should_ignore_badges_with_icon() {
         job = a(jobView().which(new HasBadgesBadgePlugin()).of(
             a(job().whereTheLast(build().hasBadgesBadgePlugin(badgePluginBadge().withIcon("icon.gif", "badge1"), badgePluginBadge().withText("badge2"))))));
 
@@ -63,7 +58,7 @@ public class HasBadgesBadgePluginTest {
     }
 
     @Test
-    public void should_report_badges_from_latest_build() throws Exception {
+    public void should_report_badges_from_latest_build() {
         job = a(jobView().which(new HasBadgesBadgePlugin()).of(
                 a(job().whereTheLast(build().isStillBuilding().hasBadgesBadgePlugin(badgePluginBadge().withText("badge1")))
                         .andThePrevious(build().hasBadgesBadgePlugin(badgePluginBadge().withText("badge1"), badgePluginBadge().withText("badge2"))))));

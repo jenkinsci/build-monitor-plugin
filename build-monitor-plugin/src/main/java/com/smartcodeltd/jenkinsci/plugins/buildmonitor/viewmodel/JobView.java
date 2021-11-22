@@ -13,7 +13,6 @@ import hudson.util.RunList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -134,8 +133,8 @@ public class JobView {
     	
     	RunList<Run<?, ?>> runList = ((RunList<Run<?, ?>>)job.getNewBuilds()).filter(BuildingPredicate.INSTANCE);
 
-    	for (Iterator<Run<?, ?>> i = runList.iterator(); i.hasNext(); ) {
-    		currentBuilds.add(buildViewOf(i.next()));
+    	for (Run<?, ?> run : runList) {
+    		currentBuilds.add(buildViewOf(run));
     	}
     	
         return currentBuilds;

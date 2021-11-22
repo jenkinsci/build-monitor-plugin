@@ -3,7 +3,6 @@ package net.serenitybdd.screenplay.jenkins.actions;
 import net.serenitybdd.screenplay.Action;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplayx.actions.Scroll;
 import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplayx.actions.Evaluate;
 import net.thucydides.core.annotations.Step;

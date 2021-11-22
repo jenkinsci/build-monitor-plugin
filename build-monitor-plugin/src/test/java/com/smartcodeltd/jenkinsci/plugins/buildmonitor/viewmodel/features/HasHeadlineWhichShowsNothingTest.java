@@ -6,17 +6,18 @@ import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.is;
 
 public class HasHeadlineWhichShowsNothingTest {
     private JobView view;
 
     @Test
-    public void should_say_nothing_if_no_builds_were_executed() throws Exception {
+    public void should_say_nothing_if_no_builds_were_executed() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().thatHasNeverRun())));
 
-        assertThat(headlineOf(view), isEmptyString());
+        assertThat(headlineOf(view), is(emptyString()));
     }
 
     // --

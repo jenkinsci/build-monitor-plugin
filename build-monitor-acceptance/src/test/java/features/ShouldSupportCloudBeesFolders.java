@@ -20,8 +20,8 @@ import org.junit.Test;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ShouldSupportCloudBeesFolders extends BuilMonitorAcceptanceTest {
@@ -33,7 +33,7 @@ public class ShouldSupportCloudBeesFolders extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("cloudbees-folder"));
+        return Collections.singletonList(InstallPlugins.fromUpdateCenter("cloudbees-folder"));
     }
 
     @TestData
@@ -47,7 +47,7 @@ public class ShouldSupportCloudBeesFolders extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void visualising_projects_nested_in_folders() throws Exception {
+    public void visualising_projects_nested_in_folders() {
 
         givenThat(anna).wasAbleTo(
                 Navigate.to(jenkins.url()),

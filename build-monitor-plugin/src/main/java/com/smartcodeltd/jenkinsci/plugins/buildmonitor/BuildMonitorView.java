@@ -40,7 +40,6 @@ import org.kohsuke.stapler.bind.JavaScriptMethod;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -139,7 +138,6 @@ public class BuildMonitorView extends ListView {
      * it can only work with net.sf.JSONObject in order to produce correct application/json output
      *
      * @return Json representation of JobViews
-     * @throws Exception
      */
     @JavaScriptMethod
     public JSONObject fetchJobViews() throws Exception {
@@ -157,9 +155,9 @@ public class BuildMonitorView extends ListView {
         //A little bit of evil to make the type system happy.
         @SuppressWarnings("unchecked")
         List<Job<?, ?>> projects = new ArrayList(filter(super.getItems(), Job.class));
-        List<JobView> jobs = new ArrayList<JobView>();
+        List<JobView> jobs = new ArrayList<>();
 
-        Collections.sort(projects, currentConfig().getOrder());
+        projects.sort(currentConfig().getOrder());
 
         for (Job project : projects) {
             jobs.add(views.viewOf(project));

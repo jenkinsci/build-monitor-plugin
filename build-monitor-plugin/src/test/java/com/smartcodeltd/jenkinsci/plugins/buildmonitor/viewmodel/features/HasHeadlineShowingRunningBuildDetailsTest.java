@@ -10,8 +10,8 @@ import org.mockito.MockedStatic;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.isEmptyString;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 
@@ -26,7 +26,7 @@ public class HasHeadlineShowingRunningBuildDetailsTest {
     public void setup() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
-        mockedJenkins.when(Jenkins::getInstance).thenReturn(jenkins);
+        mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
     @After
@@ -35,15 +35,15 @@ public class HasHeadlineShowingRunningBuildDetailsTest {
     }
 
     @Test
-    public void should_say_nothing_if_no_builds_were_executed_and_one_is_running_now() throws Exception {
+    public void should_say_nothing_if_no_builds_were_executed_and_one_is_running_now() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().isStillBuilding()))));
 
-        assertThat(headlineOf(view), isEmptyString());
+        assertThat(headlineOf(view), is(emptyString()));
     }
 
     @Test
-    public void should_tell_whose_changes_are_being_built() throws Exception {
+    public void should_tell_whose_changes_are_being_built() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Adam")))));
 
@@ -51,7 +51,7 @@ public class HasHeadlineShowingRunningBuildDetailsTest {
     }
 
     @Test
-    public void should_tell_whose_changes_are_being_built_when_there_are_multiple_committers() throws Exception {
+    public void should_tell_whose_changes_are_being_built_when_there_are_multiple_committers() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Ben", "Adam")))));
 
@@ -59,11 +59,11 @@ public class HasHeadlineShowingRunningBuildDetailsTest {
     }
 
     @Test
-    public void should_not_tell_whose_changes_are_being_built_if_commiters_are_not_to_be_displayed() throws Exception {
+    public void should_not_tell_whose_changes_are_being_built_if_commiters_are_not_to_be_displayed() {
         view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
                 a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Adam")))));
 
-        assertThat(headlineOf(view), isEmptyString());
+        assertThat(headlineOf(view), is(emptyString()));
     }
 
 

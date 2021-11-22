@@ -6,7 +6,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headli
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * @author Jan Molak
@@ -41,11 +40,9 @@ public class HasHeadline implements Feature<Headline> {
                 new HeadlineOfFailing(job, config)
         );
 
-        return availableHeadlines.stream().filter(new Predicate<CandidateHeadline>() {
-            @Override
-            public boolean test(CandidateHeadline candidateHeadline) {
-                return candidateHeadline.isApplicableTo(job);
-            }
-        }).findFirst().orElse(new NoHeadline());
+        return availableHeadlines.stream()
+                .filter(candidateHeadline -> candidateHeadline.isApplicableTo(job))
+                .findFirst()
+                .orElse(new NoHeadline());
     }
 }
