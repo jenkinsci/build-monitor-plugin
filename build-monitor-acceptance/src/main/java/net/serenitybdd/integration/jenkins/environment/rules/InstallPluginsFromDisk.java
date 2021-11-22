@@ -7,8 +7,6 @@ import org.junit.runner.Description;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -91,12 +89,7 @@ public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstan
             private List<Path> getDirectoryPlugins(Path location) {
                 List<Path> plugins = new ArrayList<>();
                 
-                String[] files = location.toFile().list(new FilenameFilter() {
-                    @Override
-                    public boolean accept(File dir, String name) {
-                        return name.endsWith(".jpi") || name.endsWith(".hpi");
-                    }
-                });
+                String[] files = location.toFile().list((dir, name) -> name.endsWith(".jpi") || name.endsWith(".hpi"));
                 
                 if (files != null ) {
                     for (String file : files ) {
