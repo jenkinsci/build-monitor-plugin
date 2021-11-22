@@ -139,7 +139,6 @@ public class BuildMonitorView extends ListView {
      * it can only work with net.sf.JSONObject in order to produce correct application/json output
      *
      * @return Json representation of JobViews
-     * @throws Exception
      */
     @JavaScriptMethod
     public JSONObject fetchJobViews() throws Exception {

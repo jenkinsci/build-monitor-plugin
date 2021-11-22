@@ -16,7 +16,6 @@ public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>>, S
     /**
      * Returns a sum of the estimated duration for a project and all upstream projects
      *
-     * @param project
      * @return time
      */
     private long getTotalEstimatedDuration(AbstractProject<?, ?> project) {
