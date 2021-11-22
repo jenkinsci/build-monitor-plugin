@@ -19,7 +19,6 @@ import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStat
 import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus.Successful;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
