@@ -1,8 +1,7 @@
 package net.serenitybdd.integration.jenkins.logging;
 
-import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class LoggerOutputStream extends OutputStream {
     private Witness witness;
@@ -14,10 +13,10 @@ public class LoggerOutputStream extends OutputStream {
     }
 
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b) {
         byte[] bytes = new byte[1];
         bytes[0] = (byte) (b & 0xff);
-        buffer = buffer + new String(bytes, Charset.forName("UTF-8"));
+        buffer = buffer + new String(bytes, StandardCharsets.UTF_8);
 
         if (buffer.endsWith("\n")) {
             buffer = buffer.substring(0, buffer.length() - 1);

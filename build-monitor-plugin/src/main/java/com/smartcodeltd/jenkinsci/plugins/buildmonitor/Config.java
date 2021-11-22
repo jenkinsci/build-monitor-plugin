@@ -49,7 +49,7 @@ public class Config {
     
     @Override
     public String toString() {
-        return "Config{order=%s}".format(order.getClass().getSimpleName());
+        return String.format("Config{order=%s}", order.getClass().getSimpleName());
     }
 
     // --

@@ -40,7 +40,7 @@ public class PipelineHelperTest {
 
     private Jenkins createMockJenkins(MockedStatic<Jenkins> mockedJenkins) {
         Jenkins jenkins = mock(Jenkins.class);
-        mockedJenkins.when(Jenkins::getInstance).thenReturn(jenkins);
+        mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
         return jenkins;
     }
 }

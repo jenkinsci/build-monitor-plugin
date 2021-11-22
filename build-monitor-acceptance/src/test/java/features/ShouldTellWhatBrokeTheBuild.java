@@ -18,8 +18,8 @@ import org.junit.Test;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.containsString;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ShouldTellWhatBrokeTheBuild extends BuilMonitorAcceptanceTest {
@@ -31,7 +31,7 @@ public class ShouldTellWhatBrokeTheBuild extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
-        return Arrays.asList(InstallPlugins.fromCache(getpluginsCache(), "workflow-aggregator", "cloudbees-folder", "build-failure-analyzer"));
+        return Collections.singletonList(InstallPlugins.fromCache(getpluginsCache(), "workflow-aggregator", "cloudbees-folder", "build-failure-analyzer"));
     }
 
     @TestData
@@ -45,7 +45,7 @@ public class ShouldTellWhatBrokeTheBuild extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void displaying_potential_failure_cause() throws Exception {
+    public void displaying_potential_failure_cause() {
         givenThat(dave).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAShellScriptFailureCauseDefined.called("Rogue AI").describedAs("Pod bay doors didn't open"),

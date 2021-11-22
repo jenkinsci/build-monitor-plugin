@@ -21,8 +21,8 @@ import org.junit.Test;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.is;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ShouldDisplayConcurrentBuilds extends BuilMonitorAcceptanceTest {
@@ -35,7 +35,7 @@ public class ShouldDisplayConcurrentBuilds extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
-        return Arrays.asList(InstallPlugins.fromCache(getpluginsCache(), "workflow-aggregator", "description-setter"));
+        return Collections.singletonList(InstallPlugins.fromCache(getpluginsCache(), "workflow-aggregator", "description-setter"));
     }
 
     @TestData
@@ -49,7 +49,7 @@ public class ShouldDisplayConcurrentBuilds extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void displaying_concurrent_builds() throws Exception {
+    public void displaying_concurrent_builds() {
         givenThat(dave).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAProjectCreated.called(My_App).andConfiguredTo(

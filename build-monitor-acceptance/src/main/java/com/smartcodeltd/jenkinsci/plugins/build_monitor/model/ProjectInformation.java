@@ -24,6 +24,6 @@ public class ProjectInformation {
 
     @Override
     public String toString() {
-        return "ProjectInformation{name=%s, status={%s}}".format(name, status.stream().map(Object::toString).collect(Collectors.joining(", ")));
+        return String.format("ProjectInformation{name=%s, status={%s}}", name, status.stream().map(Object::toString).collect(Collectors.joining(", ")));
     }
 }

@@ -22,7 +22,7 @@ public class RelativeLocation {
         StaplerRequest request = Stapler.getCurrentRequest();
         for( Ancestor a : request.getAncestors() ) {
             if(a.getObject() instanceof BuildMonitorView) {
-                ig = ((View) a.getObject()).getOwnerItemGroup();
+                ig = ((View) a.getObject()).getOwner().getItemGroup();
             }
         }
 

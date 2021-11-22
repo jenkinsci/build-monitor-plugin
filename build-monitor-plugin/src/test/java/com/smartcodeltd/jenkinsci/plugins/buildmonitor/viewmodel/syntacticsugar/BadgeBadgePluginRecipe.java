@@ -18,13 +18,13 @@ public class BadgeBadgePluginRecipe implements Supplier<BadgeAction> {
         badge = mock(BadgeAction.class);
     }
 
-    public BadgeBadgePluginRecipe withText(String text) throws Exception {
+    public BadgeBadgePluginRecipe withText(String text) {
         when(badge.getIconPath()).thenReturn(null);
         lenient().when(badge.getText()).thenReturn(text);
         return this;
     }
 
-    public BadgeBadgePluginRecipe withIcon(String icon, String text) throws Exception {
+    public BadgeBadgePluginRecipe withIcon(String icon, String text) {
         when(badge.getIconPath()).thenReturn(icon);
         lenient().when(badge.getText()).thenReturn(text);
         return this;

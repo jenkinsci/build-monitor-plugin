@@ -13,8 +13,8 @@ import org.openqa.selenium.WebDriver;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RunWith(SerenityParameterizedRunner.class)
@@ -28,11 +28,11 @@ public abstract class BuilMonitorAcceptanceTest {
             .create();
     
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
-        return Arrays.asList();
+        return Collections.emptyList();
     }
     
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
 

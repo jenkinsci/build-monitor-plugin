@@ -34,7 +34,7 @@ public class JobViewSerialiser extends JsonSerializer<JobView> {
 
     private String nameOf(Object serialised) {
         // http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/6-b14/java/beans/Introspector.java#265
-        char chars[] = serialised.getClass().getSimpleName().toString().toCharArray();
+        char[] chars = serialised.getClass().getSimpleName().toCharArray();
         chars[0] = Character.toLowerCase(chars[0]);
 
         return new String(chars);

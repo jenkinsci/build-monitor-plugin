@@ -8,7 +8,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Durati
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -49,9 +48,9 @@ public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDeta
         private final List<CurrentBuild> builds = new ArrayList<>();
 
         public CurrentBuilds(List<BuildViewModel> currentBuilds) {
-        	for (Iterator<BuildViewModel> i = currentBuilds.iterator(); i.hasNext(); ) {
-        		builds.add(new CurrentBuild(i.next()));
-        	}
+            for (BuildViewModel currentBuild : currentBuilds) {
+                builds.add(new CurrentBuild(currentBuild));
+            }
         }
 
 		@JsonValue

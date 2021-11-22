@@ -63,7 +63,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe withChangesFrom(String... authors) throws Exception {
+    public BuildStateRecipe withChangesFrom(String... authors) {
         boolean newJenkins = false;
         try {
             build.getClass().getMethod("shouldCalculateCulprits");
@@ -86,7 +86,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     //Mockito reflective call to handle methods not available in Jenkins 2.46 which is used as dependency
-    private BuildStateRecipe withChangesFromForJenkins2_107AndNewer(String... authors) throws Exception {
+    private BuildStateRecipe withChangesFromForJenkins2_107AndNewer(String... authors) {
         ChangeLogSet changeSet = changeSetBasedOn(entriesBy(authors));
         when(build.getChangeSet()).thenReturn(changeSet);
         lenient().when(build.shouldCalculateCulprits()).thenReturn(true);
@@ -100,14 +100,14 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe succeededThanksTo(String... authors) throws Exception {
+    public BuildStateRecipe succeededThanksTo(String... authors) {
         finishedWith(Result.SUCCESS);
         withChangesFrom(authors);
 
         return this;
     }
 
-    public BuildStateRecipe wasBrokenBy(String... culprits) throws Exception {
+    public BuildStateRecipe wasBrokenBy(String... culprits) {
         finishedWith(Result.FAILURE);
         withChangesFrom(culprits);
 
@@ -143,7 +143,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe took(int minutes) throws Exception{
+    public BuildStateRecipe took(int minutes) {
         long duration = (long) minutes * 60 * 1000;
 
         when(build.getDuration()).thenReturn(duration);
@@ -151,7 +151,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe usuallyTakes(int minutes) throws Exception{
+    public BuildStateRecipe usuallyTakes(int minutes) {
         long duration = (long) minutes * 60 * 1000;
 
         when(build.getEstimatedDuration()).thenReturn(duration);
@@ -179,7 +179,6 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         User user = userCalled(username);
 
         if (mockedUser != null) {
-            mockedUser.when(() -> User.get(user.getId())).thenReturn(user); //For older Jenkins versions
             mockedUser.when(() -> User.get(Mockito.eq(user.getId()), Mockito.eq(false), Mockito.anyMap())).thenReturn(user); // For newer Jenkins versions
         }
 
@@ -210,7 +209,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
 
     private FailureCauseBuildAction failureCauseBuildAction(String... FailureNames) {
         FailureCauseBuildAction action = mock(FailureCauseBuildAction.class);
-        List<FoundFailureCause> items = new ArrayList<FoundFailureCause>();
+        List<FoundFailureCause> items = new ArrayList<>();
         for( String name : FailureNames ) {
             items.add(failure(name));
         }
@@ -226,9 +225,9 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     public BuildStateRecipe hasBadgesBadgePlugin(BadgeBadgePluginRecipe... badges) {
-        List<BadgeAction> actions = new ArrayList<BadgeAction>();
-        for (int i = 0; i < badges.length; i++) {
-            actions.add(badges[i].get());
+        List<BadgeAction> actions = new ArrayList<>();
+        for (BadgeBadgePluginRecipe badge : badges) {
+            actions.add(badge.get());
         }
         when(build.getActions(BadgeAction.class)).thenReturn(actions);
 
@@ -246,7 +245,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
 
     // todo: replace mock user with userCalled
     private List<ChangeLogSet.Entry> entriesBy(String... authors) {
-        List<ChangeLogSet.Entry> entries = new ArrayList<ChangeLogSet.Entry>();
+        List<ChangeLogSet.Entry> entries = new ArrayList<>();
 
         for (String name : authors) {
             User author = mock(User.class);
@@ -269,7 +268,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     private ChangeLogSet changeSetBasedOn(final List<ChangeLogSet.Entry> entries) {
-        return new ChangeLogSet<ChangeLogSet.Entry>(null) {
+        return new ChangeLogSet<ChangeLogSet.Entry>(null, null) {
             @Override
             public boolean isEmptySet() {
                 return false;

@@ -2,7 +2,6 @@ package net.serenitybdd.screenplay.jenkins.user_interface;
 
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.screenplay.jenkins.targets.RadioButton;
-import net.serenitybdd.screenplay.jenkins.targets.Setting;
 import net.serenitybdd.screenplay.targets.Target;
 import net.thucydides.core.annotations.DefaultUrl;
 

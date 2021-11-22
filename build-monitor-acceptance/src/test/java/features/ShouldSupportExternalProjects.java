@@ -20,8 +20,8 @@ import static com.smartcodeltd.jenkinsci.plugins.build_monitor.matchers.ProjectI
 import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus.Successful;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ShouldSupportExternalProjects extends BuilMonitorAcceptanceTest {
@@ -33,7 +33,7 @@ public class ShouldSupportExternalProjects extends BuilMonitorAcceptanceTest {
     }
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
-        return Arrays.asList(InstallPlugins.fromCache(getpluginsCache(), "external-monitor-job"));
+        return Collections.singletonList(InstallPlugins.fromCache(getpluginsCache(), "external-monitor-job"));
     }
 
     @TestData
@@ -48,7 +48,7 @@ public class ShouldSupportExternalProjects extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void visualising_an_external_project() throws Exception {
+    public void visualising_an_external_project() {
 
         givenThat(maggie).wasAbleTo(
                 Navigate.to(jenkins.url()),

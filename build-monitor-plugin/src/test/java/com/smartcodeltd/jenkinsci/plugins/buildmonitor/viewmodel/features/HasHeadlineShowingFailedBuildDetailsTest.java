@@ -25,7 +25,7 @@ public class HasHeadlineShowingFailedBuildDetailsTest {
     public void setup() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
-        mockedJenkins.when(Jenkins::getInstance).thenReturn(jenkins);
+        mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
     @After
@@ -34,7 +34,7 @@ public class HasHeadlineShowingFailedBuildDetailsTest {
     }
 
     @Test
-    public void should_tell_who_broke_the_build() throws Exception {
+    public void should_tell_who_broke_the_build() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")))));
 
@@ -42,7 +42,7 @@ public class HasHeadlineShowingFailedBuildDetailsTest {
     }
 
     @Test
-    public void should_list_committers_who_broke_the_build_in_alphabetical_order() throws Exception {
+    public void should_list_committers_who_broke_the_build_in_alphabetical_order() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben")))));
 
@@ -50,7 +50,7 @@ public class HasHeadlineShowingFailedBuildDetailsTest {
     }
 
     @Test
-    public void should_tell_the_number_of_broken_builds_since_the_last_broken_build_and_the_author_of_the_first_offending_commit() throws Exception {
+    public void should_tell_the_number_of_broken_builds_since_the_last_broken_build_and_the_author_of_the_first_offending_commit() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")).
                         andThePrevious(build().wasBrokenBy("Ben", "Connor")).
@@ -61,7 +61,7 @@ public class HasHeadlineShowingFailedBuildDetailsTest {
     }
 
     @Test
-    public void should_tell_the_number_of_broken_builds_since_the_last_build_broken_by_multiple_committers() throws Exception {
+    public void should_tell_the_number_of_broken_builds_since_the_last_build_broken_by_multiple_committers() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor")).
@@ -71,7 +71,7 @@ public class HasHeadlineShowingFailedBuildDetailsTest {
     }
 
     @Test
-    public void should_tell_how_many_builds_have_failed_but_not_who_broke_them_if_configured_as_such() throws Exception {
+    public void should_tell_how_many_builds_have_failed_but_not_who_broke_them_if_configured_as_such() {
         view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")))));
 
@@ -79,7 +79,7 @@ public class HasHeadlineShowingFailedBuildDetailsTest {
     }
 
     @Test
-    public void should_tell_the_number_of_broken_builds_since_the_last_broken_build() throws Exception {
+    public void should_tell_the_number_of_broken_builds_since_the_last_broken_build() {
         view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")).
                         andThePrevious(build().wasBrokenBy("Ben", "Connor")).
@@ -90,7 +90,7 @@ public class HasHeadlineShowingFailedBuildDetailsTest {
     }
 
     @Test
-    public void should_tell_the_number_of_broken_builds_since_the_last_build_broken_when_multiple_committers_are_involver() throws Exception {
+    public void should_tell_the_number_of_broken_builds_since_the_last_build_broken_when_multiple_committers_are_involver() {
         view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
                 a(job().whereTheLast(build().wasBrokenBy("Adam")).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor")).

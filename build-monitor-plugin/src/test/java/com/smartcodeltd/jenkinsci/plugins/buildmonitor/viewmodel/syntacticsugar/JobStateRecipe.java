@@ -22,8 +22,8 @@ import static org.mockito.Mockito.when;
 public class JobStateRecipe implements Supplier<Job<?,?>> {
     private Job<?, ?> job;
     private RunList<?> runList;
-    private Stack<AbstractBuild> buildHistory = new Stack<AbstractBuild>();
-    private List<AbstractBuild> allBuilds = new ArrayList<AbstractBuild>();
+    private Stack<AbstractBuild> buildHistory = new Stack<>();
+    private List<AbstractBuild> allBuilds = new ArrayList<>();
 
     public JobStateRecipe() {
         job = mock(Job.class);
