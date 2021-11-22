@@ -10,8 +10,8 @@ import org.mockito.MockedStatic;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.isEmptyString;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 
@@ -26,7 +26,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     public void setup() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
-        mockedJenkins.when(Jenkins::getInstance).thenReturn(jenkins);
+        mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
     @After
@@ -76,7 +76,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
                 a(job().whereTheLast(build().succeededThanksTo("Adam")).
                         andThePrevious(build().succeededThanksTo("Ben")))));
 
-        assertThat(headlineOf(view), isEmptyString());
+        assertThat(headlineOf(view), is(emptyString()));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().succeededThanksTo("Adam")))));
 
-        assertThat(headlineOf(view), isEmptyString());
+        assertThat(headlineOf(view), is(emptyString()));
     }
 
     // --

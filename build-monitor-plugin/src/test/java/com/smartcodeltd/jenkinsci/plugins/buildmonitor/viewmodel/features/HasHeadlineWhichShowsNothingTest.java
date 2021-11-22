@@ -6,7 +6,8 @@ import org.junit.Test;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.is;
 
 public class HasHeadlineWhichShowsNothingTest {
     private JobView view;
@@ -16,7 +17,7 @@ public class HasHeadlineWhichShowsNothingTest {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().thatHasNeverRun())));
 
-        assertThat(headlineOf(view), isEmptyString());
+        assertThat(headlineOf(view), is(emptyString()));
     }
 
     // --

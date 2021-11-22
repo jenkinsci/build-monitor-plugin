@@ -179,7 +179,6 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         User user = userCalled(username);
 
         if (mockedUser != null) {
-            mockedUser.when(() -> User.get(user.getId())).thenReturn(user); //For older Jenkins versions
             mockedUser.when(() -> User.get(Mockito.eq(user.getId()), Mockito.eq(false), Mockito.anyMap())).thenReturn(user); // For newer Jenkins versions
         }
 
@@ -269,7 +268,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     private ChangeLogSet changeSetBasedOn(final List<ChangeLogSet.Entry> entries) {
-        return new ChangeLogSet<ChangeLogSet.Entry>(null) {
+        return new ChangeLogSet<ChangeLogSet.Entry>(null, null) {
             @Override
             public boolean isEmptySet() {
                 return false;

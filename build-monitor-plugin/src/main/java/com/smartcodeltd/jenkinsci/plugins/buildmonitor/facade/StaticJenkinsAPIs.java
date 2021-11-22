@@ -15,7 +15,7 @@ public class StaticJenkinsAPIs {
 
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "PageDecoratorImpl is part of Jenkins core and should never be null")
     public String encodedPublicKey() {
-        return Jenkins.getInstance().getExtensionList(PageDecorator.class).get(PageDecoratorImpl.class).getEncodedPublicKey();
+        return Jenkins.get().getExtensionList(PageDecorator.class).get(PageDecoratorImpl.class).getEncodedPublicKey();
     }
 
     public int numberOfUsers() {
@@ -24,7 +24,7 @@ public class StaticJenkinsAPIs {
 
     // see https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/215
     public String crumbFieldName() {
-        Jenkins instance = Jenkins.getInstance();
+        Jenkins instance = Jenkins.get();
 
         if (instance.isUseCrumbs()) {
           CrumbIssuer crumbIssuer = instance.getCrumbIssuer();
@@ -37,6 +37,6 @@ public class StaticJenkinsAPIs {
     }
 
     public boolean hasPlugin(String pluginName) {
-        return Jenkins.getInstance().getPlugin(pluginName) != null;
+        return Jenkins.get().getPlugin(pluginName) != null;
     }
 }

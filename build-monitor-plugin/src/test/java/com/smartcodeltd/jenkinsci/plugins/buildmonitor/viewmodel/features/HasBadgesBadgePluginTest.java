@@ -4,9 +4,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import jenkins.model.Jenkins;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.MockedStatic;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
@@ -20,9 +18,6 @@ import static org.mockito.Mockito.mockStatic;
 public class HasBadgesBadgePluginTest {
     private JobView job;
     
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
@@ -30,7 +25,7 @@ public class HasBadgesBadgePluginTest {
     public void setup() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
-        mockedJenkins.when(Jenkins::getInstance).thenReturn(jenkins);
+        mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
     @After

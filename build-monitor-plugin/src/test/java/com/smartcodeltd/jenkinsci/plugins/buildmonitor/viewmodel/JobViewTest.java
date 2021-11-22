@@ -41,7 +41,7 @@ public class JobViewTest {
     public void setup() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
-        mockedJenkins.when(Jenkins::getInstance).thenReturn(jenkins);
+        mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
     @After
