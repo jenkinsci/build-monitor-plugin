@@ -209,7 +209,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
 
     private FailureCauseBuildAction failureCauseBuildAction(String... FailureNames) {
         FailureCauseBuildAction action = mock(FailureCauseBuildAction.class);
-        List<FoundFailureCause> items = new ArrayList<FoundFailureCause>();
+        List<FoundFailureCause> items = new ArrayList<>();
         for( String name : FailureNames ) {
             items.add(failure(name));
         }
@@ -225,7 +225,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     public BuildStateRecipe hasBadgesBadgePlugin(BadgeBadgePluginRecipe... badges) {
-        List<BadgeAction> actions = new ArrayList<BadgeAction>();
+        List<BadgeAction> actions = new ArrayList<>();
         for (BadgeBadgePluginRecipe badge : badges) {
             actions.add(badge.get());
         }
@@ -245,7 +245,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
 
     // todo: replace mock user with userCalled
     private List<ChangeLogSet.Entry> entriesBy(String... authors) {
-        List<ChangeLogSet.Entry> entries = new ArrayList<ChangeLogSet.Entry>();
+        List<ChangeLogSet.Entry> entries = new ArrayList<>();
 
         for (String name : authors) {
             User author = mock(User.class);

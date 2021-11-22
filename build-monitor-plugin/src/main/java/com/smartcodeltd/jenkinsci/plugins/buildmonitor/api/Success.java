@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
     }
 
     public static <T> Success successful(T data) {
-        return new Success<T>(data);
+        return new Success<>(data);
     }
 
     @JsonProperty

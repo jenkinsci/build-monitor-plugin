@@ -70,7 +70,7 @@ public class NullBuildView implements BuildViewModel {
 
     @Override
     public List<String> pipelineStages() {
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }
 
     @Override
@@ -85,12 +85,12 @@ public class NullBuildView implements BuildViewModel {
 
     @Override
     public Set<String> culprits() {
-        return new HashSet<String>();
+        return new HashSet<>();
     }
 
     @Override
     public Set<String> committers() {
-        return new HashSet<String>();
+        return new HashSet<>();
     }
 
     @Override
@@ -100,6 +100,6 @@ public class NullBuildView implements BuildViewModel {
 
 	@Override
 	public <A extends Action> List<A> allDetailsOf(Class<A> jenkinsAction) {
-		return new ArrayList<A>();
+		return new ArrayList<>();
 	}
 }

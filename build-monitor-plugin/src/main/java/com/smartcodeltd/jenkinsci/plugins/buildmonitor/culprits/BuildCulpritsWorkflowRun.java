@@ -17,7 +17,7 @@ class BuildCulpritsWorkflowRun extends BuildCulpritsRetriever {
     @Override
     public Set<String> getCulprits(Run<?, ?> run) {
         WorkflowRun workflowRun = (WorkflowRun) run;
-        Set<String> culprits = new TreeSet<String>();
+        Set<String> culprits = new TreeSet<>();
         //Workaround while waiting for https://issues.jenkins-ci.org/browse/JENKINS-24141
         WorkflowRun previous = workflowRun.getPreviousCompletedBuild();
         if (workflowRun.isBuilding()) {
@@ -49,7 +49,7 @@ class BuildCulpritsWorkflowRun extends BuildCulpritsRetriever {
     }
 
     private Set<String> getCulpritsForRun(WorkflowRun from, WorkflowRun to) {
-        Set<String> culprits = new TreeSet<String>();
+        Set<String> culprits = new TreeSet<>();
         WorkflowRun next = null;
         while (true) {
             next = next == null ? from.getNextBuild() : next.getNextBuild();

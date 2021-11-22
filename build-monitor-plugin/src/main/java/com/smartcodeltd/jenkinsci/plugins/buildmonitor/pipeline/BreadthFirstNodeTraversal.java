@@ -14,8 +14,8 @@ public abstract class BreadthFirstNodeTraversal<N> {
     private final Set<String> stages;
 
     public BreadthFirstNodeTraversal() {
-        this.nodesToAccess = new LinkedList<N>();
-        this.stages = new LinkedHashSet<String>();
+        this.nodesToAccess = new LinkedList<>();
+        this.stages = new LinkedHashSet<>();
     }
 
     public void start(List<N> nodes) {
@@ -37,6 +37,6 @@ public abstract class BreadthFirstNodeTraversal<N> {
     protected abstract Collection<N> getParents(N node);
 
     public List<String> getStages() {
-        return new ArrayList<String>(stages);
+        return new ArrayList<>(stages);
     }
 }

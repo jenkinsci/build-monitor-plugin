@@ -156,7 +156,7 @@ public class BuildMonitorView extends ListView {
         //A little bit of evil to make the type system happy.
         @SuppressWarnings("unchecked")
         List<Job<?, ?>> projects = new ArrayList(filter(super.getItems(), Job.class));
-        List<JobView> jobs = new ArrayList<JobView>();
+        List<JobView> jobs = new ArrayList<>();
 
         Collections.sort(projects, currentConfig().getOrder());
 
