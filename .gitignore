@@ -15,6 +15,7 @@ work
 
 node
 node_modules
+plugin_cache
 
 use-node
 .DS_Store
