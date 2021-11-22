@@ -45,7 +45,7 @@ public class ShouldTellWhatBrokeTheBuild extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void displaying_potential_failure_cause() throws Exception {
+    public void displaying_potential_failure_cause() {
         givenThat(dave).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAShellScriptFailureCauseDefined.called("Rogue AI").describedAs("Pod bay doors didn't open"),

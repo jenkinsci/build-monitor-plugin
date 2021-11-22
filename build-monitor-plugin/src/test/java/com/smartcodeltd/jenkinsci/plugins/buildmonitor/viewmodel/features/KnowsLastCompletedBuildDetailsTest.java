@@ -63,7 +63,7 @@ public class KnowsLastCompletedBuildDetailsTest {
      */
 
     @Test
-    public void should_know_how_long_the_last_build_took_once_its_finished() throws Exception {
+    public void should_know_how_long_the_last_build_took_once_its_finished() {
         view = a(jobView().which(new KnowsLastCompletedBuildDetails()).of(
                 a(job().whereTheLast(build().finishedWith(SUCCESS).and().took(3)))));
 

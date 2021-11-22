@@ -49,7 +49,7 @@ public class ShouldDisplayConcurrentBuilds extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void displaying_concurrent_builds() throws Exception {
+    public void displaying_concurrent_builds() {
         givenThat(dave).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAProjectCreated.called(My_App).andConfiguredTo(

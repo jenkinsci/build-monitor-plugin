@@ -47,7 +47,7 @@ public class ShouldSupportCloudBeesFolders extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void visualising_projects_nested_in_folders() throws Exception {
+    public void visualising_projects_nested_in_folders() {
 
         givenThat(anna).wasAbleTo(
                 Navigate.to(jenkins.url()),

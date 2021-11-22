@@ -35,7 +35,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_tell_who_fixed_the_broken_build() throws Exception {
+    public void should_tell_who_fixed_the_broken_build() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().succeededThanksTo("Adam")).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
@@ -44,7 +44,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_list_committers_who_fixed_the_broken_build() throws Exception {
+    public void should_list_committers_who_fixed_the_broken_build() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().succeededThanksTo("Adam", "Connor")).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
@@ -53,7 +53,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_congratulate_anonymously_if_broken_build_was_fixed_without_known_committers() throws Exception {
+    public void should_congratulate_anonymously_if_broken_build_was_fixed_without_known_committers() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().succeededThanksTo()).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
@@ -62,7 +62,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_congratulate_anonymously_when_the_build_is_fixed_but_the_committers_should_not_be_displayed() throws Exception {
+    public void should_congratulate_anonymously_when_the_build_is_fixed_but_the_committers_should_not_be_displayed() {
         view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
                 a(job().whereTheLast(build().succeededThanksTo("Adam")).
                         andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
@@ -71,7 +71,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_not_congratulate_if_previous_succeeded() throws Exception {
+    public void should_not_congratulate_if_previous_succeeded() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().succeededThanksTo("Adam")).
                         andThePrevious(build().succeededThanksTo("Ben")))));
@@ -80,7 +80,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_not_congratulate_if_no_failure_before() throws Exception {
+    public void should_not_congratulate_if_no_failure_before() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
                 a(job().whereTheLast(build().succeededThanksTo("Adam")))));
 

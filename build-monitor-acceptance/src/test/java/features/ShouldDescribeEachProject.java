@@ -48,7 +48,7 @@ public class ShouldDescribeEachProject extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void displaying_a_custom_build_description() throws Exception {
+    public void displaying_a_custom_build_description() {
         givenThat(dave).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAProjectCreated.called("Example Github Project").andConfiguredTo(

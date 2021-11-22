@@ -46,7 +46,7 @@ public class ShouldDisplayPipelineStage extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void displaying_current_pipeline_stage() throws Exception {
+    public void displaying_current_pipeline_stage() {
         givenThat(donald).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAPipelineProjectCreated.called("My Pipeline").andConfiguredTo(

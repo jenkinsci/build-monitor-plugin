@@ -126,7 +126,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_know_how_long_the_next_build_is_supposed_to_take() throws Exception {
+    public void should_know_how_long_the_next_build_is_supposed_to_take() {
         view = a(jobView().of(
                 a(job().whereTheLast(build().finishedWith(SUCCESS).and().usuallyTakes(5)))));
 
@@ -134,7 +134,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_not_say_anything_if_it_doesnt_know_how_long_the_next_build_is_supposed_to_take() throws Exception {
+    public void should_not_say_anything_if_it_doesnt_know_how_long_the_next_build_is_supposed_to_take() {
         view = a(jobView().of(a(job())));
 
         assertThat(view.estimatedDuration(), is(""));
@@ -279,7 +279,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() throws Exception {
+    public void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() {
         view = a(jobView().of(
                 a(job().thatHasNeverRun())));
 

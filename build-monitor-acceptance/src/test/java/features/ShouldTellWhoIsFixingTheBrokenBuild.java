@@ -51,7 +51,7 @@ public class ShouldTellWhoIsFixingTheBrokenBuild extends BuilMonitorAcceptanceTe
     }
 
     @Test
-    public void claiming_a_broken_build() throws Exception {
+    public void claiming_a_broken_build() {
         givenThat(ben).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 LogIn.as(ben),

@@ -48,7 +48,7 @@ public class ShouldSupportExternalProjects extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void visualising_an_external_project() throws Exception {
+    public void visualising_an_external_project() {
 
         givenThat(maggie).wasAbleTo(
                 Navigate.to(jenkins.url()),

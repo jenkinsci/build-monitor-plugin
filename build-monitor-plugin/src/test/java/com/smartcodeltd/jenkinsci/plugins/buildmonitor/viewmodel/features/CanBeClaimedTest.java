@@ -36,7 +36,7 @@ public class CanBeClaimedTest {
     }
 
     @Test
-    public void should_know_if_a_failing_build_has_been_claimed() throws Exception {
+    public void should_know_if_a_failing_build_has_been_claimed() {
         String ourPotentialHero = "Adam",
                 theReason = "I broke it, sorry, fixing now";
 
@@ -48,7 +48,7 @@ public class CanBeClaimedTest {
     }
 
     @Test
-    public void should_know_if_a_failing_build_has_not_been_claimed() throws Exception {
+    public void should_know_if_a_failing_build_has_not_been_claimed() {
         job = a(jobView().which(new CanBeClaimed()).of(
                 a(job().whereTheLast(build().finishedWith(FAILURE)))));
 
@@ -56,7 +56,7 @@ public class CanBeClaimedTest {
     }
 
     @Test
-    public void should_complain_if_the_build_was_not_claimable() throws Exception {
+    public void should_complain_if_the_build_was_not_claimable() {
         job = a(jobView().of(
                 a(job().withName("my-project").whereTheLast(build().finishedWith(FAILURE)))));
 

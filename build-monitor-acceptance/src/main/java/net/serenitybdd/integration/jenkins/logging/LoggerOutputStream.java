@@ -14,7 +14,7 @@ public class LoggerOutputStream extends OutputStream {
     }
 
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b) {
         byte[] bytes = new byte[1];
         bytes[0] = (byte) (b & 0xff);
         buffer = buffer + new String(bytes, StandardCharsets.UTF_8);

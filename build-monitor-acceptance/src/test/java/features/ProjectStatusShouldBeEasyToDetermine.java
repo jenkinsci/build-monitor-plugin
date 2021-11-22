@@ -46,7 +46,7 @@ public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceT
     }
 
     @Test
-    public void visualising_a_successful_project() throws Exception {
+    public void visualising_a_successful_project() {
 
         givenThat(anna).wasAbleTo(
                 Navigate.to(jenkins.url()),
@@ -61,7 +61,7 @@ public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceT
     }
 
     @Test
-    public void visualising_a_failing_project() throws Exception {
+    public void visualising_a_failing_project() {
 
         givenThat(anna).wasAbleTo(
                 Navigate.to(jenkins.url()),

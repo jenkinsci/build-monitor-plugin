@@ -52,7 +52,7 @@ public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
     }
 
     @Test
-    public void displaying_build_badges() throws Exception {
+    public void displaying_build_badges() {
         givenThat(paul).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAPipelineProjectCreated.called("My App").andConfiguredTo(

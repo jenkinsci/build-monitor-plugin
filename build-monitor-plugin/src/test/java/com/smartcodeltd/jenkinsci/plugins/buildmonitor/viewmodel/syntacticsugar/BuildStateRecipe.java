@@ -63,7 +63,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe withChangesFrom(String... authors) throws Exception {
+    public BuildStateRecipe withChangesFrom(String... authors) {
         boolean newJenkins = false;
         try {
             build.getClass().getMethod("shouldCalculateCulprits");
@@ -86,7 +86,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     //Mockito reflective call to handle methods not available in Jenkins 2.46 which is used as dependency
-    private BuildStateRecipe withChangesFromForJenkins2_107AndNewer(String... authors) throws Exception {
+    private BuildStateRecipe withChangesFromForJenkins2_107AndNewer(String... authors) {
         ChangeLogSet changeSet = changeSetBasedOn(entriesBy(authors));
         when(build.getChangeSet()).thenReturn(changeSet);
         lenient().when(build.shouldCalculateCulprits()).thenReturn(true);
@@ -100,14 +100,14 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe succeededThanksTo(String... authors) throws Exception {
+    public BuildStateRecipe succeededThanksTo(String... authors) {
         finishedWith(Result.SUCCESS);
         withChangesFrom(authors);
 
         return this;
     }
 
-    public BuildStateRecipe wasBrokenBy(String... culprits) throws Exception {
+    public BuildStateRecipe wasBrokenBy(String... culprits) {
         finishedWith(Result.FAILURE);
         withChangesFrom(culprits);
 
@@ -143,7 +143,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe took(int minutes) throws Exception{
+    public BuildStateRecipe took(int minutes) {
         long duration = (long) minutes * 60 * 1000;
 
         when(build.getDuration()).thenReturn(duration);
@@ -151,7 +151,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    public BuildStateRecipe usuallyTakes(int minutes) throws Exception{
+    public BuildStateRecipe usuallyTakes(int minutes) {
         long duration = (long) minutes * 60 * 1000;
 
         when(build.getEstimatedDuration()).thenReturn(duration);

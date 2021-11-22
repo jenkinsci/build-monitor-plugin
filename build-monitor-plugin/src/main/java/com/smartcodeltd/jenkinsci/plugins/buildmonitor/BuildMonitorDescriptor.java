@@ -36,7 +36,7 @@ public final class BuildMonitorDescriptor extends ViewDescriptor {
     }
 
     @Override
-    public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
+    public boolean configure(StaplerRequest req, JSONObject json) {
         req.bindJSON(this, json.getJSONObject("build-monitor"));
         save();
 
