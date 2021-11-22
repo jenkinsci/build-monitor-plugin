@@ -23,8 +23,8 @@ public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>>, S
 
         if(!project.getUpstreamProjects().isEmpty()) {
             List<AbstractProject> upStreamProjects = project.getUpstreamProjects();
-            for (int i = 0; i < upStreamProjects.size(); i++) {
-                time += getTotalEstimatedDuration((AbstractProject<?, ?>)upStreamProjects.get(i));
+            for (AbstractProject upStreamProject : upStreamProjects) {
+                time += getTotalEstimatedDuration((AbstractProject<?, ?>) upStreamProject);
             }
         }
         return time;

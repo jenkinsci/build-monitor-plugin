@@ -226,8 +226,8 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
 
     public BuildStateRecipe hasBadgesBadgePlugin(BadgeBadgePluginRecipe... badges) {
         List<BadgeAction> actions = new ArrayList<BadgeAction>();
-        for (int i = 0; i < badges.length; i++) {
-            actions.add(badges[i].get());
+        for (BadgeBadgePluginRecipe badge : badges) {
+            actions.add(badge.get());
         }
         when(build.getActions(BadgeAction.class)).thenReturn(actions);
 

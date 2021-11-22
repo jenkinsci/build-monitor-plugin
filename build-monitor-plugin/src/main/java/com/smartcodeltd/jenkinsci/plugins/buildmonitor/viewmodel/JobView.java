@@ -134,8 +134,8 @@ public class JobView {
     	
     	RunList<Run<?, ?>> runList = ((RunList<Run<?, ?>>)job.getNewBuilds()).filter(BuildingPredicate.INSTANCE);
 
-    	for (Iterator<Run<?, ?>> i = runList.iterator(); i.hasNext(); ) {
-    		currentBuilds.add(buildViewOf(i.next()));
+    	for (Run<?, ?> run : runList) {
+    		currentBuilds.add(buildViewOf(run));
     	}
     	
         return currentBuilds;
