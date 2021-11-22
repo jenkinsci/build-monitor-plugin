@@ -2,7 +2,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import hudson.model.Action;
-import hudson.model.BuildBadgeAction;
 import hudson.model.Result;
 
 import java.util.ArrayList;
