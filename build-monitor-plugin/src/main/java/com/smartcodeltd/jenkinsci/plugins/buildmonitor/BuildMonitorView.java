@@ -158,7 +158,7 @@ public class BuildMonitorView extends ListView {
         List<Job<?, ?>> projects = new ArrayList(filter(super.getItems(), Job.class));
         List<JobView> jobs = new ArrayList<>();
 
-        Collections.sort(projects, currentConfig().getOrder());
+        projects.sort(currentConfig().getOrder());
 
         for (Job project : projects) {
             jobs.add(views.viewOf(project));
