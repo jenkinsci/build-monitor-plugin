@@ -89,11 +89,6 @@
                 <version>1.4.18</version>
             </dependency>
             <dependency>
-                <groupId>commons-net</groupId>
-                <artifactId>commons-net</artifactId>
-                <version>3.8.0</version>
-            </dependency>
-            <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>2.10.13</version>
@@ -107,11 +102,6 @@
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy</artifactId>
                 <version>${bytebuddy.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.12.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -290,6 +280,34 @@
                             <generateOutcomes>true</generateOutcomes>
                             <outputDirectory>target/site/serenity</outputDirectory>
                             <sourceDirectory>target/site/serenity</sourceDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>display-info</id>
+                        <configuration>
+                            <rules>
+                                <requireUpperBoundDeps>
+                                    <excludes combine.children="append">
+                                        <exclude>org.eclipse.jetty:jetty-client</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-http</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-io</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-security</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-server</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-util</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-webapp</exclude>
+                                        <exclude>org.eclipse.jetty:jetty-xml</exclude>
+                                        <exclude>org.eclipse.jetty.websocket:websocket-api</exclude>
+                                        <exclude>org.eclipse.jetty.websocket:websocket-client</exclude>
+                                        <exclude>org.eclipse.jetty.websocket:websocket-common</exclude>
+                                        <exclude>org.eclipse.jetty.websocket:websocket-server</exclude>
+                                    </excludes>
+                                </requireUpperBoundDeps>
+                            </rules>
                         </configuration>
                     </execution>
                 </executions>
