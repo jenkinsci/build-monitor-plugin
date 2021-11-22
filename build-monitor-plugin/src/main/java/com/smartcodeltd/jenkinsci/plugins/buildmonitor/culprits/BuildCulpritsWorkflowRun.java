@@ -41,14 +41,11 @@ class BuildCulpritsWorkflowRun extends BuildCulpritsRetriever {
     @Override
     protected Set<String> getCommittersForRun(Run<?, ?> run) {
         WorkflowRun workflowRun = (WorkflowRun) run;
-        return new TreeSet<>(
-                workflowRun.getChangeSets().stream()
-                        .filter(Objects::nonNull)
-                        .flatMap(
-                                changeLogSet ->
-                                        StreamSupport.stream(changeLogSet.spliterator(), false))
-                        .map(entry -> entry != null ? entry.getAuthor().getFullName() : null)
-                        .collect(Collectors.toSet()));
+        return workflowRun.getChangeSets().stream()
+                .filter(Objects::nonNull)
+                .flatMap(changeLogSet -> StreamSupport.stream(changeLogSet.spliterator(), false))
+                .map(entry -> entry != null ? entry.getAuthor().getFullName() : null)
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     private Set<String> getCulpritsForRun(WorkflowRun from, WorkflowRun to) {

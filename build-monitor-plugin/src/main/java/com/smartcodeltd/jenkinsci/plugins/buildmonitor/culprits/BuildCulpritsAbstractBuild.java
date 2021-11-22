@@ -20,10 +20,9 @@ class BuildCulpritsAbstractBuild extends BuildCulpritsRetriever {
     @Override
     public Set<String> getCulprits(Run<?, ?> run) {
         AbstractBuild<?, ?> abstractBuild = (AbstractBuild<?, ?>) run;
-        return new TreeSet<>(
-                abstractBuild.getCulprits().stream()
-                        .map(User::getFullName)
-                        .collect(Collectors.toSet()));
+        return abstractBuild.getCulprits().stream()
+                .map(User::getFullName)
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
 
@@ -35,9 +34,8 @@ class BuildCulpritsAbstractBuild extends BuildCulpritsRetriever {
         if (cs == null) {
             return Collections.emptySet();
         }
-        return new TreeSet<>(
-                StreamSupport.stream(cs.spliterator(), false)
-                        .map(entry -> entry.getAuthor().getFullName())
-                        .collect(Collectors.toSet()));
+        return StreamSupport.stream(cs.spliterator(), false)
+                .map(entry -> entry.getAuthor().getFullName())
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 }
