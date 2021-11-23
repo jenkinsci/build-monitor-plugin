@@ -273,7 +273,7 @@
                                 ]]>
                             </source>
                             <properties>
-                                <plugins>build-monitor-plugin,description-setter,workflow-aggregator,badge,cloudbees-folder,external-monitor-job,build-failure-analyzer,claim</plugins>
+                                <plugins>description-setter,workflow-aggregator,badge,cloudbees-folder,external-monitor-job,build-failure-analyzer,claim</plugins>
                                 <jenkins_versions>${jenkins.version},${jenkins.latest.version}</jenkins_versions>
                                 <dest_dir>${plugins.cache}</dest_dir>
                                 <local_repo>${settings.localRepository}</local_repo>

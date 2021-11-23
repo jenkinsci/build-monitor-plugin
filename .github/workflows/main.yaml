@@ -25,13 +25,13 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
 
-      - name: Cache eclipse plugins
+      - name: Cache jenkins plugins
         uses: actions/cache@v2
         with:
           path: build-monitor-acceptance/plugin_cache
-          key: eclipse-plugins-${{ hashFiles('build-monitor-acceptance/pom.xml') }}
+          key: jenkins-plugins-${{ hashFiles('build-monitor-acceptance/pom.xml') }}
           restore-keys: |
-            eclipse-plugins-
+            jenkins-plugins-
 
       - name: Setup git (master only)
         uses: ./.github/actions/setup-git
