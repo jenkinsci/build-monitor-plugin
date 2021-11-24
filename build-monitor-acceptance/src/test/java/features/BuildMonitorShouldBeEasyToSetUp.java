@@ -2,8 +2,6 @@ package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
-import net.serenitybdd.integration.jenkins.JenkinsInstance;
-import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
@@ -21,8 +19,6 @@ import static net.serenitybdd.screenplay.GivenWhenThen.when;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 public class BuildMonitorShouldBeEasyToSetUp extends BuilMonitorAcceptanceTest {
 
@@ -30,10 +26,6 @@ public class BuildMonitorShouldBeEasyToSetUp extends BuilMonitorAcceptanceTest {
 
     public BuildMonitorShouldBeEasyToSetUp(String jenkinsVersion) {
         super(jenkinsVersion);
-    }
-
-    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Collections.emptyList();
     }
 
     @TestData

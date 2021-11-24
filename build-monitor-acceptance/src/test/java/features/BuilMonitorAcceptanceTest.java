@@ -10,8 +10,11 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RunWith(SerenityParameterizedRunner.class)
@@ -19,9 +22,18 @@ public abstract class BuilMonitorAcceptanceTest {
 
     @Managed public WebDriver browser;
 
-    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure().afterStart(jenkinsAfterStartRules()).create();
+    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure()
+            .beforeStart(jenkinsBeforeStartRules())
+            .afterStart(jenkinsAfterStartRules())
+            .create();
     
-    protected abstract List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules();
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
+        return Collections.emptyList();
+    }
+    
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
+        return Collections.emptyList();
+    }
 
 
     public static Collection<Object[]> testData(){
@@ -37,5 +49,9 @@ public abstract class BuilMonitorAcceptanceTest {
     
     protected BuilMonitorAcceptanceTest(String jenkinsVersion) {
         System.setProperty("jenkins.version", jenkinsVersion);
+    }
+    
+    protected Path getpluginsCache() {
+        return Paths.get(System.getenv("PLUGINS_CACHE"));
     }
 }

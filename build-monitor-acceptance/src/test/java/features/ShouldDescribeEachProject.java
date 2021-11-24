@@ -33,8 +33,8 @@ public class ShouldDescribeEachProject extends BuilMonitorAcceptanceTest {
         super(jenkinsVersion);
     }
 
-    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Collections.singletonList(InstallPlugins.fromUpdateCenter("description-setter"));
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
+        return Collections.singletonList(InstallPlugins.fromCache(getpluginsCache(), "workflow-aggregator", "description-setter"));
     }
 
     @TestData

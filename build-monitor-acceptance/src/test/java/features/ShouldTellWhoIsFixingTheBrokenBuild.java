@@ -23,8 +23,8 @@ import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStat
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.core.Is.is;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ShouldTellWhoIsFixingTheBrokenBuild extends BuilMonitorAcceptanceTest {
@@ -35,9 +35,13 @@ public class ShouldTellWhoIsFixingTheBrokenBuild extends BuilMonitorAcceptanceTe
         super(jenkinsVersion);
     }
 
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
+        return Collections.singletonList(InstallPlugins.fromCache(getpluginsCache(), "claim"));
+    }
+
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
         ben = JenkinsUser.named("Ben");
-        return Arrays.asList(InstallPlugins.fromUpdateCenter("claim"), RegisterUserAccount.of(ben));
+        return Collections.singletonList(RegisterUserAccount.of(ben));
     }
 
     @TestData

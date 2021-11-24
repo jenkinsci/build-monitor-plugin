@@ -32,8 +32,8 @@ public class ShouldSupportExternalProjects extends BuilMonitorAcceptanceTest {
         super(jenkinsVersion);
     }
 
-    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Collections.singletonList(InstallPlugins.fromUpdateCenter("external-monitor-job"));
+    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
+        return Collections.singletonList(InstallPlugins.fromCache(getpluginsCache(), "external-monitor-job"));
     }
 
     @TestData
