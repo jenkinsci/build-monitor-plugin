@@ -19,8 +19,6 @@ public class DisplayNestedProjects implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
             Scroll.to(ViewConfigurationPage.Recurse_In_Subfolders),
-            // In case we scroll up and field is under the breadcrumb overlay
-            Scroll.to(ViewConfigurationPage.Status_Filter),
             Choose.the(ViewConfigurationPage.Recurse_In_Subfolders)
         );
     }

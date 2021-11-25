@@ -1,6 +1,8 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.build.GetBuildViewModel;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.build.GetLastBuild;
 import hudson.model.Job;
 
 import java.util.Comparator;
@@ -9,6 +11,8 @@ import java.util.Optional;
 public class Config {
 
     private boolean displayCommitters;
+    private DisplayOptions displayBadges;
+    private GetBuildViewModel displayBadgesFrom;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     
     public static Config defaultConfig() {
@@ -47,6 +51,22 @@ public class Config {
         this.displayCommitters = flag;
     }
     
+    public DisplayOptions getDisplayBadges() {
+        return Optional.ofNullable(displayBadges).orElse(DisplayOptions.UserSetting);
+    }
+
+    public void setDisplayBadges(String option) {
+        this.displayBadges = DisplayOptions.valueOf(option);
+    }
+    
+    public GetBuildViewModel getDisplayBadgesFrom() {
+        return Optional.ofNullable(displayBadgesFrom).orElse(new GetLastBuild());
+    }
+
+    public void setDisplayBadgesFrom(GetBuildViewModel displayBadgesFrom) {
+        this.displayBadgesFrom = displayBadgesFrom;
+    }
+
     @Override
     public String toString() {
         return String.format("Config{order=%s}", order.getClass().getSimpleName());
@@ -70,5 +90,9 @@ public class Config {
         public String toString() { return value; }
     }
     
+    public enum DisplayOptions {
+        Always, Never, UserSetting;
+    }
+
     private Comparator<Job<?, ?>> order;
 }

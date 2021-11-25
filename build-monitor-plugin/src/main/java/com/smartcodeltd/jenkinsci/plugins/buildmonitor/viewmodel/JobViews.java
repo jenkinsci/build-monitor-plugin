@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config.DisplayOptions;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.*;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
@@ -30,6 +31,7 @@ public class JobViews {
         List<Feature> viewFeatures = new ArrayList<>();
 
         // todo: a more elegant way of assembling the features would be nice
+        viewFeatures.add(new HasConfig(config));
         viewFeatures.add(new HasHeadline(new HeadlineConfig(config.shouldDisplayCommitters())));
         viewFeatures.add(new KnowsLastCompletedBuildDetails());
         viewFeatures.add(new KnowsCurrentBuildsDetails());
@@ -42,8 +44,10 @@ public class JobViews {
             viewFeatures.add(new CanBeDiagnosedForProblems(config.getBuildFailureAnalyzerDisplayedField()));
         }
 
-        if (jenkins.hasPlugin(Badge_Plugin)) {
-            viewFeatures.add(new HasBadgesBadgePlugin());
+        if (config.getDisplayBadges() != DisplayOptions.Never) {
+            if (jenkins.hasPlugin(Badge_Plugin)) {
+                viewFeatures.add(new HasBadgesBadgePlugin(config));
+            }
         }
 
         boolean isPipelineJob = jenkins.hasPlugin(Pipeline) && job instanceof WorkflowJob;

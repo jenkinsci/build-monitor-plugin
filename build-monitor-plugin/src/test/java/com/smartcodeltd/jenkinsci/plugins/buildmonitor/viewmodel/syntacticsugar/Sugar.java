@@ -2,6 +2,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.HasBadgesBadgePlugin;
 
 import java.util.function.Supplier;
 
@@ -20,6 +21,14 @@ public class Sugar {
 
     public static BuildStateRecipe build() {
         return new BuildStateRecipe();
+    }
+
+    public static HasBadgesBadgePlugin hasBadgePluginBadges(Config config) {
+        return new HasBadgesBadgePlugin(config);
+    }
+
+    public static HasBadgesBadgePlugin hasBadgePluginBadges(ConfigStateRecipe config) {
+        return new HasBadgesBadgePlugin(config.get());
     }
 
     public static BadgeBadgePluginRecipe badgePluginBadge() {
@@ -46,5 +55,9 @@ public class Sugar {
 
     public static Config withDefaultConfig() {
         return new ConfigStateRecipe().get();
+    }
+
+    public static ConfigStateRecipe withConfig() {
+        return new ConfigStateRecipe();
     }
 }
