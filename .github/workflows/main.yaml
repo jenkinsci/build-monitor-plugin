@@ -95,3 +95,8 @@ jobs:
             -Dfile=build-monitor-plugin/target/build-monitor-plugin.hpi \
             -DrepositoryId=repo.jenkins-ci.org \
             -Durl=https://repo.jenkins-ci.org/releases/
+          mvn --batch-mode deploy:deploy-file \
+            -DpomFile=pom.xml \
+            -Dfile=pom.xml \
+            -DrepositoryId=repo.jenkins-ci.org \
+            -Durl=https://repo.jenkins-ci.org/releases/
