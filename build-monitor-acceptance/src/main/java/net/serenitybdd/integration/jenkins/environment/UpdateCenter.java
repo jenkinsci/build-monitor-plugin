@@ -54,7 +54,7 @@ public class UpdateCenter {
     private URL updateCenterJSONPFor(String jenkinsVersion) throws MalformedURLException {
         String versionToUse = getUpdateVersionToUse(jenkinsVersion);
         URL url = url(Update_Center_URL_Template, versionToUse);
-        Log.info("Jenkins update URL is {}", url.toString());
+        Log.info("Jenkins update URL is {}", url);
         return url;
 
     }
