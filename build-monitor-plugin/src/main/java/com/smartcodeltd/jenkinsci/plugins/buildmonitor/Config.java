@@ -91,7 +91,7 @@ public class Config {
     }
     
     public enum DisplayOptions {
-        Always, Never, UserSetting;
+        Always, Never, UserSetting
     }
 
     private Comparator<Job<?, ?>> order;

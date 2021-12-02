@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,14 +27,14 @@ public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstan
 
     public InstallPluginsFromDisk(Path... pluginsToInstall) {
         this.pluginsCache = null;
-        this.pluginIDs = asList();
+        this.pluginIDs = Collections.emptyList();
         this.pluginsToInstall = asList(pluginsToInstall);
     }
 
     public InstallPluginsFromDisk(Path pluginsCache, String... pluginIDs) {
         this.pluginsCache = pluginsCache;
         this.pluginIDs = asList(pluginIDs);
-        this.pluginsToInstall = asList();
+        this.pluginsToInstall = Collections.emptyList();
     }
 
     @Override
