@@ -95,6 +95,7 @@ jobs:
             -Dfile=build-monitor-plugin/target/build-monitor-plugin.hpi \
             -Dfiles=build-monitor-plugin/target/build-monitor-plugin.jar \
             -Dtypes=jar \
+            -Dclassifiers="" \
             -DrepositoryId=repo.jenkins-ci.org \
             -Durl=https://repo.jenkins-ci.org/releases/
           mvn --batch-mode deploy:deploy-file \
