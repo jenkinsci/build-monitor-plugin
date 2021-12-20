@@ -21,7 +21,7 @@
         <encoding>UTF-8</encoding>
         <serenity.version>2.4.51</serenity.version>
         <aether.version>1.0.2.v20150114</aether.version>
-        <bytebuddy.version>1.12.3</bytebuddy.version>
+        <bytebuddy.version>1.12.5</bytebuddy.version>
         <slf4j.version>1.7.32</slf4j.version>
 
         <webdriver.driver>chrome</webdriver.driver>
