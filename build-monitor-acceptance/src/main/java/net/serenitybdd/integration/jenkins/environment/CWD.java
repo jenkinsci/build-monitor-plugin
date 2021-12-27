@@ -1,6 +1,6 @@
 package net.serenitybdd.integration.jenkins.environment;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
