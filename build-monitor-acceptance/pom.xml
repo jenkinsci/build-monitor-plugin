@@ -170,6 +170,12 @@
             <groupId>net.serenity-bdd</groupId>
             <artifactId>serenity-core</artifactId>
             <version>${serenity.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctorj</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.serenity-bdd</groupId>
@@ -362,6 +368,7 @@
                             <rules>
                                 <requireUpperBoundDeps>
                                     <excludes combine.children="append">
+                                        <exclude>com.squareup.okhttp3:okhttp</exclude>
                                         <exclude>org.eclipse.jetty:jetty-client</exclude>
                                         <exclude>org.eclipse.jetty:jetty-http</exclude>
                                         <exclude>org.eclipse.jetty:jetty-io</exclude>
