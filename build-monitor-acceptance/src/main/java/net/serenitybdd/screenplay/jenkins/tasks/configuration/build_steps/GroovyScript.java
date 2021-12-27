@@ -1,6 +1,6 @@
 package net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
