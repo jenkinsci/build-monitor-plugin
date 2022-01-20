@@ -9,6 +9,8 @@ updates:
     ignore:
       # This is the minimum Jenkins version
       - dependency-name: "org.jenkins-ci.main:cli"
+      # Provided by Jenkins core
+      - dependency-name: "javax.annotation:javax.annotation-api"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
