@@ -37,5 +37,9 @@ public class ProjectWidget {
         this.projectOfInterest = projectOfInterest;
     }
 
+    public Question<WebElementState> testProgressBars() {
+        return new ProjectWidgetProgressBarsState(projectOfInterest);
+    }
+
     private final String projectOfInterest;
 }
