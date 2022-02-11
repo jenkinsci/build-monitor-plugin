@@ -114,12 +114,6 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-            <!-- Fix RequireUpperBoundDeps -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>1.21</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -377,6 +371,7 @@
                                     <excludes combine.children="append">
                                         <exclude>com.squareup.okhttp3:okhttp</exclude>
                                         <exclude>javax.annotation:javax.annotation-api</exclude>
+                                        <exclude>org.apache.commons:commons-compress</exclude>
                                         <exclude>org.eclipse.jetty:jetty-client</exclude>
                                         <exclude>org.eclipse.jetty:jetty-http</exclude>
                                         <exclude>org.eclipse.jetty:jetty-io</exclude>
