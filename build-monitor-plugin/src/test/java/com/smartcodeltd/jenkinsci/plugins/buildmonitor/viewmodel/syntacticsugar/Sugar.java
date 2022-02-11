@@ -3,6 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.HasBadgesBadgePlugin;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.HasJunitRealtime;
 
 import java.util.function.Supplier;
 
@@ -33,6 +34,14 @@ public class Sugar {
 
     public static BadgeBadgePluginRecipe badgePluginBadge() {
         return new BadgeBadgePluginRecipe();
+    }
+
+    public static HasJunitRealtime hasJunitRealtime() {
+        return new HasJunitRealtime();
+    }
+
+    public static RealtimeTestPluginRecipe realtimeTest() {
+        return new RealtimeTestPluginRecipe();
     }
 
     public static <X> X a(Supplier<X> recipe) {
