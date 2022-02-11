@@ -14,7 +14,7 @@ public class ProjectWidgetPipelineStages implements Question<String> {
     public String answeredBy(Actor actor) {
         Target details = BuildMonitorDashboard.Project_Widget_Pipeline_Stages.of(projectName);
 
-        return Text.of(details).viewedBy(actor).resolve();
+        return Text.of(details).answeredBy(actor);
     }
 
     public ProjectWidgetPipelineStages(String projectName) {

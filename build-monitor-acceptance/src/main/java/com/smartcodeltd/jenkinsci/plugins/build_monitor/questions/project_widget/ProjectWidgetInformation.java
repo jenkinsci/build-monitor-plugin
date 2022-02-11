@@ -15,7 +15,7 @@ public class ProjectWidgetInformation implements Question<ProjectInformation> {
     @Override
     public ProjectInformation answeredBy(Actor actor) {
         Target widget     = BuildMonitorDashboard.Project_Widget.of(projectName);
-        String cssClasses = Attribute.of(widget).named("class").viewedBy(actor).asString();
+        String cssClasses = Attribute.of(widget).named("class").answeredBy(actor);
 
         return new ProjectInformation(projectName, ProjectStatus.fromMultiple(cssClasses));
     }

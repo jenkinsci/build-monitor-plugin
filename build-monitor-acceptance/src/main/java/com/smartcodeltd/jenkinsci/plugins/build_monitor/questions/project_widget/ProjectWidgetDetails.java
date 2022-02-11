@@ -14,7 +14,7 @@ public class ProjectWidgetDetails implements Question<String> {
     public String answeredBy(Actor actor) {
         Target details    = BuildMonitorDashboard.Project_Widget_Details.of(projectName);
 
-        return Text.of(details).viewedBy(actor).resolve();
+        return Text.of(details).answeredBy(actor);
     }
 
     public ProjectWidgetDetails(String projectName) {
