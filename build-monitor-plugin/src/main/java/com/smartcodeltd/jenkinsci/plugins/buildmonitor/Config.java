@@ -14,6 +14,7 @@ public class Config {
     private DisplayOptions displayBadges;
     private GetBuildViewModel displayBadgesFrom;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
+    private boolean displayJUnitProgress;
     
     public static Config defaultConfig() {
         return new Config();
@@ -65,6 +66,14 @@ public class Config {
 
     public void setDisplayBadgesFrom(GetBuildViewModel displayBadgesFrom) {
         this.displayBadgesFrom = displayBadgesFrom;
+    }
+
+    public boolean shouldDisplayJUnitProgress() {
+        return Optional.of(displayJUnitProgress).orElse(true);
+    }
+
+    public void setDisplayJUnitProgress(boolean flag) {
+        this.displayJUnitProgress = flag;
     }
 
     @Override

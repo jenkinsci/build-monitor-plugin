@@ -12,6 +12,8 @@ import jenkins.model.CauseOfInterruption;
 import jenkins.model.InterruptedBuildAction;
 
 import com.jenkinsci.plugins.badge.action.BadgeAction;
+
+import org.jenkinsci.plugins.junitrealtimetestreporter.AbstractRealtimeTestResultAction;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -234,6 +236,16 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
+    public BuildStateRecipe hasRealtimeTests(RealtimeTestPluginRecipe... realtimeTests) {
+        List<AbstractRealtimeTestResultAction> actions = new ArrayList<>();
+        for (RealtimeTestPluginRecipe realtimeTest : realtimeTests) {
+            actions.add(realtimeTest.get());
+        }
+        when(build.getActions(AbstractRealtimeTestResultAction.class)).thenReturn(actions);
+
+        return this;
+    }
+    
     public BuildStateRecipe and() {
         return this;
     }

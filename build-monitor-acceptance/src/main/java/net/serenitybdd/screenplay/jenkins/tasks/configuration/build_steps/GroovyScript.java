@@ -14,12 +14,18 @@ public class GroovyScript {
         return new GroovyScript(descriptionOfScriptsBehaviour);
     }
 
+    public GroovyScript separatedBy(String lineSeparator) {
+        this.lineSeparator = lineSeparator;
+
+        return this;
+    }
+
     public GroovyScript definedAs(String... lines) {
         return this.definedAs(asList(lines));
     }
 
     public GroovyScript definedAs(List<String> lines) {
-        this.code = String.join("\n", lines);
+        this.code = String.join(this.lineSeparator, lines);
 
         return this;
     }
@@ -52,6 +58,8 @@ public class GroovyScript {
     }
 
     private final String description;
+
+    private String lineSeparator = "\n";
 
     private String code = "";
 }
