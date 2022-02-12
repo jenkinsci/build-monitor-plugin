@@ -1,15 +1,13 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 
-import static com.google.common.collect.Lists.newArrayList;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -41,15 +39,15 @@ public class HasJunitRealtime implements Feature<HasJunitRealtime.RealtimeTests>
         }
 
         BuildViewModel build = builds.get(0);
-        Iterator<AbstractRealtimeTestResultAction> details = Iterables
-                .filter(build.allDetailsOf(AbstractRealtimeTestResultAction.class), filter).iterator();
+        Iterator<AbstractRealtimeTestResultAction> details =
+                build.allDetailsOf(AbstractRealtimeTestResultAction.class).stream().filter(filter).iterator();
 
         return details.hasNext() ? new RealtimeTests(details) : null; // `null` because we don't want to serialise an
                                                                         // empty object
     }
 
     public static class RealtimeTests {
-        private final List<RealtimeTest> realtimeTests = newArrayList();
+        private final List<RealtimeTest> realtimeTests = new ArrayList<>();
 
         public RealtimeTests(Iterator<AbstractRealtimeTestResultAction> realtimeTestResultAction) {
             while (realtimeTestResultAction.hasNext()) {
@@ -60,7 +58,7 @@ public class HasJunitRealtime implements Feature<HasJunitRealtime.RealtimeTests>
 
         @JsonValue
         public List<RealtimeTest> value() {
-            return ImmutableList.copyOf(realtimeTests);
+            return Collections.unmodifiableList(new ArrayList<>(realtimeTests));
         }
     }
 
@@ -108,7 +106,7 @@ public class HasJunitRealtime implements Feature<HasJunitRealtime.RealtimeTests>
 
     private static class ActionFilter implements Predicate<AbstractRealtimeTestResultAction> {
         @Override
-        public boolean apply(AbstractRealtimeTestResultAction action) {
+        public boolean test(AbstractRealtimeTestResultAction action) {
             // Need to trigger the polling manually first
             action.getResult();
             return action.getTestProgress() != null;
