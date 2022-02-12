@@ -1,14 +1,14 @@
 package net.serenitybdd.screenplay.jenkins.actions;
 
-import net.serenitybdd.screenplay.Action;
 import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
-public class Choose implements Action{
-    public static Action the(Target radioButton) {
+public class Choose implements Interaction {
+    public static Interaction the(Target radioButton) {
         return instrumented(Choose.class, radioButton);
     }
 
