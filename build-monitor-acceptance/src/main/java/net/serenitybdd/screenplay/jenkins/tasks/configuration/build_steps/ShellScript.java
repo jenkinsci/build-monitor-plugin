@@ -1,9 +1,7 @@
 package net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
@@ -25,7 +23,7 @@ public class ShellScript {
     }
 
     public ShellScript andOutputs(String... lines) {
-        return definedAs(Arrays.stream(lines).map(mapEachLineTo("echo \"%s\";")).collect(Collectors.toList()));
+        return definedAs(Arrays.stream(lines).map(line -> String.format("echo \"%s\";", line)).collect(Collectors.toList()));
     }
 
     public String code() {
@@ -39,16 +37,6 @@ public class ShellScript {
 
     private ShellScript(String descriptionOfScriptsBehaviour) {
         this.description = descriptionOfScriptsBehaviour;
-    }
-
-    private Function<String, String> mapEachLineTo(final String template) {
-        return new Function<String, String>() {
-            @Nullable
-            @Override
-            public String apply(@Nullable String line) {
-                return String.format(template, line);
-            }
-        };
     }
 
     private final String description;
