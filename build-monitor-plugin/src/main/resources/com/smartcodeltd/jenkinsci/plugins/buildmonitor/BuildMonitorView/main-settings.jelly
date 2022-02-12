@@ -1,6 +1,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core">
-    <nav data-ng-controller="controlPanel" data-ng-init="built_at = '${it.installation.buildMonitorBuiltAt()}'">
+    <nav data-ng-controller="controlPanel" data-ng-init="built_at = '${it.installation.buildMonitorBuiltAt()}'; defaults.fontSize = ${it.textScale}; defaults.numberOfColumns = ${it.maxColumns}; defaults.colourBlind = ${it.colourBlindMode}; defaults.reduceMotion = ${it.reduceMotion}; defaults.showBadges = ${it.showBadges}; addCookie()">
         <span data-ng-show="newVersionAvailable" class="notifications">!</span>
         <section data-ng-class="{ showSettings:toggleSettings }">
             <input id="settings-toggle" type="checkbox" class="settings" data-ng-model="toggleSettings" />
@@ -15,11 +15,11 @@
                 </li>
                 <li class="settings-option">
                     <span class="slider-label">Text scale</span>
-                    <rzslider rz-slider-model="settings.fontSize" rz-slider-options="{ floor: 0.1, ceil: 2, step: 0.1, precision: 1 }"></rzslider>
+                    <rzslider rz-slider-model="settings.fontSize" rz-slider-options="{ floor: 0.1, ceil: 5, step: 0.1, precision: 1 }"></rzslider>
                 </li>
                 <li class="settings-option">
                     <span class="slider-label">Maximum number of columns</span>
-                    <rzslider rz-slider-model="settings.numberOfColumns" rz-slider-options="{ floor: 1, ceil: 8, step: 1, precision: 0 }"></rzslider>
+                    <rzslider rz-slider-model="settings.numberOfColumns" rz-slider-options="{ floor: 1, ceil: 20, step: 1, precision: 0 }"></rzslider>
                 </li>
                 <li class="settings-option">
                     <input ng-model="settings.colourBlind"
@@ -41,6 +41,11 @@
                            ng-true-value="'1'"
                            id="settings-show-badges" type="checkbox" />
                     <label for="settings-show-badges" title="Show the last build badges">Show badges?</label>
+                </li>
+                <li class="buttons">
+                    <a class="btn"
+                       data-ng-click="resetSettings()"
+                       title="Reset to defaults.">Reset to defaults</a>
                 </li>
                 <li class="buttons">
                     <a class="btn"
