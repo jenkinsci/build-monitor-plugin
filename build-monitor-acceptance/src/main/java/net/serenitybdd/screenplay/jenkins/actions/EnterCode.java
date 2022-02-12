@@ -1,7 +1,7 @@
 package net.serenitybdd.screenplay.jenkins.actions;
 
-import net.serenitybdd.screenplay.Action;
 import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplayx.actions.Evaluate;
@@ -17,11 +17,11 @@ public class EnterCode {
         return new EnterCode(asList(lines));
     }
 
-    public Action intoTheCodeMirror(Target editorField) {
+    public Interaction intoTheCodeMirror(Target editorField) {
         return instrumented(EnterCodeIntoCodeMirrorEditor.class, editorField, String.join(System.lineSeparator(), lines));
     }
 
-    public Action intoThePipelineEditor(Target editorField) {
+    public Interaction intoThePipelineEditor(Target editorField) {
         return instrumented(EnterCodeIntoPipelineEditor.class, editorField, String.join(System.lineSeparator(), lines));
     }
 
@@ -31,7 +31,7 @@ public class EnterCode {
 
     private final List<String> lines;
 
-    public static class EnterCodeIntoCodeMirrorEditor implements Action {
+    public static class EnterCodeIntoCodeMirrorEditor implements Interaction {
 
         private final Target target;
         private final String code;
@@ -69,7 +69,7 @@ public class EnterCode {
         }
     }
 
-    private static class EnterCodeIntoPipelineEditor implements Action {
+    private static class EnterCodeIntoPipelineEditor implements Interaction {
 
         private final Target target;
         private final String code;

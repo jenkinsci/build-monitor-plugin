@@ -1,13 +1,13 @@
 package net.serenitybdd.screenplayx.actions;
 
 import net.serenitybdd.core.steps.Instrumented;
-import net.serenitybdd.screenplay.Action;
 import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import org.openqa.selenium.JavascriptExecutor;
 
 // the original implementation has a side-effect of injecting the jQuery library, which conflicts with Jenkins' prototype.js
-public class Evaluate implements Action {
+public class Evaluate implements Interaction {
 
     private final String expression;
     private Object[] parameters;
