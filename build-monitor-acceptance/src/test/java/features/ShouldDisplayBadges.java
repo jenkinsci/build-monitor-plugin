@@ -2,8 +2,10 @@ package features;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HideBadges;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.ModifyControlPanelOptions;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.ShowBadges;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.ConfigureViewSettings;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayBadges;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayBadgesFrom;
@@ -66,6 +68,7 @@ public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
                 ScheduleABuild.of("My App"),
                 CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
                         DisplayAllProjects.usingARegularExpression(),
+                        ConfigureViewSettings.doNotShowBadges(),
                         DisplayBadges.asAUserSetting(),
                         DisplayBadgesFrom.theLastBuild()
                 )
@@ -85,14 +88,16 @@ public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
                 HaveAPipelineProjectCreated.called("My App").andConfiguredTo(
                         SetPipelineDefinition.asFollows(Adds_A_Badge.code())
                 ),
-                ScheduleABuild.of("My App")
+                ScheduleABuild.of("My App"),
+                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
+                        DisplayAllProjects.usingARegularExpression(),
+                        ConfigureViewSettings.showBadges(),
+                        DisplayBadges.always(),
+                        DisplayBadgesFrom.theLastBuild()
+                )
         );
 
-        when(paul).attemptsTo(CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                DisplayAllProjects.usingARegularExpression(),
-                DisplayBadges.always(),
-                DisplayBadgesFrom.theLastBuild()
-        ));
+        when(paul).attemptsTo(ModifyControlPanelOptions.to(HideBadges.onTheDashboard()));
 
         then(paul).should(seeThat(ProjectWidget.of("My App").badges(),
                 isCurrentlyVisible()
@@ -109,6 +114,7 @@ public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
                 ScheduleABuild.of("My App"),
                 CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
                         DisplayAllProjects.usingARegularExpression(),
+                        ConfigureViewSettings.doNotShowBadges(),
                         DisplayBadges.never(),
                         DisplayBadgesFrom.theLastBuild()
                 )

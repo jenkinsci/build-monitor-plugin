@@ -4,24 +4,24 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface.BuildMoni
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.serenitybdd.screenplay.actions.CheckCheckbox;
+import net.serenitybdd.screenplay.actions.UncheckCheckbox;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
-public class ShowBadges implements Task {
+public class HideBadges implements Task {
     public static Task onTheDashboard() {
-        return instrumented(ShowBadges.class);
+        return instrumented(HideBadges.class);
     }
 
-    @Step("{0} decides to display the badges on the dashboard")
+    @Step("{0} decides to hide the badges on the dashboard")
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
             WaitUntil.the(BuildMonitorDashboard.Show_Badges, isVisible()),
-            CheckCheckbox.of(BuildMonitorDashboard.Show_Badges)
+            UncheckCheckbox.of(BuildMonitorDashboard.Show_Badges)
         );
     }
 }
