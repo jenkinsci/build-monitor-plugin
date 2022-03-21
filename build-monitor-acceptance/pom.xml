@@ -19,7 +19,7 @@
         <jenkins.latest.version>2.319.3</jenkins.latest.version>
 
         <encoding>UTF-8</encoding>
-        <serenity.version>3.2.0</serenity.version>
+        <serenity.version>3.2.1</serenity.version>
         <aether.version>1.0.2.v20150114</aether.version>
         <bytebuddy.version>1.12.8</bytebuddy.version>
         <slf4j.version>1.7.36</slf4j.version>
@@ -351,6 +351,23 @@
                             <generateOutcomes>true</generateOutcomes>
                             <outputDirectory>target/site/serenity</outputDirectory>
                             <sourceDirectory>target/site/serenity</sourceDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>display-info</id>
+                        <configuration>
+                            <rules>
+                                <requireUpperBoundDeps>
+                                    <excludes combine.children="append">
+                                        <exclude>org.projectlombok:lombok</exclude>
+                                    </excludes>
+                                </requireUpperBoundDeps>
+                            </rules>
                         </configuration>
                     </execution>
                 </executions>
