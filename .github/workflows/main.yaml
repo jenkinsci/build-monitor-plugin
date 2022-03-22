@@ -26,7 +26,7 @@ jobs:
           cache: 'maven'
 
       - name: Cache jenkins plugins
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: build-monitor-acceptance/plugin_cache
           key: jenkins-plugins-${{ hashFiles('build-monitor-acceptance/pom.xml') }}
