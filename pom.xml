@@ -5,14 +5,13 @@
 
     <properties>
         <jenkins.version>2.303.3</jenkins.version>
-        <java.level>8</java.level>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.39</version>
+        <version>4.40</version>
         <relativePath />
     </parent>
 
