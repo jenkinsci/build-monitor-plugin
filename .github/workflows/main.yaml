@@ -52,7 +52,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: cat build-monitor-plugin/target/classes/build-monitor.properties >> $GITHUB_ENV
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           retention-days: 3
           name: artifacts
