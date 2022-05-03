@@ -67,9 +67,9 @@ angular.
                 ]).open().then(function (result) {
                     $window.location.reload();
                 });
-			setTimeout(function() {
-				$window.location.reload();
-			}, 10000);
+            setTimeout(function() {
+                $window.location.reload();
+            }, 10000);
         }
     }).
 
