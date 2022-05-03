@@ -3,6 +3,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 /**
  * @author Jan Molak
  */
-public interface SerialisableAsJsonObjectCalled<JSON extends Object> {
+public interface SerialisableAsJsonObjectCalled<JSON> {
     JSON asJson();
 }

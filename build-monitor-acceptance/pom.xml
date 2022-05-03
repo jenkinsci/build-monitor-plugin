@@ -1,33 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>build-monitor</artifactId>
-        <version>1.12-SNAPSHOT</version>
+        <version>1.13-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>build-monitor-acceptance</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>Build Monitor Acceptance Tests</name>
 
     <properties>
+        <!-- Update this as new LTS versions are released -->
+        <jenkins.latest.version>2.319.3</jenkins.latest.version>
+
         <encoding>UTF-8</encoding>
-        <serenity.version>2.0.56</serenity.version>
-        <aether.version>1.0.0.v20140518</aether.version>
+        <serenity.version>3.2.3</serenity.version>
+        <aether.version>1.0.2.v20150114</aether.version>
+        <bytebuddy.version>1.12.9</bytebuddy.version>
+        <slf4j.version>1.7.36</slf4j.version>
 
         <webdriver.driver>chrome</webdriver.driver>
         <browserstack.url/>
-        <enforcer.skip>true</enforcer.skip>
-        <spotbugs.skip>true</spotbugs.skip>
+        <plugins.cache>${project.basedir}/plugin_cache</plugins.cache>
     </properties>
-
-    <modules>
-        <module>build-monitor-acceptance-base</module>
-        <module>build-monitor-acceptance-latest</module>
-    </modules>
 
     <profiles>
         <profile>
@@ -70,6 +70,47 @@
             </build>
         </profile>
     </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- TODO remove when minimum Jenkins core baseline is 2.321 or higher -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>31.1-jre</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>5.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thoughtworks.xstream</groupId>
+                <artifactId>xstream</artifactId>
+                <version>1.4.19</version>
+            </dependency>
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy-agent</artifactId>
+                <version>${bytebuddy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>${bytebuddy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>1.21</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -116,12 +157,7 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-aether-provider</artifactId>
-            <version>3.2.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.5</version>
+            <version>3.3.9</version>
         </dependency>
 
         <!-- serenity -->
@@ -151,6 +187,7 @@
         <dependency>
             <groupId>org.jdeferred</groupId>
             <artifactId>jdeferred-core</artifactId>
+            <version>1.2.6</version>
         </dependency>
 
         <dependency>
@@ -161,108 +198,180 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <configuration>
-                        <excludes>
-                            <exclude>**/*UnitTest.java</exclude>
-                        </excludes>
-                        <includes>
-                            <include>**/features/*Test.java</include>
-                            <include>**/features/*Should*.java</include>
-                        </includes>
-                        <argLine>-Xmx2048m</argLine>
-                        <systemPropertyVariables>
-                            <webdriver.driver>${webdriver.driver}</webdriver.driver>
-                            <browserstack.url>${browserstack.url}</browserstack.url>
-                            <project.root>../../</project.root>
-                            <context>jenkins-${jenkins.version}</context>
-                        </systemPropertyVariables>
-                        <environmentVariables>
-                            <!-- todo: remove when the acceptance-test-harness is gone -->
-                            <BROWSER>htmlunit</BROWSER>
-                            <JENKINS_VERSION>${jenkins.version}</JENKINS_VERSION>
-                            <PLUGINS_DIR>../../build-monitor-plugin/target</PLUGINS_DIR>
-                            <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
-                        </environmentVariables>
-                        <forkCount>2</forkCount>
-                        <reuseForks>true</reuseForks>
-                        <rerunFailingTestsCount>${surefire.rerunFailingTestsCount}</rerunFailingTestsCount>
-                        <redirectTestOutputToFile>false</redirectTestOutputToFile>
-                        <reportNameSuffix>${jenkins.version}</reportNameSuffix>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>integration-test</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>net.serenity-bdd.maven.plugins</groupId>
-                    <artifactId>serenity-maven-plugin</artifactId>
-                    <version>${serenity.version}</version>
-                    <executions>
-                        <execution>
-                            <id>serenity-reports</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>aggregate</goal>
-                            </goals>
-                            <configuration>
-                                <generateOutcomes>true</generateOutcomes>
-                                <outputDirectory>../target/site/serenity</outputDirectory>
-                                <sourceDirectory>../target/site/serenity</sourceDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>display-info</id>
-                            <configuration>
-                                <rules>
-                                    <requireUpperBoundDeps>
-                                        <excludes combine.children="append">
-                                            <exclude>org.springframework:spring-core</exclude>
-                                            <exclude>org.springframework:spring-beans</exclude>
-                                            <exclude>org.eclipse.jetty.websocket:websocket-client</exclude>
-                                            <exclude>org.jenkins-ci:trilead-ssh2</exclude>
-                                            <exclude>commons-io:commons-io</exclude>
-                                            <exclude>commons-codec:commons-codec</exclude>
-                                        </excludes>
-                                    </requireUpperBoundDeps>
-                                </rules>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/*UnitTest.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>groovy-maven-plugin</artifactId>
+                <version>2.1.1</version>
+                <executions>
+                    <execution>
+                        <id>download-jenkins-plugins</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                <![CDATA[
+                                    def skipTests = Boolean.valueOf(properties.skipTests)
+                                    def skipITs = Boolean.valueOf(properties.skipITs)
+                                    if (skipTests || skipITs)
+                                        return
+                                    
+                                    def plugins = properties.plugins.split(",")
+                                    def jenkinsVersions = properties.jenkins_versions.split(",") 
+
+                                    def destDir = new java.io.File(properties.dest_dir)
+
+                                    for (def jenkinsVersion : jenkinsVersions) {
+                                        def jenkinsVersionDestDir = new java.io.File(destDir, jenkinsVersion)
+
+                                        for (def pluginId : plugins) {
+                                            def pluginDest = new java.io.File(jenkinsVersionDestDir, pluginId)
+                                            pluginDest.mkdirs()
+                                            def args = [
+                                                "--jenkins-version", jenkinsVersion,
+                                                "--plugins", pluginId,
+                                                "--plugin-download-directory", pluginDest,
+                                                "--war", "${properties.local_repo}/org/jenkins-ci/main/jenkins-war/${jenkinsVersion}/jenkins-war-${jenkinsVersion}.war",
+                                                //"--list",
+                                            ] as String[]
+                                            println "Cache plugin ${pluginId} for jenkins version ${jenkinsVersion}"
+                                            io.jenkins.tools.pluginmanager.cli.Main.main(args)
+                                        }
+                                    }
+                                ]]>
+                            </source>
+                            <properties>
+                                <plugins>description-setter,workflow-aggregator,badge,cloudbees-folder,external-monitor-job,build-failure-analyzer,claim,junit-realtime-test-reporter</plugins>
+                                <jenkins_versions>${jenkins.version},${jenkins.latest.version}</jenkins_versions>
+                                <dest_dir>${plugins.cache}</dest_dir>
+                                <local_repo>${settings.localRepository}</local_repo>
+                                <skipTests>${skipTests}</skipTests>
+                                <skipITs>${skipITs}</skipITs>
+                            </properties>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                        <version>2.4.21</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>io.jenkins.plugin-management</groupId>
+                        <artifactId>plugin-management-cli</artifactId>
+                        <version>2.12.3</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*UnitTest.java</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/features/*Test.java</include>
+                        <include>**/features/*Should*.java</include>
+                    </includes>
+                    <argLine>-Xmx2048m</argLine>
+                    <systemPropertyVariables>
+                        <webdriver.driver>${webdriver.driver}</webdriver.driver>
+                        <browserstack.url>${browserstack.url}</browserstack.url>
+                        <project.root>../</project.root>
+                    </systemPropertyVariables>
+                    <environmentVariables>
+                        <!-- todo: remove when the acceptance-test-harness is gone -->
+                        <BROWSER>htmlunit</BROWSER>
+                        <JENKINS_VERSIONS>${jenkins.version},${jenkins.latest.version}</JENKINS_VERSIONS>
+                        <PLUGINS_DIR>../build-monitor-plugin/target</PLUGINS_DIR>
+                        <PLUGINS_CACHE>${plugins.cache}</PLUGINS_CACHE>
+                        <NEVER_REPLACE_EXISTING_PLUGINS>false</NEVER_REPLACE_EXISTING_PLUGINS>
+                    </environmentVariables>
+                    <forkCount>2</forkCount>
+                    <reuseForks>false</reuseForks>
+                    <rerunFailingTestsCount>2</rerunFailingTestsCount>
+                    <redirectTestOutputToFile>false</redirectTestOutputToFile>
+                    <reportNameSuffix>${jenkins.version}</reportNameSuffix>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>net.serenity-bdd.maven.plugins</groupId>
+                <artifactId>serenity-maven-plugin</artifactId>
+                <version>${serenity.version}</version>
+                <executions>
+                    <execution>
+                        <id>serenity-reports</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                        <configuration>
+                            <generateOutcomes>true</generateOutcomes>
+                            <outputDirectory>target/site/serenity</outputDirectory>
+                            <sourceDirectory>target/site/serenity</sourceDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>display-info</id>
+                        <configuration>
+                            <rules>
+                                <requireUpperBoundDeps>
+                                    <excludes combine.children="append">
+                                        <exclude>org.projectlombok:lombok</exclude>
+                                    </excludes>
+                                </requireUpperBoundDeps>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>

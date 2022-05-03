@@ -1,0 +1,25 @@
+inputs:
+  github_token:
+    description: 'GitHub Token'
+    required: true
+  git_user_email:
+    description: 'Git user email'
+    required: true
+  git_username:
+    description: 'Git username'
+    required: true
+  npm_token:
+    description: 'NPM Token'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+
+  - name: Configure Git
+    shell: bash
+    run: |
+      git config --global user.email ${{ inputs.git_user_email }}
+      git config --global user.name ${{ inputs.git_username }}
+      git config --global user.password ${{ inputs.github_token }}
+      git config --global push.default simple

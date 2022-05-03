@@ -42,7 +42,7 @@
             <link rel="stylesheet" href="${resourcesURL}/vendor/angular-slider-5.4.0/rzslider.min.css"/>
 
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
-            <link rel="stylesheet" href="${rootURL}/build-monitor-plugin/style.css"/>
+            <link rel="stylesheet" href="${resourcesURL}/styles/index.css"/>
 
             <script src="${resURL}/scripts/yui/cookie/cookie-min.js"></script>
 

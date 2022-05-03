@@ -24,6 +24,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.api.Respond;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.build.GetBuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation.BuildMonitorInstallation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByFullName;
@@ -43,7 +44,6 @@ import org.kohsuke.stapler.bind.JavaScriptMethod;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -113,6 +113,51 @@ public class BuildMonitorView extends ListView {
         return currentConfig().shouldDisplayCommitters();
     }
 
+    // used in the configure-entries.jelly and main-settings.jelly forms
+    @SuppressWarnings("unused")
+    public double getTextScale() {
+        return currentConfig().getTextScale();
+    }
+
+    // used in the configure-entries.jelly and main-settings.jelly forms
+    @SuppressWarnings("unused")
+    public int getMaxColumns() {
+        return currentConfig().getMaxColumns();
+    }
+
+    // used in the configure-entries.jelly and main-settings.jelly forms
+    @SuppressWarnings("unused")
+    public boolean isColourBlindMode() {
+        return currentConfig().colourBlindMode();
+    }
+
+    // used in the configure-entries.jelly and main-settings.jelly forms
+    @SuppressWarnings("unused")
+    public boolean isReduceMotion() {
+        return currentConfig().reduceMotion();
+    }
+
+    // used in the configure-entries.jelly and main-settings.jelly forms
+    @SuppressWarnings("unused")
+    public boolean isShowBadges() {
+        return currentConfig().showBadges();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public String currentDisplayBadges() {
+        return currentConfig().getDisplayBadges().name();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public String currentDisplayBadgesFrom() {
+        return currentConfig().getDisplayBadgesFrom().getClass().getSimpleName();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public boolean isDisplayJUnitProgress() {
+        return currentConfig().shouldDisplayJUnitProgress();
+    }
+
     private static final BuildMonitorInstallation installation = new BuildMonitorInstallation();
 
     @SuppressWarnings("unused") // used in index.jelly
@@ -138,12 +183,20 @@ public class BuildMonitorView extends ListView {
         synchronized (this) {
 
             String requestedOrdering = req.getParameter("order");
+            String displayBadgesFrom = req.getParameter("displayBadgesFrom");
             title                    = req.getParameter("title");
+            String maxColumns        = req.getParameter("maxColumns");
+            String textScale         = req.getParameter("textScale");
 
             currentConfig().setDisplayClusterTitle(json.optBoolean("displayClusterTitle", true));
+            currentConfig().setColourBlindMode(json.optBoolean("colourBlindMode", false));
+            currentConfig().setReduceMotion(json.optBoolean("reduceMotion", false));
+            currentConfig().setShowBadges(json.optBoolean("showBadges", true));
+            currentConfig().setDisplayBadges(req.getParameter("displayBadges"));
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
             currentConfig().setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
-            
+            currentConfig().setDisplayJUnitProgress(json.optBoolean("displayJUnitProgress", true));
+
             try {
                 Comparator<Job<?, ?>> jobComparator = orderIn(requestedOrdering);
                 if (jobComparator instanceof ByFullName) {
@@ -151,8 +204,26 @@ public class BuildMonitorView extends ListView {
                     ((ByFullName) jobComparator).setOrdinalSet(ordinalSet);
                 }
                 currentConfig().setOrder(jobComparator);
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 throw new FormException("Can't order projects by " + requestedOrdering, "order");
+            }
+
+            try {
+                currentConfig().setMaxColumns(Integer.parseInt(maxColumns));
+            } catch (Exception e) {
+                throw new FormException("Invalid value of 'Maximum number of columns': '" + maxColumns + "' (should be double).", maxColumns);
+            }
+
+            try {
+                currentConfig().setTextScale(Double.parseDouble(textScale));
+            } catch (Exception e) {
+                throw new FormException("Invalid value of 'Text scale': '" + textScale + "' (should be double).", textScale);
+            }
+
+            try {
+                currentConfig().setDisplayBadgesFrom(getBuildViewModelIn(displayBadgesFrom));
+            } catch (Exception e) {
+                throw new FormException("Can't display badges from " + displayBadgesFrom, "displayBadgesFrom");
             }
         }
     }
@@ -162,7 +233,6 @@ public class BuildMonitorView extends ListView {
      * it can only work with net.sf.JSONObject in order to produce correct application/json output
      *
      * @return Json representation of JobViews
-     * @throws Exception
      */
     @JavaScriptMethod
     public JSONObject fetchJobViews() throws Exception {
@@ -178,14 +248,14 @@ public class BuildMonitorView extends ListView {
         JobViews views = new JobViews(new StaticJenkinsAPIs(), currentConfig());
 
         //A little bit of evil to make the type system happy.
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         List<Job<?, ?>> projects = new ArrayList(filter(super.getItems(), Job.class));
-        List<JobView> jobs = new ArrayList<JobView>();
+        List<JobView> jobs = new ArrayList<>();
 
-        Collections.sort(projects, currentConfig().getOrder());
+        projects.sort(currentConfig().getOrder());
 
         String currentClusterTitle = null;
-        for (Job project : projects) {
+        for (Job<?, ?> project : projects) {
             JobView job = views.viewOf(project);
             if (config.shouldDisplayClusterTitle() && !getClusterTitle(project).equals(currentClusterTitle)) {
                 jobs.add(ClusterTitleJobView.create(project.getParent()));
@@ -249,6 +319,12 @@ public class BuildMonitorView extends ListView {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
         return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).newInstance();
+    }
+
+    private GetBuildViewModel getBuildViewModelIn(String requestedBuild)  throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        String packageName = this.getClass().getPackage().getName() + ".build.";
+
+        return (GetBuildViewModel) Class.forName(packageName + requestedBuild).newInstance();
     }
 
     private Config config;

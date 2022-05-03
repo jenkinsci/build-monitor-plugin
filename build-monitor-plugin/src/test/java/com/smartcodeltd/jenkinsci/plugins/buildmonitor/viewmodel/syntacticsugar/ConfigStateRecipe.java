@@ -1,11 +1,11 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.google.common.base.Supplier;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
-import hudson.model.AbstractProject;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.build.GetLastCompletedBuild;
 import hudson.model.Job;
 
 import java.util.Comparator;
+import java.util.function.Supplier;
 
 public class ConfigStateRecipe implements Supplier<Config> {
 
@@ -13,6 +13,12 @@ public class ConfigStateRecipe implements Supplier<Config> {
 
     public ConfigStateRecipe order(Comparator<Job<?, ?>> order) {
         config.setOrder(order);
+
+        return this;
+    }
+
+    public ConfigStateRecipe withBadgesFromLastCompletedBuild() {
+        config.setDisplayBadgesFrom(new GetLastCompletedBuild());
 
         return this;
     }

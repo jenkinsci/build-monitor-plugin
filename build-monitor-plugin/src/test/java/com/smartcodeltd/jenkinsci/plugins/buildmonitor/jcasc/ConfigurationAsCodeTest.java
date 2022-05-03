@@ -26,7 +26,7 @@ public class ConfigurationAsCodeTest {
 
     @Test
     public void should_support_configuration_as_code() {
-        Collection<View> views = Jenkins.getInstance().getViews();
+        Collection<View> views = Jenkins.get().getViews();
 
         assertThat(views.size(), is(1));
 

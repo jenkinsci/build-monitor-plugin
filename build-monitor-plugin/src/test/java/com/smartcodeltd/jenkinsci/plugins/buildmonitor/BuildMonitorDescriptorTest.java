@@ -11,8 +11,8 @@ import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacti
 import static hudson.util.FormValidation.Kind.ERROR;
 import static hudson.util.FormValidation.Kind.OK;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 public class BuildMonitorDescriptorTest {
 
@@ -21,19 +21,19 @@ public class BuildMonitorDescriptorTest {
     @Rule public final JenkinsRule jenkins = new JenkinsRule();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         validator = new BuildMonitorDescriptor();
     }
 
     @Test
-    public void form_validator_should_allow_valid_reg_ex_specifying_what_jobs_to_include() throws Exception {
+    public void form_validator_should_allow_valid_reg_ex_specifying_what_jobs_to_include() {
         for (String regex : asFollows(null, "", ".*", "myproject-.*")) {
             assertThat(itShouldAllow(regex), validator.doCheckIncludeRegex(regex).kind, is(OK));
         }
     }
 
     @Test
-    public void form_validator_should_advise_how_a_regex_could_be_improved() throws Exception {
+    public void form_validator_should_advise_how_a_regex_could_be_improved() {
         FormValidation result = validator.doCheckIncludeRegex(")");
 
         assertThat(result.kind, is(ERROR));

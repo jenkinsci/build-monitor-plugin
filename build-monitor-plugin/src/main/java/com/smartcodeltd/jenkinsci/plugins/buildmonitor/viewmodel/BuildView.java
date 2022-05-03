@@ -1,7 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.culprits.BuildCulpritsRetriever;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
@@ -14,9 +12,8 @@ import hudson.model.*;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
-
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafety.getOrElse;
 
 public class BuildView implements BuildViewModel {
 
@@ -26,7 +23,7 @@ public class BuildView implements BuildViewModel {
     private final Date systemTime;
     private final BuildCulpritsRetriever buildCulpritsRetriever;
 
-    @VisibleForTesting
+    // Visible for testing
     static BuildView of(Run<?, ?> build) {
         return new BuildView(build, false, RelativeLocation.of(build.getParent()), new Date());
     }
@@ -102,7 +99,7 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public String description() {
-        return getOrElse(build.getDescription(), "");
+        return Optional.ofNullable(build.getDescription()).orElse("");
     }
 
     @Override
@@ -144,7 +141,7 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public <A extends Action> Optional<A> detailsOf(Class<A> jenkinsAction) {
-        return Optional.fromNullable(build.getAction(jenkinsAction));
+        return Optional.ofNullable(build.getAction(jenkinsAction));
     }
     
     @Override

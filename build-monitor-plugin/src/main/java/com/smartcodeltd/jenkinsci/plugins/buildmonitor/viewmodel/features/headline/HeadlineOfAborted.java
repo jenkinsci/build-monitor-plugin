@@ -1,12 +1,13 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline;
 
-import com.google.common.base.Optional;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import hudson.model.Result;
 import hudson.model.User;
 import jenkins.model.CauseOfInterruption;
 import jenkins.model.InterruptedBuildAction;
+
+import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -59,6 +60,6 @@ public class HeadlineOfAborted implements CandidateHeadline {
             }
         }
 
-        return Optional.absent();
+        return Optional.empty();
     }
 }

@@ -36,7 +36,7 @@ public final class BuildMonitorDescriptor extends ViewDescriptor {
     }
 
     @Override
-    public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
+    public boolean configure(StaplerRequest req, JSONObject json) {
         req.bindJSON(this, json.getJSONObject("build-monitor"));
         save();
 
@@ -52,5 +52,35 @@ public final class BuildMonitorDescriptor extends ViewDescriptor {
     @SuppressWarnings("unused") // used in global.jelly
     public void setPermissionToCollectAnonymousUsageStatistics(boolean collect) {
         this.permissionToCollectAnonymousUsageStatistics = collect;
+    }
+
+    public FormValidation doCheckMaxColumns(@QueryParameter String value) {
+        try {
+            int intValue = Integer.parseInt(value);
+            if(intValue > 0) {
+                return FormValidation.ok();
+            } else {
+                return FormValidation.error("Must be an integer, greater than 0.");
+            }
+        } catch (NullPointerException npe) {
+            return FormValidation.error("Cannot be null.");
+        } catch (NumberFormatException nfe) {
+            return FormValidation.error("Must be an integer.");
+        }
+    }
+
+    public FormValidation doCheckTextScale(@QueryParameter String value) {
+        try {
+            double doubleValue = Double.parseDouble(value);
+            if(doubleValue > 0.0) {
+                return FormValidation.ok();
+            } else {
+                return FormValidation.error("Must be a double, greater than 0.0.");
+            }
+        } catch (NullPointerException npe) {
+            return FormValidation.error("Cannot be null.");
+        } catch (NumberFormatException nfe) {
+            return FormValidation.error("Must be a double.");
+        }
     }
 }

@@ -1,8 +1,10 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.google.common.base.Supplier;
 import com.jenkinsci.plugins.badge.action.BadgeAction;
 
+import java.util.function.Supplier;
+
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -16,15 +18,15 @@ public class BadgeBadgePluginRecipe implements Supplier<BadgeAction> {
         badge = mock(BadgeAction.class);
     }
 
-    public BadgeBadgePluginRecipe withText(String text) throws Exception {
+    public BadgeBadgePluginRecipe withText(String text) {
         when(badge.getIconPath()).thenReturn(null);
-        when(badge.getText()).thenReturn(text);
+        lenient().when(badge.getText()).thenReturn(text);
         return this;
     }
 
-    public BadgeBadgePluginRecipe withIcon(String icon, String text) throws Exception {
+    public BadgeBadgePluginRecipe withIcon(String icon, String text) {
         when(badge.getIconPath()).thenReturn(icon);
-        when(badge.getText()).thenReturn(text);
+        lenient().when(badge.getText()).thenReturn(text);
         return this;
     }
 

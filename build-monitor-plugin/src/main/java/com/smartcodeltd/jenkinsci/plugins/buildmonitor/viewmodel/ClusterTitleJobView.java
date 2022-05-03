@@ -11,11 +11,13 @@ import hudson.model.Job;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.Objects;
 
 public class ClusterTitleJobView extends JobView {
 
     private static final BuildMonitorLogger logger = BuildMonitorLogger.forClass(BuildMonitorBuildProperties.class);
 
+    private Job clusterTitle;
     private String url;
 
     public static ClusterTitleJobView create(ItemGroup parent) {
@@ -40,11 +42,26 @@ public class ClusterTitleJobView extends JobView {
 
     private ClusterTitleJobView(Job<?, ?> clusterTitle, String url) {
         super(clusterTitle, Collections.emptyList(), false, RelativeLocation.of(clusterTitle), new Date(), false);
+        this.clusterTitle = clusterTitle;
         this.url = url;
     }
 
     @Override
     public String url() {
         return url;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ClusterTitleJobView that = (ClusterTitleJobView) o;
+        return clusterTitle.equals(that.clusterTitle);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), clusterTitle);
     }
 }

@@ -5,46 +5,42 @@ import hudson.Plugin;
 import hudson.model.AbstractBuild;
 import jenkins.model.Jenkins;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.MockedStatic;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Jenkins.class, WorkflowRun.class})
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
+
 public class PipelineHelperTest {
-
-    @Mock
-    private Jenkins jenkins;
-
-    @Mock
-    private Plugin mockedPipeline;
-
-    private WorkflowRun workflowRun;
-
-    @Mock
-    private AbstractBuild abstractBuild;
-
-    @Before
-    public void setup() {
-        PowerMockito.mockStatic(Jenkins.class);
-        workflowRun = PowerMockito.mock(WorkflowRun.class);
-        PowerMockito.when(Jenkins.getInstance()).thenReturn(jenkins);
-        PowerMockito.when(jenkins.getPlugin("workflow-aggregator")).thenReturn(mockedPipeline);
-    }
 
     @Test
     public void isWorkflowRun() {
-        Assert.assertTrue(PipelineHelper.isWorkflowRun(workflowRun, new StaticJenkinsAPIs()));
+        try (MockedStatic<Jenkins> mockedJenkins = mockStatic(Jenkins.class)) {
+            Jenkins jenkins = createMockJenkins(mockedJenkins);
+            Plugin mockedPipeline = mock(Plugin.class);
+            WorkflowRun workflowRun = mock(WorkflowRun.class);
+            when(jenkins.getPlugin("workflow-aggregator")).thenReturn(mockedPipeline);
+
+            assertTrue(PipelineHelper.isWorkflowRun(workflowRun, new StaticJenkinsAPIs()));
+        }
     }
 
     @Test
     public void isNotWorkflowRun() {
-        Assert.assertFalse(PipelineHelper.isWorkflowRun(abstractBuild, new StaticJenkinsAPIs()));
+        try (MockedStatic<Jenkins> mockedJenkins = mockStatic(Jenkins.class)) {
+            createMockJenkins(mockedJenkins);
+            AbstractBuild abstractBuild = mock(AbstractBuild.class);
+
+            assertFalse(PipelineHelper.isWorkflowRun(abstractBuild, new StaticJenkinsAPIs()));
+        }
     }
 
+    private Jenkins createMockJenkins(MockedStatic<Jenkins> mockedJenkins) {
+        Jenkins jenkins = mock(Jenkins.class);
+        mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
+        return jenkins;
+    }
 }

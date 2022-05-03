@@ -8,9 +8,6 @@ import hudson.model.Run;
 
 import java.util.Set;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafety.getOrElse;
-
 /**
  * Created by Erik Håkansson on 2017-04-25.
  * https://github.com/erikhakansson
@@ -25,11 +22,6 @@ public abstract class BuildCulpritsRetriever {
         } else {
             return new BuildCulpritsNotImplemented();
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    static <T> T nonNullIterable(T list) {
-        return (T) getOrElse(list, newArrayList());
     }
 
     public abstract Set<String> getCulprits(Run<?, ?> run);

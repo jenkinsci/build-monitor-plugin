@@ -35,6 +35,6 @@ public class CssStatus {
     }
 
     private static String statusOf(Result result) {
-        return statuses.containsKey(result) ? statuses.get(result) : "unknown";
+        return statuses.getOrDefault(result, "unknown");
     }
 }

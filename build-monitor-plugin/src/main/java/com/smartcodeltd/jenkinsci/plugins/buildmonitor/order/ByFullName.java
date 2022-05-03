@@ -30,7 +30,7 @@ public class ByFullName implements Comparator<Job<?, ?>>, Serializable {
         return a.getFullName().compareToIgnoreCase(b.getFullName());
     }
 
-    public static class OrdinalSet {
+    public static class OrdinalSet implements Serializable {
         private final List<String> entries;
 
         public OrdinalSet(List<String> entries) {

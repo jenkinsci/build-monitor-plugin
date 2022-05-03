@@ -1,9 +1,9 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
-import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * @author Jan Molak

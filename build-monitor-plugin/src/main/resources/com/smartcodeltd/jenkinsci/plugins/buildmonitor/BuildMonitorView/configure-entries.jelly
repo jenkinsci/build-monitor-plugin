@@ -78,6 +78,30 @@
 
   </f:section>
 
+  <f:section title="${%Build Monitor - Default Display Settings}">
+
+    <f:entry title="${%Text scale}" field="textScale">
+      <f:textbox name="textScale" value="${it.textScale}" />
+    </f:entry>
+
+    <f:entry title="${%Maximum number of columns}" field="maxColumns">
+      <f:textbox name="maxColumns" value="${it.maxColumns}" />
+    </f:entry>
+
+    <f:entry title="${%Enable Colour blind mode}">
+      <f:checkbox id="colourBlindMode" field="colourBlindMode" />
+    </f:entry>
+
+    <f:entry title="${%Enable Reduce motion}">
+      <f:checkbox id="reduceMotion" field="reduceMotion" />
+    </f:entry>
+
+    <f:entry title="${%Enable Show badges}">
+      <f:checkbox id="showBadges" field="showBadges" />
+    </f:entry>
+
+  </f:section>
+
   <f:section title="${%Build Monitor - Widget Settings}">
 
     <f:entry title="${%Display committers}" help="${descriptor.getHelpFile('displayCommitters')}">
@@ -91,6 +115,25 @@
 			<f:option value="None" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='None'}">${%None}</f:option>
           </select>
         </f:entry>
+
+    <f:entry title="${%Display badges}" help="${descriptor.getHelpFile('displayBadges')}">
+      <select name="displayBadges" class="setting-input">
+        <f:option value="Always" selected='${it.currentDisplayBadges()=="Always"}'>${%Always}</f:option>
+        <f:option value="Never" selected="${it.currentDisplayBadges()=='Never'}">${%Never}</f:option>
+        <f:option value="UserSetting" selected="${it.currentDisplayBadges()=='UserSetting'}">${%User Setting}</f:option>
+      </select>
+    </f:entry>
+
+    <f:entry title="${%Display badges from}" help="${descriptor.getHelpFile('displayBadgesFrom')}">
+      <select name="displayBadgesFrom" class="setting-input">
+        <f:option value="GetLastBuild" selected='${it.currentDisplayBadgesFrom()=="GetLastBuild"}'>${%Last Build}</f:option>
+        <f:option value="GetLastCompletedBuild" selected="${it.currentDisplayBadgesFrom()=='GetLastCompletedBuild'}">${%Last Completed Build}</f:option>
+      </select>
+    </f:entry>
+
+    <f:entry title="${%Display JUnit Realtime progress}" help="${descriptor.getHelpFile('displayJUnitProgress')}">
+      <f:checkbox id="displayJUnitProgress" field="displayJUnitProgress" />
+    </f:entry>
 
   </f:section>
 

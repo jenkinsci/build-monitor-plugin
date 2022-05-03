@@ -1,0 +1,105 @@
+name: Release Pipeline
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    types: [ opened, synchronize ]
+
+jobs:
+
+  build:
+    if:       "!contains(github.event.head_commit.message, 'ci skip')"
+    runs-on:  ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Cache jenkins plugins
+        uses: actions/cache@v3
+        with:
+          path: build-monitor-acceptance/plugin_cache
+          key: jenkins-plugins-${{ hashFiles('build-monitor-acceptance/pom.xml') }}
+          restore-keys: |
+            jenkins-plugins-
+
+      - name: Setup git (master only)
+        uses: ./.github/actions/setup-git
+        if: github.ref == 'refs/heads/master'
+        with:
+          github_token:   ${{ secrets.GITHUB_TOKEN }}
+          git_user_email: ${{ secrets.RELEASE_GH_EMAIL }}
+          git_username:   ${{ secrets.RELEASE_GH_USERNAME }}
+
+      - name: Set version (master only)
+        if: github.ref == 'refs/heads/master'
+        run: mvn --batch-mode release-candidate:updateVersion
+
+      - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots verify
+
+      - name: Read $version (master only)
+        if: github.ref == 'refs/heads/master'
+        run: cat build-monitor-plugin/target/classes/build-monitor.properties >> $GITHUB_ENV
+
+      - uses: actions/upload-artifact@v3
+        with:
+          retention-days: 3
+          name: artifacts
+          path: |
+            build-monitor-plugin/target/*.hpi
+            pom.xml
+            build-monitor-plugin/pom.xml
+            build-monitor-acceptance/pom.xml
+            build-monitor-acceptance/build-monitor-acceptance-base/pom.xml
+            build-monitor-acceptance/build-monitor-acceptance-latest/pom.xml
+            build-monitor-acceptance/build-monitor-acceptance-base/target/failsafe-reports/*-output.txt
+            build-monitor-acceptance/build-monitor-acceptance-latest/target/failsafe-reports/*-output.txt
+
+      - name: Create Release Branch (master only)
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git checkout -b "release-${version}"
+          git commit -a -m "Release candidate v$version"
+          git push origin "release-$version"
+
+      - name: Setup repo.jenkins-ci.org (master only)
+        if: github.ref == 'refs/heads/master'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: 'maven'
+          server-id: 'repo.jenkins-ci.org'
+          server-username: JENKINS_REPO_USERNAME
+          server-password: JENKINS_REPO_TOKEN
+
+      - name: Publish (master only)
+        if: github.ref == 'refs/heads/master'
+        env:
+          JENKINS_REPO_USERNAME: ${{ secrets.JENKINS_REPO_USERNAME }}
+          JENKINS_REPO_TOKEN: ${{ secrets.JENKINS_REPO_TOKEN }}
+        run: |
+          mvn --batch-mode deploy:deploy-file \
+            -DpomFile=build-monitor-plugin/pom.xml \
+            -Dfile=build-monitor-plugin/target/build-monitor-plugin.hpi \
+            -Dfiles=build-monitor-plugin/target/build-monitor-plugin.jar \
+            -Dtypes=jar \
+            -Dclassifiers="" \
+            -DrepositoryId=repo.jenkins-ci.org \
+            -Durl=https://repo.jenkins-ci.org/releases/
+          mvn --batch-mode deploy:deploy-file \
+            -DpomFile=pom.xml \
+            -Dfile=pom.xml \
+            -DrepositoryId=repo.jenkins-ci.org \
+            -Durl=https://repo.jenkins-ci.org/releases/

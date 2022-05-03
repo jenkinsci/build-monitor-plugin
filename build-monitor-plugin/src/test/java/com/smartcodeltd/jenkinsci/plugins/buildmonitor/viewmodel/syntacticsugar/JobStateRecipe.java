@@ -1,22 +1,20 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Supplier;
 import hudson.model.AbstractBuild;
-import hudson.model.ItemGroup;
 import hudson.model.Job;
 import hudson.model.ViewJob;
 import hudson.util.RunList;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Jan Molak
@@ -24,18 +22,18 @@ import static org.mockito.Mockito.*;
 public class JobStateRecipe implements Supplier<Job<?,?>> {
     private Job<?, ?> job;
     private RunList<?> runList;
-    private Stack<AbstractBuild> buildHistory = new Stack<AbstractBuild>();
-    private List<AbstractBuild> allBuilds = new ArrayList<AbstractBuild>();
+    private Stack<AbstractBuild> buildHistory = new Stack<>();
+    private List<AbstractBuild> allBuilds = new ArrayList<>();
 
     public JobStateRecipe() {
         job = mock(Job.class);
         runList = mock(RunList.class);
 
-        when(job.isBuildable()).thenReturn(Boolean.TRUE);
+        lenient().when(job.isBuildable()).thenReturn(Boolean.TRUE);
     }
 
     public JobStateRecipe withName(String name) {
-        when(job.getName()).thenReturn(name);
+        lenient().when(job.getName()).thenReturn(name);
 
         // The name of the job also defines its URL, that's why the stub for getUrl() is defined here as well.
         // You could argue, that 'withUrl' could be a separate method on the builder,
@@ -45,20 +43,14 @@ public class JobStateRecipe implements Supplier<Job<?,?>> {
     }
 
     private JobStateRecipe withShortUrl(String url) {
-        when(job.getShortUrl()).thenReturn(url);
-
-        // This might not necessarily belong here,
-        // but I don't need to introduce the concept of a parent anywhere else yet.
-        ItemGroup parent = mock(ItemGroup.class);
-        when(parent.getUrl()).thenReturn("job/");
-        when(job.getParent()).thenReturn(parent);
+        lenient().when(job.getShortUrl()).thenReturn(url);
 
         return this;
     }
 
     public JobStateRecipe withDisplayName(String name) {
-        when(job.getDisplayNameOrNull()).thenReturn(name);
-        when(job.getDisplayName()).thenReturn(name);
+        lenient().when(job.getDisplayNameOrNull()).thenReturn(name);
+        lenient().when(job.getDisplayName()).thenReturn(name);
 
         return this;
     }
@@ -101,19 +93,19 @@ public class JobStateRecipe implements Supplier<Job<?,?>> {
             earliestBuild = buildHistory.pop();
             earlierBuild  = buildHistory.peek();
 
-            when(earlierBuild.getPreviousBuild()).thenReturn(earliestBuild);
+            lenient().when(earlierBuild.getPreviousBuild()).thenReturn(earliestBuild);
         }
 
         // pick the first build from the build history and make it the "last build"
         if (buildHistory.size() == 1) {
-        	doReturn(buildHistory.pop()).when(job).getLastBuild();
+            lenient().doReturn(buildHistory.pop()).when(job).getLastBuild();
         }
         
         // mock the necessary methods to get the currentBuilds
         // it will return the full list so make sure it contains only building builds
-        doReturn(runList).when(job).getNewBuilds();
-        doReturn(runList).when(runList).filter(any(Predicate.class));
-        doReturn(allBuilds.iterator()).when(runList).iterator();
+        lenient().doReturn(runList).when(job).getNewBuilds();
+        lenient().doReturn(runList).when(runList).filter(any(Predicate.class));
+        lenient().doReturn(allBuilds.iterator()).when(runList).iterator();
 
         return job;
     }

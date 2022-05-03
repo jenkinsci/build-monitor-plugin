@@ -1,7 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.Feature;
@@ -10,13 +9,12 @@ import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.util.RunList;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.format;
 
 /**
@@ -30,7 +28,7 @@ public class JobView {
     private final RelativeLocation relative;
     private final boolean showShortenedJobName;
 
-    private final List<Feature> features = newArrayList();
+    private final List<Feature> features = new ArrayList<>();
 
     public static JobView of(Job<?, ?> job, List<Feature> features, boolean isPipelineJob, boolean showShortenedJobName) {
         return new JobView(job, features, isPipelineJob, RelativeLocation.of(job), new Date(), showShortenedJobName);
@@ -51,7 +49,7 @@ public class JobView {
     }
 
     public List<Feature> features() {
-        return ImmutableList.copyOf(features);
+        return Collections.unmodifiableList(new ArrayList<>(features));
     }
 
     public <F extends Feature> F which(Class<F> requestedFeature) {
@@ -125,7 +123,7 @@ public class JobView {
 
     @Override
     public boolean equals(Object obj) {
-        return Objects.equal(job, obj);
+        return Objects.equals(job, obj);
     }
 
     @Override
@@ -137,12 +135,12 @@ public class JobView {
 
     @SuppressWarnings("unchecked")
 	public List<BuildViewModel> currentBuilds() {
-    	List<BuildViewModel> currentBuilds = newArrayList();
+    	List<BuildViewModel> currentBuilds = new ArrayList<>();
     	
     	RunList<Run<?, ?>> runList = ((RunList<Run<?, ?>>)job.getNewBuilds()).filter(BuildingPredicate.INSTANCE);
 
-    	for (Iterator<Run<?, ?>> i = runList.iterator(); i.hasNext(); ) {
-    		currentBuilds.add(buildViewOf(i.next()));
+    	for (Run<?, ?> run : runList) {
+    		currentBuilds.add(buildViewOf(run));
     	}
     	
         return currentBuilds;
