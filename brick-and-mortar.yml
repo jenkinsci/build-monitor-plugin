@@ -1,0 +1,236 @@
+
+ESDoc
+Usage Features Config Tags API Releases FAQ   Plugins Try it out Hosting
+Releases
+1.1.0 (2018-04-29)
+Feat
+Add config.outputAST (#483). Thanks @MattMcFarland
+Add @package tag (#486). Thanks @bmaupin
+Fix
+Crash if config.index file was not found (#490). Thanks @22a
+Chore
+Update marked. (#503) Thanks @jan-molak
+Update some packages.
+1.0.4 (2017-11-12)
+Fix
+Fix import { type foo } from './Bar' (flowtype syntax). (#464) Thanks @mprobber
+Fix decorate that has object literal arguments. (#472) Thanks @mysim1
+1.0.3 (2017-09-20)
+Fix
+Broken if using @foo.bar decorator. (#439)
+1.0.2 (2017-09-03)
+Fix
+Broken if code block has @. (#436) Thanks @pzuraq
+Broken if anonymous default export is exist. (#431) Thanks @zemzheng
+Broken if expression extends is exist. (#409) Thanks @dimitryvolkov
+1.0.1 (2017-07-30)
+Breaking
+Some features were carved out to plugins
+Migration to v1.0
+v0.5 documentation
+Feat
+esdoc-publish-markdown-plugin PoC
+esdoc-flow-type-plugin PoC
+esdoc-typescript-plugin PoC
+esdoc-react-plugin PoC
+esdoc-jsx-plugin
+Note
+v1.0.0 can not use. Because v1.0.0 had been used in past.
+0.5.2 (2017-01-02)
+Fix
+Display error message when invalid function type (#351) Thanks @LukasHechenberger
+Crash when destructure sparse array (#350)
+Crash when guess type of array detructuring (#301)
+A union type in a generics type (eb051e7)
+A union type with a spread type (199d834)
+Crash when function was assigned by member expression (e59820a)
+Broken to guess type when property has null value or object expression using string key (5920c1f)
+Crash when guess type of return value that has object spread (#364) Thanks vovkasm
+Feat
+Automatically take a super class description if the method override a super class method. (7b515f0)
+0.5.1 (2016-12-26)
+Fix
+Fix a message when could not parse the codes (a98a83c)
+Fix a help message (a16e2c1)
+0.5.0 (2016-12-25)
+ESDoc logo was out!
+
+
+
+Breaking
+Require node v6 or later (a5b37bd)
+Switch the ES parser to babylon from espree (8130a3f)
+onHandleAST in plugin is breaking
+Remove config.importPathPrefix (a665c5d)
+Use ESDoc Import Path Plugin instead of it
+Remove badge tag in README (6869b06)
+Use badge of ESDoc Hosting Service
+Feature: ES2015
+Support arrow function (964eda3)
+Feature: ES2016
+Support exponentiation operator (29f6ccc)
+Feature: ES2017
+Support async function (50452a1)
+Support trailing comma (dc9ba0f)
+Feature: ECMAScript Proposal (see here)
+Support class properties (c7b4d9b)
+Support object rest spread (b58aa05)
+Support do expressions (33daf5a)
+Support function bind (5b7a7d0)
+Support function sent (fe8a265)
+Support async generators (e6dc2f2)
+Support decorators (c941951)
+Support export extensions (parsing syntax only) (8803005)
+Support dynamic import (d729f5f)
+Feature: Manual (see here)
+Support new sections(advanced and design) to manual (2ebb2c6)
+Improve new manual index page (0d30880)
+Use manual as global index (a887852)
+Feature: Config
+Support automatically finding config (08fa2bc)
+.esdoc.json in current directory
+.esdoc.js in current directory
+esdoc property in package.json
+Internal
+Update to babel6 (149914e)
+Refactor test codes (#324)
+Remove internal private tags (#325)
+Use ESLint (#326)
+0.4.8 (2016-08-07)
+Feat
+Through more info to plugins (#263) Thanks @typhonrt
+Fix
+Not work @link at property description (#246)
+Crash when function name includes member expression (#297)
+0.4.7 (2016-05-02)
+Fix
+Broken if identifier name is stared with B (#224)
+Broken dependency package
+0.4.6 (2016-03-06)
+Fix
+Crash when the manual has HTML comments (#231, #239) Thanks @staltz
+Broken output when repository url is git+https:// style (#235, #236) Thanks @jamsyoung
+0.4.5 (2016-02-14)
+Fix
+Make a mistake lint for array destructuring (#178)
+Comment syntax(white space) is too strict (#181)
+Broken param parsed result if description has {} (#185)
+Link does not work when identifier name has $ (#218)
+0.4.4 (2016-02-06)
+Feat
+Can resolve import file path that has no file extension (#160)
+onHandleHTML has the target filename (#175) Thanks @skratchdot
+Fix
+Breaking document if comment has tab (#127) Thanks @developit
+Crash indirect instance export (#166) Thanks @kogai
+0.4.3 (2015-11-02)
+Fix
+Lock npm modules
+0.4.2 (2015-11-01)
+Fix
+Crash when not initialized declaration (#126)
+Crash when @param description has {@link foo} (#129)
+Allow particular HTML tags in each descriptions (#130)
+Crash when record + union type is exists (#152)
+0.4.1 (2015-10-18)
+Breaking
+Support multi files in manual (#124)
+Feat
+Support tutorial and configuration in manual (#122)
+Support image in manual (#123)
+Fix
+Crash if method is generator + computed + member-expression (#107)
+Not resolved @link in summary (#110)
+Invalid param name when description has @link (#119)
+0.4.0 (2015-10-04)
+Feat
+Support manual(overview, installation, usage, etc) into documentation (#102)
+Support documentation lint (#103)
+0.3.1 (2015-09-27)
+Fix
+Multi-line description truncated in summary (#85)
+0.3.0 (2015-09-21)
+Breaking
+Change side bar navigation style (#84)
+Fix
+Inner link in user markdown (#80)
+0.2.6 (2015-09-13)
+Fix
+Crash when array destructuring is exist (#77 Thanks @noraesae, #76)
+Crash when computed property method is exist (#78 Thanks @noraesae, #73)
+Crash when loading config without .js and .json (#74)
+Crash when unknown class new expression variable is exist (#75)
+0.2.5 (2015-09-06)
+Feat
+Support JavaScript code as esdoc config (#71 Thanks @raveclassic)
+Add config.includeSource (#67, #68)
+If you do not want to include source code into documentation, set config.includeSource: false
+Display undocument lines in source file (#61)
+Fix
+Excludes member that has same name getter/setter/method (#64, #70)
+Crash when destructuring is exist at top (#65)
+0.2.4 (2015-08-30)
+Fix
+Crash if un-initialized let/const variables are exist (#60)
+Invalid documentation when computed members(this[prop] = 123) are exist (#59)
+0.2.3 (2015-08-29)
+Fix
+Fail if config.source is ./ (#56)
+Not match includes, excludes in config (#57)
+Not process @param in @typedef of function (#58)
+0.2.2 (2015-08-23)
+Fix
+Badge color (645a256)
+Crash if package.json is not exits (#50)
+Deprecated
+config.importPathPrefix (#46)
+coverage badge in README.md (#47)
+0.2.1 (2015-08-09)
+Fix
+Fail loading plugin (#44)
+0.2.0 (2015-08-03)
+Feat
+Support coverage badge (#34)
+Plugin feature (#27)
+Fix
+Anonymous class document tag (#38)
+Repository style in package.json (#39) Thanks @r7kamura
+Repeat @typedef in document (#40)
+0.1.4 (2015-07-20)
+Feat
+Support Complex class extends (#26)
+Support caption tag in @example (#33)
+Support separated function and variable exporting (#30)
+Fix
+Crash when object pattern argument does not have @param (#24)
+0.1.3 (2015-07-05)
+Feat
+Support instance export(#11, #19)
+export default new Foo()
+export let foo = new Foo()
+Support anonymous class/function export (#13)
+export default class{} and export default function(){}
+Show a detail log when ESDoc could not process a input code (#14)
+Support git@github.com:foo/bar.git style url (#22)
+Fix
+Broken @desc when it has html code (#12)
+Crash complex ExportDefaultDeclaration and ExportNamedDeclaration(957d61a)
+Crash when a class extends unexported class (bf87643)
+Tab in document tag (#20)
+Internal
+Change internal tags name (#23)
+0.1.2 (2015-06-06)
+Breaking Changes
+drop esdoc ./path/to/dir implementation (b4d2121)
+Fix
+Fail parsing of React JSX syntax (#3). Thank you @koba04
+Home link does not work as expected (97f47cf)
+Separated export is not shown in document (6159c3a)
+Crash when a class extends nested super class. (2d634d0)
+Web font loading protocol (5ba8d82)
+0.1.1 (2015-05-10)
+Feat
+Support Windows (edd09cb , 2d34d46)
+0.1.0 (2015-05-05)
+First release
+© 2016 Ryo Maruyama. All rights reserved.
