@@ -116,3 +116,5 @@ Build Monitor is continuously delivered to a Jenkins near you thanks to:
 * a battery of browsers provided by [BrowserStack](https://www.browserstack.com) and powering the [acceptance tests](/build-monitor-acceptance/src/test/java)
 
 [![tested on BrowserStack](docs/browserstack-logo.png)](http://bit.ly/JBMBS)
+
+TEST
