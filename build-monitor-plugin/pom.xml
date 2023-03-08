@@ -25,7 +25,7 @@
         </license>
     </licenses>
 
-    <url>https://wiki.jenkins-ci.org/display/JENKINS/Build+Monitor+Plugin</url>
+    <url>https://github.com/jenkinsci/build-monitor-plugin</url>
 
     <developers>
         <developer>

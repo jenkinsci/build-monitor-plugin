@@ -37,7 +37,7 @@ angular.module("buildMonitor.templates", []).run(["$templateCache", function($te
         "       <p>This translates to the following stack trace:</p>\n" +
         "       <textarea rows='5'>{{ stackTrace }}</textarea>\n" +
         "   </div>\n" +
-        "   <p>Before <a href='https://issues.jenkins-ci.org/secure/Dashboard.jspa'>reporting a bug in Jenkins</a> it's usually worth trying to troubleshoot it using the information from your <a href='https://wiki.jenkins-ci.org/display/JENKINS/Logging'>Jenkins Error Log</a>.</p>\n" +
+        "   <p>Before <a href='https://issues.jenkins.io/'>reporting a bug in Jenkins</a> it's usually worth trying to troubleshoot it using the information from your <a href='https://www.jenkins.io/doc/book/system-administration/viewing-logs/'>Jenkins Error Log</a>.</p>\n" +
         "</div>\n" +
         "");
 }]);
