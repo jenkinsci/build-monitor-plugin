@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RunWith(SerenityRunner.class)
-public abstract class BuilMonitorAcceptanceTest {
+public abstract class BuildMonitorAcceptanceTest {
 
     @Managed public WebDriver browser;
 

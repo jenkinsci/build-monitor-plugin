@@ -20,7 +20,7 @@ import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.GroovyScriptThat.Pause_In_Middle_Of_Tests;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
-public class ShouldDisplayTestProgress extends BuilMonitorAcceptanceTest {
+public class ShouldDisplayTestProgress extends BuildMonitorAcceptanceTest {
 
     Actor richard = Actor.named("Richard");
 

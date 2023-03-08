@@ -16,7 +16,7 @@ import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStat
 import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus.Successful;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
-public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceTest {
+public class ProjectStatusShouldBeEasyToDetermine extends BuildMonitorAcceptanceTest {
 
     private Actor anna = Actor.named("Anna");
 

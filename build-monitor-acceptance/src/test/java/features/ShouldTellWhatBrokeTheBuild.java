@@ -14,7 +14,7 @@ import org.junit.Test;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.containsString;
 
-public class ShouldTellWhatBrokeTheBuild extends BuilMonitorAcceptanceTest {
+public class ShouldTellWhatBrokeTheBuild extends BuildMonitorAcceptanceTest {
 
     Actor dave = Actor.named("Dave");
 
