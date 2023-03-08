@@ -1,5 +1,7 @@
 package net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps;
 
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.Sleep;
+import java.util.concurrent.TimeUnit;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
@@ -17,8 +19,11 @@ public class AddAPostBuildAction implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
+                Sleep.of(1, TimeUnit.SECONDS),
                 Scroll.to(ProjectConfigurationPage.Add_Post_Build_Action),
+                Sleep.of(1, TimeUnit.SECONDS),
                 Click.on(ProjectConfigurationPage.Add_Post_Build_Action),
+                Sleep.of(1, TimeUnit.SECONDS),
                 Click.on(Link.called(postBuildActionName))
         );
     }

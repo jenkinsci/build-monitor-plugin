@@ -6,14 +6,12 @@ import hudson.plugins.claim.HaveAFailingClaimableProjectCreated;
 import hudson.plugins.claim.tasks.Claim;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
-import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
 import net.serenitybdd.integration.jenkins.environment.rules.RegisterUserAccount;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.JenkinsUser;
 import net.serenitybdd.screenplay.jenkins.tasks.GoBack;
 import net.serenitybdd.screenplay.jenkins.tasks.LogIn;
 import net.serenitybdd.screenplayx.actions.Navigate;
-import net.thucydides.junit.annotations.TestData;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +21,6 @@ import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStat
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.core.Is.is;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,24 +28,11 @@ public class ShouldTellWhoIsFixingTheBrokenBuild extends BuilMonitorAcceptanceTe
 
     JenkinsUser ben;
 
-    public ShouldTellWhoIsFixingTheBrokenBuild(String jenkinsVersion) {
-        super(jenkinsVersion);
-    }
-
-    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
-        return Collections.singletonList(InstallPlugins.fromCache(getpluginsCache(), "claim"));
-    }
-
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
         ben = JenkinsUser.named("Ben");
         return Collections.singletonList(RegisterUserAccount.of(ben));
     }
 
-    @TestData
-    public static Collection<Object[]> testData(){
-        return BuilMonitorAcceptanceTest.testData();
-    }
-    
     @Before
     public void actorCanBrowseTheWeb() {
         ben.can(BrowseTheWeb.with(browser));

@@ -3,9 +3,6 @@ package features;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
 import hudson.plugins.descriptionsetter.tasks.SetBuildDescription;
-import net.serenitybdd.integration.jenkins.JenkinsInstance;
-import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
-import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
@@ -13,7 +10,6 @@ import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ExecuteAShellScript;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScript;
 import net.serenitybdd.screenplayx.actions.Navigate;
-import net.thucydides.junit.annotations.TestData;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,27 +17,10 @@ import org.junit.Test;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.is;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 public class ShouldDescribeEachProject extends BuilMonitorAcceptanceTest {
 
     private Actor dave = Actor.named("Dave");
 
-    public ShouldDescribeEachProject(String jenkinsVersion) {
-        super(jenkinsVersion);
-    }
-
-    protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
-        return Collections.singletonList(InstallPlugins.fromCache(getpluginsCache(), "workflow-aggregator", "description-setter"));
-    }
-
-    @TestData
-    public static Collection<Object[]> testData(){
-        return BuilMonitorAcceptanceTest.testData();
-    }
-    
     @Before
     public void actorCanBrowseTheWeb() {
         dave.can(BrowseTheWeb.with(browser));

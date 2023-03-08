@@ -2,6 +2,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Main;
+import hudson.PluginWrapper;
 import hudson.model.PageDecorator;
 import hudson.model.User;
 import hudson.security.csrf.CrumbIssuer;
@@ -22,7 +23,7 @@ public class StaticJenkinsAPIs {
         return User.getAll().size();
     }
 
-    // see https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/215
+    // see https://github.com/jenkinsci/build-monitor-plugin/issues/215
     public String crumbFieldName() {
         Jenkins instance = Jenkins.get();
 
@@ -38,5 +39,10 @@ public class StaticJenkinsAPIs {
 
     public boolean hasPlugin(String pluginName) {
         return Jenkins.get().getPlugin(pluginName) != null;
+    }
+
+    public String getPluginVersion(String pluginName) {
+        PluginWrapper plugin = Jenkins.get().getPluginManager().getPlugin(pluginName);
+        return plugin != null ? plugin.getVersion() : null;
     }
 }

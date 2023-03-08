@@ -3,7 +3,7 @@ package hudson.plugins.descriptionsetter.tasks;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Enter;
-import net.serenitybdd.screenplay.jenkins.targets.Setting;
+import net.serenitybdd.screenplay.jenkins.targets.Input;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.AddABuildStep;
 import net.thucydides.core.annotations.Step;
 
@@ -33,8 +33,8 @@ public class SetBuildDescription implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 AddABuildStep.called("Set build description"),
-                Enter.theValue(regex).into(Setting.defining("Regular expression")),
-                Enter.theValue(description).into(Setting.defining("Description"))
+                Enter.theValue(regex).into(Input.named("_.regexp")),
+                Enter.theValue(description).into(Input.named("_.description"))
         );
     }
 }

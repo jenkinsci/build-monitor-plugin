@@ -22,7 +22,7 @@ public class PipelineHelperTest {
             Jenkins jenkins = createMockJenkins(mockedJenkins);
             Plugin mockedPipeline = mock(Plugin.class);
             WorkflowRun workflowRun = mock(WorkflowRun.class);
-            when(jenkins.getPlugin("workflow-aggregator")).thenReturn(mockedPipeline);
+            when(jenkins.getPlugin("workflow-job")).thenReturn(mockedPipeline);
 
             assertTrue(PipelineHelper.isWorkflowRun(workflowRun, new StaticJenkinsAPIs()));
         }

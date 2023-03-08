@@ -8,7 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 
 import static java.lang.String.format;
@@ -25,7 +29,16 @@ public class JenkinsProcess {
     private final Thread      shutdownHook = new Thread() {
         @Override
         public void run() {
-            jenkinsProcess.destroy();
+            if (jenkinsProcess.isAlive()) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                if (jenkinsProcess.isAlive()) {
+                    jenkinsProcess.destroyForcibly();
+                }
+            }
         }
     };
 
@@ -50,7 +63,6 @@ public class JenkinsProcess {
                 "-Djava.util.logging=DEBUG",
 				"-Dhudson.DNSMultiCast.disabled=true",
                 "-jar", jenkinsWar.toString(),
-                "--ajp13Port=-1",
                 "--httpPort=" + port
         ).directory(jenkinsHome.toFile());
 

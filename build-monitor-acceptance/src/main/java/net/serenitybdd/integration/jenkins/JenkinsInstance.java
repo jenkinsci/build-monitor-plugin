@@ -16,58 +16,32 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import static java.lang.String.format;
-import static java.util.Arrays.asList;
 import static net.serenitybdd.integration.utils.ListFunctions.concat;
 
 public class JenkinsInstance implements TestRule {
-    private final PluginDescription pluginUnderTest;
-
     private Path jenkinsHome = Paths.get(System.getProperty("java.io.tmpdir"));
     private int  portNumber  = 8080;
 
     private JenkinsClient client = null;    // instantiated when the Jenkins server is up and running
 
-    private List<? extends ApplicativeTestRule<JenkinsInstance>> customRulesToApplyBeforeStart = new ArrayList<>();
-    private List<? extends ApplicativeTestRule<JenkinsInstance>> defaultRules;
-    private List<? extends ApplicativeTestRule<JenkinsInstance>> customRulesToApplyAfterStart  = new ArrayList<>();
+    private List<ApplicativeTestRule<JenkinsInstance>> customRulesToApplyBeforeStart = new ArrayList<>();
+    private List<ApplicativeTestRule<JenkinsInstance>> defaultRules;
+    private List<ApplicativeTestRule<JenkinsInstance>> customRulesToApplyAfterStart = new ArrayList<>();
 
     /**
-     * @param   pluginUnderTest
-     *          Path to the plugin under test, either a .hpi or a .jpi file
-     * @param   jackson2ApiPlugin
-     *          Path to the Jackson 2 API plugin, either a .hpi or a .jpi file
-     * @param   snakeyamlApiPlugin
-     *          Path to the SnakeYAML API plugin, either a .hpi or a .jpi file
+     * @param descriptions Plugin meta-data derived from the manifest files packaged with the plugins
      */
-    public JenkinsInstance(Path pluginUnderTest, Path jackson2ApiPlugin, Path snakeyamlApiPlugin) {
-        this(PluginDescription.of(pluginUnderTest), PluginDescription.of(jackson2ApiPlugin), PluginDescription.of(snakeyamlApiPlugin));
-    }
-
-    /**
-     * @param   description
-     *          Plugin meta-data derived from the manifest file packaged with the plugin
-     */
-    public JenkinsInstance(PluginDescription description, PluginDescription jackson2ApiPlugin, PluginDescription snakeyamlApiPlugin) {
-        this.pluginUnderTest = description;
-
-        defaultRules = asList(
-                InstallPlugins.fromDisk(snakeyamlApiPlugin.path()),
-                InstallPlugins.fromDisk(jackson2ApiPlugin.path()),
-                InstallPlugins.fromDisk(pluginUnderTest.path()),
-                new ManageJenkinsServer()
-        );
-    }
-
-    public String pluginUnderTestName() {
-        return pluginUnderTest.fullName();
-    }
-
-    public String pluginUnderTestVersion() {
-        return pluginUnderTest.version();
+    public JenkinsInstance(Collection<PluginDescription> descriptions) {
+        defaultRules = new ArrayList<>();
+        for (PluginDescription description : descriptions) {
+            defaultRules.add(InstallPlugins.fromDisk(description.path()));
+        }
+        defaultRules.add(new ManageJenkinsServer());
     }
 
     public String version() {

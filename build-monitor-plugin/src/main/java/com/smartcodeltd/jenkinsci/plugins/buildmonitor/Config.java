@@ -31,7 +31,7 @@ public class Config {
          * In order to retrieve a potentially already persisted field try to first get the field, if that didn't work - use defaults.
          *
          * This is defensive coding to avoid issues such as this one:
-         *  https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/43
+         *  https://github.com/jenkinsci/build-monitor-plugin/issues/43
          */
 
         return Optional.ofNullable(order).orElse(new ByName());

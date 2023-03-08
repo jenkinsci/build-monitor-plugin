@@ -84,7 +84,7 @@ angular.
         this.start    = function() {
             every(hour, function() {
                 return $http
-                    .jsonp('https://api.github.com/repos/jan-molak/jenkins-build-monitor-plugin/releases/latest?callback=JSON_CALLBACK')
+                    .jsonp('https://api.github.com/repos/jenkinsci/build-monitor-plugin/releases/latest?callback=JSON_CALLBACK')
                     .then(function(response) {
                         var latestRelease = response.data.data.tag_name;
 

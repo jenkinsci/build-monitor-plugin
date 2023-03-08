@@ -18,7 +18,7 @@ angular
 
     // this function sends the performance indicators to google analytics only when:
     // - you agreed to participate in making Build Monitor better by allowing for the anonymous stats to be collected
-    //   see https://github.com/jan-molak/jenkins-build-monitor-plugin/wiki/Privacy-Policy
+    //   see https://github.com/jenkinsci/build-monitor-plugin/wiki/Privacy-Policy
     // - your machine is connected to the Internet
     function sendTimer (timer) {
         if (analyticsScriptLoaded()) {

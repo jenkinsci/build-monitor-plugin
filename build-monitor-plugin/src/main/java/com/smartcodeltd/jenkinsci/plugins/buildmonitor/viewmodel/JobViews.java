@@ -17,7 +17,7 @@ public class JobViews {
     private static final String Claim                       = "claim";
     private static final String Build_Failure_Analyzer      = "build-failure-analyzer";
     private static final String Badge_Plugin                = "badge";
-    private static final String Pipeline                    = "workflow-aggregator";
+    private static final String Pipeline                    = "workflow-job";
     private static final String Junit_Realtime              = "junit-realtime-test-reporter";
 
     private final StaticJenkinsAPIs jenkins;

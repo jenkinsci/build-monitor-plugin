@@ -1,5 +1,6 @@
 package net.serenitybdd.integration.jenkins.environment.rules;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,20 +21,12 @@ import static java.util.Arrays.asList;
 public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstance> {
     private static final Logger Log = LoggerFactory.getLogger(InstallPluginsFromDisk.class);
 
-    private final Path pluginsCache;
     private final List<String> pluginIDs;
     private final List<Path> pluginsToInstall;
 
     public InstallPluginsFromDisk(Path... pluginsToInstall) {
-        this.pluginsCache = null;
         this.pluginIDs = Collections.emptyList();
         this.pluginsToInstall = asList(pluginsToInstall);
-    }
-
-    public InstallPluginsFromDisk(Path pluginsCache, String... pluginIDs) {
-        this.pluginsCache = pluginsCache;
-        this.pluginIDs = asList(pluginIDs);
-        this.pluginsToInstall = Collections.emptyList();
     }
 
     @Override
@@ -43,24 +35,17 @@ public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstan
             @Override
             protected void starting(Description description) {
                 Path pluginsDir = jenkins.home().resolve("plugins");
-                List<Path> plugins;
-                if (pluginsCache == null) {
-                    Log.info("Installing {} into {}", pluginsToInstall.stream().map(Object::toString).collect(Collectors.joining(", ")), pluginsDir);
-                    plugins = pluginsToInstall;
-                } else {
-                    Log.info("Installing plugins {} into {}", pluginIDs, pluginsDir);
-                    plugins = getPluginsFromCache();
-                }
-
-                copyPlugins(plugins, pluginsDir);
+                Log.info("Installing {} into {}", pluginsToInstall.stream().map(Object::toString).collect(Collectors.joining(", ")), pluginsDir);
+                copyPlugins(pluginsToInstall, pluginsDir);
             }
 
+            @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "TODO needs triage")
             protected void copyPlugins(List<Path> plugins, Path pluginsDir) {
                 try {
                     Files.createDirectories(pluginsDir);
 
                     for (Path plugin : plugins) {
-                        Files.copy(existing(plugin), pluginsDir.resolve(plugin.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+                        Files.copy(existing(plugin), pluginsDir.resolve(plugin.getFileName().toString().replace(".hpi", ".jpi")), StandardCopyOption.REPLACE_EXISTING);
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(String.format("Couldn't install '%s' under '%s'", plugins, pluginsDir.toAbsolutePath()));
@@ -73,32 +58,6 @@ public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstan
                 }
 
                 return plugin;
-            }
-            
-            private List<Path> getPluginsFromCache() {
-                List<Path> plugins = new ArrayList<>();
-                
-                Path jenkinsVersionPluginCache = pluginsCache.resolve(System.getProperty("jenkins.version"));
-                
-                for (String pluginDir : pluginIDs) {
-                    plugins.addAll(getDirectoryPlugins(jenkinsVersionPluginCache.resolve(pluginDir)));
-                }
-                
-                return plugins;
-            }
-            
-            private List<Path> getDirectoryPlugins(Path location) {
-                List<Path> plugins = new ArrayList<>();
-                
-                String[] files = location.toFile().list((dir, name) -> name.endsWith(".jpi") || name.endsWith(".hpi"));
-                
-                if (files != null ) {
-                    for (String file : files ) {
-                        plugins.add(location.resolve(file));
-                    }
-                }
-                
-                return plugins;
             }
         };
     }

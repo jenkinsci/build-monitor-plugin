@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Util;
 import hudson.model.ViewDescriptor;
 import hudson.util.FormValidation;
@@ -54,6 +55,7 @@ public final class BuildMonitorDescriptor extends ViewDescriptor {
         this.permissionToCollectAnonymousUsageStatistics = collect;
     }
 
+    @SuppressFBWarnings(value = "DCN_NULLPOINTER_EXCEPTION", justification = "TODO needs triage")
     public FormValidation doCheckMaxColumns(@QueryParameter String value) {
         try {
             int intValue = Integer.parseInt(value);
@@ -69,6 +71,7 @@ public final class BuildMonitorDescriptor extends ViewDescriptor {
         }
     }
 
+    @SuppressFBWarnings(value = "DCN_NULLPOINTER_EXCEPTION", justification = "TODO needs triage")
     public FormValidation doCheckTextScale(@QueryParameter String value) {
         try {
             double doubleValue = Double.parseDouble(value);
