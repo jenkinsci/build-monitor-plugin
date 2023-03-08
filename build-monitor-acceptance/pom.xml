@@ -17,7 +17,7 @@
         <serenity.version>3.6.7</serenity.version>
         <aether.version>1.0.2.v20150114</aether.version>
         <bytebuddy.version>1.12.23</bytebuddy.version>
-        <slf4j.version>2.0.5</slf4j.version>
+        <slf4j.version>2.0.6</slf4j.version>
     </properties>
 
     <dependencyManagement>
