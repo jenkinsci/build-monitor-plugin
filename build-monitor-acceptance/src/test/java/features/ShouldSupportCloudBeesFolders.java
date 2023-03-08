@@ -16,7 +16,7 @@ import org.junit.Test;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
-public class ShouldSupportCloudBeesFolders extends BuilMonitorAcceptanceTest {
+public class ShouldSupportCloudBeesFolders extends BuildMonitorAcceptanceTest {
 
     Actor anna = Actor.named("Anna");
 

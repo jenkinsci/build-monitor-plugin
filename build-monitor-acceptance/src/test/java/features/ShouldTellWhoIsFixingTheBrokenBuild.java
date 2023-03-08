@@ -24,7 +24,7 @@ import static org.hamcrest.core.Is.is;
 import java.util.Collections;
 import java.util.List;
 
-public class ShouldTellWhoIsFixingTheBrokenBuild extends BuilMonitorAcceptanceTest {
+public class ShouldTellWhoIsFixingTheBrokenBuild extends BuildMonitorAcceptanceTest {
 
     JenkinsUser ben;
 

@@ -17,7 +17,7 @@ import org.junit.Test;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.is;
 
-public class ShouldDisplayConcurrentBuilds extends BuilMonitorAcceptanceTest {
+public class ShouldDisplayConcurrentBuilds extends BuildMonitorAcceptanceTest {
     private static String My_App = "My App";
 
     Actor dave = Actor.named("Dave");

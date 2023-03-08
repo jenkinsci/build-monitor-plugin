@@ -17,7 +17,7 @@ import org.junit.Test;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.Matchers.is;
 
-public class ShouldDescribeEachProject extends BuilMonitorAcceptanceTest {
+public class ShouldDescribeEachProject extends BuildMonitorAcceptanceTest {
 
     private Actor dave = Actor.named("Dave");
 

@@ -17,7 +17,7 @@ import static net.serenitybdd.screenplay.GivenWhenThen.then;
 import static net.serenitybdd.screenplay.GivenWhenThen.when;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
-public class BuildMonitorShouldBeEasyToSetUp extends BuilMonitorAcceptanceTest {
+public class BuildMonitorShouldBeEasyToSetUp extends BuildMonitorAcceptanceTest {
 
     Actor anna = Actor.named("Anna");
 

@@ -27,7 +27,7 @@ import static net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isNotCurrentlyVisible;
 
-public class ShouldDisplayBadges extends BuilMonitorAcceptanceTest {
+public class ShouldDisplayBadges extends BuildMonitorAcceptanceTest {
 
     Actor paul = Actor.named("Paul");
 
