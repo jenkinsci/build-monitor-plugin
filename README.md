@@ -5,7 +5,7 @@ Build Monitor Plugin provides a highly visible view of the status of selected Je
 It easily accommodates different computer screen sizes and is ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
 (Inspired by the no longer maintained [RadiatorView](https://wiki.jenkins-ci.org/display/JENKINS/Radiator+View+Plugin) plugin).
 
-[![Build Status](https://github.com/jan-molak/jenkins-build-monitor-plugin/workflows/Release%20Pipeline/badge.svg)](https://github.com/jan-molak/jenkins-build-monitor-plugin/actions)
+[![Build Status](https://github.com/jenkinsci/build-monitor-plugin/workflows/Release%20Pipeline/badge.svg)](https://github.com/jenkinsci/build-monitor-plugin/actions)
 [![Join the chat at https://gitter.im/jenkins-build-monitor-plugin/Lobby](https://badges.gitter.im/jenkins-build-monitor-plugin/Lobby.svg)](https://gitter.im/jenkins-build-monitor-plugin/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Have a question? Perhaps it's already been answered - check the [FAQ](#faq) section below.
@@ -25,7 +25,7 @@ Current functionality of the Build Monitor plugin:
 * Supports [Pipeline Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin), so that the currently executing stage(s) are shown.
 * The number of columns and size of the font used is easily customisable, making it trivial to accommodate screens of different sizes.
 * UI configuration is stored in a cookie, making it possible to display different number of columns and using different font size on each of the screens at your office.
-* Can work in a colour-blind-friendly mode; [learn more](https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/30#issuecomment-35849019)
+* Can work in a colour-blind-friendly mode; [learn more](https://github.com/jenkinsci/build-monitor-plugin/issues/30#issuecomment-35849019)
 
 All the previous releases together with their change logs are [listed here](https://bitly.com/JBMReleases).
 
@@ -40,8 +40,8 @@ The standard is currently supported by [most modern web browsers](http://caniuse
 
 Do you find Build Monitor useful? Give it a star! &#9733;
 
-Found a bug? Raise [an issue](https://github.com/jan-molak/jenkins-build-monitor-plugin/issues?state=open)
-or submit a pull request ([start with this mini-dev guide](https://github.com/jan-molak/jenkins-build-monitor-plugin/wiki/Development-Guide), it might come in handy).
+Found a bug? Raise [an issue](https://github.com/jenkinsci/build-monitor-plugin/issues?state=open)
+or submit a pull request ([start with this mini-dev guide](https://github.com/jenkinsci/build-monitor-plugin/wiki/Development-Guide), it might come in handy).
 
 Have feedback? Let me know on twitter: [@JanMolak](https://twitter.com/JanMolak)
 
@@ -62,7 +62,7 @@ Simple, right? :-) You can have as many Build Monitor Views as you want - the mo
 
 To stay up-to-date with the project news - [follow @JanMolak on twitter](https://twitter.com/JanMolak).
 
-If you'd like to know what's coming next - have a look at the project's [kanban board](https://waffle.io/jan-molak/jenkins-build-monitor-plugin).
+If you'd like to know what's coming next - have a look at the project's [kanban board](https://waffle.io/jenkinsci/build-monitor-plugin).
 Here's how the columns work:
 
 * Ideas - ideas up for discussion. If you'd like to see any of them making it into the Build Monitor project - vote on them or submit a pull request.
@@ -99,7 +99,7 @@ You have several options here:
 1. get a bigger screen ...
 
 ### Red and green colours are lovely, but I'm colour blind ...
-There's a colour blind mode you can [enable in the Settings](https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/30#issuecomment-35849019)
+There's a colour blind mode you can [enable in the Settings](https://github.com/jenkinsci/build-monitor-plugin/issues/30#issuecomment-35849019)
 
 ## Open Source Software Used
 
@@ -112,7 +112,5 @@ There's a colour blind mode you can [enable in the Settings](https://github.com/
 ## Friends of Build Monitor
 
 Build Monitor is continuously delivered to a Jenkins near you thanks to:
-* the time and commitment of [the author](http://smartcodeltd.co.uk/) and [the contributors](https://github.com/jan-molak/jenkins-build-monitor-plugin/graphs/contributors)
-* a battery of browsers provided by [BrowserStack](https://www.browserstack.com) and powering the [acceptance tests](/build-monitor-acceptance/src/test/java)
-
-[![tested on BrowserStack](docs/browserstack-logo.png)](http://bit.ly/JBMBS)
+* the time and commitment of [the author](http://smartcodeltd.co.uk/) and [the contributors](https://github.com/jenkinsci/build-monitor-plugin/graphs/contributors)
+* the [acceptance tests](/build-monitor-acceptance/src/test/java)

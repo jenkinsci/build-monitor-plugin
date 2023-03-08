@@ -15,7 +15,6 @@ work
 
 node
 node_modules
-plugin_cache
 
 use-node
 .DS_Store
@@ -23,3 +22,6 @@ use-node
 chromedriver.exe
 
 !.travis.yml
+
+build-monitor-plugin/src/main/webapp/styles/index.css
+build-monitor-plugin/src/main/webapp/styles/main.js

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.Feature;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.Run;
@@ -34,7 +33,6 @@ public class JobView {
         return new JobView(job, features, isPipelineJob, RelativeLocation.of(job), new Date());
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "systemTime is non-critical and no security should be compromised by mutating")
     public JobView(Job<?, ?> job, List<Feature> features, boolean isPipelineJob, RelativeLocation relative, Date systemTime) {
         this.job           = job;
         this.isPipelineJob = isPipelineJob;

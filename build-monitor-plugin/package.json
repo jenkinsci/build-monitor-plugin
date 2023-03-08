@@ -1,18 +1,36 @@
 {
+  "name": "build-monitor-plugin",
+  "version": "1.0.0",
+  "description": "Build Monitor",
+  "private": true,
   "scripts": {
-    "test": "node_modules/karma/bin/karma start src/test/resources/karma.conf.js --auto-watch"
+    "mvnbuild": "npm run build",
+    "mvntest": "npm run test",
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development --watch",
+    "test": "OPENSSL_CONF=/dev/null node_modules/karma/bin/karma start src/test/resources/karma.conf.ci.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jan-molak/jenkins-build-monitor-plugin.git"
+    "url": "git+https://github.com/jenkinsci/build-monitor-plugin.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jenkinsci/build-monitor-plugin/issues"
   },
   "devDependencies": {
-    "jasmine-core": "2.5.2",
-    "karma": "1.3.0",
-    "karma-coverage": "1.1.1",
-    "karma-jasmine": "1.0.2",
-    "karma-junit-reporter": "1.1.0",
-    "karma-phantomjs-launcher": "1.0.2"
+    "css-loader": "6.7.3",
+    "jasmine-core": "2.9.1",
+    "karma": "2.0.5",
+    "karma-coverage": "1.1.2",
+    "karma-jasmine": "1.1.2",
+    "karma-junit-reporter": "2.0.1",
+    "karma-phantomjs-launcher": "1.0.4",
+    "less-loader": "11.1.0",
+    "mini-css-extract-plugin": "2.7.3",
+    "style-loader": "3.3.1",
+    "webpack": "5.75.0",
+    "webpack-cli": "5.0.1"
   },
   "engines": {
     "node": ">=0.10"

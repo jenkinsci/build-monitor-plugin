@@ -42,9 +42,7 @@ public class BuildMonitorInstallation {
                 : Audience.EndUsers;
     }
 
-    private static final BuildMonitorBuildProperties buildProperties = new BuildMonitorBuildProperties("build-monitor.properties");
-
     public String buildMonitorVersion() {
-        return buildProperties.get("version");
+        return jenkins.getPluginVersion("build-monitor-plugin");
     }
 }

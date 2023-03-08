@@ -4,28 +4,31 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <jenkins.version>2.303.3</jenkins.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <revision>1.14</revision>
+        <changelist>999999-SNAPSHOT</changelist>
+        <jenkins.version>2.361.4</jenkins.version>
+        <gitHubRepo>jenkinsci/build-monitor-plugin</gitHubRepo>
     </properties>
 
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.40</version>
+        <version>4.55</version>
         <relativePath />
     </parent>
 
     <artifactId>build-monitor</artifactId>
-    <version>1.13-SNAPSHOT</version>
+    <version>${revision}-${changelist}</version>
     <packaging>pom</packaging>
 
     <name>Build Monitor</name>
-    <url>https://github.com/jan-molak/jenkins-build-monitor-plugin</url>
+    <url>https://github.com/jenkinsci/build-monitor-plugin</url>
 
-    <scm>
-        <connection>scm:git:ssh://github.com/jan-molak/jenkins-build-monitor-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/jan-molak/jenkins-build-monitor-plugin.git</developerConnection>
-        <url>https://github.com/jan-molak/jenkins-build-monitor-plugin</url>
+    <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
+        <connection>scm:git:https://github.com/${gitHubRepo}.git</connection>
+        <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
+        <tag>${scmTag}</tag>
+        <url>https://github.com/${gitHubRepo}</url>
     </scm>
 
     <repositories>
@@ -58,7 +61,7 @@
             <dependency>
                 <groupId>commons-net</groupId>
                 <artifactId>commons-net</artifactId>
-                <version>3.8.0</version>
+                <version>3.9.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -67,35 +70,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>com.smartcodeltd</groupId>
-                    <artifactId>release-candidate-maven-plugin</artifactId>
-                    <version>1.0-201605132325.9e7d5be</version>
-                </plugin>
-
-            </plugins>
-        </pluginManagement>
-
-        <plugins>
-            <plugin>
-                <groupId>com.smartcodeltd</groupId>
-                <artifactId>release-candidate-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-cli</id>
-                        <goals>
-                            <goal>updateVersion</goal>
-                        </goals>
-                        <configuration>
-                            <releaseVersionFormat>{{ api_version }}+build.{{ timestamp('YYYYMMddHHmm') }}</releaseVersionFormat>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

@@ -7,7 +7,6 @@ import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
 import net.serenitybdd.screenplayx.actions.Navigate;
 import net.thucydides.core.annotations.Title;
-import net.thucydides.junit.annotations.TestData;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,21 +17,10 @@ import static net.serenitybdd.screenplay.GivenWhenThen.then;
 import static net.serenitybdd.screenplay.GivenWhenThen.when;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
-import java.util.Collection;
-
 public class BuildMonitorShouldBeEasyToSetUp extends BuilMonitorAcceptanceTest {
 
     Actor anna = Actor.named("Anna");
 
-    public BuildMonitorShouldBeEasyToSetUp(String jenkinsVersion) {
-        super(jenkinsVersion);
-    }
-
-    @TestData
-    public static Collection<Object[]> testData(){
-        return BuilMonitorAcceptanceTest.testData();
-    }
-    
     @Before
     public void actorCanBrowseTheWeb() {
         anna.can(BrowseTheWeb.with(browser));

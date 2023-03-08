@@ -15,12 +15,12 @@ public class UpdateCenterUnitTest {
     @Test
     public void getUpdateVersionToUse() {
         // Exact version
-        Assert.assertEquals("2.289.2", updateCenter.getUpdateVersionToUse("2.289.2"));
+        Assert.assertEquals("2.346.2", updateCenter.getUpdateVersionToUse("2.346.2"));
         // Higher patch
-        Assert.assertEquals("2.289.3", updateCenter.getUpdateVersionToUse("2.289.9999"));
+        Assert.assertEquals("2.346.3", updateCenter.getUpdateVersionToUse("2.346.9999"));
         // Higher minor
-        Assert.assertEquals("2.303.3", updateCenter.getUpdateVersionToUse("2.304.0"));
+        Assert.assertEquals("2.361.4", updateCenter.getUpdateVersionToUse("2.362.0"));
         // Higher major
-        Assert.assertEquals("2.303.3", updateCenter.getUpdateVersionToUse("3.1.0"));
+        Assert.assertEquals("2.375.4", updateCenter.getUpdateVersionToUse("3.1.0"));
     }
 }

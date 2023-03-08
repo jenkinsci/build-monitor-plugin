@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 /**
  * Inspired by <a href="https://github.com/Mercynary">@Mercenary</a>'s answer to
- * issue <a href="https://github.com/jan-molak/jenkins-build-monitor-plugin/issues/113">#113</a>.
+ * issue <a href="https://github.com/jenkinsci/build-monitor-plugin/issues/113">#113</a>.
  */
 public class ByLastBuildTime implements Comparator<Job<?, ?>>, Serializable {
 

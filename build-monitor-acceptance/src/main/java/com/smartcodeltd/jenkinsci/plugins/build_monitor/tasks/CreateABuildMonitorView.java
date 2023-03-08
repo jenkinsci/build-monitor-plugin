@@ -31,7 +31,7 @@ public class CreateABuildMonitorView implements Task {
                 Click.on(JenkinsHomePage.New_View_link),
                 Enter.theValue(buildMonitorName).into(NewViewPage.View_Name),
                 Click.on(NewViewPage.Build_Monitor_View),
-                Click.on(Buttons.OK),
+                Click.on(Buttons.Create),
                 configureBuildMonitor,
                 SaveTheChangesToBuildMonitor.andExitTheConfigurationScreen()
         );

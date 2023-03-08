@@ -44,7 +44,7 @@ public class JenkinsClient {
 
         try {
             executeGroovy(promise,
-                    "def instance         = jenkins.model.Jenkins.getInstance()",
+                    "def instance         = jenkins.model.Jenkins.get()",
                     "def usersCanRegister = true",
                     "def realm            = new hudson.security.HudsonPrivateSecurityRealm(usersCanRegister)",
                     format("realm.createAccount(\"%s\",\"%s\")", username, password),

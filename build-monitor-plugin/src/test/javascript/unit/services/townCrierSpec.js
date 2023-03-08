@@ -116,7 +116,7 @@ describe('buildMonitor', function () {
                 return {
                     and_the_latest_version_available_is: function(released_version) {
                         httpBackend.
-                            whenJSONP('https://api.github.com/repos/jan-molak/jenkins-build-monitor-plugin/releases/latest?callback=JSON_CALLBACK').
+                            whenJSONP('https://api.github.com/repos/jenkinsci/build-monitor-plugin/releases/latest?callback=JSON_CALLBACK').
                             respond(200, { data: { tag_name: 'v' + released_version }});
                     }
                 }

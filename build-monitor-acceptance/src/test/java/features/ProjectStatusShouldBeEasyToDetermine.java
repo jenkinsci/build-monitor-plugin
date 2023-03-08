@@ -7,7 +7,6 @@ import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAFailingProjectCreated;
 import net.serenitybdd.screenplay.jenkins.HaveASuccessfulProjectCreated;
 import net.serenitybdd.screenplayx.actions.Navigate;
-import net.thucydides.junit.annotations.TestData;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,21 +16,10 @@ import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStat
 import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus.Successful;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
-import java.util.Collection;
-
 public class ProjectStatusShouldBeEasyToDetermine extends BuilMonitorAcceptanceTest {
 
     private Actor anna = Actor.named("Anna");
 
-    public ProjectStatusShouldBeEasyToDetermine(String jenkinsVersion) {
-        super(jenkinsVersion);
-    }
-
-    @TestData
-    public static Collection<Object[]> testData(){
-        return BuilMonitorAcceptanceTest.testData();
-    }
-    
     @Before
     public void actorCanBrowseTheWeb() {
         anna.can(BrowseTheWeb.with(browser));

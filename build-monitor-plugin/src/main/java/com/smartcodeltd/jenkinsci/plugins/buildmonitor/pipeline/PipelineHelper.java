@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PipelineHelper {
 
-    private static final String PIPELINE_PLUGIN = "workflow-aggregator";
+    private static final String PIPELINE_PLUGIN = "workflow-job";
     private static final String WORKFLOW_RUN_CLASS_NAME = "org.jenkinsci.plugins.workflow.job.WorkflowRun";
     private static Boolean hasWorkflowClass = null;
     private static Class<?> workflowRunClass = null;

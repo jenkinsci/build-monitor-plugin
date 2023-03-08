@@ -7,6 +7,7 @@ import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplay.waits.WaitUntil;
+import net.serenitybdd.screenplayx.actions.Scroll;
 import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
@@ -20,6 +21,7 @@ public class LineInTheBuildLog implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
+                Scroll.to(FailureCauseManagementPage.Add_Indication),
                 Click.on(FailureCauseManagementPage.Add_Indication),
                 WaitUntil.the(FailureCauseManagementPage.Build_Log_Indication_Link, WebElementStateMatchers.isVisible()),
                 Click.on(FailureCauseManagementPage.Build_Log_Indication_Link),
