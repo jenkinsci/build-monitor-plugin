@@ -4,7 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -114,7 +113,7 @@ public class JenkinsProcess {
 
     private ProcessBuilder process(Path executable, String... arguments) {
         List<String> args = new ArrayList<>(windowsOrUnix(executable));
-        args.addAll(Arrays.asList(arguments));
+        args.addAll(List.of(arguments));
 
         return new ProcessBuilder(args);
     }

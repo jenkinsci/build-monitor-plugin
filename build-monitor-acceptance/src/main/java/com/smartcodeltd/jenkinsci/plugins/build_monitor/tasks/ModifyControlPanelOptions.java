@@ -3,7 +3,6 @@ package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface.BuildMonitorDashboard;
-import java.util.Arrays;
 import java.util.List;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
@@ -15,7 +14,7 @@ import net.thucydides.core.annotations.Step;
 public class ModifyControlPanelOptions implements Task {
 
     public static ModifyControlPanelOptions to(Task... configurationTasks) {
-        return instrumented(ModifyControlPanelOptions.class, Arrays.asList(configurationTasks));
+        return instrumented(ModifyControlPanelOptions.class, List.of(configurationTasks));
     }
 
     @Override

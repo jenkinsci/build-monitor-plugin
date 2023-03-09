@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Lister;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 
@@ -46,6 +45,6 @@ public class ListerTest {
     }
 
     private <T> List<T> listOf(T... items) {
-        return Arrays.asList(items);
+        return List.of(items);
     }
 }

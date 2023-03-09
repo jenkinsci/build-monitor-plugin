@@ -2,7 +2,6 @@ package com.smartcodeltd.aether;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.eclipse.aether.DefaultRepositorySystemSession;
@@ -34,7 +33,7 @@ public class ArtifactTransporter {
 
     public ArtifactTransporter(Path localRepositoryLocation, RemoteRepository... remoteLocations) {
         this.localRepositoryLocation = localRepositoryLocation;
-        this.remoteLocations         = Arrays.asList(remoteLocations);
+        this.remoteLocations         = List.of(remoteLocations);
 
         // todo: proxies: https://github.com/jenkinsci/acceptance-test-harness/blob/b27c150f35a386dfced4a5960127bf62f9c34363/src/main/java/org/jenkinsci/test/acceptance/utils/aether/ArtifactResolverUtil.java
     }

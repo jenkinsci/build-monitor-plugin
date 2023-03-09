@@ -5,7 +5,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.Feature;
 import hudson.model.Job;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Supplier;
@@ -24,7 +23,7 @@ public class JobViewRecipe implements Supplier<JobView> {
     }
 
     public JobViewRecipe which(Feature... features) {
-        this.features = Arrays.asList(features);
+        this.features = List.of(features);
         return this;
     }
 

@@ -3,7 +3,6 @@ package com.sonyericsson.jenkins.plugins.bfa;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import com.sonyericsson.jenkins.plugins.bfa.user_interface.JenkinsHomePageWithBFA;
-import java.util.Arrays;
 import java.util.List;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
@@ -14,7 +13,7 @@ import net.thucydides.core.annotations.Step;
 
 public class UseFailureCauseManagement implements Task {
     public static UseFailureCauseManagement to(Task... defineFailureCauses) {
-        return instrumented(UseFailureCauseManagement.class, Arrays.asList(defineFailureCauses));
+        return instrumented(UseFailureCauseManagement.class, List.of(defineFailureCauses));
     }
 
     @Step("{0} uses the 'Failure Cause Management'")

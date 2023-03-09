@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import net.serenitybdd.integration.jenkins.process.JenkinsProcess;
@@ -164,8 +163,8 @@ public class JenkinsClient {
         //TODO use RealJenkinsRule
         //return executor.call(args).execute(noManualInput(), info(logger), error(logger));
         try {
-        	List<String> cliArgs = new ArrayList<>(Arrays.asList("-s", jenkinsUrl.toString(), "-http"));
-        	cliArgs.addAll(Arrays.asList(args));
+        	List<String> cliArgs = new ArrayList<>(List.of("-s", jenkinsUrl.toString(), "-http"));
+        	cliArgs.addAll(List.of(args));
         	
         	return CLI._main(cliArgs.toArray(new String[0]));
         } catch (Exception e) {

@@ -1,8 +1,8 @@
 package net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ShellScript {
 
@@ -11,7 +11,7 @@ public class ShellScript {
     }
 
     public ShellScript definedAs(String... lines) {
-        return this.definedAs(Arrays.asList(lines));
+        return this.definedAs(List.of(lines));
     }
 
     public ShellScript definedAs(List<String> lines) {
@@ -21,7 +21,7 @@ public class ShellScript {
     }
 
     public ShellScript andOutputs(String... lines) {
-        return definedAs(Arrays.stream(lines).map(line -> String.format("echo \"%s\";", line)).collect(Collectors.toList()));
+        return definedAs(Stream.of(lines).map(line -> String.format("echo \"%s\";", line)).collect(Collectors.toList()));
     }
 
     public String code() {

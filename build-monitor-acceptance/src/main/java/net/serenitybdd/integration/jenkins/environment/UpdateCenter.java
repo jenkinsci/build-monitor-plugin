@@ -10,7 +10,6 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,7 @@ public class UpdateCenter {
             = "https://updates.jenkins.io/update-center.json?version=%s";
     private final Path tempDir;
 
-    private List<Version> jenkinsLTSVersions = Arrays.asList(
+    private List<Version> jenkinsLTSVersions = List.of(
       Version.valueOf("2.375.4"),
       Version.valueOf("2.375.3"),
       Version.valueOf("2.375.2"),
