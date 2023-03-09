@@ -8,7 +8,7 @@
     "mvntest": "npm run test",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development --watch",
-    "test": "OPENSSL_CONF=/dev/null node_modules/karma/bin/karma start src/test/resources/karma.conf.ci.js"
+    "test": "cross-env OPENSSL_CONF=/dev/null node_modules/karma/bin/karma start src/test/resources/karma.conf.ci.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "url": "https://github.com/jenkinsci/build-monitor-plugin/issues"
   },
   "devDependencies": {
+    "cross-env": "7.0.3",
     "css-loader": "6.7.3",
     "jasmine-core": "2.9.1",
     "karma": "6.4.1",
