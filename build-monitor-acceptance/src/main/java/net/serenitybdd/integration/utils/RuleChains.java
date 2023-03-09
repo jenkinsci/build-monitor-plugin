@@ -1,13 +1,12 @@
 package net.serenitybdd.integration.utils;
 
-import java.util.Arrays;
 import java.util.List;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 
 public class RuleChains {
     public static RuleChain from(TestRule... rules) {
-        return from(Arrays.asList(rules));
+        return from(List.of(rules));
     }
 
     private static RuleChain from(List<TestRule> testRules) {

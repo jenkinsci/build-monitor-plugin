@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import org.junit.Test;
@@ -55,7 +54,7 @@ public class BreadthFirstNodeTraversalTest {
         TestNode(String displayName, Type type, TestNode[] parents) {
             this.displayName = displayName;
             this.type = type;
-            this.parents = Arrays.asList(parents);
+            this.parents = List.of(parents);
         }
 
         String getDisplayName() {

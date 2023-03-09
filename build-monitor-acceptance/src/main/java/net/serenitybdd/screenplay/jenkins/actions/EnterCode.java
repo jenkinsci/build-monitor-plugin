@@ -2,7 +2,6 @@ package net.serenitybdd.screenplay.jenkins.actions;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
-import java.util.Arrays;
 import java.util.List;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
@@ -13,7 +12,7 @@ import net.thucydides.core.annotations.Step;
 
 public class EnterCode {
     public static EnterCode asFollows(String... lines) {
-        return new EnterCode(Arrays.asList(lines));
+        return new EnterCode(List.of(lines));
     }
 
     public Interaction intoTheCodeMirror(Target editorField) {
