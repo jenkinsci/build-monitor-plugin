@@ -1,14 +1,13 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.pipeline;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import org.junit.Test;
 
 public class BreadthFirstNodeTraversalTest {
     @Test

@@ -1,17 +1,14 @@
 package net.serenitybdd.integration.jenkins.environment.rules;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import static java.lang.String.format;
 
 public class SandboxJenkinsHome implements ApplicativeTestRule<JenkinsInstance> {
     private static final Logger Log = LoggerFactory.getLogger(SandboxJenkinsHome.class);
@@ -48,12 +45,12 @@ public class SandboxJenkinsHome implements ApplicativeTestRule<JenkinsInstance> 
                     fileSystemSafeNameOf(test) + "_"
             );
         } catch (IOException e) {
-            throw new RuntimeException(format("Couldn't create a temporary directory for '%s' at '%s'.", test, rootDirectory), e);
+            throw new RuntimeException(String.format("Couldn't create a temporary directory for '%s' at '%s'.", test, rootDirectory), e);
         }
     }
 
     private String fileSystemSafeNameOf(Description description) {
-        return format("%s_%s",
+        return String.format("%s_%s",
                 simplified(description.getClassName()),
                 description.getMethodName()
         );

@@ -1,15 +1,13 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import org.jenkinsci.plugins.junitrealtimetestreporter.AbstractRealtimeTestResultAction;
 import org.jenkinsci.plugins.junitrealtimetestreporter.TestProgress;
 

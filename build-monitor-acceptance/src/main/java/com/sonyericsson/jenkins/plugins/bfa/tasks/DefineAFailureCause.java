@@ -1,13 +1,13 @@
 package com.sonyericsson.jenkins.plugins.bfa.tasks;
 
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
 import com.sonyericsson.jenkins.plugins.bfa.user_interface.FailureCauseManagementPage;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
-
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class DefineAFailureCause implements Task {
     public static DefineAFailureCause called(String name) {

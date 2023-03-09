@@ -1,11 +1,11 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks;
 
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.thucydides.core.annotations.Step;
-
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class HaveABuildMonitorViewCreated implements Task {
     public static Task showingAllTheProjects() {

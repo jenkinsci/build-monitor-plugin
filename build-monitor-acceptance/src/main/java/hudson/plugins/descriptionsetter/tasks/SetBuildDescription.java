@@ -1,13 +1,13 @@
 package hudson.plugins.descriptionsetter.tasks;
 
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.jenkins.targets.Input;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.AddABuildStep;
 import net.thucydides.core.annotations.Step;
-
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class SetBuildDescription implements Task {
 

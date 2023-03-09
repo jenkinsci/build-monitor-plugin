@@ -5,8 +5,6 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
-import static java.lang.String.format;
-
 public class ProjectInformationMatchers {
     public static ProjectStatusMatcher displaysProjectStatusAs(ProjectStatus desiredStatus) {
         return new ProjectStatusMatcher(desiredStatus);
@@ -29,7 +27,7 @@ public class ProjectInformationMatchers {
         public void describeTo(Description description) {
             description
                     .appendText("displaying the status as ")
-                    .appendText(format("'%s'", desiredStatus.toString()));
+                    .appendText(String.format("'%s'", desiredStatus.toString()));
         }
     }
 }

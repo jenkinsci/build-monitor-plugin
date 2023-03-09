@@ -1,16 +1,13 @@
 package net.serenitybdd.integration.jenkins.environment.rules;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.net.ServerSocket;
-
-import static java.lang.String.format;
 
 public class FindFreePort implements ApplicativeTestRule<JenkinsInstance> {
     private static final Logger Log = LoggerFactory.getLogger(FindFreePort.class);
@@ -31,7 +28,7 @@ public class FindFreePort implements ApplicativeTestRule<JenkinsInstance> {
 
     public FindFreePort(int rangeStart, int rangeEnd) {
         if (rangeStart > rangeEnd) {
-          throw new IllegalArgumentException(format("Start of the port range (%d) should be lower than the end of the range (%d)", rangeStart, rangeEnd));
+          throw new IllegalArgumentException(String.format("Start of the port range (%d) should be lower than the end of the range (%d)", rangeStart, rangeEnd));
         }
 
         this.rangeStart = rangeStart;

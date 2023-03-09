@@ -1,10 +1,10 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.readability;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Pluraliser;
-import org.junit.Test;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Pluraliser;
+import org.junit.Test;
 
 public class PluraliserTest {
     @Test

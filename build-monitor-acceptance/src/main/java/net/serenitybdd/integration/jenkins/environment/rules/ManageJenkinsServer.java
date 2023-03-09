@@ -1,6 +1,8 @@
 package net.serenitybdd.integration.jenkins.environment.rules;
 
 import com.smartcodeltd.aether.ArtifactTransporter;
+import java.io.IOException;
+import java.nio.file.Path;
 import net.serenitybdd.integration.jenkins.JenkinsArtifactTransporter;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.integration.jenkins.client.JenkinsClient;
@@ -9,9 +11,6 @@ import net.serenitybdd.integration.utils.CommandLineTools;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
-
-import java.io.IOException;
-import java.nio.file.Path;
 
 public class ManageJenkinsServer implements ApplicativeTestRule<JenkinsInstance> {
     private final Path javaExecutable;

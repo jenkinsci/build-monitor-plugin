@@ -5,9 +5,8 @@ import net.serenitybdd.core.pages.WebElementState;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.annotations.Subject;
+import net.serenitybdd.screenplay.questions.WebElementQuestion;
 import net.serenitybdd.screenplay.targets.Target;
-
-import static net.serenitybdd.screenplay.questions.WebElementQuestion.stateOf;
 
 @Subject("the badges of widget representing the '#projectName' project on the Build Monitor")
 public class ProjectBadgesState implements Question<WebElementState> {
@@ -16,7 +15,7 @@ public class ProjectBadgesState implements Question<WebElementState> {
     public WebElementState answeredBy(Actor actor) {
         Target widget     = BuildMonitorDashboard.Project_Widget_Badges.of(projectName);
 
-        return stateOf(widget).answeredBy(actor);
+        return WebElementQuestion.stateOf(widget).answeredBy(actor);
     }
 
     public ProjectBadgesState(String projectName) {

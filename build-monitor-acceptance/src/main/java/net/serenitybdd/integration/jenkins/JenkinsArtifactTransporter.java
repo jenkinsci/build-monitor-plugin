@@ -2,7 +2,6 @@ package net.serenitybdd.integration.jenkins;
 
 import com.smartcodeltd.aether.ArtifactTransporter;
 import com.smartcodeltd.aether.RemoteRepository;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 

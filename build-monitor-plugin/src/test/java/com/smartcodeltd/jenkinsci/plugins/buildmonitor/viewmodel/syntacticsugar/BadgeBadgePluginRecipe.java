@@ -1,12 +1,11 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import com.jenkinsci.plugins.badge.action.BadgeAction;
-
-import java.util.function.Supplier;
-
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import com.jenkinsci.plugins.badge.action.BadgeAction;
+import java.util.function.Supplier;
 
 /**
  * @author Daniel Beland

@@ -1,12 +1,11 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
-import java.util.function.Supplier;
-
-import org.jenkinsci.plugins.junitrealtimetestreporter.PipelineRealtimeTestResultAction;
-import org.jenkinsci.plugins.junitrealtimetestreporter.TestProgress;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.util.function.Supplier;
+import org.jenkinsci.plugins.junitrealtimetestreporter.PipelineRealtimeTestResultAction;
+import org.jenkinsci.plugins.junitrealtimetestreporter.TestProgress;
 
 /**
  * @author Daniel Beland

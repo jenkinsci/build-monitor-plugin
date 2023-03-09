@@ -1,9 +1,9 @@
 package com.sonyericsson.jenkins.plugins.bfa;
 
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class HaveAShellScriptFailureCauseDefined implements Task {
 

@@ -1,14 +1,13 @@
 package net.serenitybdd.screenplay.jenkins.tasks.configuration;
 
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Arrays.asList;
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class TodoList implements Task {
     public static TodoList empty() {
@@ -22,7 +21,7 @@ public class TodoList implements Task {
     }
 
     public <T extends Performable> TodoList addAll(T... tasks) {
-        todos.addAll(asList(tasks));
+        todos.addAll(Arrays.asList(tasks));
 
         return this;
     }

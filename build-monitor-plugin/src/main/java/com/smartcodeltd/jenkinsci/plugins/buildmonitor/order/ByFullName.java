@@ -1,7 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.order;
 
 import hudson.model.Job;
-
 import java.io.Serializable;
 import java.util.Comparator;
 

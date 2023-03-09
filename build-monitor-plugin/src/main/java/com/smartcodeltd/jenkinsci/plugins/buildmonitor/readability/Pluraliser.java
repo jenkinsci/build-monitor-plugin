@@ -1,10 +1,8 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability;
 
-import static java.lang.String.format;
-
 public class Pluraliser {
     public static String pluralise(String template, int count) {
-        return format(template, count);
+        return String.format(template, count);
     }
 
     public static String pluralise(String singularTemplate, String pluralTemplate, int count) {

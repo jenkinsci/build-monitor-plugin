@@ -2,8 +2,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability;
 
 import java.util.List;
 
-import static java.lang.String.format;
-
 public class Lister {
     private static final String DEFAULT_NO_ITEMS_TEMPLATE = "%s";
 
@@ -30,7 +28,7 @@ public class Lister {
     // --
 
     private static <T> String formatted(String template, List<T> items) {
-        return format(template, asString(items));
+        return String.format(template, asString(items));
     }
 
     private static <T> String asString(String acc, List<T> tail) {
@@ -42,11 +40,11 @@ public class Lister {
     }
 
     private static String and(String first, String second) {
-        return format("%s and %s", first, second);
+        return String.format("%s and %s", first, second);
     }
 
     private static String comma(String first, String second) {
-        return format("%s, %s", first, second);
+        return String.format("%s, %s", first, second);
     }
 
     private static <T> String headOf(List<T> items) {

@@ -1,12 +1,12 @@
 package net.serenitybdd.screenplay.jenkins.tasks;
 
-import net.serenitybdd.screenplay.jenkins.user_interface.JenkinsHomePage;
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.jenkins.user_interface.JenkinsHomePage;
 import net.thucydides.core.annotations.Step;
-
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class ScheduleABuild implements Task {
     public static Task of(String project) {

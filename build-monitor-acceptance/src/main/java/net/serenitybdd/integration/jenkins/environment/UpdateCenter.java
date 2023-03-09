@@ -1,9 +1,6 @@
 package net.serenitybdd.integration.jenkins.environment;
 
 import com.github.zafarkhaja.semver.Version;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -15,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UpdateCenter {
 

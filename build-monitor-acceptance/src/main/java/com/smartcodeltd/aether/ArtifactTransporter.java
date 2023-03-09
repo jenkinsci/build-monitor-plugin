@@ -1,5 +1,9 @@
 package com.smartcodeltd.aether;
 
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;
@@ -19,13 +23,6 @@ import org.eclipse.aether.transport.http.HttpTransporterFactory;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static java.lang.String.format;
 
 public class ArtifactTransporter {
 
@@ -68,7 +65,7 @@ public class ArtifactTransporter {
             return artifact.getFile().toPath();
 
         } catch (ArtifactResolutionException e) {
-            throw new RuntimeException(format("Couldn't resolve a '%s' artifact for '%s:%s:%s'",
+            throw new RuntimeException(String.format("Couldn't resolve a '%s' artifact for '%s:%s:%s'",
                     artifactFileExtension, groupName, artifactName, version
             ), e);
         }

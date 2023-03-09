@@ -1,12 +1,12 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration;
 
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
-import net.thucydides.core.annotations.Step;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Buttons;
-
-import static net.serenitybdd.screenplay.Tasks.instrumented;
+import net.thucydides.core.annotations.Step;
 
 public class SaveTheChangesToBuildMonitor implements Task {
     public static Task andExitTheConfigurationScreen() {

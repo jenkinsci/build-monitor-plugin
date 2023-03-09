@@ -9,9 +9,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.jetbrains.annotations.NotNull;
 
-import static java.lang.String.format;
-import static java.util.stream.Collectors.toList;
-
 public enum ProjectStatus {
     Successful("successful"),
     Failing("failing"),
@@ -51,7 +48,7 @@ public enum ProjectStatus {
             }
         }
 
-        throw new IllegalArgumentException(format("'%s' is not a recognised value of the ProjectStatus enum", cssClass));
+        throw new IllegalArgumentException(String.format("'%s' is not a recognised value of the ProjectStatus enum", cssClass));
     }
 
     // todo: Java 8?
@@ -71,7 +68,7 @@ public enum ProjectStatus {
     private static <T> List<String> stringRepresentationsOf(Collection<T> items) {
         return items.stream()
                 .map(Object::toString)
-                .collect(toList());
+                .collect(Collectors.toList());
     }
 
 

@@ -1,5 +1,11 @@
 package features;
 
+import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.then;
+import static net.serenitybdd.screenplay.GivenWhenThen.when;
+import static org.hamcrest.Matchers.containsString;
+
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
 import net.serenitybdd.screenplay.Actor;
@@ -8,12 +14,8 @@ import net.serenitybdd.screenplay.jenkins.HaveAPipelineProjectCreated;
 import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.SetPipelineDefinition;
 import net.serenitybdd.screenplayx.actions.Navigate;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import static net.serenitybdd.screenplay.GivenWhenThen.*;
-import static org.hamcrest.Matchers.containsString;
 
 public class ShouldDisplayPipelineStage extends BuildMonitorAcceptanceTest {
 

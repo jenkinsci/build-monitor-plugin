@@ -1,16 +1,5 @@
 package net.serenitybdd.integration.jenkins;
 
-import net.serenitybdd.integration.jenkins.client.JenkinsClient;
-import net.serenitybdd.integration.jenkins.environment.PluginDescription;
-import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
-import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
-import net.serenitybdd.integration.jenkins.environment.rules.ManageJenkinsServer;
-import net.serenitybdd.integration.utils.RuleChains;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -18,9 +7,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import static java.lang.String.format;
-import static net.serenitybdd.integration.utils.ListFunctions.concat;
+import net.serenitybdd.integration.jenkins.client.JenkinsClient;
+import net.serenitybdd.integration.jenkins.environment.PluginDescription;
+import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
+import net.serenitybdd.integration.jenkins.environment.rules.InstallPlugins;
+import net.serenitybdd.integration.jenkins.environment.rules.ManageJenkinsServer;
+import net.serenitybdd.integration.utils.ListFunctions;
+import net.serenitybdd.integration.utils.RuleChains;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 
 public class JenkinsInstance implements TestRule {
     private Path jenkinsHome = Paths.get(System.getProperty("java.io.tmpdir"));
@@ -65,9 +62,9 @@ public class JenkinsInstance implements TestRule {
 
     public URL url() {
         try {
-            return new URL(format("http://localhost:%d/", portNumber));
+            return new URL(String.format("http://localhost:%d/", portNumber));
         } catch (MalformedURLException e) {
-            throw new RuntimeException(format("Couldn't instantiate a URL as 'http://localhost:%d/'", portNumber));
+            throw new RuntimeException(String.format("Couldn't instantiate a URL as 'http://localhost:%d/'", portNumber));
         }
     }
 
@@ -93,7 +90,7 @@ public class JenkinsInstance implements TestRule {
 
     @Override
     public Statement apply(final Statement base, final Description description) {
-        return chainOf(concat(customRulesToApplyBeforeStart, defaultRules, customRulesToApplyAfterStart)).apply(base, description);
+        return chainOf(ListFunctions.concat(customRulesToApplyBeforeStart, defaultRules, customRulesToApplyAfterStart)).apply(base, description);
     }
 
     private <ATR extends ApplicativeTestRule<JenkinsInstance>> RuleChain chainOf(List<ATR> rules) {

@@ -1,9 +1,8 @@
 package com.smartcodeltd.aether;
 
+import java.io.PrintStream;
 import org.eclipse.aether.AbstractRepositoryListener;
 import org.eclipse.aether.RepositoryEvent;
-
-import java.io.PrintStream;
 
 public class ConsoleRepositoryListener extends AbstractRepositoryListener {
 

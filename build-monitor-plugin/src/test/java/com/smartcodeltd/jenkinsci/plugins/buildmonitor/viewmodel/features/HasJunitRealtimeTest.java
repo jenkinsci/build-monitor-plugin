@@ -13,14 +13,12 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
+import jenkins.model.Jenkins;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
-
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
-
-import jenkins.model.Jenkins;
 
 public class HasJunitRealtimeTest {
     private JobView job;

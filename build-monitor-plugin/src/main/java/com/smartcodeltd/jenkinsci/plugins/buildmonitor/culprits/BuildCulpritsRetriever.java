@@ -5,7 +5,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.pipeline.PipelineHelper;
 import hudson.model.AbstractBuild;
 import hudson.model.Cause;
 import hudson.model.Run;
-
 import java.util.Set;
 
 /**

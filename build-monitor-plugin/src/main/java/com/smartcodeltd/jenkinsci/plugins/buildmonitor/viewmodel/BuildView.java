@@ -7,8 +7,9 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.pipeline.PipelineHelper;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.DurationInMilliseconds;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.HumanReadableDuration;
-import hudson.model.*;
-
+import hudson.model.Action;
+import hudson.model.Result;
+import hudson.model.Run;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

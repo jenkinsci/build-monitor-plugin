@@ -1,20 +1,17 @@
 package net.serenitybdd.integration.jenkins.process;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
 import org.jdeferred.Promise;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-
-import static java.lang.String.format;
-import static java.util.Arrays.asList;
 
 public class JenkinsProcess {
     private static final Logger Log = LoggerFactory.getLogger(JenkinsProcess.class);
@@ -84,13 +81,13 @@ public class JenkinsProcess {
             jenkinsStarted.waitSafely(Startup_Timeout);
 
             if (! jenkinsStarted.isResolved()) {
-                throw new RuntimeException(format("Jenkins failed to start within %s seconds, aborting the test.", Startup_Timeout));
+                throw new RuntimeException(String.format("Jenkins failed to start within %s seconds, aborting the test.", Startup_Timeout));
             }
 
             Log.info("Jenkins is now available at http://localhost:{}", port);
         } catch (InterruptedException e) {
             throw portConflictDetected.isResolved()
-                    ? new RuntimeException(format("Couldn't start Jenkins on port '%s', the port is already in use", port), e)
+                    ? new RuntimeException(String.format("Couldn't start Jenkins on port '%s', the port is already in use", port), e)
                     : new RuntimeException("Couldn't start Jenkins", e);
         }
     }
@@ -103,7 +100,7 @@ public class JenkinsProcess {
         try {
             jenkinsLogWatcher.watchFor(logLine).waitSafely(Startup_Timeout);
         } catch (InterruptedException e) {
-            throw new RuntimeException(format("Did not see '%s' in the Jenkins log within %s ms", logLine, Startup_Timeout), e);
+            throw new RuntimeException(String.format("Did not see '%s' in the Jenkins log within %s ms", logLine, Startup_Timeout), e);
         }
     }
 
@@ -117,7 +114,7 @@ public class JenkinsProcess {
 
     private ProcessBuilder process(Path executable, String... arguments) {
         List<String> args = new ArrayList<>(windowsOrUnix(executable));
-        args.addAll(asList(arguments));
+        args.addAll(Arrays.asList(arguments));
 
         return new ProcessBuilder(args);
     }

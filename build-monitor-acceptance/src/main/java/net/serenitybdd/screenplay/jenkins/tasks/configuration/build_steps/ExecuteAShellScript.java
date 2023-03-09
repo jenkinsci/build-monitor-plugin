@@ -1,12 +1,12 @@
 package net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps;
 
-import net.serenitybdd.screenplay.jenkins.actions.EnterCode;
-import net.serenitybdd.screenplay.jenkins.user_interface.project_configuration.build_steps.ShellBuildStep;
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
+import net.serenitybdd.screenplay.jenkins.actions.EnterCode;
+import net.serenitybdd.screenplay.jenkins.user_interface.project_configuration.build_steps.ShellBuildStep;
 import net.thucydides.core.annotations.Step;
-
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class ExecuteAShellScript implements Task {
 

@@ -1,21 +1,19 @@
 package net.serenitybdd.integration.jenkins.environment.rules;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.Arrays.asList;
 
 public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstance> {
     private static final Logger Log = LoggerFactory.getLogger(InstallPluginsFromDisk.class);
@@ -25,7 +23,7 @@ public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstan
 
     public InstallPluginsFromDisk(Path... pluginsToInstall) {
         this.pluginIDs = List.of();
-        this.pluginsToInstall = asList(pluginsToInstall);
+        this.pluginsToInstall = Arrays.asList(pluginsToInstall);
     }
 
     @Override

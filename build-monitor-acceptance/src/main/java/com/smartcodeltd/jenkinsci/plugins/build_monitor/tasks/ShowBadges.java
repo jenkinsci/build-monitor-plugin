@@ -1,15 +1,14 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks;
 
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface.BuildMonitorDashboard;
+import static net.serenitybdd.screenplay.Tasks.instrumented;
 
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface.BuildMonitorDashboard;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.CheckCheckbox;
+import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.thucydides.core.annotations.Step;
-
-import static net.serenitybdd.screenplay.Tasks.instrumented;
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 public class ShowBadges implements Task {
     public static Task onTheDashboard() {
@@ -20,7 +19,7 @@ public class ShowBadges implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-            WaitUntil.the(BuildMonitorDashboard.Show_Badges, isVisible()),
+            WaitUntil.the(BuildMonitorDashboard.Show_Badges, WebElementStateMatchers.isVisible()),
             CheckCheckbox.of(BuildMonitorDashboard.Show_Badges)
         );
     }

@@ -2,13 +2,20 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config.DisplayOptions;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.*;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.CanBeClaimed;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.CanBeDiagnosedForProblems;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.Feature;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.HasBadgesBadgePlugin;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.HasConfig;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.HasHeadline;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.HasJunitRealtime;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.KnowsCurrentBuildsDetails;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.KnowsLastCompletedBuildDetails;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
 import hudson.model.Job;
-import org.jenkinsci.plugins.workflow.job.WorkflowJob;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 
 /**
  * @author Jan Molak

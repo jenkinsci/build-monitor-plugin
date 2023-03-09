@@ -5,7 +5,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config.BuildFailureAnalyz
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

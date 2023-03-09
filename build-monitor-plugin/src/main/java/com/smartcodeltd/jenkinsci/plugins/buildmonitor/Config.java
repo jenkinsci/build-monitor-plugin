@@ -1,10 +1,9 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.build.GetBuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.build.GetLastBuild;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
 import hudson.model.Job;
-
 import java.util.Comparator;
 import java.util.Optional;
 

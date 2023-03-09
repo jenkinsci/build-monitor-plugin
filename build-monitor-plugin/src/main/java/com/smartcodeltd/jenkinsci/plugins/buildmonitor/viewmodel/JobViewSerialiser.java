@@ -1,10 +1,9 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.Feature;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.Feature;
 import java.io.IOException;
 
 /**

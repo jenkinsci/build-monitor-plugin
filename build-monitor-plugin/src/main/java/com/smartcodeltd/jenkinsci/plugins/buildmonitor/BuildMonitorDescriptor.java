@@ -4,12 +4,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Util;
 import hudson.model.ViewDescriptor;
 import hudson.util.FormValidation;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
-
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 public final class BuildMonitorDescriptor extends ViewDescriptor {
 

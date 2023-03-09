@@ -3,12 +3,10 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headl
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Lister;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
-
+import hudson.model.Result;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
-
-import static hudson.model.Result.*;
 
 public class HeadlineOfFixed implements CandidateHeadline {
 
@@ -40,12 +38,12 @@ public class HeadlineOfFixed implements CandidateHeadline {
     }
 
     private boolean didTheJobJustGetFixedWith(BuildViewModel build) {
-        return SUCCESS.equals(build.result()) && previousFailed(build);
+        return Result.SUCCESS.equals(build.result()) && previousFailed(build);
     }
 
     private boolean previousFailed(BuildViewModel build) {
         return build.hasPreviousBuild() &&
-                (FAILURE.equals(build.previousBuild().result()) || UNSTABLE.equals(build.previousBuild().result()) || ABORTED.equals(build.previousBuild().result()));
+                (Result.FAILURE.equals(build.previousBuild().result()) || Result.UNSTABLE.equals(build.previousBuild().result()) || Result.ABORTED.equals(build.previousBuild().result()));
     }
 
     private Set<String> committersOf(BuildViewModel build) {

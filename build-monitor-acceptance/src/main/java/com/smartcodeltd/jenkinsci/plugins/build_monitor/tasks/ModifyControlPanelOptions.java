@@ -1,23 +1,21 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks;
 
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface.BuildMonitorDashboard;
+import static net.serenitybdd.screenplay.Tasks.instrumented;
 
-import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface.BuildMonitorDashboard;
+import java.util.Arrays;
+import java.util.List;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
 import net.thucydides.core.annotations.Step;
-
-import java.util.List;
-
-import static java.util.Arrays.asList;
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class ModifyControlPanelOptions implements Task {
 
     public static ModifyControlPanelOptions to(Task... configurationTasks) {
-        return instrumented(ModifyControlPanelOptions.class, asList(configurationTasks));
+        return instrumented(ModifyControlPanelOptions.class, Arrays.asList(configurationTasks));
     }
 
     @Override
