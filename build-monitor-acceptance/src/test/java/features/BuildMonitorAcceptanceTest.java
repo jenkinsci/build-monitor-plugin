@@ -10,7 +10,6 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
-import java.util.Collections;
 import java.util.List;
 
 @RunWith(SerenityRunner.class)
@@ -24,10 +23,10 @@ public abstract class BuildMonitorAcceptanceTest {
             .create();
     
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
-        return Collections.emptyList();
+        return List.of();
     }
     
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
-        return Collections.emptyList();
+        return List.of();
     }
 }

@@ -32,7 +32,9 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobViews;
 import hudson.Extension;
 import hudson.model.Descriptor.FormException;
 import hudson.model.Job;
+import hudson.model.View;
 import hudson.model.ListView;
+import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -239,14 +241,18 @@ public class BuildMonitorView extends ListView {
     }
 
     /**
-     * When Jenkins is started up, Jenkins::loadTasks is called.
-     * At that point config.xml file is unmarshaled into a Jenkins object containing a list of Views, including BuildMonitorView objects.
+     * When Jenkins is started up, {@link Jenkins#loadTasks} is called. At that point the {@code
+     * config.xml} file is unmarshaled into a {@link Jenkins} object containing a list of {@link
+     * View}s, including {@link BuildMonitorView} objects.
      *
-     * The unmarshaling process sets private fields on BuildMonitorView objects directly, ignoring their constructors.
-     * This means that if there's a private field added to this class (say "config"), the previously persisted versions of this class can no longer
-     * be correctly un-marshaled into the new version as they don't define the new field and the object ends up in an inconsistent state.
+     * <p>The unmarshaling process sets private fields on {@link BuildMonitorView} objects directly,
+     * ignoring their constructors. This means that if there's a private field added to this class
+     * (say {@code config}), the previously persisted versions of this class can no longer be
+     * correctly unmarshaled into the new version as they don't define the new field and the object
+     * ends up in an inconsistent state.
      *
-     * @return the previously persisted version of the config object, default config, or the deprecated "order" object, converted to a "config" object.
+     * @return the previously persisted version of the config object, default config, or the
+     *     deprecated "order" object, converted to a "config" object.
      */
     private Config currentConfig() {
         if (creatingAFreshView()) {
@@ -278,16 +284,16 @@ public class BuildMonitorView extends ListView {
     }
 
     @SuppressWarnings("unchecked")
-    private Comparator<Job<?, ?>> orderIn(String requestedOrdering) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    private Comparator<Job<?, ?>> orderIn(String requestedOrdering) throws ReflectiveOperationException {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
-        return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).newInstance();
+        return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).getDeclaredConstructor().newInstance();
     }
 
-    private GetBuildViewModel getBuildViewModelIn(String requestedBuild)  throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    private GetBuildViewModel getBuildViewModelIn(String requestedBuild) throws ReflectiveOperationException {
         String packageName = this.getClass().getPackage().getName() + ".build.";
 
-        return (GetBuildViewModel) Class.forName(packageName + requestedBuild).newInstance();
+        return (GetBuildViewModel) Class.forName(packageName + requestedBuild).getDeclaredConstructor().newInstance();
     }
 
     private Config config;

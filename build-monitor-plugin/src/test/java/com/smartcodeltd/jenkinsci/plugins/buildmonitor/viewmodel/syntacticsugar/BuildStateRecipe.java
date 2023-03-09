@@ -280,7 +280,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     }
 
     private ChangeLogSet changeSetBasedOn(final List<ChangeLogSet.Entry> entries) {
-        return new ChangeLogSet<ChangeLogSet.Entry>(null, null) {
+        return new ChangeLogSet<>(null, null) {
             @Override
             public boolean isEmptySet() {
                 return false;

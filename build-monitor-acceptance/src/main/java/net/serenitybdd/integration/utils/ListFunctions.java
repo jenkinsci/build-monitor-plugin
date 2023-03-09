@@ -2,13 +2,12 @@ package net.serenitybdd.integration.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class ListFunctions {
     public static <T> List<T> concat(List<? extends T>... lists) {
         if (lists.length == 0) {
-            return Collections.emptyList();
+            return List.of();
         }
 
         List<T> combined = new ArrayList<>();
@@ -32,6 +31,6 @@ public class ListFunctions {
     }
 
     public static <T> List<T> tail(List<T> list) {
-        return Collections.unmodifiableList(new ArrayList<>(list.subList(1, list.size())));
+        return List.copyOf(list.subList(1, list.size()));
     }
 }

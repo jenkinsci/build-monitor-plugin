@@ -30,7 +30,7 @@ public class ShouldDisplayTestProgress extends BuildMonitorAcceptanceTest {
     }
 
     @Test
-    public void display_tests_progress_bar() throws Exception {
+    public void display_tests_progress_bar() {
         givenThat(richard).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAPipelineProjectCreated.called("My Pipeline").andConfiguredTo(

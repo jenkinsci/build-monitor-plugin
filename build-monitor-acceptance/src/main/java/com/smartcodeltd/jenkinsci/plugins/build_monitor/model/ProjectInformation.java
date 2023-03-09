@@ -1,7 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +17,7 @@ public class ProjectInformation {
     }
 
     public List<ProjectStatus> status() {
-        return Collections.unmodifiableList(new ArrayList<>(status));
+        return List.copyOf(status);
     }
 
     @Override

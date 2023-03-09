@@ -2,9 +2,7 @@ package com.smartcodeltd.jenkinsci.plugins.build_monitor.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -67,7 +65,7 @@ public enum ProjectStatus {
     }
 
     private static <T> Set<T> setOf(List<T> items) {
-        return Collections.unmodifiableSet(new HashSet<>(items));
+        return Set.copyOf(items);
     }
 
     private static <T> List<String> stringRepresentationsOf(Collection<T> items) {

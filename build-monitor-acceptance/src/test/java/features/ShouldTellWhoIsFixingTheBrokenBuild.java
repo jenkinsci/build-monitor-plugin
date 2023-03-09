@@ -21,7 +21,6 @@ import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStat
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.core.Is.is;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ShouldTellWhoIsFixingTheBrokenBuild extends BuildMonitorAcceptanceTest {
@@ -30,7 +29,7 @@ public class ShouldTellWhoIsFixingTheBrokenBuild extends BuildMonitorAcceptanceT
 
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
         ben = JenkinsUser.named("Ben");
-        return Collections.singletonList(RegisterUserAccount.of(ben));
+        return List.of(RegisterUserAccount.of(ben));
     }
 
     @Before
