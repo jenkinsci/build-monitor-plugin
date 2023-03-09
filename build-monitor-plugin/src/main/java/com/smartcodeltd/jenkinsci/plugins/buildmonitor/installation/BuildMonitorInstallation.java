@@ -1,7 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.StaticJenkinsAPIs;
-
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class BuildMonitorInstallation {

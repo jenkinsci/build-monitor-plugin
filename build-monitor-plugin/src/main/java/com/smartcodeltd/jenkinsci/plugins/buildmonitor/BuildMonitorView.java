@@ -30,23 +30,21 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.installation.BuildMonitor
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobViews;
 import hudson.Extension;
+import hudson.Util;
 import hudson.model.Descriptor.FormException;
 import hudson.model.Job;
-import hudson.model.View;
 import hudson.model.ListView;
+import hudson.model.View;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import javax.servlet.ServletException;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
-
-import javax.servlet.ServletException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-import static hudson.Util.filter;
 
 /**
  * @author Jan Molak
@@ -228,7 +226,7 @@ public class BuildMonitorView extends ListView {
 
         //A little bit of evil to make the type system happy.
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        List<Job<?, ?>> projects = new ArrayList(filter(super.getItems(), Job.class));
+        List<Job<?, ?>> projects = new ArrayList(Util.filter(super.getItems(), Job.class));
         List<JobView> jobs = new ArrayList<>();
 
         projects.sort(currentConfig().getOrder());

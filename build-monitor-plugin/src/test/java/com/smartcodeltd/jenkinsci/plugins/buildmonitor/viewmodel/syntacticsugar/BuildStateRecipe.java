@@ -1,5 +1,10 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import com.jenkinsci.plugins.badge.action.BadgeAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
 import hudson.model.AbstractBuild;
@@ -8,25 +13,17 @@ import hudson.model.Result;
 import hudson.model.User;
 import hudson.plugins.claim.ClaimBuildAction;
 import hudson.scm.ChangeLogSet;
-import jenkins.model.CauseOfInterruption;
-import jenkins.model.InterruptedBuildAction;
-
-import com.jenkinsci.plugins.badge.action.BadgeAction;
-
-import org.jenkinsci.plugins.junitrealtimetestreporter.AbstractRealtimeTestResultAction;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
-
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import jenkins.model.CauseOfInterruption;
+import jenkins.model.InterruptedBuildAction;
+import org.jenkinsci.plugins.junitrealtimetestreporter.AbstractRealtimeTestResultAction;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 /**
  * @author Jan Molak

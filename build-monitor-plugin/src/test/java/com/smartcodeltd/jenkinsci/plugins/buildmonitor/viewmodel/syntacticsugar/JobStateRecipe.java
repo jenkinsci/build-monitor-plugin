@@ -1,20 +1,19 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar;
 
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import hudson.model.AbstractBuild;
 import hudson.model.Job;
 import hudson.model.ViewJob;
 import hudson.util.RunList;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * @author Jan Molak

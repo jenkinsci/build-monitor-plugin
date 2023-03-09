@@ -1,8 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 
 public class HasConfig implements Feature<HasConfig.Config> {
     private final com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config;

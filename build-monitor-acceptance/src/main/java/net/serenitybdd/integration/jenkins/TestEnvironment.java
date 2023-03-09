@@ -1,11 +1,9 @@
 package net.serenitybdd.integration.jenkins;
 
-import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import static java.util.Arrays.asList;
+import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 
 public class TestEnvironment {
     private final JenkinsInstance instance;
@@ -22,11 +20,11 @@ public class TestEnvironment {
     }
 
     public <ATR extends ApplicativeTestRule<JenkinsInstance>> TestEnvironment beforeStart(ATR... rules) {
-        return beforeStart(asList(rules));
+        return beforeStart(Arrays.asList(rules));
     }
 
     public <ATR extends ApplicativeTestRule<JenkinsInstance>> TestEnvironment afterStart(ATR... rules) {
-        return afterStart(asList(rules));
+        return afterStart(Arrays.asList(rules));
     }
 
     public <ATR extends ApplicativeTestRule<JenkinsInstance>> TestEnvironment beforeStart(List<ATR> rules) {

@@ -1,7 +1,7 @@
 package com.sonyericsson.jenkins.plugins.bfa.user_interface;
 
-import net.serenitybdd.screenplay.jenkins.targets.Input;
 import net.serenitybdd.screenplay.jenkins.targets.Button;
+import net.serenitybdd.screenplay.jenkins.targets.Input;
 import net.serenitybdd.screenplay.jenkins.targets.Link;
 import net.serenitybdd.screenplay.targets.Target;
 

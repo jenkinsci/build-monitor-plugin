@@ -1,12 +1,10 @@
 package net.serenitybdd.screenplayx.actions;
 
+import java.util.HashMap;
+import java.util.Map;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.targets.Target;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openqa.selenium.WebElement;
 
 public class ScrollToTarget implements Interaction {

@@ -1,13 +1,13 @@
 package com.sonyericsson.jenkins.plugins.bfa;
 
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
 import com.sonyericsson.jenkins.plugins.bfa.tasks.DefineAFailureCause;
 import com.sonyericsson.jenkins.plugins.bfa.tasks.configuration.LineInTheBuildLog;
+import net.serenitybdd.integration.utils.Nulls;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.thucydides.core.annotations.Step;
-
-import static net.serenitybdd.integration.utils.Nulls.getOrElse;
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class DefineABuildLogIndicatedFailureCause implements Task {
 
@@ -31,7 +31,7 @@ public class DefineABuildLogIndicatedFailureCause implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                DefineAFailureCause.called(name).describedAs(getOrElse(description, name)).indicatedBy(
+                DefineAFailureCause.called(name).describedAs(Nulls.getOrElse(description, name)).indicatedBy(
                         LineInTheBuildLog.matching(regex)
                 )
         );

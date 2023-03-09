@@ -2,13 +2,12 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.culprits;
 
 import hudson.model.Result;
 import hudson.model.Run;
-import org.jenkinsci.plugins.workflow.job.WorkflowRun;
-
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
 class BuildCulpritsWorkflowRun extends BuildCulpritsRetriever {
 

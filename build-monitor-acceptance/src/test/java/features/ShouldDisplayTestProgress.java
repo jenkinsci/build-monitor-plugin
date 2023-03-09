@@ -1,24 +1,25 @@
 package features;
 
+import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.then;
+import static net.serenitybdd.screenplay.GivenWhenThen.when;
+
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.CreateABuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayAllProjects;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayJunitRealtimeProgress;
-
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAPipelineProjectCreated;
 import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.Disable;
+import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.GroovyScriptThat;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.SetPipelineDefinition;
+import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplayx.actions.Navigate;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import static net.serenitybdd.screenplay.GivenWhenThen.*;
-import static net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.GroovyScriptThat.Pause_In_Middle_Of_Tests;
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
 public class ShouldDisplayTestProgress extends BuildMonitorAcceptanceTest {
 
@@ -34,7 +35,7 @@ public class ShouldDisplayTestProgress extends BuildMonitorAcceptanceTest {
         givenThat(richard).wasAbleTo(
                 Navigate.to(jenkins.url()),
                 HaveAPipelineProjectCreated.called("My Pipeline").andConfiguredTo(
-                        SetPipelineDefinition.asFollows(Pause_In_Middle_Of_Tests.code()),
+                        SetPipelineDefinition.asFollows(GroovyScriptThat.Pause_In_Middle_Of_Tests.code()),
                         Disable.executingConcurrentBuilds()
                 ),
 
@@ -50,7 +51,7 @@ public class ShouldDisplayTestProgress extends BuildMonitorAcceptanceTest {
         
 
         then(richard).should(seeThat(ProjectWidget.of("My Pipeline").testProgressBars(),
-                isCurrentlyVisible()
+                WebElementStateMatchers.isCurrentlyVisible()
         ));
     }
 

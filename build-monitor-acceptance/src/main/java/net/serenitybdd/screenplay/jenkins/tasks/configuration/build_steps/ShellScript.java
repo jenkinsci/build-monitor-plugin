@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
-
 public class ShellScript {
 
     public static ShellScript that(String descriptionOfScriptsBehaviour) {
@@ -13,7 +11,7 @@ public class ShellScript {
     }
 
     public ShellScript definedAs(String... lines) {
-        return this.definedAs(asList(lines));
+        return this.definedAs(Arrays.asList(lines));
     }
 
     public ShellScript definedAs(List<String> lines) {

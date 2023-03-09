@@ -1,8 +1,7 @@
 package net.serenitybdd.screenplay.jenkins;
 
-import net.serenitybdd.screenplay.Actor;
-
 import java.util.UUID;
+import net.serenitybdd.screenplay.Actor;
 
 public class JenkinsUser extends Actor {
     public static JenkinsUser named(String username) {

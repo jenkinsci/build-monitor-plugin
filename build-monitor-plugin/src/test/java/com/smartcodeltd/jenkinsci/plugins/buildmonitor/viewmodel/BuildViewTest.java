@@ -1,15 +1,15 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
-import jenkins.model.Jenkins;
-import org.junit.Test;
-import org.mockito.MockedStatic;
-
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.a;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.build;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
+
+import jenkins.model.Jenkins;
+import org.junit.Test;
+import org.mockito.MockedStatic;
 
 public class BuildViewTest {
 

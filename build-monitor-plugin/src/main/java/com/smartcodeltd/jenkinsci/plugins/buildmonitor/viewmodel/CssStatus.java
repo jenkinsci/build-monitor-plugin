@@ -1,23 +1,19 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
 import hudson.model.Result;
-
 import java.util.Map;
-
-import static hudson.model.Result.*;
 
 /**
  * @author Jan Molak
  */
 public class CssStatus {
 
-    private static final Map<Result, String> statuses =
-            Map.of(
-                    SUCCESS, "successful",
-                    UNSTABLE, "unstable",
-                    FAILURE, "failing",
-                    NOT_BUILT, "unknown",
-                    ABORTED, "aborted");
+    private static final Map<Result, String> statuses = Map.of(
+            Result.SUCCESS, "successful",
+            Result.UNSTABLE, "unstable",
+            Result.FAILURE, "failing",
+            Result.NOT_BUILT, "unknown",
+            Result.ABORTED, "aborted");
 
     public static String of(final JobView job) {
         Result result = job.lastResult();

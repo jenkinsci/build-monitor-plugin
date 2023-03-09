@@ -1,12 +1,12 @@
 package net.serenitybdd.screenplay.jenkins.tasks;
 
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
 import net.serenitybdd.screenplay.jenkins.user_interface.NewJobPage;
 import net.thucydides.core.annotations.Step;
-
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class CreateAFreestyleProject implements Task {
     public static CreateAFreestyleProject called(String name) {

@@ -1,20 +1,22 @@
 package features;
 
+import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.then;
+import static net.serenitybdd.screenplay.GivenWhenThen.when;
+
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.matchers.ProjectInformationMatchers;
+import com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.jenkins.HaveAnExternalProjectCreated;
 import net.serenitybdd.screenplay.interacting_with_jenkins_api.abilities.InteractWithJenkinsAPI;
 import net.serenitybdd.screenplay.interacting_with_jenkins_api.interactions.NotifyOfExternalProject;
+import net.serenitybdd.screenplay.jenkins.HaveAnExternalProjectCreated;
 import net.serenitybdd.screenplayx.actions.Navigate;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import static com.smartcodeltd.jenkinsci.plugins.build_monitor.matchers.ProjectInformationMatchers.displaysProjectStatusAs;
-import static com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus.Successful;
-import static net.serenitybdd.screenplay.GivenWhenThen.*;
 
 public class ShouldSupportExternalProjects extends BuildMonitorAcceptanceTest {
 
@@ -40,7 +42,7 @@ public class ShouldSupportExternalProjects extends BuildMonitorAcceptanceTest {
         );
 
         then(maggie).should(seeThat(ProjectWidget.of("external-project").information(),
-                displaysProjectStatusAs(Successful)
+                ProjectInformationMatchers.displaysProjectStatusAs(ProjectStatus.Successful)
         ));
     }
 }

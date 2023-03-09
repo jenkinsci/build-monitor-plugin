@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
-
 public class GroovyScript {
 
     public static GroovyScript that(String descriptionOfScriptsBehaviour) {
@@ -19,7 +17,7 @@ public class GroovyScript {
     }
 
     public GroovyScript definedAs(String... lines) {
-        return this.definedAs(asList(lines));
+        return this.definedAs(Arrays.asList(lines));
     }
 
     public GroovyScript definedAs(List<String> lines) {

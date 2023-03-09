@@ -1,11 +1,6 @@
 package net.serenitybdd.integration.jenkins.client;
 
 import hudson.cli.CLI;
-import net.serenitybdd.integration.jenkins.process.JenkinsProcess;
-import org.jdeferred.Promise;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -14,9 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
-
-import static java.lang.String.format;
-import static net.serenitybdd.integration.jenkins.process.JenkinsProcess.JENKINS_IS_FULLY_UP_AND_RUNNING;
+import net.serenitybdd.integration.jenkins.process.JenkinsProcess;
+import org.jdeferred.Promise;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JenkinsClient {
     private static final Logger logger = LoggerFactory.getLogger(JenkinsClient.class);
@@ -39,7 +35,7 @@ public class JenkinsClient {
     public void registerAccount(String username, String password) {
         logger.info("Enabling Jenkins Security and registering account for '{}', identified by '{}'", username, password);
 
-        String endScriptMessage = format("Account for '%s' created", username);
+        String endScriptMessage = String.format("Account for '%s' created", username);
         Promise<Matcher, ?, ?> promise = process.promiseWhen(endScriptMessage);
 
         try {
@@ -47,13 +43,13 @@ public class JenkinsClient {
                     "def instance         = jenkins.model.Jenkins.get()",
                     "def usersCanRegister = true",
                     "def realm            = new hudson.security.HudsonPrivateSecurityRealm(usersCanRegister)",
-                    format("realm.createAccount(\"%s\",\"%s\")", username, password),
+                    String.format("realm.createAccount(\"%s\",\"%s\")", username, password),
                     "instance.setSecurityRealm(realm)",
                     "instance.save()",
                     "",
                     "import java.util.logging.Logger",
                     "Logger rootLogger = Logger.getLogger('')",
-                    format("rootLogger.info(\"%s\")", endScriptMessage)
+                    String.format("rootLogger.info(\"%s\")", endScriptMessage)
             );
             logger.info(endScriptMessage);
         } catch (InterruptedException e) {
@@ -76,7 +72,7 @@ public class JenkinsClient {
                     "",
                     "import java.util.logging.Logger",
                     "Logger rootLogger = Logger.getLogger('')",
-                    format("rootLogger.info(\"%s\")", endScriptMessage)
+                    String.format("rootLogger.info(\"%s\")", endScriptMessage)
                 );
             logger.info(endScriptMessage);
         } catch (InterruptedException e) {
@@ -88,7 +84,7 @@ public class JenkinsClient {
         // http://stackoverflow.com/questions/7709993/how-can-i-update-jenkins-plugins-from-the-terminal
 
         executeCommand("install-plugin", pluginName, "-restart");
-        process.waitUntil(JENKINS_IS_FULLY_UP_AND_RUNNING);
+        process.waitUntil(JenkinsProcess.JENKINS_IS_FULLY_UP_AND_RUNNING);
     }
 
 
@@ -134,14 +130,14 @@ public class JenkinsClient {
     private void safeRestart() {
         executeCommand("safe-restart");
 
-        process.waitUntil(JENKINS_IS_FULLY_UP_AND_RUNNING);
+        process.waitUntil(JenkinsProcess.JENKINS_IS_FULLY_UP_AND_RUNNING);
     }
 
     public void setExternalBuildResult(String projectName, String result) {
         executeCommand("set-external-build-result",
                 "--job", projectName,
                 "--result", result,
-                "--log", format("%s finished with %s", projectName, result)
+                "--log", String.format("%s finished with %s", projectName, result)
         );
     }
 

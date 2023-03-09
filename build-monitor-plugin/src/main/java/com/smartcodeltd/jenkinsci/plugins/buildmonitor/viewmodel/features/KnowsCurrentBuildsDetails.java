@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
-
 import java.util.ArrayList;
 import java.util.List;
 

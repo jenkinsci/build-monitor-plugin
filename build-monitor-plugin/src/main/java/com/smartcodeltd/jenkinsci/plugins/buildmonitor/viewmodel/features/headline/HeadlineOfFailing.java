@@ -4,17 +4,13 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Lister;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.readability.Pluraliser;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
-
+import hudson.model.Result;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
-import static hudson.model.Result.FAILURE;
-import static hudson.model.Result.SUCCESS;
-import static hudson.model.Result.UNSTABLE;
 
 public class HeadlineOfFailing implements CandidateHeadline {
 
@@ -28,7 +24,7 @@ public class HeadlineOfFailing implements CandidateHeadline {
 
     @Override
     public boolean isApplicableTo(JobView job) {
-        return FAILURE.equals(job.lastCompletedBuild().result()) || UNSTABLE.equals(job.lastCompletedBuild().result());
+        return Result.FAILURE.equals(job.lastCompletedBuild().result()) || Result.UNSTABLE.equals(job.lastCompletedBuild().result());
     }
 
     @Override
@@ -68,7 +64,7 @@ public class HeadlineOfFailing implements CandidateHeadline {
 
         List<BuildViewModel> failedBuilds = new ArrayList<>();
 
-        while (! SUCCESS.equals(currentBuild.result())) {
+        while (! Result.SUCCESS.equals(currentBuild.result())) {
 
             if (! currentBuild.isRunning()) {
                 failedBuilds.add(currentBuild);

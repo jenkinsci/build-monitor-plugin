@@ -1,12 +1,10 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.culprits;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import hudson.model.AbstractBuild;
 import hudson.model.Run;
 import hudson.model.User;
 import hudson.scm.ChangeLogSet;
-
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;

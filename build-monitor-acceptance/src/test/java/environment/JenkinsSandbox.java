@@ -1,12 +1,5 @@
 package environment;
 
-import net.serenitybdd.integration.jenkins.JenkinsInstance;
-import net.serenitybdd.integration.jenkins.TestEnvironment;
-import net.serenitybdd.integration.jenkins.environment.CWD;
-import net.serenitybdd.integration.jenkins.environment.PluginDescription;
-import net.serenitybdd.integration.jenkins.environment.rules.FindFreePort;
-import net.serenitybdd.integration.jenkins.environment.rules.SandboxJenkinsHome;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
@@ -14,12 +7,16 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-
-import static java.lang.System.getProperty;
+import net.serenitybdd.integration.jenkins.JenkinsInstance;
+import net.serenitybdd.integration.jenkins.TestEnvironment;
+import net.serenitybdd.integration.jenkins.environment.CWD;
+import net.serenitybdd.integration.jenkins.environment.PluginDescription;
+import net.serenitybdd.integration.jenkins.environment.rules.FindFreePort;
+import net.serenitybdd.integration.jenkins.environment.rules.SandboxJenkinsHome;
 
 public class JenkinsSandbox {
     public static TestEnvironment configure() {
-        CWD cwd = CWD.or(getProperty("project.root"));
+        CWD cwd = CWD.or(System.getProperty("project.root"));
 
         List<PluginDescription> descriptions = new ArrayList<>();
         descriptions.add(

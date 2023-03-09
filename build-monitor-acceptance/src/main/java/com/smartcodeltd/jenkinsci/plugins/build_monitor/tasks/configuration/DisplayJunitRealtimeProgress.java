@@ -1,13 +1,13 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration;
 
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.CheckCheckbox;
 import net.serenitybdd.screenplay.jenkins.user_interface.ViewConfigurationPage;
 import net.serenitybdd.screenplayx.actions.Scroll;
 import net.thucydides.core.annotations.Step;
-
-import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class DisplayJunitRealtimeProgress implements Task {
     public static Task bars() {

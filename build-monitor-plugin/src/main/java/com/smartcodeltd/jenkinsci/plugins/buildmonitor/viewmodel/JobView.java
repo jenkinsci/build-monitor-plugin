@@ -8,13 +8,10 @@ import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.util.RunList;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
-import static java.lang.String.format;
 
 /**
  * @author Jan Molak
@@ -54,7 +51,7 @@ public class JobView {
             }
         }
 
-        throw new RuntimeException(format("%s is not a feature of this project: '%s'", requestedFeature.getSimpleName(), job.getName()));
+        throw new RuntimeException(String.format("%s is not a feature of this project: '%s'", requestedFeature.getSimpleName(), job.getName()));
     }
 
     public String name() {

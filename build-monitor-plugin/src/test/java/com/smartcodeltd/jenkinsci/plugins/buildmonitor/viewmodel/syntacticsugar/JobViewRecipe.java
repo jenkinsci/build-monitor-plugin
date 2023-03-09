@@ -4,7 +4,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.Feature;
 import hudson.model.Job;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;

@@ -1,18 +1,11 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
-import jenkins.model.Jenkins;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.MockedStatic;
-
-import java.util.List;
-
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Loops.asFollows;
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.*;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.a;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.build;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.job;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.jobView;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.TimeMachine.currentTime;
-import static hudson.model.Result.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.Is.is;
@@ -22,6 +15,15 @@ import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
+import hudson.model.Result;
+import java.util.List;
+import jenkins.model.Jenkins;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.MockedStatic;
 
 /**
  * @author Jan Molak
@@ -93,7 +95,7 @@ public class JobViewTest {
     @Test
     public void progress_of_a_finished_job_should_be_zero() {
         view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(SUCCESS)))));
+                a(job().whereTheLast(build().finishedWith(Result.SUCCESS)))));
 
         assertThat(view.progress(), is(0));
     }
@@ -128,7 +130,7 @@ public class JobViewTest {
     @Test
     public void should_know_how_long_the_next_build_is_supposed_to_take() {
         view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(SUCCESS).and().usuallyTakes(5)))));
+                a(job().whereTheLast(build().finishedWith(Result.SUCCESS).and().usuallyTakes(5)))));
 
         assertThat(view.estimatedDuration(), is("5m 0s"));
     }
@@ -147,7 +149,7 @@ public class JobViewTest {
     @Test
     public void should_describe_the_job_as_successful_if_the_last_build_succeeded() {
         view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(SUCCESS)))));
+                a(job().whereTheLast(build().finishedWith(Result.SUCCESS)))));
 
         assertThat(view.status(), containsString("successful"));
     }
@@ -155,7 +157,7 @@ public class JobViewTest {
     @Test
     public void should_describe_the_job_as_failing_if_the_last_build_failed() {
         view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(FAILURE)))));
+                a(job().whereTheLast(build().finishedWith(Result.FAILURE)))));
 
         assertThat(view.status(), containsString("failing"));
     }
@@ -163,7 +165,7 @@ public class JobViewTest {
     @Test
     public void should_describe_the_job_as_aborted_if_the_last_build_was_aborted() {
         view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(ABORTED)))));
+                a(job().whereTheLast(build().finishedWith(Result.ABORTED)))));
 
         assertThat(view.status(), containsString("aborted"));
     }
@@ -171,7 +173,7 @@ public class JobViewTest {
     @Test
     public void should_describe_the_job_as_unstable_if_the_last_build_is_unstable() {
         view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(UNSTABLE)))));
+                a(job().whereTheLast(build().finishedWith(Result.UNSTABLE)))));
 
         assertThat(view.status(), containsString("unstable"));
     }
@@ -211,7 +213,7 @@ public class JobViewTest {
 
     @Test
     public void should_describe_the_job_as_disabled_and_failing_if_the_last_build_failed_and_the_job_is_disabled() {
-        view = a(jobView().of(a(job().thatIsNotBuildable().whereTheLast(build().finishedWith(FAILURE)))));
+        view = a(jobView().of(a(job().thatIsNotBuildable().whereTheLast(build().finishedWith(Result.FAILURE)))));
 
         assertThat(view.status(), containsString("disabled"));
         assertThat(view.status(), containsString("failing"));
@@ -220,9 +222,9 @@ public class JobViewTest {
     @Test
     public void should_describe_the_job_as_running_and_successful_if_it_is_running_and_the_previous_build_succeeded() {
         List<JobView> views = asFollows(
-                a(jobView().of(a(job().whereTheLast(build().hasntStartedYet()).andThePrevious(build().finishedWith(SUCCESS))))),
-                a(jobView().of(a(job().whereTheLast(build().isStillBuilding()).andThePrevious(build().finishedWith(SUCCESS))))),
-                a(jobView().of(a(job().whereTheLast(build().isStillUpdatingTheLog()).andThePrevious(build().finishedWith(SUCCESS))))));
+                a(jobView().of(a(job().whereTheLast(build().hasntStartedYet()).andThePrevious(build().finishedWith(Result.SUCCESS))))),
+                a(jobView().of(a(job().whereTheLast(build().isStillBuilding()).andThePrevious(build().finishedWith(Result.SUCCESS))))),
+                a(jobView().of(a(job().whereTheLast(build().isStillUpdatingTheLog()).andThePrevious(build().finishedWith(Result.SUCCESS))))));
 
         // I could do this instead of having two assertions:
         // assertThat(view.status(), both(containsString("successful")).and(containsString("running")));
@@ -239,13 +241,13 @@ public class JobViewTest {
         List<JobView> views = asFollows(
                 a(jobView().of(a(job().
                         whereTheLast(build().hasntStartedYet()).
-                        andThePrevious(build().finishedWith(FAILURE))))),
+                        andThePrevious(build().finishedWith(Result.FAILURE))))),
                 a(jobView().of(a(job().
                         whereTheLast(build().isStillBuilding()).
-                        andThePrevious(build().finishedWith(FAILURE))))),
+                        andThePrevious(build().finishedWith(Result.FAILURE))))),
                 a(jobView().of(a(job().
                         whereTheLast(build().isStillUpdatingTheLog()).
-                        andThePrevious(build().finishedWith(FAILURE)))))
+                        andThePrevious(build().finishedWith(Result.FAILURE)))))
         );
 
         for (JobView jobView : views) {
@@ -263,7 +265,7 @@ public class JobViewTest {
         view = a(jobView().of(
                 a(job().whereTheLast(build().isStillBuilding()).
                         andThePrevious(build().isStillBuilding()).
-                        andThePrevious(build().finishedWith(SUCCESS)))));
+                        andThePrevious(build().finishedWith(Result.SUCCESS)))));
 
         assertThat(view.status(), containsString("successful"));
     }
@@ -273,7 +275,7 @@ public class JobViewTest {
         view = a(jobView().of(
                 a(job().whereTheLast(build().isStillBuilding()).
                         andThePrevious(build().isStillBuilding()).
-                        andThePrevious(build().finishedWith(FAILURE)))));
+                        andThePrevious(build().finishedWith(Result.FAILURE)))));
 
         assertThat(view.status(), containsString("failing"));
     }

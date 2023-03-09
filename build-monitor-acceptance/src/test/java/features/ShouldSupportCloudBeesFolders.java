@@ -1,5 +1,10 @@
 package features;
 
+import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.then;
+import static net.serenitybdd.screenplay.GivenWhenThen.when;
+
 import com.cloudbees.hudson.plugins.folder.HaveAFolderCreated;
 import com.cloudbees.hudson.plugins.folder.HaveANestedProjectCreated;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
@@ -8,13 +13,10 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.Disp
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.DisplayNestedProjects;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplayx.actions.Navigate;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import static net.serenitybdd.screenplay.GivenWhenThen.*;
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 public class ShouldSupportCloudBeesFolders extends BuildMonitorAcceptanceTest {
 
@@ -46,7 +48,7 @@ public class ShouldSupportCloudBeesFolders extends BuildMonitorAcceptanceTest {
                 )
         );
 
-        then(anna).should(seeThat(ProjectWidget.of("Search Services » Librarian").state(), isVisible()));
-        then(anna).should(seeThat(ProjectWidget.of("Search Services » Contracts » Third Party System").state(), isVisible()));
+        then(anna).should(seeThat(ProjectWidget.of("Search Services » Librarian").state(), WebElementStateMatchers.isVisible()));
+        then(anna).should(seeThat(ProjectWidget.of("Search Services » Contracts » Third Party System").state(), WebElementStateMatchers.isVisible()));
     }
 }

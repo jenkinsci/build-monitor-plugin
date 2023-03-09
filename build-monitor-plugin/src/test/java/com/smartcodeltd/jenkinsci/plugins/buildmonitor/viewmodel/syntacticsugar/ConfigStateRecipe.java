@@ -3,7 +3,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.build.GetLastCompletedBuild;
 import hudson.model.Job;
-
 import java.util.Comparator;
 import java.util.function.Supplier;
 

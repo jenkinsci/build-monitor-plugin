@@ -1,5 +1,11 @@
 package features;
 
+import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.then;
+import static net.serenitybdd.screenplay.GivenWhenThen.when;
+import static org.hamcrest.Matchers.is;
+
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
 import hudson.plugins.descriptionsetter.tasks.SetBuildDescription;
@@ -10,12 +16,8 @@ import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ExecuteAShellScript;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScript;
 import net.serenitybdd.screenplayx.actions.Navigate;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import static net.serenitybdd.screenplay.GivenWhenThen.*;
-import static org.hamcrest.Matchers.is;
 
 public class ShouldDescribeEachProject extends BuildMonitorAcceptanceTest {
 

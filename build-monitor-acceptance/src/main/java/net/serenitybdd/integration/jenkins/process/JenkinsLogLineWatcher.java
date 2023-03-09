@@ -1,11 +1,10 @@
 package net.serenitybdd.integration.jenkins.process;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.jdeferred.Deferred;
 import org.jdeferred.Promise;
 import org.jdeferred.impl.DeferredObject;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 class JenkinsLogLineWatcher {
     private final Pattern pattern;

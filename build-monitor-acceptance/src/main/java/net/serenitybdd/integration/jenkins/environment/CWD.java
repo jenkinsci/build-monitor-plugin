@@ -3,9 +3,7 @@ package net.serenitybdd.integration.jenkins.environment;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import static java.lang.System.getProperty;
-import static net.serenitybdd.integration.utils.Nulls.getOrElse;
+import net.serenitybdd.integration.utils.Nulls;
 
 public class CWD {
     public static CWD or(String arbitraryCurrentWorkingDirectory) {
@@ -17,7 +15,7 @@ public class CWD {
     }
 
     public CWD(@Nullable String path) {
-        cwd = Paths.get(getOrElse(path, getProperty("user.dir")));
+        cwd = Paths.get(Nulls.getOrElse(path, System.getProperty("user.dir")));
     }
 
     public Path resolve(String pathToChild) {

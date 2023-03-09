@@ -3,8 +3,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.util.logging.Level.*;
-
 public class BuildMonitorLogger {
     private final String className;
 
@@ -13,19 +11,19 @@ public class BuildMonitorLogger {
     }
 
     public void debug(String sourceMethod, String template, Object... arguments) {
-        log(FINEST, sourceMethod, template, arguments);
+        log(Level.FINEST, sourceMethod, template, arguments);
     }
 
     public void info(String sourceMethod, String template, Object... arguments) {
-        log(INFO, sourceMethod, template, arguments);
+        log(Level.INFO, sourceMethod, template, arguments);
     }
 
     public void warning(String sourceMethod, String template, Object... arguments) {
-        log(WARNING, sourceMethod, template, arguments);
+        log(Level.WARNING, sourceMethod, template, arguments);
     }
 
     public void error(String sourceMethod, String template, Object... arguments) {
-        log(SEVERE, sourceMethod, template, arguments);
+        log(Level.SEVERE, sourceMethod, template, arguments);
 
     }
 

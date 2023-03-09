@@ -1,8 +1,14 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.*;
-
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.CandidateHeadline;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.Headline;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineOfAborted;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineOfExecuting;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineOfFailing;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineOfFixed;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.NoHeadline;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

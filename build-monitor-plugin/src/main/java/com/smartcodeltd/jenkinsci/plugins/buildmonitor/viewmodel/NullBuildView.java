@@ -3,7 +3,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 import hudson.model.Action;
 import hudson.model.Result;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
