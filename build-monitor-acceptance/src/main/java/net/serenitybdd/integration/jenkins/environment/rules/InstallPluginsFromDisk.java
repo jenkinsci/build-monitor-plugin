@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +24,7 @@ public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstan
     private final List<Path> pluginsToInstall;
 
     public InstallPluginsFromDisk(Path... pluginsToInstall) {
-        this.pluginIDs = Collections.emptyList();
+        this.pluginIDs = List.of();
         this.pluginsToInstall = asList(pluginsToInstall);
     }
 

@@ -10,7 +10,6 @@ import hudson.model.Run;
 import hudson.util.RunList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -45,7 +44,7 @@ public class JobView {
     }
 
     public List<Feature> features() {
-        return Collections.unmodifiableList(new ArrayList<>(features));
+        return List.copyOf(features);
     }
 
     public <F extends Feature> F which(Class<F> requestedFeature) {

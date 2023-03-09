@@ -9,7 +9,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Durati
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.HumanReadableDuration;
 import hudson.model.*;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -112,7 +111,7 @@ public class BuildView implements BuildViewModel {
         if (PipelineHelper.isWorkflowRun(build, new StaticJenkinsAPIs())) {
             return PipelineHelper.getPipelines(build);
         }
-        return Collections.emptyList();
+        return List.of();
     }
 
     private boolean isTakingLongerThanUsual() {

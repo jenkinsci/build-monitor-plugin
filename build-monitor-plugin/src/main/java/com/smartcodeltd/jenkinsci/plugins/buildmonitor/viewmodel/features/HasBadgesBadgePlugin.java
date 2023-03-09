@@ -3,7 +3,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -52,7 +51,7 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
 
         @JsonValue
         public List<Badge> value() {
-            return Collections.unmodifiableList(new ArrayList<>(badges));
+            return List.copyOf(badges);
         }
     }
 

@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -52,9 +50,9 @@ public class JenkinsProcess {
 
         this.port = port;
 
-        Map<String, String> env = new HashMap<>();
-        env.put("JENKINS_HOME", jenkinsHome.toAbsolutePath().toString());
-        env.put("JAVA_HOME",    java.getParent().getParent().toAbsolutePath().toString());
+        Map<String, String> env = Map.of(
+                "JENKINS_HOME", jenkinsHome.toAbsolutePath().toString(),
+                "JAVA_HOME", java.getParent().getParent().toAbsolutePath().toString());
 
         process = process(java,
                 "-Duser.language=en",
@@ -66,7 +64,7 @@ public class JenkinsProcess {
                 "--httpPort=" + port
         ).directory(jenkinsHome.toFile());
 
-        process.environment().putAll(Collections.unmodifiableMap(env));
+        process.environment().putAll(env);
         process.redirectErrorStream(true);
     }
 
@@ -137,8 +135,8 @@ public class JenkinsProcess {
 
     private List<String> windowsOrUnix(Path command) {
         return OS.contains("win")
-                ? asList("cmd.exe", "/C", command.toString())
-                : Collections.singletonList(command.toString());
+                ? List.of("cmd.exe", "/C", command.toString())
+                : List.of(command.toString());
     }
 
     public JenkinsLogWatcher getJenkinsLogWatcher() {

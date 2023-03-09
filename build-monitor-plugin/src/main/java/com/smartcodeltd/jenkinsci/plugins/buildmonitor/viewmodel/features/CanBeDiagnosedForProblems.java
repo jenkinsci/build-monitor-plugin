@@ -7,7 +7,6 @@ import com.sonyericsson.jenkins.plugins.bfa.model.FailureCauseBuildAction;
 import com.sonyericsson.jenkins.plugins.bfa.model.FoundFailureCause;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,14 +39,17 @@ public class CanBeDiagnosedForProblems implements Feature<CanBeDiagnosedForProbl
         public Problems(FailureCauseBuildAction action, BuildFailureAnalyzerDisplayedField displayedField) {
             if (displayedField != BuildFailureAnalyzerDisplayedField.None) {
                 for (FoundFailureCause failure : action.getFoundFailureCauses()) {
-                    failures.add(displayedField == BuildFailureAnalyzerDisplayedField.Description ? failure.getDescription() : failure.getName());
+                    String str = displayedField == BuildFailureAnalyzerDisplayedField.Description ? failure.getDescription() : failure.getName();
+                    if (str != null) {
+                        failures.add(str);
+                    }
                 }
             }
         }
 
         @JsonValue
         public List<String> value() {
-            return Collections.unmodifiableList(new ArrayList<>(failures));
+            return List.copyOf(failures);
         }
     }
 }

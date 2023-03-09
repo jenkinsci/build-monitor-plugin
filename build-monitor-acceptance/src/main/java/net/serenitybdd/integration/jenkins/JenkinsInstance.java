@@ -17,7 +17,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -81,13 +80,13 @@ public class JenkinsInstance implements TestRule {
     }
 
     public <ATR extends ApplicativeTestRule<JenkinsInstance>> JenkinsInstance beforeStartApply(List<ATR> customRulesToBeApplied) {
-        this.customRulesToApplyBeforeStart = Collections.unmodifiableList(new ArrayList<>(customRulesToBeApplied));
+        this.customRulesToApplyBeforeStart = List.copyOf(customRulesToBeApplied);
 
         return this;
     }
 
     public <ATR extends ApplicativeTestRule<JenkinsInstance>> JenkinsInstance afterStartApply(List<ATR> customRulesToBeApplied) {
-        this.customRulesToApplyAfterStart = Collections.unmodifiableList(new ArrayList<>(customRulesToBeApplied));
+        this.customRulesToApplyAfterStart = List.copyOf(customRulesToBeApplied);
 
         return this;
     }

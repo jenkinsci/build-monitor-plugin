@@ -7,7 +7,6 @@ import hudson.model.Run;
 import hudson.model.User;
 import hudson.scm.ChangeLogSet;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -32,7 +31,7 @@ class BuildCulpritsAbstractBuild extends BuildCulpritsRetriever {
         AbstractBuild<?, ?> abstractBuild = (AbstractBuild<?, ?>) run;
         ChangeLogSet<? extends ChangeLogSet.Entry> cs = abstractBuild.getChangeSet();
         if (cs == null) {
-            return Collections.emptySet();
+            return Set.of();
         }
         return StreamSupport.stream(cs.spliterator(), false)
                 .map(entry -> entry.getAuthor().getFullName())

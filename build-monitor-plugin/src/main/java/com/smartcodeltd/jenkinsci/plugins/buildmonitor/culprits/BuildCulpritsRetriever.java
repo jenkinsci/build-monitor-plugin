@@ -9,8 +9,7 @@ import hudson.model.Run;
 import java.util.Set;
 
 /**
- * Created by Erik Håkansson on 2017-04-25.
- * https://github.com/erikhakansson
+ * Created by <a href="https://github.com/erikhakansson">Erik Håkansson</a> on 2017-04-25.
  */
 public abstract class BuildCulpritsRetriever {
 

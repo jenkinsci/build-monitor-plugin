@@ -5,7 +5,6 @@ import hudson.model.Run;
 import org.jenkinsci.plugins.workflow.flow.FlowExecution;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
-import java.util.Collections;
 import java.util.List;
 
 public class PipelineHelper {
@@ -46,6 +45,6 @@ public class PipelineHelper {
             traversal.start(execution.getCurrentHeads());
             return traversal.getStages();
         }
-        return Collections.emptyList();
+        return List.of();
     }
 }

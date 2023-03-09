@@ -7,7 +7,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Duration;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,7 +54,7 @@ public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDeta
 
 		@JsonValue
 		public List<CurrentBuild> value() {
-			return Collections.unmodifiableList(new ArrayList<>(builds));
+			return List.copyOf(builds);
 		}
     }
 

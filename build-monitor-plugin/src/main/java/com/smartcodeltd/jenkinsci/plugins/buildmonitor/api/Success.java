@@ -2,7 +2,6 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -27,8 +26,8 @@ import java.util.concurrent.TimeUnit;
 
     @JsonProperty
     public Map<String, ?> meta() {
-        return Collections.singletonMap(
-                "response_time_ms", TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTimeNanos, TimeUnit.NANOSECONDS)
-        );
+        return Map.of(
+                "response_time_ms",
+                TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTimeNanos, TimeUnit.NANOSECONDS));
     }
 }

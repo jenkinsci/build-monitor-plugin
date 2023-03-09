@@ -4,7 +4,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.BuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -58,7 +57,7 @@ public class HasJunitRealtime implements Feature<HasJunitRealtime.RealtimeTests>
 
         @JsonValue
         public List<RealtimeTest> value() {
-            return Collections.unmodifiableList(new ArrayList<>(realtimeTests));
+            return List.copyOf(realtimeTests);
         }
     }
 
