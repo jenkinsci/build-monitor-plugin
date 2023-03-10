@@ -15,7 +15,6 @@
 
     <properties>
         <serenity.version>3.6.12</serenity.version>
-        <aether.version>1.0.2.v20150114</aether.version>
         <slf4j.version>2.0.6</slf4j.version>
     </properties>
 
@@ -37,11 +36,6 @@
                 <version>1.4.20</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>4.5.14</version>
-            </dependency>
-            <dependency>
                 <groupId>org.objenesis</groupId>
                 <artifactId>objenesis</artifactId>
                 <version>3.3</version>
@@ -59,47 +53,6 @@
             <groupId>org.jenkins-ci.main</groupId>
             <artifactId>cli</artifactId>
             <version>${jenkins.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-api</artifactId>
-            <version>${aether.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-spi</artifactId>
-            <version>${aether.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-util</artifactId>
-            <version>${aether.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-impl</artifactId>
-            <version>${aether.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-connector-basic</artifactId>
-            <version>${aether.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-transport-file</artifactId>
-            <version>${aether.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-transport-http</artifactId>
-            <version>${aether.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-aether-provider</artifactId>
-            <version>3.3.9</version>
         </dependency>
 
         <!-- serenity -->
@@ -162,6 +115,7 @@
                     <systemPropertyVariables>
                         <jenkins.version>${jenkins.version}</jenkins.version>
                         <project.root>../</project.root>
+                        <settings.localRepository>${settings.localRepository}</settings.localRepository>
                         <wdm.chromeDriverVersion>110</wdm.chromeDriverVersion>
                     </systemPropertyVariables>
                 </configuration>
