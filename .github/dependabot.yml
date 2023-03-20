@@ -17,3 +17,8 @@ updates:
     directory: "build-monitor-plugin"
     schedule:
       interval: "weekly"
+    ignore:
+      # Breaking changes, see:
+      # https://github.com/jenkinsci/build-monitor-plugin/pull/677
+      - dependency-name: "jasmine-core"
+        versions: [">=3.0.0"]
