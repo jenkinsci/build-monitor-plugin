@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "css-loader": "6.7.3",
-    "jasmine-core": "2.9.1",
+    "jasmine-core": "2.99.1",
     "karma": "6.4.1",
     "karma-coverage": "2.2.0",
     "karma-jasmine": "1.1.2",
