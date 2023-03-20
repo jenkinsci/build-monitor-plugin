@@ -15,7 +15,7 @@
 
     <properties>
         <serenity.version>3.6.12</serenity.version>
-        <slf4j.version>2.0.6</slf4j.version>
+        <slf4j.version>2.0.7</slf4j.version>
     </properties>
 
     <dependencyManagement>
