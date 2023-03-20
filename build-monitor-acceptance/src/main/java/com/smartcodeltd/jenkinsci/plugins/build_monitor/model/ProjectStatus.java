@@ -1,5 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.build_monitor.model;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -7,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.jetbrains.annotations.NotNull;
 
 public enum ProjectStatus {
     Successful("successful"),
@@ -40,7 +40,7 @@ public enum ProjectStatus {
         return statuses;
     }
 
-    public static ProjectStatus from(@NotNull String cssClass) {
+    public static ProjectStatus from(@NonNull String cssClass) {
 
         for (ProjectStatus status : ProjectStatus.values()) {
             if (cssClass.equalsIgnoreCase(status.value)) {
