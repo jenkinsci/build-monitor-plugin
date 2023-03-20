@@ -1,6 +1,6 @@
 package net.serenitybdd.integration.utils;
 
-import org.jetbrains.annotations.NotNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 public class Nulls {
     public static <T> T coalesce(T... items) {
@@ -8,7 +8,7 @@ public class Nulls {
         return null;
     }
 
-    public static <T> T getOrElse(T optionalValue, @NotNull T defaultValue) {
+    public static <T> T getOrElse(T optionalValue, @NonNull T defaultValue) {
         return optionalValue != null ? optionalValue : defaultValue;
     }
 }

@@ -14,7 +14,7 @@
     <name>Build Monitor Acceptance Tests</name>
 
     <properties>
-        <serenity.version>3.6.12</serenity.version>
+        <serenity.version>3.6.17</serenity.version>
         <slf4j.version>2.0.7</slf4j.version>
     </properties>
 
@@ -60,6 +60,12 @@
             <groupId>net.serenity-bdd</groupId>
             <artifactId>serenity-core</artifactId>
             <version>${serenity.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jetbrains</groupId>
+                    <artifactId>annotations</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.serenity-bdd</groupId>

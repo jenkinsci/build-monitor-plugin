@@ -1,5 +1,6 @@
 package net.serenitybdd.integration.jenkins.process;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -8,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import org.jdeferred.Promise;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +40,7 @@ public class JenkinsProcess {
     private Thread jenkinsLogWatcherThread;
 
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "FindBugs does not like the JAVA_HOME resolve")
-    public JenkinsProcess(@NotNull Path java, @NotNull Path jenkinsWar, @NotNull int port, @NotNull Path jenkinsHome) {
+    public JenkinsProcess(@NonNull Path java, @NonNull Path jenkinsWar, @NonNull int port, @NonNull Path jenkinsHome) {
         Log.debug("jenkins.war:  {}", jenkinsWar.toAbsolutePath());
         Log.debug("JENKINS_HOME: {}", jenkinsHome.toAbsolutePath());
 

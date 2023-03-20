@@ -1,18 +1,18 @@
 package net.serenitybdd.integration.jenkins.environment;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import net.serenitybdd.integration.jenkins.environment.rules.FindFreePort;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PluginDescription {
     private static final Logger Log = LoggerFactory.getLogger(FindFreePort.class);
 
-    public static PluginDescription of(@NotNull Path pluginAtPath) {
+    public static PluginDescription of(@NonNull Path pluginAtPath) {
         JarFile jarFile = null;
         try {
             jarFile = new JarFile(pluginAtPath.toFile());
@@ -40,7 +40,7 @@ public class PluginDescription {
         }
     }
 
-    public PluginDescription(@NotNull Path pathToPluginUnderTest, @NotNull String fullName, @NotNull String version, @NotNull String requiredJenkinsVersion) {
+    public PluginDescription(@NonNull Path pathToPluginUnderTest, @NonNull String fullName, @NonNull String version, @NonNull String requiredJenkinsVersion) {
         this.path = pathToPluginUnderTest;
         this.fullName = fullName;
         this.version = version;
