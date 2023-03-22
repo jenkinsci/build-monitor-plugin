@@ -6,8 +6,8 @@
   "scripts": {
     "mvnbuild": "npm run build",
     "mvntest": "npm run test",
-    "build": "webpack --mode production",
-    "build:dev": "webpack --mode development --watch",
+    "build": "webpack --config webpack.prod.js",
+    "build:dev": "webpack --config webpack.dev.js --watch",
     "test": "OPENSSL_CONF=/dev/null node_modules/karma/bin/karma start src/test/resources/karma.conf.ci.js"
   },
   "repository": {
@@ -30,7 +30,8 @@
     "mini-css-extract-plugin": "2.7.5",
     "style-loader": "3.3.2",
     "webpack": "5.76.2",
-    "webpack-cli": "5.0.1"
+    "webpack-cli": "5.0.1",
+    "webpack-merge": "5.8.0"
   },
   "engines": {
     "node": ">=0.10"
