@@ -1,6 +1,5 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Util;
 import hudson.model.ViewDescriptor;
 import hudson.util.FormValidation;
@@ -23,6 +22,7 @@ public final class BuildMonitorDescriptor extends ViewDescriptor {
     }
 
     // Copy-n-paste from ListView$Descriptor as sadly we cannot inherit from that class
+    @SuppressWarnings({"lgtm[jenkins/csrf]", "lgtm[jenkins/no-permission-check]"})
     public FormValidation doCheckIncludeRegex(@QueryParameter String value) {
         String v = Util.fixEmpty(value);
         if (v != null) {
@@ -54,35 +54,39 @@ public final class BuildMonitorDescriptor extends ViewDescriptor {
         this.permissionToCollectAnonymousUsageStatistics = collect;
     }
 
-    @SuppressFBWarnings(value = "DCN_NULLPOINTER_EXCEPTION", justification = "TODO needs triage")
+    @SuppressWarnings({"lgtm[jenkins/csrf]", "lgtm[jenkins/no-permission-check]"})
     public FormValidation doCheckMaxColumns(@QueryParameter String value) {
-        try {
-            int intValue = Integer.parseInt(value);
-            if(intValue > 0) {
-                return FormValidation.ok();
-            } else {
-                return FormValidation.error("Must be an integer, greater than 0.");
+        String v = Util.fixEmpty(value);
+        if (v != null) {
+            try {
+                int intValue = Integer.parseInt(v);
+                if (intValue > 0) {
+                    return FormValidation.ok();
+                } else {
+                    return FormValidation.error("Must be an integer, greater than 0.");
+                }
+            } catch (NumberFormatException e) {
+                return FormValidation.error("Must be an integer.");
             }
-        } catch (NullPointerException npe) {
-            return FormValidation.error("Cannot be null.");
-        } catch (NumberFormatException nfe) {
-            return FormValidation.error("Must be an integer.");
         }
+        return FormValidation.ok();
     }
 
-    @SuppressFBWarnings(value = "DCN_NULLPOINTER_EXCEPTION", justification = "TODO needs triage")
+    @SuppressWarnings({"lgtm[jenkins/csrf]", "lgtm[jenkins/no-permission-check]"})
     public FormValidation doCheckTextScale(@QueryParameter String value) {
-        try {
-            double doubleValue = Double.parseDouble(value);
-            if(doubleValue > 0.0) {
-                return FormValidation.ok();
-            } else {
-                return FormValidation.error("Must be a double, greater than 0.0.");
+        String v = Util.fixEmpty(value);
+        if (v != null) {
+            try {
+                double doubleValue = Double.parseDouble(v);
+                if (doubleValue > 0.0) {
+                    return FormValidation.ok();
+                } else {
+                    return FormValidation.error("Must be a double, greater than 0.0.");
+                }
+            } catch (NumberFormatException e) {
+                return FormValidation.error("Must be a double.");
             }
-        } catch (NullPointerException npe) {
-            return FormValidation.error("Cannot be null.");
-        } catch (NumberFormatException nfe) {
-            return FormValidation.error("Must be a double.");
         }
+        return FormValidation.ok();
     }
 }
