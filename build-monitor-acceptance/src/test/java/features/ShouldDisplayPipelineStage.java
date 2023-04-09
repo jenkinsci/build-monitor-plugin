@@ -28,20 +28,15 @@ public class ShouldDisplayPipelineStage extends BuildMonitorAcceptanceTest {
 
     @Test
     public void displaying_current_pipeline_stage() {
-        givenThat(donald).wasAbleTo(
-                Navigate.to(jenkins.url()),
-                HaveAPipelineProjectCreated.called("My Pipeline").andConfiguredTo(
-                        SetPipelineDefinition.asFollows("stage('Compile') { sleep 50 }")
-                ),
-
-                ScheduleABuild.of("My Pipeline")
-        );
+        givenThat(donald)
+                .wasAbleTo(
+                        Navigate.to(jenkins.url()),
+                        HaveAPipelineProjectCreated.called("My Pipeline")
+                                .andConfiguredTo(SetPipelineDefinition.asFollows("stage('Compile') { sleep 50 }")),
+                        ScheduleABuild.of("My Pipeline"));
 
         when(donald).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
-        then(donald).should(seeThat(ProjectWidget.of("My Pipeline").pipelineStages(),
-                containsString("[Compile]")
-        ));
+        then(donald).should(seeThat(ProjectWidget.of("My Pipeline").pipelineStages(), containsString("[Compile]")));
     }
-
 }

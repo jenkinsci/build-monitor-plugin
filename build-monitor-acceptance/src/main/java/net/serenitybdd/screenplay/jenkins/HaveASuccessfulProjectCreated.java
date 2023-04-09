@@ -19,11 +19,9 @@ public class HaveASuccessfulProjectCreated implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                HaveAProjectCreated.called(projectName).andConfiguredTo(
-                        ExecuteAShellScript.that(ShellScriptThat.Finishes_With_Success)
-                ),
-                ScheduleABuild.of(projectName)
-        );
+                HaveAProjectCreated.called(projectName)
+                        .andConfiguredTo(ExecuteAShellScript.that(ShellScriptThat.Finishes_With_Success)),
+                ScheduleABuild.of(projectName));
     }
 
     public HaveASuccessfulProjectCreated(String projectName) {

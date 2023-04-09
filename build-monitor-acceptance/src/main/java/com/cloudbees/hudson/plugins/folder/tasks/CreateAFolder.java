@@ -25,13 +25,12 @@ public class CreateAFolder implements Task {
                 Click.on(SidePanel.New_Item_Link),
                 Choose.the(NewJobPage.Folder),
                 Enter.theValue(name).into(NewJobPage.Item_Name_Field).thenHit(Keys.ENTER),
-                Click.on(Buttons.Save)
-        );
+                Click.on(Buttons.Save));
     }
 
     public CreateAFolder(String jobName) {
         this.name = jobName;
     }
 
-    private final String   name;
+    private final String name;
 }

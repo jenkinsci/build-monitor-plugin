@@ -18,8 +18,7 @@ public class HasJunitRealtime implements Feature<HasJunitRealtime.RealtimeTests>
     private ActionFilter filter = new ActionFilter();
     private JobView job;
 
-    public HasJunitRealtime() {
-    }
+    public HasJunitRealtime() {}
 
     @Override
     public HasJunitRealtime of(JobView jobView) {
@@ -37,10 +36,12 @@ public class HasJunitRealtime implements Feature<HasJunitRealtime.RealtimeTests>
 
         BuildViewModel build = builds.get(0);
         Iterator<AbstractRealtimeTestResultAction> details =
-                build.allDetailsOf(AbstractRealtimeTestResultAction.class).stream().filter(filter).iterator();
+                build.allDetailsOf(AbstractRealtimeTestResultAction.class).stream()
+                        .filter(filter)
+                        .iterator();
 
         return details.hasNext() ? new RealtimeTests(details) : null; // `null` because we don't want to serialise an
-                                                                        // empty object
+        // empty object
     }
 
     public static class RealtimeTests {
@@ -75,10 +76,12 @@ public class HasJunitRealtime implements Feature<HasJunitRealtime.RealtimeTests>
 
         @JsonProperty
         public int[] getCompletedPercentages() {
-            int value1 = Math.min(testProgress.getCompletedTestsPercentage(), testProgress.getCompletedTimePercentage());
-            int value2 = Math.max(testProgress.getCompletedTestsPercentage(), testProgress.getCompletedTimePercentage());
+            int value1 =
+                    Math.min(testProgress.getCompletedTestsPercentage(), testProgress.getCompletedTimePercentage());
+            int value2 =
+                    Math.max(testProgress.getCompletedTestsPercentage(), testProgress.getCompletedTimePercentage());
 
-            return new int[] { value1, value2 - value1};
+            return new int[] {value1, value2 - value1};
         }
 
         @JsonProperty
@@ -109,5 +112,4 @@ public class HasJunitRealtime implements Feature<HasJunitRealtime.RealtimeTests>
             return action.getTestProgress() != null;
         }
     }
-
 }

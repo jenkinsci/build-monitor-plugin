@@ -38,66 +38,75 @@ public class HasHeadlineShowingFailedBuildDetailsTest {
 
     @Test
     public void should_tell_who_broke_the_build() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam")))));
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().wasBrokenBy("Adam")))));
 
         assertThat(headlineOf(view), is("1 build has failed since Adam committed their changes"));
     }
 
     @Test
     public void should_list_committers_who_broke_the_build_in_alphabetical_order() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben")))));
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().wasBrokenBy("Adam", "Ben")))));
 
         assertThat(headlineOf(view), is("1 build has failed since Adam and Ben committed their changes"));
     }
 
     @Test
-    public void should_tell_the_number_of_broken_builds_since_the_last_broken_build_and_the_author_of_the_first_offending_commit() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam")).
-                        andThePrevious(build().wasBrokenBy("Ben", "Connor")).
-                        andThePrevious(build().wasBrokenBy("Daniel")).
-                        andThePrevious(build().succeededThanksTo("Errol")))));
+    public void
+            should_tell_the_number_of_broken_builds_since_the_last_broken_build_and_the_author_of_the_first_offending_commit() {
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().wasBrokenBy("Adam"))
+                        .andThePrevious(build().wasBrokenBy("Ben", "Connor"))
+                        .andThePrevious(build().wasBrokenBy("Daniel"))
+                        .andThePrevious(build().succeededThanksTo("Errol")))));
 
         assertThat(headlineOf(view), is("3 builds have failed since Daniel committed their changes"));
     }
 
     @Test
     public void should_tell_the_number_of_broken_builds_since_the_last_build_broken_by_multiple_committers() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam")).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor")).
-                        andThePrevious(build().succeededThanksTo("Errol")))));
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().wasBrokenBy("Adam"))
+                        .andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor"))
+                        .andThePrevious(build().succeededThanksTo("Errol")))));
 
         assertThat(headlineOf(view), is("2 builds have failed since Ben, Connor and Daniel committed their changes"));
     }
 
     @Test
     public void should_tell_how_many_builds_have_failed_but_not_who_broke_them_if_configured_as_such() {
-        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam")))));
+        view = a(jobView()
+                .which(hasHeadlineThatDoesNotShowCommitters())
+                .of(a(job().whereTheLast(build().wasBrokenBy("Adam")))));
 
         assertThat(headlineOf(view), is("1 build has failed"));
     }
 
     @Test
     public void should_tell_the_number_of_broken_builds_since_the_last_broken_build() {
-        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam")).
-                        andThePrevious(build().wasBrokenBy("Ben", "Connor")).
-                        andThePrevious(build().wasBrokenBy("Daniel")).
-                        andThePrevious(build().succeededThanksTo("Errol")))));
+        view = a(jobView()
+                .which(hasHeadlineThatDoesNotShowCommitters())
+                .of(a(job().whereTheLast(build().wasBrokenBy("Adam"))
+                        .andThePrevious(build().wasBrokenBy("Ben", "Connor"))
+                        .andThePrevious(build().wasBrokenBy("Daniel"))
+                        .andThePrevious(build().succeededThanksTo("Errol")))));
 
         assertThat(headlineOf(view), is("3 builds have failed"));
     }
 
     @Test
-    public void should_tell_the_number_of_broken_builds_since_the_last_build_broken_when_multiple_committers_are_involver() {
-        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
-                a(job().whereTheLast(build().wasBrokenBy("Adam")).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor")).
-                        andThePrevious(build().succeededThanksTo("Errol")))));
+    public void
+            should_tell_the_number_of_broken_builds_since_the_last_build_broken_when_multiple_committers_are_involver() {
+        view = a(jobView()
+                .which(hasHeadlineThatDoesNotShowCommitters())
+                .of(a(job().whereTheLast(build().wasBrokenBy("Adam"))
+                        .andThePrevious(build().wasBrokenBy("Daniel", "Ben", "Connor"))
+                        .andThePrevious(build().succeededThanksTo("Errol")))));
 
         assertThat(headlineOf(view), is("2 builds have failed"));
     }

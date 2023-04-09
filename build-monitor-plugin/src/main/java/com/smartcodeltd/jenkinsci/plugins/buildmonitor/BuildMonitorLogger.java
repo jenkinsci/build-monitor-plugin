@@ -24,7 +24,6 @@ public class BuildMonitorLogger {
 
     public void error(String sourceMethod, String template, Object... arguments) {
         log(Level.SEVERE, sourceMethod, template, arguments);
-
     }
 
     // --

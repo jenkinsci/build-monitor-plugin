@@ -96,8 +96,8 @@ public class NullBuildView implements BuildViewModel {
         return Optional.empty();
     }
 
-	@Override
-	public <A extends Action> List<A> allDetailsOf(Class<A> jenkinsAction) {
-		return new ArrayList<>();
-	}
+    @Override
+    public <A extends Action> List<A> allDetailsOf(Class<A> jenkinsAction) {
+        return new ArrayList<>();
+    }
 }

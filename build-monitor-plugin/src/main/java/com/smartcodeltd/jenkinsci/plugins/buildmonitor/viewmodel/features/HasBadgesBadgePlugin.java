@@ -31,11 +31,13 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
 
     @Override
     public Badges asJson() {
-        Iterator<BadgeAction> badges = config.getDisplayBadgesFrom().from(job).allDetailsOf(BadgeAction.class).stream().filter(filter).iterator();
+        Iterator<BadgeAction> badges = config.getDisplayBadgesFrom().from(job).allDetailsOf(BadgeAction.class).stream()
+                .filter(filter)
+                .iterator();
 
         return badges.hasNext()
-            ? new Badges(badges)
-            : null; // `null` because we don't want to serialise an empty object
+                ? new Badges(badges)
+                : null; // `null` because we don't want to serialise an empty object
     }
 
     public static class Badges {
@@ -92,5 +94,4 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
             return action.getIconPath() == null;
         }
     }
-
 }

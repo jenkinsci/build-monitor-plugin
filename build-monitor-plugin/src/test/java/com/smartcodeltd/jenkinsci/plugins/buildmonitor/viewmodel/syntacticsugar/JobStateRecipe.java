@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 /**
  * @author Jan Molak
  */
-public class JobStateRecipe implements Supplier<Job<?,?>> {
+public class JobStateRecipe implements Supplier<Job<?, ?>> {
     private Job<?, ?> job;
     private RunList<?> runList;
     private Stack<AbstractBuild> buildHistory = new Stack<>();
@@ -90,7 +90,7 @@ public class JobStateRecipe implements Supplier<Job<?,?>> {
         // link "previous" builds ...
         while (buildHistory.size() > 1) {
             earliestBuild = buildHistory.pop();
-            earlierBuild  = buildHistory.peek();
+            earlierBuild = buildHistory.peek();
 
             lenient().when(earlierBuild.getPreviousBuild()).thenReturn(earliestBuild);
         }
@@ -99,7 +99,7 @@ public class JobStateRecipe implements Supplier<Job<?,?>> {
         if (buildHistory.size() == 1) {
             lenient().doReturn(buildHistory.pop()).when(job).getLastBuild();
         }
-        
+
         // mock the necessary methods to get the currentBuilds
         // it will return the full list so make sure it contains only building builds
         lenient().doReturn(runList).when(job).getNewBuilds();

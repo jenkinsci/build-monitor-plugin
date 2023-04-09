@@ -22,7 +22,6 @@ class BuildCulpritsAbstractBuild extends BuildCulpritsRetriever {
                 .collect(Collectors.toCollection(TreeSet::new));
     }
 
-
     @Override
     @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
     protected Set<String> getCommittersForRun(Run<?, ?> run) {

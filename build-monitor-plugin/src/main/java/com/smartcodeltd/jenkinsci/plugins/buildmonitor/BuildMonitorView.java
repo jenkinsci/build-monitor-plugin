@@ -85,7 +85,7 @@ public class BuildMonitorView extends ListView {
     public String currentOrder() {
         return currentConfig().getOrder().getClass().getSimpleName();
     }
-    
+
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public String currentbuildFailureAnalyzerDisplayedField() {
         return currentConfig().getBuildFailureAnalyzerDisplayedField().getValue();
@@ -152,10 +152,9 @@ public class BuildMonitorView extends ListView {
     public boolean collectAnonymousUsageStatistics() {
         return descriptor.getPermissionToCollectAnonymousUsageStatistics();
     }
-    
+
     @Override
-    protected void initColumns() {
-    }
+    protected void initColumns() {}
 
     @Override
     protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
@@ -164,21 +163,21 @@ public class BuildMonitorView extends ListView {
         JSONObject json = req.getSubmittedForm();
 
         synchronized (this) {
-
             String requestedOrdering = req.getParameter("order");
             String displayBadgesFrom = req.getParameter("displayBadgesFrom");
-            title                    = req.getParameter("title");
-            String maxColumns        = req.getParameter("maxColumns");
-            String textScale         = req.getParameter("textScale");
+            title = req.getParameter("title");
+            String maxColumns = req.getParameter("maxColumns");
+            String textScale = req.getParameter("textScale");
 
             currentConfig().setColourBlindMode(json.optBoolean("colourBlindMode", false));
             currentConfig().setReduceMotion(json.optBoolean("reduceMotion", false));
             currentConfig().setShowBadges(json.optBoolean("showBadges", true));
             currentConfig().setDisplayBadges(req.getParameter("displayBadges"));
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
-            currentConfig().setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
+            currentConfig()
+                    .setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
             currentConfig().setDisplayJUnitProgress(json.optBoolean("displayJUnitProgress", true));
-            
+
             try {
                 currentConfig().setOrder(orderIn(requestedOrdering));
             } catch (Exception e) {
@@ -188,13 +187,16 @@ public class BuildMonitorView extends ListView {
             try {
                 currentConfig().setMaxColumns(Integer.parseInt(maxColumns));
             } catch (Exception e) {
-                throw new FormException("Invalid value of 'Maximum number of columns': '" + maxColumns + "' (should be double).", maxColumns);
+                throw new FormException(
+                        "Invalid value of 'Maximum number of columns': '" + maxColumns + "' (should be double).",
+                        maxColumns);
             }
 
             try {
                 currentConfig().setTextScale(Double.parseDouble(textScale));
             } catch (Exception e) {
-                throw new FormException("Invalid value of 'Text scale': '" + textScale + "' (should be double).", textScale);
+                throw new FormException(
+                        "Invalid value of 'Text scale': '" + textScale + "' (should be double).", textScale);
             }
 
             try {
@@ -218,14 +220,14 @@ public class BuildMonitorView extends ListView {
 
     // --
     private boolean isGiven(String value) {
-        return ! (value == null || "".equals(value));
+        return !(value == null || "".equals(value));
     }
 
     private List<JobView> jobViews() {
         JobViews views = new JobViews(new StaticJenkinsAPIs(), currentConfig());
 
-        //A little bit of evil to make the type system happy.
-        @SuppressWarnings({ "unchecked", "rawtypes" })
+        // A little bit of evil to make the type system happy.
+        @SuppressWarnings({"unchecked", "rawtypes"})
         List<Job<?, ?>> projects = new ArrayList(Util.filter(super.getItems(), Job.class));
         List<JobView> jobs = new ArrayList<>();
 
@@ -255,8 +257,7 @@ public class BuildMonitorView extends ListView {
     private Config currentConfig() {
         if (creatingAFreshView()) {
             config = Config.defaultConfig();
-        }
-        else if (deserailisingFromAnOlderFormat()) {
+        } else if (deserailisingFromAnOlderFormat()) {
             migrateFromOldToNewConfigFormat();
         }
 
@@ -285,17 +286,22 @@ public class BuildMonitorView extends ListView {
     private Comparator<Job<?, ?>> orderIn(String requestedOrdering) throws ReflectiveOperationException {
         String packageName = this.getClass().getPackage().getName() + ".order.";
 
-        return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering).getDeclaredConstructor().newInstance();
+        return (Comparator<Job<?, ?>>) Class.forName(packageName + requestedOrdering)
+                .getDeclaredConstructor()
+                .newInstance();
     }
 
     private GetBuildViewModel getBuildViewModelIn(String requestedBuild) throws ReflectiveOperationException {
         String packageName = this.getClass().getPackage().getName() + ".build.";
 
-        return (GetBuildViewModel) Class.forName(packageName + requestedBuild).getDeclaredConstructor().newInstance();
+        return (GetBuildViewModel) Class.forName(packageName + requestedBuild)
+                .getDeclaredConstructor()
+                .newInstance();
     }
 
     private Config config;
 
     @Deprecated // use Config instead
-    private Comparator<Job<?, ?>> order;      // note: this field can be removed when people stop using versions prior to 1.6+build.150
+    private Comparator<Job<?, ?>>
+            order; // note: this field can be removed when people stop using versions prior to 1.6+build.150
 }

@@ -18,9 +18,8 @@ public class ExecuteAShellScript implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-            AddABuildStep.called("Execute shell"),
-            EnterCode.asFollows(scriptOutcome.code()).intoTheCodeMirror(ShellBuildStep.Editor)
-        );
+                AddABuildStep.called("Execute shell"),
+                EnterCode.asFollows(scriptOutcome.code()).intoTheCodeMirror(ShellBuildStep.Editor));
     }
 
     public ExecuteAShellScript(ShellScript script) {

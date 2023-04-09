@@ -23,10 +23,10 @@ public class LineInTheBuildLog implements Task {
         actor.attemptsTo(
                 Scroll.to(FailureCauseManagementPage.Add_Indication),
                 Click.on(FailureCauseManagementPage.Add_Indication),
-                WaitUntil.the(FailureCauseManagementPage.Build_Log_Indication_Link, WebElementStateMatchers.isVisible()),
+                WaitUntil.the(
+                        FailureCauseManagementPage.Build_Log_Indication_Link, WebElementStateMatchers.isVisible()),
                 Click.on(FailureCauseManagementPage.Build_Log_Indication_Link),
-                Enter.theValue(pattern).into(FailureCauseManagementPage.Pattern_Field)
-        );
+                Enter.theValue(pattern).into(FailureCauseManagementPage.Pattern_Field));
     }
 
     private final String pattern;

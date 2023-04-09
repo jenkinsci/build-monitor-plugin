@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 public class ByName implements Comparator<Job<?, ?>>, Serializable {
     @Override
-    public int compare(Job<?, ?> a, Job<?,?> b) {
+    public int compare(Job<?, ?> a, Job<?, ?> b) {
         return a.getName().compareToIgnoreCase(b.getName());
     }
 }

@@ -18,8 +18,7 @@ public class DisplayNestedProjects implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-            Scroll.to(ViewConfigurationPage.Recurse_In_Subfolders),
-            Choose.the(ViewConfigurationPage.Recurse_In_Subfolders)
-        );
+                Scroll.to(ViewConfigurationPage.Recurse_In_Subfolders),
+                Choose.the(ViewConfigurationPage.Recurse_In_Subfolders));
     }
 }

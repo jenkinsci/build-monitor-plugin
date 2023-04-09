@@ -27,16 +27,10 @@ public class HeadlineOfExecuting implements CandidateHeadline {
     }
 
     private String text(BuildViewModel build) {
-        return Lister.describe(
-                "",
-                "Building %s's changes",
-                new ArrayList<>(committersOf(build))
-        );
+        return Lister.describe("", "Building %s's changes", new ArrayList<>(committersOf(build)));
     }
 
     private Set<String> committersOf(BuildViewModel build) {
-        return config.displayCommitters
-                ? build.committers()
-                : new HashSet<>();
+        return config.displayCommitters ? build.committers() : new HashSet<>();
     }
 }

@@ -39,24 +39,25 @@ public class KnowsLastCompletedBuildDetailsTest {
 
     @Test
     public void should_know_current_build_number() {
-        view = a(jobView().which(new KnowsLastCompletedBuildDetails()).of(
-                a(job().whereTheLast(build().hasNumber(5)))));
+        view = a(jobView().which(new KnowsLastCompletedBuildDetails()).of(a(job().whereTheLast(build().hasNumber(5)))));
 
         assertThat(lastCompletedBuildOf(view).name(), is("#5"));
     }
 
     @Test
     public void should_use_build_name_if_its_known() {
-        view = a(jobView().which(new KnowsLastCompletedBuildDetails()).of(
-                a(job().whereTheLast(build().hasName("1.3.4+build.15")))));
+        view = a(jobView()
+                .which(new KnowsLastCompletedBuildDetails())
+                .of(a(job().whereTheLast(build().hasName("1.3.4+build.15")))));
 
         assertThat(lastCompletedBuildOf(view).name(), is("1.3.4+build.15"));
     }
 
     @Test
     public void should_know_the_url_of_the_last_build() {
-        view = a(jobView().which(new KnowsLastCompletedBuildDetails()).of(
-                a(job().whereTheLast(build().hasNumber(22))))
+        view = a(jobView()
+                .which(new KnowsLastCompletedBuildDetails())
+                .of(a(job().whereTheLast(build().hasNumber(22))))
                 .with(locatedAt("job/project-name")));
 
         assertThat(lastCompletedBuildOf(view).url(), is("job/project-name/22/"));
@@ -68,8 +69,10 @@ public class KnowsLastCompletedBuildDetailsTest {
 
     @Test
     public void should_know_how_long_the_last_build_took_once_its_finished() {
-        view = a(jobView().which(new KnowsLastCompletedBuildDetails()).of(
-                a(job().whereTheLast(build().finishedWith(Result.SUCCESS).and().took(3)))));
+        view = a(jobView()
+                .which(new KnowsLastCompletedBuildDetails())
+                .of(a(job().whereTheLast(
+                                build().finishedWith(Result.SUCCESS).and().took(3)))));
 
         assertThat(lastCompletedBuildOf(view).duration(), is("3m 0s"));
     }
@@ -81,8 +84,9 @@ public class KnowsLastCompletedBuildDetailsTest {
     public void should_know_how_long_since_the_last_build_happened() throws Exception {
         String tenMinutesInMilliseconds = String.format("%d", 10 * 60 * 1000);
 
-        view = a(jobView().which(new KnowsLastCompletedBuildDetails()).of(
-                a(job().whereTheLast(build().startedAt("18:05:00").and().took(5))))
+        view = a(jobView()
+                .which(new KnowsLastCompletedBuildDetails())
+                .of(a(job().whereTheLast(build().startedAt("18:05:00").and().took(5))))
                 .assuming(currentTime().is("18:20:00")));
 
         assertThat(lastCompletedBuildOf(view).timeElapsedSince(), is(tenMinutesInMilliseconds));

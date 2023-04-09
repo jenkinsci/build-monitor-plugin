@@ -9,5 +9,4 @@ public class GetLastCompletedBuild implements GetBuildViewModel {
     public BuildViewModel from(JobView job) {
         return job.lastCompletedBuild();
     }
-
 }

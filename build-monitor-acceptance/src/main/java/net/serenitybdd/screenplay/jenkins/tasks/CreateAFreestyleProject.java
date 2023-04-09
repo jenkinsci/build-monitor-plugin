@@ -22,17 +22,15 @@ public class CreateAFreestyleProject implements Task {
     @Override
     @Step("{0} creates a 'Freestyle Project' called '#name'")
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                CreateAProject.called(name)
-                        .ofType(NewJobPage.Freestyle_Project)
-                        .andConfigureItTo(this.configureTheProject)
-        );
+        actor.attemptsTo(CreateAProject.called(name)
+                .ofType(NewJobPage.Freestyle_Project)
+                .andConfigureItTo(this.configureTheProject));
     }
 
     public CreateAFreestyleProject(String jobName) {
         this.name = jobName;
     }
 
-    private final String   name;
+    private final String name;
     private final TodoList configureTheProject = TodoList.empty();
 }

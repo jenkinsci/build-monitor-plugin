@@ -13,11 +13,15 @@ public class Lister {
         return describe(noItemsTemplate, pluralTemplate, pluralTemplate, items);
     }
 
-    public static <T> String describe(String noItemsTemplate, String singularTemplate, String pluralTemplate, List<T> items) {
+    public static <T> String describe(
+            String noItemsTemplate, String singularTemplate, String pluralTemplate, List<T> items) {
         switch (items.size()) {
-            case 0:  return formatted(noItemsTemplate,  items);
-            case 1:  return formatted(singularTemplate, items);
-            default: return formatted(pluralTemplate,   items);
+            case 0:
+                return formatted(noItemsTemplate, items);
+            case 1:
+                return formatted(singularTemplate, items);
+            default:
+                return formatted(pluralTemplate, items);
         }
     }
 
@@ -32,10 +36,13 @@ public class Lister {
     }
 
     private static <T> String asString(String acc, List<T> tail) {
-        switch(tail.size()) {
-            case 0:  return acc;
-            case 1:  return and(acc, headOf(tail));
-            default: return asString(comma(acc, headOf(tail)), restOf(tail));
+        switch (tail.size()) {
+            case 0:
+                return acc;
+            case 1:
+                return and(acc, headOf(tail));
+            default:
+                return asString(comma(acc, headOf(tail)), restOf(tail));
         }
     }
 

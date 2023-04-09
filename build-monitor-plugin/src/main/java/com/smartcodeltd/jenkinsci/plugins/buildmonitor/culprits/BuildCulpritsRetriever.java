@@ -28,7 +28,7 @@ public abstract class BuildCulpritsRetriever {
 
     public Set<String> getCommitters(Run<?, ?> run) {
         Set<String> committers = getCommittersForRun(run);
-        //If no committers were found, recursively get upstream committers:
+        // If no committers were found, recursively get upstream committers:
         if (committers.isEmpty()) {
             Cause.UpstreamCause upstreamCause = run.getCause(Cause.UpstreamCause.class);
             if (upstreamCause != null) {

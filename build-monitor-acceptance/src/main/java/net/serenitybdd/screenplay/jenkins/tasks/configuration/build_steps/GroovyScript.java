@@ -27,7 +27,9 @@ public class GroovyScript {
     }
 
     public GroovyScript andOutputs(String... lines) {
-        return definedAs(Stream.of(lines).map(line -> String.format("echo \"%s\";", line)).collect(Collectors.toList()));
+        return definedAs(Stream.of(lines)
+                .map(line -> String.format("echo \"%s\";", line))
+                .collect(Collectors.toList()));
     }
 
     public String code() {

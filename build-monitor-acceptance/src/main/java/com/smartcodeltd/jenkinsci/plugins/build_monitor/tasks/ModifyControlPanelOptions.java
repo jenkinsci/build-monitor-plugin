@@ -23,8 +23,7 @@ public class ModifyControlPanelOptions implements Task {
         actor.attemptsTo(
                 Click.on(BuildMonitorDashboard.Control_Panel),
                 configureTheView,
-                Click.on(BuildMonitorDashboard.Control_Panel)
-        );
+                Click.on(BuildMonitorDashboard.Control_Panel));
     }
 
     public ModifyControlPanelOptions(List<Performable> actions) {

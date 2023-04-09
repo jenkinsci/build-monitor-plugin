@@ -23,8 +23,7 @@ public class LogIn implements Task {
                 Click.on(JenkinsHomePage.Log_In_Link),
                 Enter.theValue(actor.getName()).into(LogInForm.Username_Field),
                 Enter.theValue(passwordOf(actor)).into(LogInForm.Password_Field),
-                Click.on(LogInForm.Log_In_Buttton)
-        );
+                Click.on(LogInForm.Log_In_Buttton));
     }
 
     private String passwordOf(Actor actor) {

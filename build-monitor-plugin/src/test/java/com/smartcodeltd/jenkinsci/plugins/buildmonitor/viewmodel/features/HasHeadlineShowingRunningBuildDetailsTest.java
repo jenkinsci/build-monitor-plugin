@@ -39,36 +39,38 @@ public class HasHeadlineShowingRunningBuildDetailsTest {
 
     @Test
     public void should_say_nothing_if_no_builds_were_executed_and_one_is_running_now() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().isStillBuilding()))));
+        view = a(
+                jobView().which(hasHeadlineThatShowsCommitters()).of(a(job().whereTheLast(build().isStillBuilding()))));
 
         assertThat(headlineOf(view), is(emptyString()));
     }
 
     @Test
     public void should_tell_whose_changes_are_being_built() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Adam")))));
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Adam")))));
 
         assertThat(headlineOf(view), is("Building Adam's changes"));
     }
 
     @Test
     public void should_tell_whose_changes_are_being_built_when_there_are_multiple_committers() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Ben", "Adam")))));
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Ben", "Adam")))));
 
         assertThat(headlineOf(view), is("Building Adam and Ben's changes"));
     }
 
     @Test
     public void should_not_tell_whose_changes_are_being_built_if_commiters_are_not_to_be_displayed() {
-        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
-                a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Adam")))));
+        view = a(jobView()
+                .which(hasHeadlineThatDoesNotShowCommitters())
+                .of(a(job().whereTheLast(build().isStillBuilding().withChangesFrom("Adam")))));
 
         assertThat(headlineOf(view), is(emptyString()));
     }
-
 
     // --
 

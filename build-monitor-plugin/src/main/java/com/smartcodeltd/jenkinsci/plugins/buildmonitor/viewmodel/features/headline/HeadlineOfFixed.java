@@ -33,8 +33,7 @@ public class HeadlineOfFixed implements CandidateHeadline {
         return Lister.describe(
                 "Back in the green!",
                 "Fixed after %s committed their changes :-)",
-                new LinkedList<>(committersOf(lastBuild))
-        );
+                new LinkedList<>(committersOf(lastBuild)));
     }
 
     private boolean didTheJobJustGetFixedWith(BuildViewModel build) {
@@ -42,13 +41,13 @@ public class HeadlineOfFixed implements CandidateHeadline {
     }
 
     private boolean previousFailed(BuildViewModel build) {
-        return build.hasPreviousBuild() &&
-                (Result.FAILURE.equals(build.previousBuild().result()) || Result.UNSTABLE.equals(build.previousBuild().result()) || Result.ABORTED.equals(build.previousBuild().result()));
+        return build.hasPreviousBuild()
+                && (Result.FAILURE.equals(build.previousBuild().result())
+                        || Result.UNSTABLE.equals(build.previousBuild().result())
+                        || Result.ABORTED.equals(build.previousBuild().result()));
     }
 
     private Set<String> committersOf(BuildViewModel build) {
-        return config.displayCommitters
-                ? build.committers()
-                : new HashSet<>();
+        return config.displayCommitters ? build.committers() : new HashSet<>();
     }
 }

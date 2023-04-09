@@ -42,24 +42,27 @@ public class KnowsCurrentBuildsDetailsTest {
 
     @Test
     public void should_know_current_build_number() {
-        view = a(jobView().which(new KnowsCurrentBuildsDetails()).of(
-                a(job().whereTheLast(build().isStillBuilding().and().hasNumber(5)))));
+        view = a(jobView()
+                .which(new KnowsCurrentBuildsDetails())
+                .of(a(job().whereTheLast(build().isStillBuilding().and().hasNumber(5)))));
 
         assertThat(currentBuildsOf(view).get(0).name(), is("#5"));
     }
 
     @Test
     public void should_use_build_name_if_its_known() {
-        view = a(jobView().which(new KnowsCurrentBuildsDetails()).of(
-                a(job().whereTheLast(build().isStillBuilding().and().hasName("1.3.4+build.15")))));
+        view = a(jobView()
+                .which(new KnowsCurrentBuildsDetails())
+                .of(a(job().whereTheLast(build().isStillBuilding().and().hasName("1.3.4+build.15")))));
 
         assertThat(currentBuildsOf(view).get(0).name(), is("1.3.4+build.15"));
     }
 
     @Test
     public void should_know_the_url_of_the_last_build() {
-        view = a(jobView().which(new KnowsCurrentBuildsDetails()).of(
-                a(job().whereTheLast(build().isStillBuilding().and().hasNumber(22))))
+        view = a(jobView()
+                .which(new KnowsCurrentBuildsDetails())
+                .of(a(job().whereTheLast(build().isStillBuilding().and().hasNumber(22))))
                 .with(locatedAt("job/project-name")));
 
         assertThat(currentBuildsOf(view).get(0).url(), is("job/project-name/22/"));
@@ -78,12 +81,13 @@ public class KnowsCurrentBuildsDetailsTest {
                 anHourAndHalfLater = "14:40:00";
         Date currentTime = currentTime().is(startTime);
 
-        view = a(jobView().which(new KnowsCurrentBuildsDetails()).of(
-                a(job().whereTheLast(build().startedAt(startTime).isStillBuilding())))
+        view = a(jobView()
+                .which(new KnowsCurrentBuildsDetails())
+                .of(a(job().whereTheLast(build().startedAt(startTime).isStillBuilding())))
                 .assuming(currentTime));
-        
+
         CurrentBuild currentBuild = currentBuildsOf(view).get(0);
-        
+
         assumeThat(currentTime).is(sixSecondsLater);
         assertThat(currentBuild.duration(), is("6s"));
 

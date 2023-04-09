@@ -19,8 +19,7 @@ public class ShowBadges implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-            WaitUntil.the(BuildMonitorDashboard.Show_Badges, WebElementStateMatchers.isVisible()),
-            CheckCheckbox.of(BuildMonitorDashboard.Show_Badges)
-        );
+                WaitUntil.the(BuildMonitorDashboard.Show_Badges, WebElementStateMatchers.isVisible()),
+                CheckCheckbox.of(BuildMonitorDashboard.Show_Badges));
     }
 }

@@ -36,69 +36,60 @@ public class ShouldDisplayBadges extends BuildMonitorAcceptanceTest {
 
     @Test
     public void user_displaying_build_badges() {
-        givenThat(paul).wasAbleTo(
-                Navigate.to(jenkins.url()),
-                HaveAPipelineProjectCreated.called("My App").andConfiguredTo(
-                        SetPipelineDefinition.asFollows(GroovyScriptThat.Adds_A_Badge.code())
-                ),
-
-                ScheduleABuild.of("My App"),
-                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                        DisplayAllProjects.usingARegularExpression(),
-                        DisplayBadges.asAUserSetting(),
-                        DisplayBadgesFrom.theLastBuild()
-                )
-        );
+        givenThat(paul)
+                .wasAbleTo(
+                        Navigate.to(jenkins.url()),
+                        HaveAPipelineProjectCreated.called("My App")
+                                .andConfiguredTo(SetPipelineDefinition.asFollows(GroovyScriptThat.Adds_A_Badge.code())),
+                        ScheduleABuild.of("My App"),
+                        CreateABuildMonitorView.called("Build Monitor")
+                                .andConfigureItTo(
+                                        DisplayAllProjects.usingARegularExpression(),
+                                        DisplayBadges.asAUserSetting(),
+                                        DisplayBadgesFrom.theLastBuild()));
 
         when(paul).attemptsTo(ModifyControlPanelOptions.to(ShowBadges.onTheDashboard()));
 
-        then(paul).should(seeThat(ProjectWidget.of("My App").badges(),
-                WebElementStateMatchers.isCurrentlyVisible()
-        ));
+        then(paul).should(seeThat(ProjectWidget.of("My App").badges(), WebElementStateMatchers.isCurrentlyVisible()));
     }
 
     @Test
     public void always_displaying_build_badges() {
-        givenThat(paul).wasAbleTo(
-                Navigate.to(jenkins.url()),
-                HaveAPipelineProjectCreated.called("My App").andConfiguredTo(
-                        SetPipelineDefinition.asFollows(GroovyScriptThat.Adds_A_Badge.code())
-                ),
-                ScheduleABuild.of("My App"),
-                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                        DisplayAllProjects.usingARegularExpression(),
-                        ConfigureViewSettings.toggleShowBadges(),
-                        DisplayBadges.always(),
-                        DisplayBadgesFrom.theLastBuild()
-                )
-        );
+        givenThat(paul)
+                .wasAbleTo(
+                        Navigate.to(jenkins.url()),
+                        HaveAPipelineProjectCreated.called("My App")
+                                .andConfiguredTo(SetPipelineDefinition.asFollows(GroovyScriptThat.Adds_A_Badge.code())),
+                        ScheduleABuild.of("My App"),
+                        CreateABuildMonitorView.called("Build Monitor")
+                                .andConfigureItTo(
+                                        DisplayAllProjects.usingARegularExpression(),
+                                        ConfigureViewSettings.toggleShowBadges(),
+                                        DisplayBadges.always(),
+                                        DisplayBadgesFrom.theLastBuild()));
 
         when(paul).attemptsTo(ModifyControlPanelOptions.to(HideBadges.onTheDashboard()));
 
-        then(paul).should(seeThat(ProjectWidget.of("My App").badges(),
-                WebElementStateMatchers.isCurrentlyVisible()
-        ));
+        then(paul).should(seeThat(ProjectWidget.of("My App").badges(), WebElementStateMatchers.isCurrentlyVisible()));
     }
 
     @Test
     public void never_displaying_build_badges() {
-        givenThat(paul).wasAbleTo(
-                Navigate.to(jenkins.url()),
-                HaveAPipelineProjectCreated.called("My App").andConfiguredTo(
-                        SetPipelineDefinition.asFollows(GroovyScriptThat.Adds_A_Badge.code())
-                ),
-                ScheduleABuild.of("My App"),
-                CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                        DisplayAllProjects.usingARegularExpression(),
-                        DisplayBadges.never(),
-                        DisplayBadgesFrom.theLastBuild()
-                )
-        );
+        givenThat(paul)
+                .wasAbleTo(
+                        Navigate.to(jenkins.url()),
+                        HaveAPipelineProjectCreated.called("My App")
+                                .andConfiguredTo(SetPipelineDefinition.asFollows(GroovyScriptThat.Adds_A_Badge.code())),
+                        ScheduleABuild.of("My App"),
+                        CreateABuildMonitorView.called("Build Monitor")
+                                .andConfigureItTo(
+                                        DisplayAllProjects.usingARegularExpression(),
+                                        DisplayBadges.never(),
+                                        DisplayBadgesFrom.theLastBuild()));
 
         when(paul).attemptsTo(ModifyControlPanelOptions.to(ShowBadges.onTheDashboard()));
 
-        then(paul).should(seeThat(ProjectWidget.of("My App").badges(),
-                WebElementStateMatchers.isNotCurrentlyVisible()
-        ));
+        then(paul)
+                .should(seeThat(ProjectWidget.of("My App").badges(), WebElementStateMatchers.isNotCurrentlyVisible()));
     }
 }

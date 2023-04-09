@@ -32,13 +32,15 @@ public class JenkinsClient {
     // http://stackoverflow.com/questions/17716242/creating-user-in-jenkins-via-api
 
     public void registerAccount(String username, String password) {
-        logger.info("Enabling Jenkins Security and registering account for '{}', identified by '{}'", username, password);
+        logger.info(
+                "Enabling Jenkins Security and registering account for '{}', identified by '{}'", username, password);
 
         String endScriptMessage = String.format("Account for '%s' created", username);
         Promise<Matcher, ?, ?> promise = process.promiseWhen(endScriptMessage);
 
         try {
-            executeGroovy(promise,
+            executeGroovy(
+                    promise,
                     "def instance         = jenkins.model.Jenkins.get()",
                     "def usersCanRegister = true",
                     "def realm            = new hudson.security.HudsonPrivateSecurityRealm(usersCanRegister)",
@@ -48,8 +50,7 @@ public class JenkinsClient {
                     "",
                     "import java.util.logging.Logger",
                     "Logger rootLogger = Logger.getLogger('')",
-                    String.format("rootLogger.info(\"%s\")", endScriptMessage)
-            );
+                    String.format("rootLogger.info(\"%s\")", endScriptMessage));
             logger.info(endScriptMessage);
         } catch (InterruptedException e) {
             throw new RuntimeException("Couldn't enable Jenkins Security", e);
@@ -63,7 +64,8 @@ public class JenkinsClient {
         Promise<Matcher, ?, ?> promise = process.promiseWhen(endScriptMessage);
 
         try {
-            executeGroovy(promise,
+            executeGroovy(
+                    promise,
                     "def ucUrl = new URL('http://updates.jenkins-ci.org/update-center.json')",
                     "def json  = hudson.model.DownloadService.loadJSON(ucUrl)",
                     "def site  = jenkins.model.Jenkins.instance.updateCenter.getById('default')",
@@ -71,8 +73,7 @@ public class JenkinsClient {
                     "",
                     "import java.util.logging.Logger",
                     "Logger rootLogger = Logger.getLogger('')",
-                    String.format("rootLogger.info(\"%s\")", endScriptMessage)
-                );
+                    String.format("rootLogger.info(\"%s\")", endScriptMessage));
             logger.info(endScriptMessage);
         } catch (InterruptedException e) {
             throw new RuntimeException("Couldn't update the Update Center caches.", e);
@@ -86,7 +87,6 @@ public class JenkinsClient {
         process.waitUntil(JenkinsProcess.JENKINS_IS_FULLY_UP_AND_RUNNING);
     }
 
-
     public void installPlugins(List<String> plugins) {
         for (String pluginName : plugins) {
             executeCommand("install-plugin", pluginName);
@@ -96,7 +96,7 @@ public class JenkinsClient {
     }
 
     private void restart() {
-        //Both Windows and WSL needs hard restart
+        // Both Windows and WSL needs hard restart
         if (OS.contains("win") || OS_VERSION.contains("microsoft")) {
             hardRestart();
         } else {
@@ -108,7 +108,7 @@ public class JenkinsClient {
         try {
             safeShutdown();
             process.start();
-            //Note: Do NOT wait here for Jenkins startup as that is handled within process.start()
+            // Note: Do NOT wait here for Jenkins startup as that is handled within process.start()
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -133,40 +133,44 @@ public class JenkinsClient {
     }
 
     public void setExternalBuildResult(String projectName, String result) {
-        executeCommand("set-external-build-result",
-                "--job", projectName,
-                "--result", result,
-                "--log", String.format("%s finished with %s", projectName, result)
-        );
+        executeCommand(
+                "set-external-build-result",
+                "--job",
+                projectName,
+                "--result",
+                result,
+                "--log",
+                String.format("%s finished with %s", projectName, result));
     }
 
-    private synchronized int executeGroovy(Promise<Matcher, ?, ?> promise, String... groovyScriptLines) throws InterruptedException {
+    private synchronized int executeGroovy(Promise<Matcher, ?, ?> promise, String... groovyScriptLines)
+            throws InterruptedException {
         String script = String.join(";\n", groovyScriptLines);
 
-        //TODO use RealJenkinsRule
-        //return executor.call("groovy", "=").execute(withInput(script), info(logger), error(logger));
-        
+        // TODO use RealJenkinsRule
+        // return executor.call("groovy", "=").execute(withInput(script), info(logger), error(logger));
+
         InputStream stdIn = System.in;
         try {
-	        System.setIn(withInput(script));
-	        int result = executeCommand("groovy", "=");
-	
-	        promise.waitSafely(Max_Wait_Time);
-	        
-	        return result;
+            System.setIn(withInput(script));
+            int result = executeCommand("groovy", "=");
+
+            promise.waitSafely(Max_Wait_Time);
+
+            return result;
         } finally {
-        	System.setIn(stdIn);
+            System.setIn(stdIn);
         }
     }
 
     private int executeCommand(String... args) {
-        //TODO use RealJenkinsRule
-        //return executor.call(args).execute(noManualInput(), info(logger), error(logger));
+        // TODO use RealJenkinsRule
+        // return executor.call(args).execute(noManualInput(), info(logger), error(logger));
         try {
-        	List<String> cliArgs = new ArrayList<>(List.of("-s", jenkinsUrl.toString(), "-http"));
-        	cliArgs.addAll(List.of(args));
-        	
-        	return CLI._main(cliArgs.toArray(new String[0]));
+            List<String> cliArgs = new ArrayList<>(List.of("-s", jenkinsUrl.toString(), "-http"));
+            cliArgs.addAll(List.of(args));
+
+            return CLI._main(cliArgs.toArray(new String[0]));
         } catch (Exception e) {
             throw new RuntimeException(String.format("Couldn't connect to Jenkins at '%s'", jenkinsUrl), e);
         }

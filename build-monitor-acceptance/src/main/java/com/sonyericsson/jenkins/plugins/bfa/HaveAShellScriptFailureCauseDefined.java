@@ -19,13 +19,9 @@ public class HaveAShellScriptFailureCauseDefined implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                UseFailureCauseManagement.to(
-                        DefineABuildLogIndicatedFailureCause.called(name).
-                                describedAs(description).
-                                matching(Build_Log_Pattern)
-                )
-        );
+        actor.attemptsTo(UseFailureCauseManagement.to(DefineABuildLogIndicatedFailureCause.called(name)
+                .describedAs(description)
+                .matching(Build_Log_Pattern)));
     }
 
     public HaveAShellScriptFailureCauseDefined(String name) {

@@ -36,7 +36,9 @@ public class ListerTest {
 
     @Test
     public void should_say_when_the_list_has_no_items() {
-        assertThat(Lister.describe("No fruit for you today :-(", "Fruits: %s", listOf()), is("No fruit for you today :-("));
+        assertThat(
+                Lister.describe("No fruit for you today :-(", "Fruits: %s", listOf()),
+                is("No fruit for you today :-("));
     }
 
     @Test

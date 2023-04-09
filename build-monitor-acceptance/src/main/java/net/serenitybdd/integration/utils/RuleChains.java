@@ -13,7 +13,6 @@ public class RuleChains {
         return chained(testRules);
     }
 
-
     public static <R extends TestRule> RuleChain chained(List<R> customRules) {
         return chained(RuleChain.emptyRuleChain(), customRules);
     }

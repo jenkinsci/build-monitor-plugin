@@ -1,6 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration;
 
-// todo: is this still needed? backend could pass the duration in milliseconds to the frontend, which in turn could make it human-readable
+// todo: is this still needed? backend could pass the duration in milliseconds to the frontend, which in turn could make
+// it human-readable
 public class HumanReadableDuration extends Duration {
     private static final long MILLISECOND = 1;
     private static final long SECONDS = 1000 * MILLISECOND;
@@ -27,7 +28,7 @@ public class HumanReadableDuration extends Duration {
     public String value() {
         String formatted;
 
-        formatted  = hours() > 0   ? hours()   + "h " : "";
+        formatted = hours() > 0 ? hours() + "h " : "";
         formatted += minutes() > 0 ? minutes() + "m " : "";
         formatted += seconds() + "s";
 

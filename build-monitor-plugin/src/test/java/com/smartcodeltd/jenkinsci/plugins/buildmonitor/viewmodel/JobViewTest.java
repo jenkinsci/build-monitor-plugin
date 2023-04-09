@@ -59,9 +59,7 @@ public class JobViewTest {
     public void delegates_the_process_of_determining_the_relative_job_name() {
         when(relativeLocation.name()).thenReturn(theName);
 
-        view = a(jobView().of(
-                a(job().withName(theName))
-        ).with(relativeLocation));
+        view = a(jobView().of(a(job().withName(theName))).with(relativeLocation));
 
         assertThat(view.name(), is(theName));
         assertThat(view.toString(), is(theName));
@@ -73,8 +71,8 @@ public class JobViewTest {
         String expectedUrl = "job/" + theName;
         when(relativeLocation.url()).thenReturn(expectedUrl);
 
-        view = a(jobView().of(
-                a(job().withName(theName).withDisplayName(displayName)))
+        view = a(jobView()
+                .of(a(job().withName(theName).withDisplayName(displayName)))
                 .with(relativeLocation));
 
         assertThat(view.url(), is(expectedUrl));
@@ -94,16 +92,18 @@ public class JobViewTest {
 
     @Test
     public void progress_of_a_finished_job_should_be_zero() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(Result.SUCCESS)))));
+        view = a(jobView().of(a(job().whereTheLast(build().finishedWith(Result.SUCCESS)))));
 
         assertThat(view.progress(), is(0));
     }
 
     @Test
     public void progress_of_a_nearly_finished_job_should_be_100() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").and().usuallyTakes(0))))
+        view = a(jobView()
+                .of(a(job().whereTheLast(build().isStillBuilding()
+                        .startedAt("12:00:00")
+                        .and()
+                        .usuallyTakes(0))))
                 .assuming(currentTime().is("12:00:00")));
 
         assertThat(view.progress(), is(100));
@@ -112,7 +112,10 @@ public class JobViewTest {
     @Test
     public void progress_of_a_job_thats_taking_longer_than_expected_should_be_100() throws Exception {
         view = a(jobView()
-                .of(a(job().whereTheLast(build().isStillBuilding().startedAt("12:00:00").and().usuallyTakes(5))))
+                .of(a(job().whereTheLast(build().isStillBuilding()
+                        .startedAt("12:00:00")
+                        .and()
+                        .usuallyTakes(5))))
                 .assuming(currentTime().is("12:20:00")));
 
         assertThat(view.progress(), is(100));
@@ -120,8 +123,11 @@ public class JobViewTest {
 
     @Test
     public void should_calculate_the_progress_of_a_running_job() throws Exception {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().isStillBuilding().startedAt("13:10:00").and().usuallyTakes(5))))
+        view = a(jobView()
+                .of(a(job().whereTheLast(build().isStillBuilding()
+                        .startedAt("13:10:00")
+                        .and()
+                        .usuallyTakes(5))))
                 .assuming(currentTime().is("13:11:00")));
 
         assertThat(view.progress(), is(20));
@@ -129,8 +135,9 @@ public class JobViewTest {
 
     @Test
     public void should_know_how_long_the_next_build_is_supposed_to_take() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(Result.SUCCESS).and().usuallyTakes(5)))));
+        view = a(jobView()
+                .of(a(job().whereTheLast(
+                                build().finishedWith(Result.SUCCESS).and().usuallyTakes(5)))));
 
         assertThat(view.estimatedDuration(), is("5m 0s"));
     }
@@ -148,32 +155,28 @@ public class JobViewTest {
 
     @Test
     public void should_describe_the_job_as_successful_if_the_last_build_succeeded() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(Result.SUCCESS)))));
+        view = a(jobView().of(a(job().whereTheLast(build().finishedWith(Result.SUCCESS)))));
 
         assertThat(view.status(), containsString("successful"));
     }
 
     @Test
     public void should_describe_the_job_as_failing_if_the_last_build_failed() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(Result.FAILURE)))));
+        view = a(jobView().of(a(job().whereTheLast(build().finishedWith(Result.FAILURE)))));
 
         assertThat(view.status(), containsString("failing"));
     }
 
     @Test
     public void should_describe_the_job_as_aborted_if_the_last_build_was_aborted() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(Result.ABORTED)))));
+        view = a(jobView().of(a(job().whereTheLast(build().finishedWith(Result.ABORTED)))));
 
         assertThat(view.status(), containsString("aborted"));
     }
 
     @Test
     public void should_describe_the_job_as_unstable_if_the_last_build_is_unstable() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().finishedWith(Result.UNSTABLE)))));
+        view = a(jobView().of(a(job().whereTheLast(build().finishedWith(Result.UNSTABLE)))));
 
         assertThat(view.status(), containsString("unstable"));
     }
@@ -222,9 +225,15 @@ public class JobViewTest {
     @Test
     public void should_describe_the_job_as_running_and_successful_if_it_is_running_and_the_previous_build_succeeded() {
         List<JobView> views = asFollows(
-                a(jobView().of(a(job().whereTheLast(build().hasntStartedYet()).andThePrevious(build().finishedWith(Result.SUCCESS))))),
-                a(jobView().of(a(job().whereTheLast(build().isStillBuilding()).andThePrevious(build().finishedWith(Result.SUCCESS))))),
-                a(jobView().of(a(job().whereTheLast(build().isStillUpdatingTheLog()).andThePrevious(build().finishedWith(Result.SUCCESS))))));
+                a(jobView()
+                        .of(a(job().whereTheLast(build().hasntStartedYet())
+                                .andThePrevious(build().finishedWith(Result.SUCCESS))))),
+                a(jobView()
+                        .of(a(job().whereTheLast(build().isStillBuilding())
+                                .andThePrevious(build().finishedWith(Result.SUCCESS))))),
+                a(jobView()
+                        .of(a(job().whereTheLast(build().isStillUpdatingTheLog())
+                                .andThePrevious(build().finishedWith(Result.SUCCESS))))));
 
         // I could do this instead of having two assertions:
         // assertThat(view.status(), both(containsString("successful")).and(containsString("running")));
@@ -239,16 +248,15 @@ public class JobViewTest {
     @Test
     public void should_describe_the_job_as_running_and_failing_if_it_is_running_and_the_previous_build_failed() {
         List<JobView> views = asFollows(
-                a(jobView().of(a(job().
-                        whereTheLast(build().hasntStartedYet()).
-                        andThePrevious(build().finishedWith(Result.FAILURE))))),
-                a(jobView().of(a(job().
-                        whereTheLast(build().isStillBuilding()).
-                        andThePrevious(build().finishedWith(Result.FAILURE))))),
-                a(jobView().of(a(job().
-                        whereTheLast(build().isStillUpdatingTheLog()).
-                        andThePrevious(build().finishedWith(Result.FAILURE)))))
-        );
+                a(jobView()
+                        .of(a(job().whereTheLast(build().hasntStartedYet())
+                                .andThePrevious(build().finishedWith(Result.FAILURE))))),
+                a(jobView()
+                        .of(a(job().whereTheLast(build().isStillBuilding())
+                                .andThePrevious(build().finishedWith(Result.FAILURE))))),
+                a(jobView()
+                        .of(a(job().whereTheLast(build().isStillUpdatingTheLog())
+                                .andThePrevious(build().finishedWith(Result.FAILURE))))));
 
         for (JobView jobView : views) {
             assertThat(jobView.status(), containsString("failing"));
@@ -261,29 +269,30 @@ public class JobViewTest {
      */
 
     @Test
-    public void should_describe_the_job_as_successful_when_there_are_several_builds_running_in_parallel_and_the_last_completed_was_successful() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().isStillBuilding()).
-                        andThePrevious(build().isStillBuilding()).
-                        andThePrevious(build().finishedWith(Result.SUCCESS)))));
+    public void
+            should_describe_the_job_as_successful_when_there_are_several_builds_running_in_parallel_and_the_last_completed_was_successful() {
+        view = a(jobView()
+                .of(a(job().whereTheLast(build().isStillBuilding())
+                        .andThePrevious(build().isStillBuilding())
+                        .andThePrevious(build().finishedWith(Result.SUCCESS)))));
 
         assertThat(view.status(), containsString("successful"));
     }
 
     @Test
-    public void should_describe_the_job_as_failing_when_there_are_several_builds_running_in_parallel_and_the_last_completed_failed() {
-        view = a(jobView().of(
-                a(job().whereTheLast(build().isStillBuilding()).
-                        andThePrevious(build().isStillBuilding()).
-                        andThePrevious(build().finishedWith(Result.FAILURE)))));
+    public void
+            should_describe_the_job_as_failing_when_there_are_several_builds_running_in_parallel_and_the_last_completed_failed() {
+        view = a(jobView()
+                .of(a(job().whereTheLast(build().isStillBuilding())
+                        .andThePrevious(build().isStillBuilding())
+                        .andThePrevious(build().finishedWith(Result.FAILURE)))));
 
         assertThat(view.status(), containsString("failing"));
     }
 
     @Test
     public void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() {
-        view = a(jobView().of(
-                a(job().thatHasNeverRun())));
+        view = a(jobView().of(a(job().thatHasNeverRun())));
 
         assertThat(view.estimatedDuration(), is(""));
         assertThat(view.progress(), is(0));

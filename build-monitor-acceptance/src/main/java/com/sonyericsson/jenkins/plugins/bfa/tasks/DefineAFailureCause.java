@@ -33,8 +33,7 @@ public class DefineAFailureCause implements Task {
                 Enter.theValue(name).into(FailureCauseManagementPage.Name),
                 Enter.theValue(description).into(FailureCauseManagementPage.Description),
                 configureFailureCauseIndicators,
-                Click.on(FailureCauseManagementPage.Save)
-        );
+                Click.on(FailureCauseManagementPage.Save));
     }
 
     private final String name;

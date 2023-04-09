@@ -42,15 +42,14 @@ class CreateAProject implements Task {
                 Scroll.to(Buttons.OK),
                 Click.on(Buttons.OK),
                 configureTheProject,
-                Click.on(Buttons.Save)
-        );
+                Click.on(Buttons.Save));
     }
 
     public CreateAProject(String jobName) {
         this.name = jobName;
     }
 
-    private final String   name;
+    private final String name;
     private final TodoList configureTheProject = TodoList.empty();
-    private       Target projectType;
+    private Target projectType;
 }

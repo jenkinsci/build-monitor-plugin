@@ -29,13 +29,12 @@ public class BuildMonitorShouldBeEasyToSetUp extends BuildMonitorAcceptanceTest 
     @Title("Adding a project to an empty Build Monitor")
     public void adding_project_to_an_empty_build_monitor() {
 
-        givenThat(anna).wasAbleTo(
-                Navigate.to(jenkins.url()),
-                HaveAProjectCreated.called("My Awesome App")
-        );
+        givenThat(anna).wasAbleTo(Navigate.to(jenkins.url()), HaveAProjectCreated.called("My Awesome App"));
 
         when(anna).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
-        then(anna).should(seeThat(ProjectWidget.of("My Awesome App").state(), WebElementStateMatchers.isCurrentlyVisible()));
+        then(anna)
+                .should(seeThat(
+                        ProjectWidget.of("My Awesome App").state(), WebElementStateMatchers.isCurrentlyVisible()));
     }
 }

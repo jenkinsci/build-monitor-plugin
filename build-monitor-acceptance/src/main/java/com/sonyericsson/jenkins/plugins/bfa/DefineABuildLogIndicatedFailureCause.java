@@ -30,19 +30,17 @@ public class DefineABuildLogIndicatedFailureCause implements Task {
     @Step("{0} defines what constitutes a problem with '#name'")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                DefineAFailureCause.called(name).describedAs(Nulls.getOrElse(description, name)).indicatedBy(
-                        LineInTheBuildLog.matching(regex)
-                )
-        );
+        actor.attemptsTo(DefineAFailureCause.called(name)
+                .describedAs(Nulls.getOrElse(description, name))
+                .indicatedBy(LineInTheBuildLog.matching(regex)));
     }
 
     public DefineABuildLogIndicatedFailureCause(String name) {
         this.name = name;
     }
 
-    private String name        = "Shell Script Failure";
-    private String regex       = "Build step 'Execute shell' marked build as failure";
+    private String name = "Shell Script Failure";
+    private String regex = "Build step 'Execute shell' marked build as failure";
 
     private String description;
 }

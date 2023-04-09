@@ -18,5 +18,4 @@ public class Loops {
     public static <T> List<T> asFollows(Supplier<T>... examples) {
         return Stream.of(examples).map(Supplier::get).collect(Collectors.toList());
     }
-
 }

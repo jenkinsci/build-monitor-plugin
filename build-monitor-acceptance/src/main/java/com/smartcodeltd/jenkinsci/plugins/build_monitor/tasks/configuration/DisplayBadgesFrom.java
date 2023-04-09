@@ -23,8 +23,7 @@ public class DisplayBadgesFrom implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 Scroll.to(ViewConfigurationPage.Display_Badges_From),
-                SelectFromOptions.byVisibleText(text).from(ViewConfigurationPage.Display_Badges_From)
-        );
+                SelectFromOptions.byVisibleText(text).from(ViewConfigurationPage.Display_Badges_From));
     }
 
     public DisplayBadgesFrom(String text) {

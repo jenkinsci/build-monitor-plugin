@@ -16,8 +16,7 @@ public class HasHeadlineWhichShowsNothingTest {
 
     @Test
     public void should_say_nothing_if_no_builds_were_executed() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().thatHasNeverRun())));
+        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(a(job().thatHasNeverRun())));
 
         assertThat(headlineOf(view), is(emptyString()));
     }

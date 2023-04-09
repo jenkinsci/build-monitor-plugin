@@ -16,7 +16,7 @@ public class PipelineHelper {
     private PipelineHelper() {}
 
     public static boolean isWorkflowRun(Run<?, ?> build, StaticJenkinsAPIs staticJenkinsAPIs) {
-        //Cache class lookup
+        // Cache class lookup
         if (hasWorkflowClass == null) {
             if (!staticJenkinsAPIs.hasPlugin(PIPELINE_PLUGIN)) {
                 hasWorkflowClass = false;

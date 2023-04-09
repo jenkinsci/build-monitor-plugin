@@ -9,9 +9,7 @@ import java.util.Comparator;
 public class ByStatus implements Comparator<Job<?, ?>>, Serializable {
     @Override
     public int compare(Job<?, ?> a, Job<?, ?> b) {
-        return bothProjectsHaveBuildHistory(a, b)
-            ? compareRecentlyCompletedBuilds(a, b)
-            : compareProjects(a, b);
+        return bothProjectsHaveBuildHistory(a, b) ? compareRecentlyCompletedBuilds(a, b) : compareProjects(a, b);
     }
 
     // --

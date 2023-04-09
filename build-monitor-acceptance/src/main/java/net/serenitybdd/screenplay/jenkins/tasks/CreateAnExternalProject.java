@@ -15,15 +15,12 @@ public class CreateAnExternalProject implements Task {
     @Override
     @Step("{0} creates a 'Freestyle Project' called '#name'")
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                CreateAProject.called(name)
-                        .ofType(NewJobPage.External_Project)
-        );
+        actor.attemptsTo(CreateAProject.called(name).ofType(NewJobPage.External_Project));
     }
 
     public CreateAnExternalProject(String jobName) {
         this.name = jobName;
     }
 
-    private final String   name;
+    private final String name;
 }

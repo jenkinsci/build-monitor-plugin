@@ -20,7 +20,6 @@ public class CanBeClaimed implements Feature {
         Optional<ClaimBuildAction> details = job.lastCompletedBuild().detailsOf(ClaimBuildAction.class);
 
         return details.map(Claim::new).orElse(null); // `null` because we don't want to serialise an empty object
-
     }
 
     public static class Claim {

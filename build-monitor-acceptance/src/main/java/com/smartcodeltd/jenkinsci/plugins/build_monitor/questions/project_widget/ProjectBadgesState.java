@@ -13,7 +13,7 @@ public class ProjectBadgesState implements Question<WebElementState> {
 
     @Override
     public WebElementState answeredBy(Actor actor) {
-        Target widget     = BuildMonitorDashboard.Project_Widget_Badges.of(projectName);
+        Target widget = BuildMonitorDashboard.Project_Widget_Badges.of(projectName);
 
         return WebElementQuestion.stateOf(widget).answeredBy(actor);
     }

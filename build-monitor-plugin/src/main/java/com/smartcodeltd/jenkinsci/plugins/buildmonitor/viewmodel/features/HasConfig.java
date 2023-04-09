@@ -32,5 +32,4 @@ public class HasConfig implements Feature<HasConfig.Config> {
             return config.getDisplayBadges().name();
         }
     }
-
 }

@@ -17,7 +17,9 @@ public class ProjectWidget {
         return new ProjectWidget(projectOfInterest);
     }
 
-    public Question<String> executedBuilds() { return new ProjectWidgetBuilds(projectOfInterest); }
+    public Question<String> executedBuilds() {
+        return new ProjectWidgetBuilds(projectOfInterest);
+    }
 
     public Question<ProjectInformation> information() {
         return new ProjectWidgetInformation(projectOfInterest);

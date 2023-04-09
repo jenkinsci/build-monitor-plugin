@@ -27,8 +27,7 @@ public class HaveAProjectCreated implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 CreateAFreestyleProject.called(projectName).andConfigureItTo(requiredConfiguration),
-                Click.on(SidePanel.Back_to_Dashboard)
-        );
+                Click.on(SidePanel.Back_to_Dashboard));
     }
 
     public HaveAProjectCreated(String projectName) {

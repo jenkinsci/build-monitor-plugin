@@ -24,21 +24,19 @@ public class UpdateCenter {
     private final Path tempDir;
 
     private List<Version> jenkinsLTSVersions = List.of(
-      Version.valueOf("2.375.4"),
-      Version.valueOf("2.375.3"),
-      Version.valueOf("2.375.2"),
-      Version.valueOf("2.375.1"),
-      Version.valueOf("2.361.4"),
-      Version.valueOf("2.361.3"),
-      Version.valueOf("2.361.2"),
-      Version.valueOf("2.361.1"),
-      Version.valueOf("2.346.3"),
-      Version.valueOf("2.346.2"),
-      Version.valueOf("2.346.1")
-    );
+            Version.valueOf("2.375.4"),
+            Version.valueOf("2.375.3"),
+            Version.valueOf("2.375.2"),
+            Version.valueOf("2.375.1"),
+            Version.valueOf("2.361.4"),
+            Version.valueOf("2.361.3"),
+            Version.valueOf("2.361.2"),
+            Version.valueOf("2.361.1"),
+            Version.valueOf("2.346.3"),
+            Version.valueOf("2.346.2"),
+            Version.valueOf("2.346.1"));
 
-
-  public UpdateCenter() {
+    public UpdateCenter() {
         this(Directories.Default_Temp_Dir);
     }
 
@@ -59,7 +57,6 @@ public class UpdateCenter {
         URL url = url(Update_Center_URL_Template, versionToUse);
         Log.info("Jenkins update URL is {}", url);
         return url;
-
     }
 
     String getUpdateVersionToUse(String jenkinsVersionString) {
@@ -75,7 +72,9 @@ public class UpdateCenter {
                 break;
             }
         }
-        assert versionToUse != null; //versionToUse should never be null since we already made sure jenkinsVersion isn't lower than the lowest LTS.
+        assert versionToUse
+                != null; // versionToUse should never be null since we already made sure jenkinsVersion isn't lower than
+        // the lowest LTS.
         return versionToUse.getNormalVersion();
     }
 
@@ -90,7 +89,8 @@ public class UpdateCenter {
 
         ReadableByteChannel rbc = Channels.newChannel(link.openStream());
 
-        try (FileOutputStream fos = new FileOutputStream(destination.toAbsolutePath().toFile())) {
+        try (FileOutputStream fos =
+                new FileOutputStream(destination.toAbsolutePath().toFile())) {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 
             return destination;

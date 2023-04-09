@@ -29,11 +29,12 @@ public class JobView {
         return new JobView(job, features, isPipelineJob, RelativeLocation.of(job), new Date());
     }
 
-    public JobView(Job<?, ?> job, List<Feature> features, boolean isPipelineJob, RelativeLocation relative, Date systemTime) {
-        this.job           = job;
+    public JobView(
+            Job<?, ?> job, List<Feature> features, boolean isPipelineJob, RelativeLocation relative, Date systemTime) {
+        this.job = job;
         this.isPipelineJob = isPipelineJob;
-        this.relative      = relative;
-        this.systemTime    = systemTime;
+        this.relative = relative;
+        this.systemTime = systemTime;
 
         for (Feature feature : features) {
             this.features.add(feature.of(this));
@@ -51,7 +52,8 @@ public class JobView {
             }
         }
 
-        throw new RuntimeException(String.format("%s is not a feature of this project: '%s'", requestedFeature.getSimpleName(), job.getName()));
+        throw new RuntimeException(String.format(
+                "%s is not a feature of this project: '%s'", requestedFeature.getSimpleName(), job.getName()));
     }
 
     public String name() {
@@ -75,9 +77,7 @@ public class JobView {
     }
 
     private String formatted(Duration duration) {
-        return null != duration
-                ? duration.value()
-                : "";
+        return null != duration ? duration.value() : "";
     }
 
     public int progress() {
@@ -85,7 +85,7 @@ public class JobView {
     }
 
     public boolean isDisabled() {
-        return ! (isJobBuildable() || isJobExternal());
+        return !(isJobBuildable() || isJobExternal());
     }
 
     private boolean isJobBuildable() {
@@ -105,6 +105,7 @@ public class JobView {
     }
 
     // todo track by job.hashCode messes up the animation
+    @Override
     public int hashCode() {
         return Objects.hashCode(job.hashCode());
     }
@@ -122,15 +123,15 @@ public class JobView {
     // --
 
     @SuppressWarnings("unchecked")
-	public List<BuildViewModel> currentBuilds() {
-    	List<BuildViewModel> currentBuilds = new ArrayList<>();
-    	
-    	RunList<Run<?, ?>> runList = ((RunList<Run<?, ?>>)job.getNewBuilds()).filter(BuildingPredicate.INSTANCE);
+    public List<BuildViewModel> currentBuilds() {
+        List<BuildViewModel> currentBuilds = new ArrayList<>();
 
-    	for (Run<?, ?> run : runList) {
-    		currentBuilds.add(buildViewOf(run));
-    	}
-    	
+        RunList<Run<?, ?>> runList = ((RunList<Run<?, ?>>) job.getNewBuilds()).filter(BuildingPredicate.INSTANCE);
+
+        for (Run<?, ?> run : runList) {
+            currentBuilds.add(buildViewOf(run));
+        }
+
         return currentBuilds;
     }
 

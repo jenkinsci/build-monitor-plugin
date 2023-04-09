@@ -34,7 +34,6 @@ public class SetBuildDescription implements Task {
         actor.attemptsTo(
                 AddABuildStep.called("Set build description"),
                 Enter.theValue(regex).into(Input.named("_.regexp")),
-                Enter.theValue(description).into(Input.named("_.description"))
-        );
+                Enter.theValue(description).into(Input.named("_.description")));
     }
 }

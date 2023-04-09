@@ -14,7 +14,7 @@ public class InteractWithJenkinsAPI implements Ability {
     }
 
     public static InteractWithJenkinsAPI as(Actor actor) {
-        if(actor.abilityTo(InteractWithJenkinsAPI.class) == null) {
+        if (actor.abilityTo(InteractWithJenkinsAPI.class) == null) {
             throw new ActorCannotInteractWithJenkinsApi(actor.getName());
         }
 

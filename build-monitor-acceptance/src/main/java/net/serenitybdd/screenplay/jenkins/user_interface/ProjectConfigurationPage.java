@@ -7,7 +7,8 @@ import net.serenitybdd.screenplay.targets.Target;
 public class ProjectConfigurationPage {
     public static final Target Execute_Concurrent_Builds = Label.called("Execute concurrent builds if necessary");
     public static final Target Do_Not_Allow_Concurrent_Builds = Label.called("Do not allow concurrent builds");
-    public static final Target Build_Steps = Target.the("the 'Build Steps' span").locatedBy("//span[contains(.,'Build Steps')]");
+    public static final Target Build_Steps =
+            Target.the("the 'Build Steps' span").locatedBy("//span[contains(.,'Build Steps')]");
     public static final Target Add_Build_Step = Button.called("Add build step");
     public static final Target Add_Post_Build_Action = Button.called("Add post-build action");
 }

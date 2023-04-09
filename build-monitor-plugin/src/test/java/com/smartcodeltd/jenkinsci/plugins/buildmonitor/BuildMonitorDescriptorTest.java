@@ -16,7 +16,8 @@ public class BuildMonitorDescriptorTest {
 
     private BuildMonitorDescriptor validator;
 
-    @Rule public final JenkinsRule jenkins = new JenkinsRule();
+    @Rule
+    public final JenkinsRule jenkins = new JenkinsRule();
 
     @Before
     public void setUp() {

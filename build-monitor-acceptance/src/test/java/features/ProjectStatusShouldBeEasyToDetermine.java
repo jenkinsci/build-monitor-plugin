@@ -29,30 +29,26 @@ public class ProjectStatusShouldBeEasyToDetermine extends BuildMonitorAcceptance
     @Test
     public void visualising_a_successful_project() {
 
-        givenThat(anna).wasAbleTo(
-                Navigate.to(jenkins.url()),
-                HaveASuccessfulProjectCreated.called("My App")
-        );
+        givenThat(anna).wasAbleTo(Navigate.to(jenkins.url()), HaveASuccessfulProjectCreated.called("My App"));
 
         when(anna).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
-        then(anna).should(seeThat(ProjectWidget.of("My App").information(),
-                ProjectInformationMatchers.displaysProjectStatusAs(ProjectStatus.Successful)
-        ));
+        then(anna)
+                .should(seeThat(
+                        ProjectWidget.of("My App").information(),
+                        ProjectInformationMatchers.displaysProjectStatusAs(ProjectStatus.Successful)));
     }
 
     @Test
     public void visualising_a_failing_project() {
 
-        givenThat(anna).wasAbleTo(
-                Navigate.to(jenkins.url()),
-                HaveAFailingProjectCreated.called("My App")
-        );
+        givenThat(anna).wasAbleTo(Navigate.to(jenkins.url()), HaveAFailingProjectCreated.called("My App"));
 
         when(anna).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
-        then(anna).should(seeThat(ProjectWidget.of("My App").information(),
-                ProjectInformationMatchers.displaysProjectStatusAs(ProjectStatus.Failing)
-        ));
+        then(anna)
+                .should(seeThat(
+                        ProjectWidget.of("My App").information(),
+                        ProjectInformationMatchers.displaysProjectStatusAs(ProjectStatus.Failing)));
     }
 }

@@ -39,53 +39,59 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
 
     @Test
     public void should_tell_who_fixed_the_broken_build() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam")).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().succeededThanksTo("Adam"))
+                        .andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
 
         assertThat(headlineOf(view), is("Fixed after Adam committed their changes :-)"));
     }
 
     @Test
     public void should_list_committers_who_fixed_the_broken_build() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam", "Connor")).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().succeededThanksTo("Adam", "Connor"))
+                        .andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
 
         assertThat(headlineOf(view), is("Fixed after Adam and Connor committed their changes :-)"));
     }
 
     @Test
     public void should_congratulate_anonymously_if_broken_build_was_fixed_without_known_committers() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().succeededThanksTo()).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().succeededThanksTo())
+                        .andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
 
         assertThat(headlineOf(view), is("Back in the green!"));
     }
 
     @Test
     public void should_congratulate_anonymously_when_the_build_is_fixed_but_the_committers_should_not_be_displayed() {
-        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam")).
-                        andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
+        view = a(jobView()
+                .which(hasHeadlineThatDoesNotShowCommitters())
+                .of(a(job().whereTheLast(build().succeededThanksTo("Adam"))
+                        .andThePrevious(build().wasBrokenBy("Daniel", "Ben")))));
 
         assertThat(headlineOf(view), is("Back in the green!"));
     }
 
     @Test
     public void should_not_congratulate_if_previous_succeeded() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam")).
-                        andThePrevious(build().succeededThanksTo("Ben")))));
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().succeededThanksTo("Adam"))
+                        .andThePrevious(build().succeededThanksTo("Ben")))));
 
         assertThat(headlineOf(view), is(emptyString()));
     }
 
     @Test
     public void should_not_congratulate_if_no_failure_before() {
-        view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                a(job().whereTheLast(build().succeededThanksTo("Adam")))));
+        view = a(jobView()
+                .which(hasHeadlineThatShowsCommitters())
+                .of(a(job().whereTheLast(build().succeededThanksTo("Adam")))));
 
         assertThat(headlineOf(view), is(emptyString()));
     }

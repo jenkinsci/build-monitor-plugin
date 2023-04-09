@@ -21,18 +21,18 @@ import org.jenkinsci.plugins.workflow.job.WorkflowJob;
  * @author Jan Molak
  */
 public class JobViews {
-    private static final String Claim                       = "claim";
-    private static final String Build_Failure_Analyzer      = "build-failure-analyzer";
-    private static final String Badge_Plugin                = "badge";
-    private static final String Pipeline                    = "workflow-job";
-    private static final String Junit_Realtime              = "junit-realtime-test-reporter";
+    private static final String Claim = "claim";
+    private static final String Build_Failure_Analyzer = "build-failure-analyzer";
+    private static final String Badge_Plugin = "badge";
+    private static final String Pipeline = "workflow-job";
+    private static final String Junit_Realtime = "junit-realtime-test-reporter";
 
     private final StaticJenkinsAPIs jenkins;
     private final com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config;
 
     public JobViews(StaticJenkinsAPIs jenkins, com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config) {
         this.jenkins = jenkins;
-        this.config  = config;
+        this.config = config;
     }
 
     public JobView viewOf(Job<?, ?> job) {

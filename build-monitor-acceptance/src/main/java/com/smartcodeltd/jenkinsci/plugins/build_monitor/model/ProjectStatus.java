@@ -21,10 +21,10 @@ public enum ProjectStatus {
         this.value = value;
     }
 
-
     // ---- todo: extract
 
-    // todo: can I use https://github.com/serenity-bdd/serenity-web-todomvc-journey/blob/e092e3a90a280aa16b0c1458f0ac7d36fe833f52/src/main/java/net/serenitybdd/demos/todos/questions/CurrentFilter.java ?
+    // todo: can I use
+    // https://github.com/serenity-bdd/serenity-web-todomvc-journey/blob/e092e3a90a280aa16b0c1458f0ac7d36fe833f52/src/main/java/net/serenitybdd/demos/todos/questions/CurrentFilter.java ?
     // asEnum thingy
 
     public static List<ProjectStatus> fromMultiple(String cssClasses) {
@@ -48,7 +48,8 @@ public enum ProjectStatus {
             }
         }
 
-        throw new IllegalArgumentException(String.format("'%s' is not a recognised value of the ProjectStatus enum", cssClass));
+        throw new IllegalArgumentException(
+                String.format("'%s' is not a recognised value of the ProjectStatus enum", cssClass));
     }
 
     // todo: Java 8?
@@ -66,11 +67,8 @@ public enum ProjectStatus {
     }
 
     private static <T> List<String> stringRepresentationsOf(Collection<T> items) {
-        return items.stream()
-                .map(Object::toString)
-                .collect(Collectors.toList());
+        return items.stream().map(Object::toString).collect(Collectors.toList());
     }
-
 
     @Override
     public String toString() {

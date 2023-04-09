@@ -23,16 +23,13 @@ public class CreateAPipelineProject implements Task {
     @Step("{0} creates a 'Pipeline Project' called '#name'")
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                CreateAProject.called(name)
-                        .ofType(NewJobPage.Pipeline)
-                        .andConfigureItTo(this.configureTheProject)
-        );
+                CreateAProject.called(name).ofType(NewJobPage.Pipeline).andConfigureItTo(this.configureTheProject));
     }
 
     public CreateAPipelineProject(String jobName) {
         this.name = jobName;
     }
 
-    private final String   name;
+    private final String name;
     private final TodoList configureTheProject = TodoList.empty();
 }
