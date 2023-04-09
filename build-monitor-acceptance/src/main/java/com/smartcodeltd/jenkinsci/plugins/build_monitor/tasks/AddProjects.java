@@ -16,8 +16,6 @@ public class AddProjects implements Task {
     @Step("{0} decides to adds some projects to an empty Build Monitor")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                Click.on(BuildMonitorDashboard.Add_Some_Projects_link)
-        );
+        actor.attemptsTo(Click.on(BuildMonitorDashboard.Add_Some_Projects_link));
     }
 }

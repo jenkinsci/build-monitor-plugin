@@ -44,7 +44,7 @@ public class ManageJenkinsServer implements ApplicativeTestRule<JenkinsInstance>
 
             @Override
             protected void finished(Description description) {
-            	client.shutdown();
+                client.shutdown();
             }
         };
     }
@@ -60,7 +60,7 @@ public class ManageJenkinsServer implements ApplicativeTestRule<JenkinsInstance>
     }
 
     private JenkinsProcess jenkinsProcessFor(JenkinsInstance jenkins, Path war) {
-        Path java        = CommandLineTools.java();
+        Path java = CommandLineTools.java();
 
         return new JenkinsProcess(java, war, jenkins.port(), jenkins.home());
     }

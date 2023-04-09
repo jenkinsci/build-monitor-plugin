@@ -8,7 +8,7 @@ public abstract class Duration {
         this.duration = milliseconds;
     }
 
-    abstract public String value();
+    public abstract String value();
 
     public boolean greaterThan(Duration otherDuration) {
         return duration > otherDuration.toLong();

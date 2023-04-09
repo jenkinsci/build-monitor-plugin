@@ -19,8 +19,8 @@ public class JenkinsProcess {
 
     private final ProcessBuilder process;
     private final int port;
-    private       Process     jenkinsProcess;
-    private final Thread      shutdownHook = new Thread() {
+    private Process jenkinsProcess;
+    private final Thread shutdownHook = new Thread() {
         @Override
         public void run() {
             if (jenkinsProcess.isAlive()) {
@@ -39,7 +39,9 @@ public class JenkinsProcess {
     private JenkinsLogWatcher jenkinsLogWatcher;
     private Thread jenkinsLogWatcherThread;
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "FindBugs does not like the JAVA_HOME resolve")
+    @SuppressFBWarnings(
+            value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "FindBugs does not like the JAVA_HOME resolve")
     public JenkinsProcess(@NonNull Path java, @NonNull Path jenkinsWar, @NonNull int port, @NonNull Path jenkinsHome) {
         Log.debug("jenkins.war:  {}", jenkinsWar.toAbsolutePath());
         Log.debug("JENKINS_HOME: {}", jenkinsHome.toAbsolutePath());
@@ -50,43 +52,48 @@ public class JenkinsProcess {
                 "JENKINS_HOME", jenkinsHome.toAbsolutePath().toString(),
                 "JAVA_HOME", java.getParent().getParent().toAbsolutePath().toString());
 
-        process = process(java,
-                "-Duser.language=en",
-                "-Dhudson.Main.development=true",
-                "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug",
-                "-Djava.util.logging=DEBUG",
-				"-Dhudson.DNSMultiCast.disabled=true",
-                "-jar", jenkinsWar.toString(),
-                "--httpPort=" + port
-        ).directory(jenkinsHome.toFile());
+        process = process(
+                        java,
+                        "-Duser.language=en",
+                        "-Dhudson.Main.development=true",
+                        "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug",
+                        "-Djava.util.logging=DEBUG",
+                        "-Dhudson.DNSMultiCast.disabled=true",
+                        "-jar",
+                        jenkinsWar.toString(),
+                        "--httpPort=" + port)
+                .directory(jenkinsHome.toFile());
 
         process.environment().putAll(env);
         process.redirectErrorStream(true);
     }
 
     public void start() throws IOException {
-        jenkinsProcess          = start(process);
-        jenkinsLogWatcher       = new JenkinsLogWatcher(jenkinsProcess.getInputStream());
+        jenkinsProcess = start(process);
+        jenkinsLogWatcher = new JenkinsLogWatcher(jenkinsProcess.getInputStream());
         jenkinsLogWatcherThread = new Thread(jenkinsLogWatcher, "jenkins");
 
         jenkinsLogWatcherThread.start();
 
         Runtime.getRuntime().addShutdownHook(shutdownHook);
 
-        Promise<Matcher, ?, ?> portConflictDetected = jenkinsLogWatcher.watchFor("java.net.BindException: Address already in use");
-        Promise<Matcher, ?, ?> jenkinsStarted       = jenkinsLogWatcher.watchFor(JENKINS_IS_FULLY_UP_AND_RUNNING);
+        Promise<Matcher, ?, ?> portConflictDetected =
+                jenkinsLogWatcher.watchFor("java.net.BindException: Address already in use");
+        Promise<Matcher, ?, ?> jenkinsStarted = jenkinsLogWatcher.watchFor(JENKINS_IS_FULLY_UP_AND_RUNNING);
 
         try {
             jenkinsStarted.waitSafely(Startup_Timeout);
 
-            if (! jenkinsStarted.isResolved()) {
-                throw new RuntimeException(String.format("Jenkins failed to start within %s seconds, aborting the test.", Startup_Timeout));
+            if (!jenkinsStarted.isResolved()) {
+                throw new RuntimeException(String.format(
+                        "Jenkins failed to start within %s seconds, aborting the test.", Startup_Timeout));
             }
 
             Log.info("Jenkins is now available at http://localhost:{}", port);
         } catch (InterruptedException e) {
             throw portConflictDetected.isResolved()
-                    ? new RuntimeException(String.format("Couldn't start Jenkins on port '%s', the port is already in use", port), e)
+                    ? new RuntimeException(
+                            String.format("Couldn't start Jenkins on port '%s', the port is already in use", port), e)
                     : new RuntimeException("Couldn't start Jenkins", e);
         }
     }
@@ -99,7 +106,8 @@ public class JenkinsProcess {
         try {
             jenkinsLogWatcher.watchFor(logLine).waitSafely(Startup_Timeout);
         } catch (InterruptedException e) {
-            throw new RuntimeException(String.format("Did not see '%s' in the Jenkins log within %s ms", logLine, Startup_Timeout), e);
+            throw new RuntimeException(
+                    String.format("Did not see '%s' in the Jenkins log within %s ms", logLine, Startup_Timeout), e);
         }
     }
 
@@ -130,9 +138,7 @@ public class JenkinsProcess {
     private static String OS = System.getProperty("os.name").toLowerCase();
 
     private List<String> windowsOrUnix(Path command) {
-        return OS.contains("win")
-                ? List.of("cmd.exe", "/C", command.toString())
-                : List.of(command.toString());
+        return OS.contains("win") ? List.of("cmd.exe", "/C", command.toString()) : List.of(command.toString());
     }
 
     public JenkinsLogWatcher getJenkinsLogWatcher() {

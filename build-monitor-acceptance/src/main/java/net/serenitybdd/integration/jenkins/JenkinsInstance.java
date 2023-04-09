@@ -21,9 +21,9 @@ import org.junit.runners.model.Statement;
 
 public class JenkinsInstance implements TestRule {
     private Path jenkinsHome = Paths.get(System.getProperty("java.io.tmpdir"));
-    private int  portNumber  = 8080;
+    private int portNumber = 8080;
 
-    private JenkinsClient client = null;    // instantiated when the Jenkins server is up and running
+    private JenkinsClient client = null; // instantiated when the Jenkins server is up and running
 
     private List<ApplicativeTestRule<JenkinsInstance>> customRulesToApplyBeforeStart = new ArrayList<>();
     private List<ApplicativeTestRule<JenkinsInstance>> defaultRules;
@@ -64,11 +64,12 @@ public class JenkinsInstance implements TestRule {
         try {
             return new URL(String.format("http://localhost:%d/", portNumber));
         } catch (MalformedURLException e) {
-            throw new RuntimeException(String.format("Couldn't instantiate a URL as 'http://localhost:%d/'", portNumber));
+            throw new RuntimeException(
+                    String.format("Couldn't instantiate a URL as 'http://localhost:%d/'", portNumber));
         }
     }
 
-    public int  port() {
+    public int port() {
         return portNumber;
     }
 
@@ -76,13 +77,15 @@ public class JenkinsInstance implements TestRule {
         this.portNumber = portNumber;
     }
 
-    public <ATR extends ApplicativeTestRule<JenkinsInstance>> JenkinsInstance beforeStartApply(List<ATR> customRulesToBeApplied) {
+    public <ATR extends ApplicativeTestRule<JenkinsInstance>> JenkinsInstance beforeStartApply(
+            List<ATR> customRulesToBeApplied) {
         this.customRulesToApplyBeforeStart = List.copyOf(customRulesToBeApplied);
 
         return this;
     }
 
-    public <ATR extends ApplicativeTestRule<JenkinsInstance>> JenkinsInstance afterStartApply(List<ATR> customRulesToBeApplied) {
+    public <ATR extends ApplicativeTestRule<JenkinsInstance>> JenkinsInstance afterStartApply(
+            List<ATR> customRulesToBeApplied) {
         this.customRulesToApplyAfterStart = List.copyOf(customRulesToBeApplied);
 
         return this;
@@ -90,7 +93,8 @@ public class JenkinsInstance implements TestRule {
 
     @Override
     public Statement apply(final Statement base, final Description description) {
-        return chainOf(ListFunctions.concat(customRulesToApplyBeforeStart, defaultRules, customRulesToApplyAfterStart)).apply(base, description);
+        return chainOf(ListFunctions.concat(customRulesToApplyBeforeStart, defaultRules, customRulesToApplyAfterStart))
+                .apply(base, description);
     }
 
     private <ATR extends ApplicativeTestRule<JenkinsInstance>> RuleChain chainOf(List<ATR> rules) {

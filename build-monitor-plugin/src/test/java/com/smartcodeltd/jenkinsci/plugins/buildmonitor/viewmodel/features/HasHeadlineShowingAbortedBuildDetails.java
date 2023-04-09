@@ -40,8 +40,9 @@ public class HasHeadlineShowingAbortedBuildDetails {
     @Test
     public void should_tell_who_aborted_the_build() {
         try (MockedStatic<User> mockedUser = mockStatic(User.class)) {
-            view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(
-                    a(job().whereTheLast(build().wasAbortedBy("Abe", mockedUser)))));
+            view = a(jobView()
+                    .which(hasHeadlineThatShowsCommitters())
+                    .of(a(job().whereTheLast(build().wasAbortedBy("Abe", mockedUser)))));
 
             assertThat(headlineOf(view), is("Execution aborted by Abe"));
         }
@@ -49,8 +50,9 @@ public class HasHeadlineShowingAbortedBuildDetails {
 
     @Test
     public void should_tell_if_a_build_was_aborted() {
-        view = a(jobView().which(hasHeadlineThatDoesNotShowCommitters()).of(
-                a(job().whereTheLast(build().wasAbortedBy("Abe", null)))));
+        view = a(jobView()
+                .which(hasHeadlineThatDoesNotShowCommitters())
+                .of(a(job().whereTheLast(build().wasAbortedBy("Abe", null)))));
 
         assertThat(headlineOf(view), is("Execution aborted"));
     }

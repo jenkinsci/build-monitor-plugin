@@ -17,10 +17,10 @@ class BuildCulpritsWorkflowRun extends BuildCulpritsRetriever {
     public Set<String> getCulprits(Run<?, ?> run) {
         WorkflowRun workflowRun = (WorkflowRun) run;
         Set<String> culprits = new TreeSet<>();
-        //Workaround while waiting for https://issues.jenkins-ci.org/browse/JENKINS-24141
+        // Workaround while waiting for https://issues.jenkins-ci.org/browse/JENKINS-24141
         WorkflowRun previous = workflowRun.getPreviousCompletedBuild();
         if (workflowRun.isBuilding()) {
-            //We are currently building so add culprits from previous build (if any)
+            // We are currently building so add culprits from previous build (if any)
             if (previous != null) {
                 Result previousResult = previous.getResult();
                 if (previousResult != null && previousResult.isWorseThan(Result.SUCCESS)) {
@@ -30,7 +30,7 @@ class BuildCulpritsWorkflowRun extends BuildCulpritsRetriever {
         }
         culprits.addAll(getCommitters(workflowRun));
 
-        //Get culprits from earlier builds
+        // Get culprits from earlier builds
         if (previous != null && previous.getPreviousNotFailedBuild() != null) {
             culprits.addAll(getCulpritsForRun(previous.getPreviousNotFailedBuild(), previous));
         }

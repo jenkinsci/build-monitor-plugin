@@ -18,8 +18,7 @@ public class DisplayJunitRealtimeProgress implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-            Scroll.to(ViewConfigurationPage.Display_JUnit_Realtime_Progress),
-            CheckCheckbox.of(ViewConfigurationPage.Display_JUnit_Realtime_Progress)
-        );
+                Scroll.to(ViewConfigurationPage.Display_JUnit_Realtime_Progress),
+                CheckCheckbox.of(ViewConfigurationPage.Display_JUnit_Realtime_Progress));
     }
 }

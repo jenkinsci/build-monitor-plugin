@@ -11,13 +11,10 @@ import org.junit.Test;
 public class BreadthFirstNodeTraversalTest {
     @Test
     public void traversal_should_identify_the_stage_nodes() {
-        TestNode head = normalNode("A1",
-                withParent(stageNode("B1",
-                        withParent(normalNode("C1")),
-                        withParent(normalNode("C2")))),
-                withParent(stageNode("B2",
-                        withParent(normalNode("C3")),
-                        withParent(normalNode("C4")))),
+        TestNode head = normalNode(
+                "A1",
+                withParent(stageNode("B1", withParent(normalNode("C1")), withParent(normalNode("C2")))),
+                withParent(stageNode("B2", withParent(normalNode("C3")), withParent(normalNode("C4")))),
                 withParent(normalNode("B3")));
 
         List<String> stages = findStages(head);
@@ -27,9 +24,7 @@ public class BreadthFirstNodeTraversalTest {
 
     @Test
     public void stages_should_not_be_repeated() {
-        TestNode head = normalNode("A1",
-                withParent(stageNode("B1")),
-                withParent(stageNode("B1")));
+        TestNode head = normalNode("A1", withParent(stageNode("B1")), withParent(stageNode("B1")));
 
         List<String> stages = findStages(head);
 
@@ -43,7 +38,8 @@ public class BreadthFirstNodeTraversalTest {
     }
 
     private enum Type {
-        STAGE, NORMAL
+        STAGE,
+        NORMAL
     }
 
     private static class TestNode {

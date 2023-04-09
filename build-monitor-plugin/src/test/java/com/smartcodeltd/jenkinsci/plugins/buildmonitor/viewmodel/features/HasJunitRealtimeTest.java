@@ -47,27 +47,33 @@ public class HasJunitRealtimeTest {
 
     @Test
     public void should_ignore_actions_without_test_progress() {
-        job = a(jobView().which(hasJunitRealtime()).of(a(
-                job().whereTheLast(build().isStillBuilding().hasRealtimeTests(realtimeTest().withoutTestProgress())))));
+        job = a(jobView()
+                .which(hasJunitRealtime())
+                .of(a(job().whereTheLast(build().isStillBuilding()
+                        .hasRealtimeTests(realtimeTest().withoutTestProgress())))));
 
         assertThat(serialisedRealtimeTestsDetailsOf(job), is(nullValue()));
     }
 
     @Test
     public void should_show_progress_during_build() {
-        job = a(jobView().which(hasJunitRealtime()).of(a(job().whereTheLast(build().isStillBuilding()
-                .hasRealtimeTests(realtimeTest().withTestProgress(10, 6, 20, 8, "Remaining time text"))))));
+        job = a(jobView()
+                .which(hasJunitRealtime())
+                .of(a(job().whereTheLast(build().isStillBuilding()
+                        .hasRealtimeTests(realtimeTest().withTestProgress(10, 6, 20, 8, "Remaining time text"))))));
 
         assertThat(serialisedRealtimeTestsDetailsOf(job).value(), hasSize(1));
     }
 
     @Test
     public void should_support_multiple_test_actions() {
-        job = a(jobView().which(hasJunitRealtime())
-                .of(a(job().whereTheLast(build().isStillBuilding().hasRealtimeTests(
-                        realtimeTest().withTestProgress(10, 6, 20, 8, "Remaining time text"),
-                        realtimeTest().withTestProgress(10, 6, 20, 8, "Remaining time text"),
-                        realtimeTest().withTestProgress(10, 6, 20, 8, "Remaining time text"))))));
+        job = a(jobView()
+                .which(hasJunitRealtime())
+                .of(a(job().whereTheLast(build().isStillBuilding()
+                        .hasRealtimeTests(
+                                realtimeTest().withTestProgress(10, 6, 20, 8, "Remaining time text"),
+                                realtimeTest().withTestProgress(10, 6, 20, 8, "Remaining time text"),
+                                realtimeTest().withTestProgress(10, 6, 20, 8, "Remaining time text"))))));
 
         assertThat(serialisedRealtimeTestsDetailsOf(job).value(), hasSize(3));
     }
@@ -75,5 +81,4 @@ public class HasJunitRealtimeTest {
     private HasJunitRealtime.RealtimeTests serialisedRealtimeTestsDetailsOf(JobView job) {
         return job.which(HasJunitRealtime.class).asJson();
     }
-
 }

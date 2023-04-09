@@ -5,12 +5,17 @@ public enum Audience {
     EndUsers("users");
 
     private final String name;
+
     Audience(String name) {
         this.name = name;
     }
 
-    public String getValue() { return name; }
+    public String getValue() {
+        return name;
+    }
 
     @Override
-    public String toString() { return name; }
+    public String toString() {
+        return name;
+    }
 }

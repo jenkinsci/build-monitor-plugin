@@ -22,8 +22,7 @@ public class UseFailureCauseManagement implements Task {
         actor.attemptsTo(
                 Click.on(JenkinsHomePageWithBFA.Failure_Cause_Management_Link),
                 defineFailureCauses,
-                Click.on(Breadcrumbs.Jenkins_Link)
-        );
+                Click.on(Breadcrumbs.Jenkins_Link));
     }
 
     private final TodoList defineFailureCauses = TodoList.empty();

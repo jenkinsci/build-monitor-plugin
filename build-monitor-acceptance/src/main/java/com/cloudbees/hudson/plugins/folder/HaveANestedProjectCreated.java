@@ -18,10 +18,7 @@ public class HaveANestedProjectCreated implements Task {
     @Step("{0} creates the '#projectName' project")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                CreateAFreestyleProject.called(projectName),
-                Click.on(FolderDetailsPage.Up_Link)
-        );
+        actor.attemptsTo(CreateAFreestyleProject.called(projectName), Click.on(FolderDetailsPage.Up_Link));
     }
 
     public HaveANestedProjectCreated(String projectName) {

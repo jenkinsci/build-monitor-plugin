@@ -14,7 +14,6 @@ public class DisableExecutingConcurrentBuilds implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 Scroll.to(ProjectConfigurationPage.Do_Not_Allow_Concurrent_Builds),
-                Click.on(ProjectConfigurationPage.Do_Not_Allow_Concurrent_Builds)
-        );
+                Click.on(ProjectConfigurationPage.Do_Not_Allow_Concurrent_Builds));
     }
 }

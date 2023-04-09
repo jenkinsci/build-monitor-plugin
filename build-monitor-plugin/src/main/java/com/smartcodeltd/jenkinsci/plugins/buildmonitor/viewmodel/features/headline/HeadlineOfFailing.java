@@ -24,7 +24,8 @@ public class HeadlineOfFailing implements CandidateHeadline {
 
     @Override
     public boolean isApplicableTo(JobView job) {
-        return Result.FAILURE.equals(job.lastCompletedBuild().result()) || Result.UNSTABLE.equals(job.lastCompletedBuild().result());
+        return Result.FAILURE.equals(job.lastCompletedBuild().result())
+                || Result.UNSTABLE.equals(job.lastCompletedBuild().result());
     }
 
     @Override
@@ -35,21 +36,16 @@ public class HeadlineOfFailing implements CandidateHeadline {
     private String text(BuildViewModel lastBuild) {
         List<BuildViewModel> failedBuildsNewestToOldest = failedBuildsSince(lastBuild);
 
-        String buildsFailedSoFar = Pluraliser.pluralise(
-                "%s build has failed",
-                "%s builds have failed",
-                failedBuildsNewestToOldest.size()
-        );
+        String buildsFailedSoFar =
+                Pluraliser.pluralise("%s build has failed", "%s builds have failed", failedBuildsNewestToOldest.size());
 
-        BuildViewModel firstFailedBuild = failedBuildsNewestToOldest.isEmpty()
-                ? lastBuild
-                : getLast(failedBuildsNewestToOldest);
+        BuildViewModel firstFailedBuild =
+                failedBuildsNewestToOldest.isEmpty() ? lastBuild : getLast(failedBuildsNewestToOldest);
 
         return Lister.describe(
                 buildsFailedSoFar,
                 buildsFailedSoFar + " since %s committed their changes",
-                new LinkedList<>(responsibleFor(firstFailedBuild))
-        );
+                new LinkedList<>(responsibleFor(firstFailedBuild)));
     }
 
     private static <T> T getLast(List<T> list) {
@@ -64,13 +60,13 @@ public class HeadlineOfFailing implements CandidateHeadline {
 
         List<BuildViewModel> failedBuilds = new ArrayList<>();
 
-        while (! Result.SUCCESS.equals(currentBuild.result())) {
+        while (!Result.SUCCESS.equals(currentBuild.result())) {
 
-            if (! currentBuild.isRunning()) {
+            if (!currentBuild.isRunning()) {
                 failedBuilds.add(currentBuild);
             }
 
-            if (! currentBuild.hasPreviousBuild()) {
+            if (!currentBuild.hasPreviousBuild()) {
                 break;
             }
 
@@ -81,8 +77,6 @@ public class HeadlineOfFailing implements CandidateHeadline {
     }
 
     private Set<String> responsibleFor(BuildViewModel build) {
-        return config.displayCommitters
-                ? build.culprits()
-                : new HashSet<>();
+        return config.displayCommitters ? build.culprits() : new HashSet<>();
     }
 }

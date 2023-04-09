@@ -24,8 +24,7 @@ public class AddAPostBuildAction implements Task {
                 Sleep.of(1, TimeUnit.SECONDS),
                 Click.on(ProjectConfigurationPage.Add_Post_Build_Action),
                 Sleep.of(1, TimeUnit.SECONDS),
-                Click.on(Link.called(postBuildActionName))
-        );
+                Click.on(Link.called(postBuildActionName)));
     }
 
     public AddAPostBuildAction(String postBuildActionName) {

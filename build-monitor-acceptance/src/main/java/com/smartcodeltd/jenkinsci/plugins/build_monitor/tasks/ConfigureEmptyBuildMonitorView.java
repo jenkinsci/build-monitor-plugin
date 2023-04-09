@@ -19,10 +19,7 @@ public class ConfigureEmptyBuildMonitorView implements Task {
     @Override
     @Step("{0} configures the Build Monitor View")
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                configureTheView,
-                SaveTheChangesToBuildMonitor.andExitTheConfigurationScreen()
-        );
+        actor.attemptsTo(configureTheView, SaveTheChangesToBuildMonitor.andExitTheConfigurationScreen());
     }
 
     public ConfigureEmptyBuildMonitorView(List<Performable> actions) {

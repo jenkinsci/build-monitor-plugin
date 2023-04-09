@@ -39,12 +39,12 @@ public class HasHeadline implements Feature<Headline> {
 
     private CandidateHeadline headlineOf(final JobView job) {
         List<CandidateHeadline> availableHeadlines = new ArrayList<>();
-        Collections.addAll(availableHeadlines,
+        Collections.addAll(
+                availableHeadlines,
                 new HeadlineOfExecuting(job, config),
                 new HeadlineOfAborted(job, config),
                 new HeadlineOfFixed(job, config),
-                new HeadlineOfFailing(job, config)
-        );
+                new HeadlineOfFailing(job, config));
 
         return availableHeadlines.stream()
                 .filter(candidateHeadline -> candidateHeadline.isApplicableTo(job))

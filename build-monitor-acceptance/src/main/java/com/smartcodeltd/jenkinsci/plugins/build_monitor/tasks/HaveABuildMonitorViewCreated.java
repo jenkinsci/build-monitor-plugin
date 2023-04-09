@@ -15,8 +15,7 @@ public class HaveABuildMonitorViewCreated implements Task {
     @Step("{0} creates a 'Build Monitor View' showing all the projects")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                DisplayAllProjects.usingARegularExpression()
-        ));
+        actor.attemptsTo(CreateABuildMonitorView.called("Build Monitor")
+                .andConfigureItTo(DisplayAllProjects.usingARegularExpression()));
     }
 }

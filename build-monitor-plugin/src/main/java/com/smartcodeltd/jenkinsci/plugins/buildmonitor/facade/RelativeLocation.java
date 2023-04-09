@@ -20,8 +20,8 @@ public class RelativeLocation {
         ItemGroup ig = null;
 
         StaplerRequest request = Stapler.getCurrentRequest();
-        for( Ancestor a : request.getAncestors() ) {
-            if(a.getObject() instanceof BuildMonitorView) {
+        for (Ancestor a : request.getAncestors()) {
+            if (a.getObject() instanceof BuildMonitorView) {
                 ig = ((View) a.getObject()).getOwner().getItemGroup();
             }
         }
@@ -32,7 +32,6 @@ public class RelativeLocation {
     public String url() {
         return Functions.getRelativeLinkTo(job);
     }
-
 
     private RelativeLocation(Job job) {
         this.job = job;

@@ -29,7 +29,6 @@ public class TimeMachine {
         return this.systemTime;
     }
 
-
     private TimeMachine(Date currentTime) {
         this.systemTime = currentTime;
     }

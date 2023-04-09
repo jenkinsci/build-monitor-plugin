@@ -22,8 +22,7 @@ public class AddABuildStep implements Task {
                 Click.on(ProjectConfigurationPage.Build_Steps),
                 Sleep.of(1, TimeUnit.SECONDS),
                 Click.on(ProjectConfigurationPage.Add_Build_Step),
-                Click.on(Link.called(buildStepName))
-        );
+                Click.on(Link.called(buildStepName)));
     }
 
     public AddABuildStep(String buildStepName) {

@@ -27,8 +27,7 @@ public class HaveAPipelineProjectCreated implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 CreateAPipelineProject.called(projectName).andConfigureItTo(requiredConfiguration),
-                Click.on(SidePanel.Back_to_Dashboard)
-        );
+                Click.on(SidePanel.Back_to_Dashboard));
     }
 
     public HaveAPipelineProjectCreated(String projectName) {

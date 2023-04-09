@@ -18,9 +18,8 @@ public class AddAGroovyPostbuildScript implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-        	AddAPostBuildAction.called("Groovy Postbuild"),
-            Enter.theValue(scriptOutcome.code()).into(GroovyPostBuildStep.Editor)
-        );
+                AddAPostBuildAction.called("Groovy Postbuild"),
+                Enter.theValue(scriptOutcome.code()).into(GroovyPostBuildStep.Editor));
     }
 
     public AddAGroovyPostbuildScript(GroovyScript script) {

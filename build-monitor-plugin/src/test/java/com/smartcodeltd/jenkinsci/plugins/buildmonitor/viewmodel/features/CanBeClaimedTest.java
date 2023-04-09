@@ -54,16 +54,14 @@ public class CanBeClaimedTest {
 
     @Test
     public void should_know_if_a_failing_build_has_not_been_claimed() {
-        job = a(jobView().which(new CanBeClaimed()).of(
-                a(job().whereTheLast(build().finishedWith(Result.FAILURE)))));
+        job = a(jobView().which(new CanBeClaimed()).of(a(job().whereTheLast(build().finishedWith(Result.FAILURE)))));
 
         assertThat(serialisedClaimOf(job), is(nullValue()));
     }
 
     @Test
     public void should_complain_if_the_build_was_not_claimable() {
-        job = a(jobView().of(
-                a(job().withName("my-project").whereTheLast(build().finishedWith(Result.FAILURE)))));
+        job = a(jobView().of(a(job().withName("my-project").whereTheLast(build().finishedWith(Result.FAILURE)))));
 
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> job.which(CanBeClaimed.class));
         assertEquals("CanBeClaimed is not a feature of this project: 'my-project'", thrown.getMessage());

@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class BuildCulpritsNotImplemented extends BuildCulpritsRetriever {
 
-    BuildCulpritsNotImplemented() { }
+    BuildCulpritsNotImplemented() {}
 
     @Override
     public Set<String> getCulprits(Run<?, ?> run) {

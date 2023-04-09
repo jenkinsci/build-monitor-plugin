@@ -31,16 +31,15 @@ public class ShouldDisplayConcurrentBuilds extends BuildMonitorAcceptanceTest {
 
     @Test
     public void displaying_concurrent_builds() {
-        givenThat(dave).wasAbleTo(
-                Navigate.to(jenkins.url()),
-                HaveAProjectCreated.called(My_App).andConfiguredTo(
-                        Enable.executingConcurrentBuilds(),
-                        ExecuteAShellScript.that(sleepsFor(300))
-                ),
-                ScheduleABuild.of(My_App),
-                Navigate.to(jenkins.url()),
-                ScheduleABuild.of(My_App)
-        );
+        givenThat(dave)
+                .wasAbleTo(
+                        Navigate.to(jenkins.url()),
+                        HaveAProjectCreated.called(My_App)
+                                .andConfiguredTo(
+                                        Enable.executingConcurrentBuilds(), ExecuteAShellScript.that(sleepsFor(300))),
+                        ScheduleABuild.of(My_App),
+                        Navigate.to(jenkins.url()),
+                        ScheduleABuild.of(My_App));
 
         when(dave).attemptsTo(HaveABuildMonitorViewCreated.showingAllTheProjects());
 
@@ -48,8 +47,6 @@ public class ShouldDisplayConcurrentBuilds extends BuildMonitorAcceptanceTest {
     }
 
     private ShellScript sleepsFor(int seconds) {
-        return ShellScript.that("simulates executing a build").definedAs(
-            String.format("sleep %d;", seconds)
-        );
+        return ShellScript.that("simulates executing a build").definedAs(String.format("sleep %d;", seconds));
     }
 }

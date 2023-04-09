@@ -40,20 +40,15 @@ public class SandboxJenkinsHome implements ApplicativeTestRule<JenkinsInstance> 
 
     private Path temporaryJenkinsHomeFor(Description test) {
         try {
-            return Files.createTempDirectory(
-                    Files.createDirectories(rootDirectory),
-                    fileSystemSafeNameOf(test) + "_"
-            );
+            return Files.createTempDirectory(Files.createDirectories(rootDirectory), fileSystemSafeNameOf(test) + "_");
         } catch (IOException e) {
-            throw new RuntimeException(String.format("Couldn't create a temporary directory for '%s' at '%s'.", test, rootDirectory), e);
+            throw new RuntimeException(
+                    String.format("Couldn't create a temporary directory for '%s' at '%s'.", test, rootDirectory), e);
         }
     }
 
     private String fileSystemSafeNameOf(Description description) {
-        return String.format("%s_%s",
-                simplified(description.getClassName()),
-                description.getMethodName()
-        );
+        return String.format("%s_%s", simplified(description.getClassName()), description.getMethodName());
     }
 
     private String simplified(String className) {

@@ -68,7 +68,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
             build.getClass().getMethod("shouldCalculateCulprits");
             newJenkins = true;
         } catch (NoSuchMethodException ignore) {
-            //If old Jenkins, variable "newJenkins" will still be false
+            // If old Jenkins, variable "newJenkins" will still be false
         }
         return newJenkins ? withChangesFromForJenkins2_107AndNewer(authors) : withChangesFromForJenkins2_46(authors);
     }
@@ -84,7 +84,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         return this;
     }
 
-    //Mockito reflective call to handle methods not available in Jenkins 2.46 which is used as dependency
+    // Mockito reflective call to handle methods not available in Jenkins 2.46 which is used as dependency
     private BuildStateRecipe withChangesFromForJenkins2_107AndNewer(String... authors) {
         ChangeLogSet changeSet = changeSetBasedOn(entriesBy(authors));
         when(build.getChangeSet()).thenReturn(changeSet);
@@ -178,7 +178,9 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
         User user = userCalled(username);
 
         if (mockedUser != null) {
-            mockedUser.when(() -> User.get(Mockito.eq(user.getId()), Mockito.eq(false), Mockito.anyMap())).thenReturn(user); // For newer Jenkins versions
+            mockedUser
+                    .when(() -> User.get(Mockito.eq(user.getId()), Mockito.eq(false), Mockito.anyMap()))
+                    .thenReturn(user); // For newer Jenkins versions
         }
 
         final InterruptedBuildAction action = interruptedBuildAction(user);
@@ -209,7 +211,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
     private FailureCauseBuildAction failureCauseBuildAction(String... FailureNames) {
         FailureCauseBuildAction action = mock(FailureCauseBuildAction.class);
         List<FoundFailureCause> items = new ArrayList<>();
-        for( String name : FailureNames ) {
+        for (String name : FailureNames) {
             items.add(failure(name));
         }
         when(action.getFoundFailureCauses()).thenReturn(items);
@@ -242,7 +244,7 @@ public class BuildStateRecipe implements Supplier<AbstractBuild<?, ?>> {
 
         return this;
     }
-    
+
     public BuildStateRecipe and() {
         return this;
     }

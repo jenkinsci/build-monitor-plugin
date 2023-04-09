@@ -31,7 +31,10 @@ public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstan
             @Override
             protected void starting(Description description) {
                 Path pluginsDir = jenkins.home().resolve("plugins");
-                Log.info("Installing {} into {}", pluginsToInstall.stream().map(Object::toString).collect(Collectors.joining(", ")), pluginsDir);
+                Log.info(
+                        "Installing {} into {}",
+                        pluginsToInstall.stream().map(Object::toString).collect(Collectors.joining(", ")),
+                        pluginsDir);
                 copyPlugins(pluginsToInstall, pluginsDir);
             }
 
@@ -41,16 +44,22 @@ public class InstallPluginsFromDisk implements ApplicativeTestRule<JenkinsInstan
                     Files.createDirectories(pluginsDir);
 
                     for (Path plugin : plugins) {
-                        Files.copy(existing(plugin), pluginsDir.resolve(plugin.getFileName().toString().replace(".hpi", ".jpi")), StandardCopyOption.REPLACE_EXISTING);
+                        Files.copy(
+                                existing(plugin),
+                                pluginsDir.resolve(
+                                        plugin.getFileName().toString().replace(".hpi", ".jpi")),
+                                StandardCopyOption.REPLACE_EXISTING);
                     }
                 } catch (IOException e) {
-                    throw new RuntimeException(String.format("Couldn't install '%s' under '%s'", plugins, pluginsDir.toAbsolutePath()));
+                    throw new RuntimeException(
+                            String.format("Couldn't install '%s' under '%s'", plugins, pluginsDir.toAbsolutePath()));
                 }
             }
 
             private Path existing(Path plugin) {
                 if (!Files.exists(plugin)) {
-                  throw new IllegalArgumentException(String.format("Plugin file '%s' doesn't exist and couldn't be installed.", plugin));
+                    throw new IllegalArgumentException(
+                            String.format("Plugin file '%s' doesn't exist and couldn't be installed.", plugin));
                 }
 
                 return plugin;

@@ -22,10 +22,7 @@ public class ConfigureViewSettings implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                Sleep.of(1, TimeUnit.SECONDS),
-                Scroll.to(target),
-                Sleep.of(1, TimeUnit.SECONDS),
-                Click.on(target));
+                Sleep.of(1, TimeUnit.SECONDS), Scroll.to(target), Sleep.of(1, TimeUnit.SECONDS), Click.on(target));
     }
 
     public ConfigureViewSettings(Target target) {

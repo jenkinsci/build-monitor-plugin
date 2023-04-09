@@ -23,10 +23,7 @@ public class HaveAFolderCreated implements Task {
     @Step("{0} creates and configures the '#name' folder")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                CreateAFolder.called(name),
-                configurationTasks
-        );
+        actor.attemptsTo(CreateAFolder.called(name), configurationTasks);
     }
 
     public HaveAFolderCreated(String name) {

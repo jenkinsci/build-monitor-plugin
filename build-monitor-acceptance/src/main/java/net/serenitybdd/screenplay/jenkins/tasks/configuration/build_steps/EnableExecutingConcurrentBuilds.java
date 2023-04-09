@@ -11,8 +11,6 @@ public class EnableExecutingConcurrentBuilds implements Task {
     @Step("{0} enables executing concurrent builds")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                Click.on(ProjectConfigurationPage.Execute_Concurrent_Builds)
-        );
+        actor.attemptsTo(Click.on(ProjectConfigurationPage.Execute_Concurrent_Builds));
     }
 }

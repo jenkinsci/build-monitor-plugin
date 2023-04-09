@@ -22,25 +22,26 @@ public class PluginDescription {
                     pluginAtPath,
                     attrs.getValue("Long-Name"),
                     attrs.getValue("Plugin-Version"),
-                    attrs.getValue("Jenkins-Version")
-            );
-        }
-        catch (IOException e) {
-            throw new RuntimeException(String.format("Couldn't read the manifest file of '%s'.", pluginAtPath.toAbsolutePath()), e);
-        }
-        finally {
-            if (jarFile != null){
+                    attrs.getValue("Jenkins-Version"));
+        } catch (IOException e) {
+            throw new RuntimeException(
+                    String.format("Couldn't read the manifest file of '%s'.", pluginAtPath.toAbsolutePath()), e);
+        } finally {
+            if (jarFile != null) {
                 try {
                     jarFile.close();
                 } catch (IOException e) {
-                    Log.error("error closing jarFile",e);
+                    Log.error("error closing jarFile", e);
                 }
-
             }
         }
     }
 
-    public PluginDescription(@NonNull Path pathToPluginUnderTest, @NonNull String fullName, @NonNull String version, @NonNull String requiredJenkinsVersion) {
+    public PluginDescription(
+            @NonNull Path pathToPluginUnderTest,
+            @NonNull String fullName,
+            @NonNull String version,
+            @NonNull String requiredJenkinsVersion) {
         this.path = pathToPluginUnderTest;
         this.fullName = fullName;
         this.version = version;

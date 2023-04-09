@@ -11,8 +11,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.duration.Durati
 public class KnowsLastCompletedBuildDetails implements Feature<KnowsLastCompletedBuildDetails.LastCompletedBuild> {
     private JobView job;
 
-    public KnowsLastCompletedBuildDetails(/* config */) {
-    }
+    public KnowsLastCompletedBuildDetails(/* config */ ) {}
 
     @Override
     public KnowsLastCompletedBuildDetails of(JobView jobView) {
@@ -27,9 +26,7 @@ public class KnowsLastCompletedBuildDetails implements Feature<KnowsLastComplete
     }
 
     private static String formatted(Duration duration) {
-        return null != duration
-                ? duration.value()
-                : "";
+        return null != duration ? duration.value() : "";
     }
 
     public static class LastCompletedBuild {

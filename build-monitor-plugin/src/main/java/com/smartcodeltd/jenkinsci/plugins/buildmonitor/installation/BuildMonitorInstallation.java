@@ -14,7 +14,7 @@ public class BuildMonitorInstallation {
     }
 
     public BuildMonitorInstallation(StaticJenkinsAPIs jenkinsAPIs) {
-        this.jenkins   = jenkinsAPIs;
+        this.jenkins = jenkinsAPIs;
     }
 
     /**
@@ -36,7 +36,7 @@ public class BuildMonitorInstallation {
     }
 
     public Audience audience() {
-        return (jenkins.isDevelopmentMode() || buildMonitorVersion().contains("SNAPSHOT"))
+        return jenkins.isDevelopmentMode() || buildMonitorVersion().contains("SNAPSHOT")
                 ? Audience.BuildMonitorDevelopers
                 : Audience.EndUsers;
     }

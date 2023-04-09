@@ -17,9 +17,7 @@ public class SetPipelineDefinition implements Task {
     @Step("{0} configures the Pipeline Defintion to execute '#pipelineDefintion'")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                EnterCode.asFollows(pipelineDefintion).intoThePipelineEditor(PipelineDefinition.Editor)
-        );
+        actor.attemptsTo(EnterCode.asFollows(pipelineDefintion).intoThePipelineEditor(PipelineDefinition.Editor));
     }
 
     public SetPipelineDefinition(String pipelineDefintion) {
@@ -27,5 +25,4 @@ public class SetPipelineDefinition implements Task {
     }
 
     private final String pipelineDefintion;
-
 }

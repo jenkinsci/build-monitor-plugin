@@ -33,14 +33,13 @@ public class CreateABuildMonitorView implements Task {
                 Click.on(NewViewPage.Build_Monitor_View),
                 Click.on(Buttons.Create),
                 configureBuildMonitor,
-                SaveTheChangesToBuildMonitor.andExitTheConfigurationScreen()
-        );
+                SaveTheChangesToBuildMonitor.andExitTheConfigurationScreen());
     }
 
     public CreateABuildMonitorView(String name) {
         this.buildMonitorName = name;
     }
 
-    private final String   buildMonitorName;
+    private final String buildMonitorName;
     private final TodoList configureBuildMonitor = TodoList.empty();
 }

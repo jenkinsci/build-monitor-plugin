@@ -54,7 +54,8 @@ public class JenkinsLogWatcher implements AutoCloseable, Runnable {
             }
         } catch (IOException e) {
             if (stop && "Stream closed".equals(e.getMessage())) {
-                Log.debug("Jenkins OutputStream was closed, but that was expected since we're stopping the log watcher.");
+                Log.debug(
+                        "Jenkins OutputStream was closed, but that was expected since we're stopping the log watcher.");
             } else {
                 throw new RuntimeException("Jenkins output stream is already closed", e);
             }

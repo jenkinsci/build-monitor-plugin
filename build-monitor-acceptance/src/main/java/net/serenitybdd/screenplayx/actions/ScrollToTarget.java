@@ -8,16 +8,16 @@ import net.serenitybdd.screenplay.targets.Target;
 import org.openqa.selenium.WebElement;
 
 public class ScrollToTarget implements Interaction {
-    
+
     private static final Map<String, String> centerAlignOptions;
-    
+
     static {
         centerAlignOptions = new HashMap<>();
         centerAlignOptions.put("behavior", "auto");
         centerAlignOptions.put("block", "center");
         centerAlignOptions.put("inline", "center");
     }
-    
+
     private final Target target;
     private String alignTo = "middle";
 
@@ -43,25 +43,25 @@ public class ScrollToTarget implements Interaction {
         return this;
     }
 
+    @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(scrollTo(target.resolveFor(actor), alignTo)
-        );
+        actor.attemptsTo(scrollTo(target.resolveFor(actor), alignTo));
     }
 
     private Evaluate scrollTo(WebElement element, String alignTo) {
         Object args;
         switch (alignTo) {
-        case "top":
-            args = Boolean.TRUE;
-            break;
-        case "bottom":
-            args = Boolean.FALSE;
-            break;
-        default:
-            args = centerAlignOptions;
-            break;
+            case "top":
+                args = Boolean.TRUE;
+                break;
+            case "bottom":
+                args = Boolean.FALSE;
+                break;
+            default:
+                args = centerAlignOptions;
+                break;
         }
-        
+
         return Evaluate.javascript("arguments[0].scrollIntoView(arguments[1]);", element, args);
     }
 }

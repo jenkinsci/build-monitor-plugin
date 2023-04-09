@@ -21,11 +21,10 @@ public class DisplayAllProjects implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-            Sleep.of(1, TimeUnit.SECONDS),
-            Scroll.to(ViewConfigurationPage.Use_Regular_Expression),
-            Sleep.of(1, TimeUnit.SECONDS),
-            Click.on(ViewConfigurationPage.Use_Regular_Expression),
-            Enter.theValue(".*").into(ViewConfigurationPage.Regular_Expression)
-        );
+                Sleep.of(1, TimeUnit.SECONDS),
+                Scroll.to(ViewConfigurationPage.Use_Regular_Expression),
+                Sleep.of(1, TimeUnit.SECONDS),
+                Click.on(ViewConfigurationPage.Use_Regular_Expression),
+                Enter.theValue(".*").into(ViewConfigurationPage.Regular_Expression));
     }
 }

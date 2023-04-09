@@ -32,27 +32,26 @@ public class ShouldDisplayTestProgress extends BuildMonitorAcceptanceTest {
 
     @Test
     public void display_tests_progress_bar() {
-        givenThat(richard).wasAbleTo(
-                Navigate.to(jenkins.url()),
-                HaveAPipelineProjectCreated.called("My Pipeline").andConfiguredTo(
-                        SetPipelineDefinition.asFollows(GroovyScriptThat.Pause_In_Middle_Of_Tests.code()),
-                        Disable.executingConcurrentBuilds()
-                ),
+        givenThat(richard)
+                .wasAbleTo(
+                        Navigate.to(jenkins.url()),
+                        HaveAPipelineProjectCreated.called("My Pipeline")
+                                .andConfiguredTo(
+                                        SetPipelineDefinition.asFollows(
+                                                GroovyScriptThat.Pause_In_Middle_Of_Tests.code()),
+                                        Disable.executingConcurrentBuilds()),
+                        ScheduleABuild.of("My Pipeline"),
+                        Navigate.to(jenkins.url()),
+                        ScheduleABuild.of("My Pipeline"));
 
-                ScheduleABuild.of("My Pipeline"),
-                Navigate.to(jenkins.url()),
-                ScheduleABuild.of("My Pipeline")
-        );
+        when(richard)
+                .attemptsTo(CreateABuildMonitorView.called("Build Monitor")
+                        .andConfigureItTo(
+                                DisplayAllProjects.usingARegularExpression(), DisplayJunitRealtimeProgress.bars()));
 
-        when(richard).attemptsTo(CreateABuildMonitorView.called("Build Monitor").andConfigureItTo(
-                DisplayAllProjects.usingARegularExpression(),
-                DisplayJunitRealtimeProgress.bars()
-        ));
-        
-
-        then(richard).should(seeThat(ProjectWidget.of("My Pipeline").testProgressBars(),
-                WebElementStateMatchers.isCurrentlyVisible()
-        ));
+        then(richard)
+                .should(seeThat(
+                        ProjectWidget.of("My Pipeline").testProgressBars(),
+                        WebElementStateMatchers.isCurrentlyVisible()));
     }
-
 }

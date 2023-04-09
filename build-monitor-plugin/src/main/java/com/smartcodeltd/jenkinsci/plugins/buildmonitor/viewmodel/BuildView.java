@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class BuildView implements BuildViewModel {
 
-    private final Run<?,?> build;
+    private final Run<?, ?> build;
     private final boolean isPipeline;
     private final RelativeLocation parentJobLocation;
     private final Date systemTime;
@@ -28,7 +28,8 @@ public class BuildView implements BuildViewModel {
         return new BuildView(build, false, RelativeLocation.of(build.getParent()), new Date());
     }
 
-    public static BuildView of(Run<?, ?> build, boolean isPipeline, RelativeLocation parentJobLocation, Date systemTime) {
+    public static BuildView of(
+            Run<?, ?> build, boolean isPipeline, RelativeLocation parentJobLocation, Date systemTime) {
         return new BuildView(build, isPipeline, parentJobLocation, systemTime);
     }
 
@@ -79,7 +80,7 @@ public class BuildView implements BuildViewModel {
 
     @Override
     public int progress() {
-        if (! isRunning()) {
+        if (!isRunning()) {
             return 0;
         }
 
@@ -87,8 +88,7 @@ public class BuildView implements BuildViewModel {
             return 100;
         }
 
-        long elapsedTime       = now() - whenTheBuildStarted(),
-             estimatedDuration = build.getEstimatedDuration();
+        long elapsedTime = now() - whenTheBuildStarted(), estimatedDuration = build.getEstimatedDuration();
 
         if (estimatedDuration > 0) {
             return (int) ((float) elapsedTime / (float) estimatedDuration * 100);
@@ -143,7 +143,7 @@ public class BuildView implements BuildViewModel {
     public <A extends Action> Optional<A> detailsOf(Class<A> jenkinsAction) {
         return Optional.ofNullable(build.getAction(jenkinsAction));
     }
-    
+
     @Override
     public <A extends Action> List<A> allDetailsOf(Class<A> jenkinsAction) {
         return build.getActions(jenkinsAction);
@@ -161,7 +161,6 @@ public class BuildView implements BuildViewModel {
     private long whenTheBuildStarted() {
         return build.getTimestamp().getTimeInMillis();
     }
-
 
     private BuildView(Run<?, ?> build, boolean isPipeline, RelativeLocation parentJobLocation, Date systemTime) {
         this.build = build;

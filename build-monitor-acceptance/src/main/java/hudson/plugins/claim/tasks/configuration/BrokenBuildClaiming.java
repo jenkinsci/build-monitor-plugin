@@ -16,8 +16,6 @@ public class BrokenBuildClaiming implements Task {
     @Step("{0} allows for a broken build to be claimed")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                AddAPostBuildAction.called("Allow broken build claiming")
-        );
+        actor.attemptsTo(AddAPostBuildAction.called("Allow broken build claiming"));
     }
 }

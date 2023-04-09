@@ -27,13 +27,12 @@ public class Claim implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-            Click.on(Link.called(project)),
-            Click.on(ProjectDetailsPage.Last_Failed_Build_Link),
-            Click.on(ClaimableBuildDetailsPage.Claim_It_Link),
-            Scroll.to(ClaimableBuildDetailsPage.Reason_Field),
-            Enter.theValue(reason).into(ClaimableBuildDetailsPage.Reason_Field),
-            Click.on(ClaimableBuildDetailsPage.Claim_Button)
-        );
+                Click.on(Link.called(project)),
+                Click.on(ProjectDetailsPage.Last_Failed_Build_Link),
+                Click.on(ClaimableBuildDetailsPage.Claim_It_Link),
+                Scroll.to(ClaimableBuildDetailsPage.Reason_Field),
+                Enter.theValue(reason).into(ClaimableBuildDetailsPage.Reason_Field),
+                Click.on(ClaimableBuildDetailsPage.Claim_Button));
     }
 
     private final String project;

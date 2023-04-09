@@ -13,22 +13,22 @@ public class ByLastBuildTime implements Comparator<Job<?, ?>>, Serializable {
     @Override
     public int compare(Job<?, ?> a, Job<?, ?> b) {
 
-    	// none of them executed
-    	if (a.getLastBuild() == null && b.getLastBuild() == null) {
-    		return 0;
-    	}
+        // none of them executed
+        if (a.getLastBuild() == null && b.getLastBuild() == null) {
+            return 0;
+        }
 
-    	// only job B executed, so job A is older than job B
-    	if (a.getLastBuild() == null && b.getLastBuild() != null) {
-    		return 1;
-    	}
+        // only job B executed, so job A is older than job B
+        if (a.getLastBuild() == null && b.getLastBuild() != null) {
+            return 1;
+        }
 
-    	// only job A executed, so job A is newer than Job B
-    	if (a.getLastBuild() != null && b.getLastBuild() == null) {
-    		return -1;
-    	}
+        // only job A executed, so job A is newer than Job B
+        if (a.getLastBuild() != null && b.getLastBuild() == null) {
+            return -1;
+        }
 
-    	// "New is always better" - B. Stinson ;-)
+        // "New is always better" - B. Stinson ;-)
         return b.getLastBuild().getTimestamp().compareTo(a.getLastBuild().getTimestamp());
     }
 }

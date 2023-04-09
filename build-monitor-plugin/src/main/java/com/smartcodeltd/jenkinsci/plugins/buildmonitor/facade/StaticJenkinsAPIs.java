@@ -14,9 +14,14 @@ public class StaticJenkinsAPIs {
         return Main.isUnitTest || Main.isDevelopmentMode;
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "PageDecoratorImpl is part of Jenkins core and should never be null")
+    @SuppressFBWarnings(
+            value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "PageDecoratorImpl is part of Jenkins core and should never be null")
     public String encodedPublicKey() {
-        return Jenkins.get().getExtensionList(PageDecorator.class).get(PageDecoratorImpl.class).getEncodedPublicKey();
+        return Jenkins.get()
+                .getExtensionList(PageDecorator.class)
+                .get(PageDecoratorImpl.class)
+                .getEncodedPublicKey();
     }
 
     public int numberOfUsers() {
@@ -28,8 +33,8 @@ public class StaticJenkinsAPIs {
         Jenkins instance = Jenkins.get();
 
         if (instance.isUseCrumbs()) {
-          CrumbIssuer crumbIssuer = instance.getCrumbIssuer();
-          if (crumbIssuer == null) {
+            CrumbIssuer crumbIssuer = instance.getCrumbIssuer();
+            if (crumbIssuer == null) {
                 throw new RuntimeException("No CrumbIssuer found");
             }
             return crumbIssuer.getCrumbRequestField();

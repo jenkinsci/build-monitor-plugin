@@ -19,7 +19,7 @@ public class Config {
     private GetBuildViewModel displayBadgesFrom;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     private Boolean displayJUnitProgress;
-    
+
     public static Config defaultConfig() {
         return new Config();
     }
@@ -39,13 +39,14 @@ public class Config {
     public void setOrder(Comparator<Job<?, ?>> order) {
         this.order = order;
     }
-    
+
     public BuildFailureAnalyzerDisplayedField getBuildFailureAnalyzerDisplayedField() {
         return Optional.ofNullable(buildFailureAnalyzerDisplayedField).orElse(BuildFailureAnalyzerDisplayedField.Name);
     }
-    
+
     public void setBuildFailureAnalyzerDisplayedField(String buildFailureAnalyzerDisplayedField) {
-        this.buildFailureAnalyzerDisplayedField = BuildFailureAnalyzerDisplayedField.valueOf(buildFailureAnalyzerDisplayedField);
+        this.buildFailureAnalyzerDisplayedField =
+                BuildFailureAnalyzerDisplayedField.valueOf(buildFailureAnalyzerDisplayedField);
     }
 
     public boolean colourBlindMode() {
@@ -55,7 +56,7 @@ public class Config {
     public void setColourBlindMode(boolean flag) {
         this.colourBlindMode = flag;
     }
-    
+
     public boolean shouldDisplayCommitters() {
         return Optional.ofNullable(displayCommitters).orElse(true);
     }
@@ -79,7 +80,7 @@ public class Config {
     public void setShowBadges(boolean flag) {
         this.showBadges = flag;
     }
-    
+
     public DisplayOptions getDisplayBadges() {
         return Optional.ofNullable(displayBadges).orElse(DisplayOptions.UserSetting);
     }
@@ -87,7 +88,7 @@ public class Config {
     public void setDisplayBadges(String option) {
         this.displayBadges = DisplayOptions.valueOf(option);
     }
-    
+
     public GetBuildViewModel getDisplayBadgesFrom() {
         return Optional.ofNullable(displayBadgesFrom).orElse(new GetLastBuild());
     }
@@ -131,20 +132,27 @@ public class Config {
         Name("name"),
         Description("description"),
         None("none");
-    
+
         private final String value;
+
         BuildFailureAnalyzerDisplayedField(String value) {
             this.value = value;
         }
-    
-        public String getValue() { return value; }
-    
+
+        public String getValue() {
+            return value;
+        }
+
         @Override
-        public String toString() { return value; }
+        public String toString() {
+            return value;
+        }
     }
-    
+
     public enum DisplayOptions {
-        Always, Never, UserSetting
+        Always,
+        Never,
+        UserSetting
     }
 
     private Comparator<Job<?, ?>> order;

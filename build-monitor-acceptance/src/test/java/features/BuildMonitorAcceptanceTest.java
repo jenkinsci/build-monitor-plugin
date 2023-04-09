@@ -13,17 +13,19 @@ import org.openqa.selenium.WebDriver;
 @RunWith(SerenityRunner.class)
 public abstract class BuildMonitorAcceptanceTest {
 
-    @Managed public WebDriver browser;
+    @Managed
+    public WebDriver browser;
 
-    @Rule public JenkinsInstance jenkins = JenkinsSandbox.configure()
+    @Rule
+    public JenkinsInstance jenkins = JenkinsSandbox.configure()
             .beforeStart(jenkinsBeforeStartRules())
             .afterStart(jenkinsAfterStartRules())
             .create();
-    
+
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsBeforeStartRules() {
         return List.of();
     }
-    
+
     protected List<? extends ApplicativeTestRule<JenkinsInstance>> jenkinsAfterStartRules() {
         return List.of();
     }

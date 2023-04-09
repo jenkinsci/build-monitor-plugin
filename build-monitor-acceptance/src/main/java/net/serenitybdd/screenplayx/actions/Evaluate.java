@@ -6,7 +6,8 @@ import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import org.openqa.selenium.JavascriptExecutor;
 
-// the original implementation has a side-effect of injecting the jQuery library, which conflicts with Jenkins' prototype.js
+// the original implementation has a side-effect of injecting the jQuery library, which conflicts with Jenkins'
+// prototype.js
 public class Evaluate implements Interaction {
 
     private final String expression;
@@ -21,6 +22,7 @@ public class Evaluate implements Interaction {
         return this;
     }
 
+    @Override
     public <T extends Actor> void performAs(T theUser) {
         ((JavascriptExecutor) BrowseTheWeb.as(theUser).getDriver()).executeScript(expression, parameters);
     }

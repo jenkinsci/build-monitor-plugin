@@ -14,8 +14,7 @@ import java.util.List;
 public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDetails.CurrentBuilds> {
     private JobView job;
 
-    public KnowsCurrentBuildsDetails(/* config */) {
-    }
+    public KnowsCurrentBuildsDetails(/* config */ ) {}
 
     @Override
     public KnowsCurrentBuildsDetails of(JobView jobView) {
@@ -30,9 +29,7 @@ public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDeta
     }
 
     private static String formattedDuration(Duration duration) {
-        return null != duration
-                ? duration.value()
-                : "";
+        return null != duration ? duration.value() : "";
     }
 
     private static String formattedStages(List<String> stages) {
@@ -51,10 +48,10 @@ public class KnowsCurrentBuildsDetails implements Feature<KnowsCurrentBuildsDeta
             }
         }
 
-		@JsonValue
-		public List<CurrentBuild> value() {
-			return List.copyOf(builds);
-		}
+        @JsonValue
+        public List<CurrentBuild> value() {
+            return List.copyOf(builds);
+        }
     }
 
     public static class CurrentBuild {

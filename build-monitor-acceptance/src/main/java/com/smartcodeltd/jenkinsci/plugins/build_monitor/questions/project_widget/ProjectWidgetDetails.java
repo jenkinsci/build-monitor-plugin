@@ -12,7 +12,7 @@ public class ProjectWidgetDetails implements Question<String> {
 
     @Override
     public String answeredBy(Actor actor) {
-        Target details    = BuildMonitorDashboard.Project_Widget_Details.of(projectName);
+        Target details = BuildMonitorDashboard.Project_Widget_Details.of(projectName);
 
         return Text.of(details).answeredBy(actor);
     }

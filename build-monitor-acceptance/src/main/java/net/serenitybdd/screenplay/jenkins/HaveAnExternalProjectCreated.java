@@ -18,10 +18,7 @@ public class HaveAnExternalProjectCreated implements Task {
     @Step("{0} creates the '#projectName' external project")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                CreateAnExternalProject.called(projectName),
-                Click.on(SidePanel.Back_to_Dashboard)
-        );
+        actor.attemptsTo(CreateAnExternalProject.called(projectName), Click.on(SidePanel.Back_to_Dashboard));
     }
 
     public HaveAnExternalProjectCreated(String projectName) {

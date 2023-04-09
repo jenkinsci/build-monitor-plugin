@@ -19,13 +19,9 @@ public class JenkinsSandbox {
         CWD cwd = CWD.or(System.getProperty("project.root"));
 
         List<PluginDescription> descriptions = new ArrayList<>();
-        descriptions.add(
-                PluginDescription.of(
-                        cwd.resolve("build-monitor-plugin/target/build-monitor-plugin.hpi")));
+        descriptions.add(PluginDescription.of(cwd.resolve("build-monitor-plugin/target/build-monitor-plugin.hpi")));
         try (Stream<Path> stream =
-                Files.list(
-                        cwd.resolve(
-                                "build-monitor-plugin/target/test-classes/test-dependencies"))) {
+                Files.list(cwd.resolve("build-monitor-plugin/target/test-classes/test-dependencies"))) {
             stream.filter(Files::isRegularFile)
                     .filter(p -> p.getFileName().toString().endsWith(".hpi"))
                     .map(PluginDescription::of)
@@ -36,7 +32,7 @@ public class JenkinsSandbox {
         return new TestEnvironment(new JenkinsInstance(descriptions))
                 .beforeStart(
                         FindFreePort.useFreePortFromDynamicRange(),
-                        SandboxJenkinsHome.useATemporaryDirectoryUnder(cwd.resolve("build-monitor-acceptance/target/jenkins"))
-                );
+                        SandboxJenkinsHome.useATemporaryDirectoryUnder(
+                                cwd.resolve("build-monitor-acceptance/target/jenkins")));
     }
 }
