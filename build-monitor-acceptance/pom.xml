@@ -132,25 +132,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>net.serenity-bdd.maven.plugins</groupId>
-        <artifactId>serenity-maven-plugin</artifactId>
-        <version>${serenity.version}</version>
-        <executions>
-          <execution>
-            <id>serenity-reports</id>
-            <goals>
-              <goal>aggregate</goal>
-            </goals>
-            <phase>post-integration-test</phase>
-            <configuration>
-              <generateOutcomes>true</generateOutcomes>
-              <outputDirectory>target/site/serenity</outputDirectory>
-              <sourceDirectory>target/site/serenity</sourceDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
         <configuration>
