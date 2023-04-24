@@ -21,7 +21,7 @@
   "devDependencies": {
     "css-loader": "6.7.3",
     "jasmine-core": "2.99.1",
-    "karma": "6.4.1",
+    "karma": "6.4.2",
     "karma-coverage": "2.2.0",
     "karma-jasmine": "1.1.2",
     "karma-junit-reporter": "2.0.1",
@@ -29,8 +29,8 @@
     "less-loader": "11.1.0",
     "mini-css-extract-plugin": "2.7.5",
     "style-loader": "3.3.2",
-    "webpack": "5.79.0",
-    "webpack-cli": "5.0.1",
+    "webpack": "5.80.0",
+    "webpack-cli": "5.0.2",
     "webpack-merge": "5.8.0"
   },
   "engines": {
