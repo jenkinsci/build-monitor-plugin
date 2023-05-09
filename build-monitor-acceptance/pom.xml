@@ -138,6 +138,7 @@
             <jenkins.version>${jenkins.version}</jenkins.version>
             <project.root>../</project.root>
             <settings.localRepository>${settings.localRepository}</settings.localRepository>
+            <wdm.chromeDriverVersion>112</wdm.chromeDriverVersion>
           </systemPropertyVariables>
         </configuration>
       </plugin>
