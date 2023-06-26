@@ -22,7 +22,7 @@
     "css-loader": "6.8.1",
     "jasmine-core": "2.99.1",
     "karma": "6.4.2",
-    "karma-coverage": "2.2.0",
+    "karma-coverage": "2.2.1",
     "karma-jasmine": "1.1.2",
     "karma-junit-reporter": "2.0.1",
     "karma-phantomjs-launcher": "1.0.4",
