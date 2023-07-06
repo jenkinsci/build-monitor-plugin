@@ -2,8 +2,11 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.jcasc;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.Is.isA;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByStatus;
 import hudson.model.View;
 import io.jenkins.plugins.casc.ConfigurationContext;
 import io.jenkins.plugins.casc.ConfiguratorRegistry;
@@ -33,6 +36,9 @@ public class ConfigurationAsCodeTest {
         assertThat(view.getIncludeRegex(), is(".+\\/(my-job-.*)\\/(master|demo)"));
         assertThat(view.getViewName(), is("My-Monitor"));
         assertThat(view.isRecurse(), is(true));
+        assertThat(view.getConfig(), notNullValue());
+        assertThat(view.getConfig().getOrder(), isA(ByStatus.class));
+        assertThat(view.getConfig().getMaxColumns(), is(3));
     }
 
     @Test

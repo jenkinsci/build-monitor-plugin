@@ -1,4 +1,8 @@
 - buildMonitor:
+    config:
+      displayBadgesFrom: "getLastBuild"
+      maxColumns: 3
+      order: "byStatus"
     includeRegex: ".+\\/(my-job-.*)\\/(master|demo)"
     name: "My-Monitor"
     recurse: true

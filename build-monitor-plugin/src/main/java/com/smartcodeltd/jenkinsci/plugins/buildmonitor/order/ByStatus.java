@@ -1,12 +1,19 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.order;
 
+import hudson.Extension;
+import hudson.model.Descriptor;
 import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.Run;
 import java.io.Serializable;
 import java.util.Comparator;
+import org.kohsuke.stapler.DataBoundConstructor;
 
-public class ByStatus implements Comparator<Job<?, ?>>, Serializable {
+public class ByStatus extends BaseOrder implements Comparator<Job<?, ?>>, Serializable {
+
+    @DataBoundConstructor
+    public ByStatus() {}
+
     @Override
     public int compare(Job<?, ?> a, Job<?, ?> b) {
         return bothProjectsHaveBuildHistory(a, b) ? compareRecentlyCompletedBuilds(a, b) : compareProjects(a, b);
@@ -49,4 +56,7 @@ public class ByStatus implements Comparator<Job<?, ?>>, Serializable {
             return 0;
         }
     }
+
+    @Extension
+    public static class ByStatusDescriptor extends Descriptor<BaseOrder> {}
 }
