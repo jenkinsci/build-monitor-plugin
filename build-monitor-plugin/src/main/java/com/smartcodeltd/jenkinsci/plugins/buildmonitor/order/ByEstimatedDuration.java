@@ -1,15 +1,22 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.order;
 
+import hudson.Extension;
 import hudson.model.AbstractProject;
+import hudson.model.Descriptor;
+import hudson.model.Job;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
+import org.kohsuke.stapler.DataBoundConstructor;
 
-public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>>, Serializable {
+public class ByEstimatedDuration extends BaseOrder implements Comparator<Job<?, ?>>, Serializable {
+
+    @DataBoundConstructor
+    public ByEstimatedDuration() {}
 
     @Override
-    public int compare(AbstractProject<?, ?> a, AbstractProject<?, ?> b) {
-        return compareEstimatedDuration(a, b);
+    public int compare(Job<?, ?> a, Job<?, ?> b) {
+        return compareEstimatedDuration((AbstractProject<?, ?>) a, (AbstractProject<?, ?>) b);
     }
 
     /**
@@ -32,4 +39,7 @@ public class ByEstimatedDuration implements Comparator<AbstractProject<?, ?>>, S
     private int compareEstimatedDuration(AbstractProject<?, ?> a, AbstractProject<?, ?> b) {
         return Long.compare(getTotalEstimatedDuration(a), getTotalEstimatedDuration(b));
     }
+
+    @Extension
+    public static class ByEstimatedDurationDescriptor extends Descriptor<BaseOrder> {}
 }

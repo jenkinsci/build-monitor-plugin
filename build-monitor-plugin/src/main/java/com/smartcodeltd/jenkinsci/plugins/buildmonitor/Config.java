@@ -2,12 +2,21 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.build.GetBuildViewModel;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.build.GetLastBuild;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.BaseOrder;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByName;
+import hudson.Extension;
+import hudson.model.Describable;
+import hudson.model.Descriptor;
 import hudson.model.Job;
 import java.util.Comparator;
 import java.util.Optional;
+import jenkins.model.Jenkins;
+import org.kohsuke.stapler.DataBoundConstructor;
 
-public class Config {
+public class Config implements Describable<Config> {
+
+    @Extension
+    public static class ConfigDescriptor extends Descriptor<Config> {}
 
     private Boolean colourBlindMode;
     private Boolean displayCommitters;
@@ -24,6 +33,14 @@ public class Config {
         return new Config();
     }
 
+    @Override
+    public Descriptor<Config> getDescriptor() {
+        return Jenkins.get().getDescriptor(this.getClass());
+    }
+
+    @DataBoundConstructor
+    public Config() {}
+
     public Comparator<Job<?, ?>> getOrder() {
         /*
          * Jenkins unmarshals objects from config.xml by setting their private fields directly and without invoking their constructors.
@@ -36,7 +53,7 @@ public class Config {
         return Optional.ofNullable(order).orElse(new ByName());
     }
 
-    public void setOrder(Comparator<Job<?, ?>> order) {
+    public void setOrder(BaseOrder order) {
         this.order = order;
     }
 
@@ -155,5 +172,5 @@ public class Config {
         UserSetting
     }
 
-    private Comparator<Job<?, ?>> order;
+    private BaseOrder order;
 }
