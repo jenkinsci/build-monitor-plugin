@@ -5,14 +5,8 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.Is.isA;
 import static org.hamcrest.core.IsNull.notNullValue;
 
-import java.util.Collection;
-
-import org.junit.ClassRule;
-import org.junit.Test;
-
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByStatus;
-
 import hudson.model.View;
 import io.jenkins.plugins.casc.ConfigurationContext;
 import io.jenkins.plugins.casc.ConfiguratorRegistry;
@@ -20,7 +14,10 @@ import io.jenkins.plugins.casc.misc.ConfiguredWithCode;
 import io.jenkins.plugins.casc.misc.JenkinsConfiguredWithCodeRule;
 import io.jenkins.plugins.casc.misc.Util;
 import io.jenkins.plugins.casc.model.CNode;
+import java.util.Collection;
 import jenkins.model.Jenkins;
+import org.junit.ClassRule;
+import org.junit.Test;
 
 public class ConfigurationAsCodeTest {
 
