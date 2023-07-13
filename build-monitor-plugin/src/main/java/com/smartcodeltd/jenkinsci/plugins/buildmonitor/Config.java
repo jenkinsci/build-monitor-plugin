@@ -66,7 +66,7 @@ public class Config implements Describable<Config> {
                 BuildFailureAnalyzerDisplayedField.valueOf(buildFailureAnalyzerDisplayedField);
     }
 
-    public boolean colourBlindMode() {
+    public boolean getColourBlindMode() {
         return Optional.ofNullable(colourBlindMode).orElse(false);
     }
 
@@ -74,7 +74,7 @@ public class Config implements Describable<Config> {
         this.colourBlindMode = flag;
     }
 
-    public boolean shouldDisplayCommitters() {
+    public boolean getDisplayCommitters() {
         return Optional.ofNullable(displayCommitters).orElse(true);
     }
 
@@ -82,7 +82,7 @@ public class Config implements Describable<Config> {
         this.displayCommitters = flag;
     }
 
-    public boolean reduceMotion() {
+    public boolean getReduceMotion() {
         return Optional.ofNullable(reduceMotion).orElse(false);
     }
 
@@ -90,7 +90,7 @@ public class Config implements Describable<Config> {
         this.reduceMotion = flag;
     }
 
-    public boolean showBadges() {
+    public boolean getShowBadges() {
         return Optional.ofNullable(showBadges).orElse(true);
     }
 
@@ -114,7 +114,7 @@ public class Config implements Describable<Config> {
         this.displayBadgesFrom = displayBadgesFrom;
     }
 
-    public boolean shouldDisplayJUnitProgress() {
+    public boolean getDisplayJUnitProgress() {
         return Optional.ofNullable(displayJUnitProgress).orElse(true);
     }
 

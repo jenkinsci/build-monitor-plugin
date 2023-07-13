@@ -95,7 +95,7 @@ public class BuildMonitorView extends ListView {
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public boolean isDisplayCommitters() {
-        return currentConfig().shouldDisplayCommitters();
+        return currentConfig().getDisplayCommitters();
     }
 
     // used in the configure-entries.jelly and main-settings.jelly forms
@@ -113,19 +113,19 @@ public class BuildMonitorView extends ListView {
     // used in the configure-entries.jelly and main-settings.jelly forms
     @SuppressWarnings("unused")
     public boolean isColourBlindMode() {
-        return currentConfig().colourBlindMode();
+        return currentConfig().getColourBlindMode();
     }
 
     // used in the configure-entries.jelly and main-settings.jelly forms
     @SuppressWarnings("unused")
     public boolean isReduceMotion() {
-        return currentConfig().reduceMotion();
+        return currentConfig().getReduceMotion();
     }
 
     // used in the configure-entries.jelly and main-settings.jelly forms
     @SuppressWarnings("unused")
     public boolean isShowBadges() {
-        return currentConfig().showBadges();
+        return currentConfig().getShowBadges();
     }
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
@@ -140,7 +140,7 @@ public class BuildMonitorView extends ListView {
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public boolean isDisplayJUnitProgress() {
-        return currentConfig().shouldDisplayJUnitProgress();
+        return currentConfig().getDisplayJUnitProgress();
     }
 
     private static final BuildMonitorInstallation installation = new BuildMonitorInstallation();

@@ -8,3 +8,8 @@ jenkins:
         config:
           maxColumns: 3
           order: "byStatus"
+          displayCommitters: false
+          colourBlindMode: true
+          reduceMotion: true
+          displayJUnitProgress: false
+          showBadges: false
