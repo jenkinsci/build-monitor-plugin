@@ -9,7 +9,7 @@ public class Breadcrumbs {
 
     public static Target linkTo(String name) {
         return Target.the(String.format("the '%s' breadcrumb link", name))
-                .locatedBy("//ul[@id='breadcrumbs']//a[contains(., '{0}')]")
+                .locatedBy("//li[@class='jenkins-breadcrumbs__list-item' and a[text()='{0}']]/a")
                 .of(name);
     }
 }
