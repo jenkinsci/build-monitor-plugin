@@ -30,8 +30,7 @@
             <l:yui module="yahoo" />
             <l:yui module="cookie" />
 
-            <st:adjunct assumes="org.kohsuke.stapler.framework.prototype.prototype"
-                        includes="org.kohsuke.stapler.bind"/>
+            <st:adjunct includes="org.kohsuke.stapler.bind"/>
 
             <j:forEach var="pd" items="${h.pageDecorators}">
                 <st:include it="${pd}" page="header.jelly" optional="true" />
