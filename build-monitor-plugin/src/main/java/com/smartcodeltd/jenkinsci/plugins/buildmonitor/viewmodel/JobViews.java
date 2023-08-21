@@ -40,7 +40,7 @@ public class JobViews {
 
         // todo: a more elegant way of assembling the features would be nice
         viewFeatures.add(new HasConfig(config));
-        viewFeatures.add(new HasHeadline(new HeadlineConfig(config.shouldDisplayCommitters())));
+        viewFeatures.add(new HasHeadline(new HeadlineConfig(config.getDisplayCommitters())));
         viewFeatures.add(new KnowsLastCompletedBuildDetails());
         viewFeatures.add(new KnowsCurrentBuildsDetails());
 
@@ -58,7 +58,7 @@ public class JobViews {
             }
         }
 
-        if (config.shouldDisplayJUnitProgress() && jenkins.hasPlugin(Junit_Realtime)) {
+        if (config.getDisplayJUnitProgress() && jenkins.hasPlugin(Junit_Realtime)) {
             viewFeatures.add(new HasJunitRealtime());
         }
 

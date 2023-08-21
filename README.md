@@ -74,7 +74,7 @@ Here's how the columns work:
 * Done - done and deployed. Grab the latest version from your Jenkins Update Center or the [Releases](https://github.com/jenkinsci/build-monitor-plugin/releases) page.
 
 If you'd like to get hold of the latest and greatest build of the Build Monitor Plugin
-before it's available in the Jenkins Update Center, you can [download it](https://smartcode-opensource.ci.cloudbees.com/job/build-monitor/lastBuild/) from the [SmartCode Open-Source](http://bit.ly/SmartCodeOSCI) Jenkins CI server.
+before it's available in the Jenkins Update Center, you can [download the latest incremental build](https://ci.jenkins.io/job/Plugins/job/build-monitor-plugin/job/master/) from the Jenkins CI server.
 If the plugin doesn't appear in your Jenkins Update Center, visit Manage Plugins / Advanced and click the "Check now" button to make Jenkins retrieve the latest `update-center.json` data.
 
 ## (A)TDD

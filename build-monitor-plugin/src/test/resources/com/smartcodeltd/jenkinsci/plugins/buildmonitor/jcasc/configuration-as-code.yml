@@ -5,3 +5,11 @@ jenkins:
         name: "My-Monitor"
         recurse: true
         title: "My Monitor"
+        config:
+          maxColumns: 3
+          order: "byStatus"
+          displayCommitters: false
+          colourBlindMode: true
+          reduceMotion: true
+          displayJUnitProgress: false
+          showBadges: false

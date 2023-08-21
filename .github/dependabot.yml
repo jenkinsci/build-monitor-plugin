@@ -7,8 +7,15 @@ updates:
     schedule:
       interval: "weekly"
     ignore:
+      # Starting with 7.x, Guice switches from javax.* to jakarta.* bindings.
+      # See https://github.com/google/guice/wiki/Guice700
+      - dependency-name: "com.google.inject:guice"
+        versions: [">=7.0.0"]
       # This is the minimum Jenkins version
       - dependency-name: "org.jenkins-ci.main:cli"
+      # Restrict updates to Jetty in the 11.x space
+      - dependency-name: "org.eclipse.jetty:*"
+        versions: [">=12.0.0"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

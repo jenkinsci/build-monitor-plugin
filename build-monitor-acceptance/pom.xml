@@ -12,8 +12,8 @@
   <name>Build Monitor Acceptance Tests</name>
 
   <properties>
-    <byte-buddy.version>1.14.4</byte-buddy.version>
-    <serenity.version>3.7.1</serenity.version>
+    <byte-buddy.version>1.14.6</byte-buddy.version>
+    <serenity.version>3.9.8</serenity.version>
     <slf4j.version>2.0.7</slf4j.version>
   </properties>
 
@@ -34,7 +34,7 @@
       <dependency>
         <groupId>com.google.inject</groupId>
         <artifactId>guice</artifactId>
-        <version>5.1.0</version>
+        <version>6.0.0</version>
       </dependency>
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
@@ -141,6 +141,24 @@
             <wdm.chromeDriverVersion>112.0.5615.49</wdm.chromeDriverVersion>
           </systemPropertyVariables>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>display-info</id>
+            <configuration>
+              <rules>
+                <requireUpperBoundDeps>
+                  <excludes combine.children="append">
+                    <exclude>org.htmlunit:htmlunit</exclude>
+                  </excludes>
+                </requireUpperBoundDeps>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

@@ -1,14 +1,20 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.order;
 
+import hudson.Extension;
+import hudson.model.Descriptor;
 import hudson.model.Job;
 import java.io.Serializable;
 import java.util.Comparator;
+import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
  * Inspired by <a href="https://github.com/Mercynary">@Mercenary</a>'s answer to
  * issue <a href="https://github.com/jenkinsci/build-monitor-plugin/issues/113">#113</a>.
  */
-public class ByLastBuildTime implements Comparator<Job<?, ?>>, Serializable {
+public class ByLastBuildTime extends BaseOrder implements Comparator<Job<?, ?>>, Serializable {
+
+    @DataBoundConstructor
+    public ByLastBuildTime() {}
 
     @Override
     public int compare(Job<?, ?> a, Job<?, ?> b) {
@@ -31,4 +37,7 @@ public class ByLastBuildTime implements Comparator<Job<?, ?>>, Serializable {
         // "New is always better" - B. Stinson ;-)
         return b.getLastBuild().getTimestamp().compareTo(a.getLastBuild().getTimestamp());
     }
+
+    @Extension
+    public static class ByLastBuildTimeDescriptor extends Descriptor<BaseOrder> {}
 }

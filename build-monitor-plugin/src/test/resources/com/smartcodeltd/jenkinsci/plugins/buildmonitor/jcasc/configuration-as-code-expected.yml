@@ -1,4 +1,13 @@
 - buildMonitor:
+    config:
+      colourBlindMode: true
+      displayBadgesFrom: "getLastBuild"
+      displayCommitters: false
+      displayJUnitProgress: false
+      maxColumns: 3
+      order: "byStatus"
+      reduceMotion: true
+      showBadges: false
     includeRegex: ".+\\/(my-job-.*)\\/(master|demo)"
     name: "My-Monitor"
     recurse: true
