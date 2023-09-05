@@ -3,10 +3,10 @@ package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface.BuildMonitorDashboard;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
-import net.thucydides.core.annotations.Step;
 
 public class AddProjects implements Task {
     public static Task toAnEmptyBuildMonitor() {

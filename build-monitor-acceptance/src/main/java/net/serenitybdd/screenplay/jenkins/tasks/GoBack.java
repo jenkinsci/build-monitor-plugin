@@ -2,11 +2,11 @@ package net.serenitybdd.screenplay.jenkins.tasks;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Breadcrumbs;
-import net.thucydides.core.annotations.Step;
 
 public class GoBack implements Task {
     public static Task to(String target) {

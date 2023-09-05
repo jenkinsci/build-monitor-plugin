@@ -4,10 +4,10 @@ import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import com.sonyericsson.jenkins.plugins.bfa.tasks.DefineAFailureCause;
 import com.sonyericsson.jenkins.plugins.bfa.tasks.configuration.LineInTheBuildLog;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.integration.utils.Nulls;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.thucydides.core.annotations.Step;
 
 public class DefineABuildLogIndicatedFailureCause implements Task {
 

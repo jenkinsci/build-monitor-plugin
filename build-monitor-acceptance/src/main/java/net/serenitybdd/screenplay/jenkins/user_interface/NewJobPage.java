@@ -1,8 +1,8 @@
 package net.serenitybdd.screenplay.jenkins.user_interface;
 
+import net.serenitybdd.annotations.DefaultUrl;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.screenplay.targets.Target;
-import net.thucydides.core.annotations.DefaultUrl;
 
 @DefaultUrl("/newJob")
 public class NewJobPage extends PageObject {

@@ -3,13 +3,13 @@ package hudson.plugins.claim;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import hudson.plugins.claim.tasks.configuration.BrokenBuildClaiming;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
 import net.serenitybdd.screenplay.jenkins.tasks.ScheduleABuild;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ExecuteAShellScript;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps.ShellScriptThat;
-import net.thucydides.core.annotations.Step;
 
 public class HaveAFailingClaimableProjectCreated implements Task {
     public static Task called(String name) {

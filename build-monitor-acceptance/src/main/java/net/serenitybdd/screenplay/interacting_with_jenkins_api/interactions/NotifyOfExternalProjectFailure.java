@@ -1,9 +1,9 @@
 package net.serenitybdd.screenplay.interacting_with_jenkins_api.interactions;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.interacting_with_jenkins_api.abilities.InteractWithJenkinsAPI;
-import net.thucydides.core.annotations.Step;
 
 class NotifyOfExternalProjectFailure implements Interaction {
     @Override

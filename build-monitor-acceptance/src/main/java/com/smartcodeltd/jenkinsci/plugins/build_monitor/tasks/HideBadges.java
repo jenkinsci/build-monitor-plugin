@@ -3,12 +3,12 @@ package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface.BuildMonitorDashboard;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.UncheckCheckbox;
 import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplay.waits.WaitUntil;
-import net.thucydides.core.annotations.Step;
 
 public class HideBadges implements Task {
     public static Task onTheDashboard() {
