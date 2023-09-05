@@ -3,6 +3,7 @@ package com.sonyericsson.jenkins.plugins.bfa.tasks.configuration;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import com.sonyericsson.jenkins.plugins.bfa.user_interface.FailureCauseManagementPage;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
@@ -10,7 +11,6 @@ import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.serenitybdd.screenplayx.actions.Scroll;
-import net.thucydides.core.annotations.Step;
 
 public class LineInTheBuildLog implements Task {
     public static LineInTheBuildLog matching(String pattern) {

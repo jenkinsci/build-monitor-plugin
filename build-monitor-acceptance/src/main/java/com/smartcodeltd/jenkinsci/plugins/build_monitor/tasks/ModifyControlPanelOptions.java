@@ -4,12 +4,12 @@ import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.user_interface.BuildMonitorDashboard;
 import java.util.List;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
-import net.thucydides.core.annotations.Step;
 
 public class ModifyControlPanelOptions implements Task {
 

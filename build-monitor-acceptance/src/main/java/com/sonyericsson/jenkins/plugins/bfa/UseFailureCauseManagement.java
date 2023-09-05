@@ -4,12 +4,12 @@ import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import com.sonyericsson.jenkins.plugins.bfa.user_interface.JenkinsHomePageWithBFA;
 import java.util.List;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Breadcrumbs;
-import net.thucydides.core.annotations.Step;
 
 public class UseFailureCauseManagement implements Task {
     public static UseFailureCauseManagement to(Task... defineFailureCauses) {

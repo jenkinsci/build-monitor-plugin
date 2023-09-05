@@ -2,6 +2,7 @@ package net.serenitybdd.screenplay.jenkins.tasks;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
@@ -9,7 +10,6 @@ import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.jenkins.JenkinsUser;
 import net.serenitybdd.screenplay.jenkins.user_interface.JenkinsHomePage;
 import net.serenitybdd.screenplay.jenkins.user_interface.LogInForm;
-import net.thucydides.core.annotations.Step;
 
 public class LogIn implements Task {
     public static LogIn as(JenkinsUser actor) {

@@ -2,11 +2,11 @@ package net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.jenkins.actions.EnterCode;
 import net.serenitybdd.screenplay.jenkins.user_interface.project_configuration.build_steps.PipelineDefinition;
-import net.thucydides.core.annotations.Step;
 
 public class SetPipelineDefinition implements Task {
 

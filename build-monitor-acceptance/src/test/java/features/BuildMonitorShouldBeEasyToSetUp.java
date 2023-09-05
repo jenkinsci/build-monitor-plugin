@@ -7,12 +7,12 @@ import static net.serenitybdd.screenplay.GivenWhenThen.when;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
+import net.serenitybdd.annotations.Title;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.jenkins.HaveAProjectCreated;
 import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplayx.actions.Navigate;
-import net.thucydides.core.annotations.Title;
 import org.junit.Before;
 import org.junit.Test;
 

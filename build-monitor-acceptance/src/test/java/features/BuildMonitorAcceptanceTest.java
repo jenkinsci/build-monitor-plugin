@@ -2,10 +2,10 @@ package features;
 
 import environment.JenkinsSandbox;
 import java.util.List;
+import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 import net.serenitybdd.junit.runners.SerenityRunner;
-import net.thucydides.core.annotations.Managed;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;

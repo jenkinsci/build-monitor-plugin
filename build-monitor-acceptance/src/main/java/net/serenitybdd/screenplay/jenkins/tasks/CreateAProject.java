@@ -2,6 +2,7 @@ package net.serenitybdd.screenplay.jenkins.tasks;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
@@ -13,7 +14,6 @@ import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Buttons;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.SidePanel;
 import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplayx.actions.Scroll;
-import net.thucydides.core.annotations.Step;
 
 class CreateAProject implements Task {
     public static CreateAProject called(String name) {

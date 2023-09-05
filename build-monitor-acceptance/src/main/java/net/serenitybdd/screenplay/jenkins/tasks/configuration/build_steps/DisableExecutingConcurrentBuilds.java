@@ -1,11 +1,11 @@
 package net.serenitybdd.screenplay.jenkins.tasks.configuration.build_steps;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.jenkins.user_interface.ProjectConfigurationPage;
 import net.serenitybdd.screenplayx.actions.Scroll;
-import net.thucydides.core.annotations.Step;
 
 public class DisableExecutingConcurrentBuilds implements Task {
 

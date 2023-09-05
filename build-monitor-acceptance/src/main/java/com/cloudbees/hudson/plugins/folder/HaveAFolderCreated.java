@@ -3,10 +3,10 @@ package com.cloudbees.hudson.plugins.folder;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import com.cloudbees.hudson.plugins.folder.tasks.CreateAFolder;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
-import net.thucydides.core.annotations.Step;
 
 public class HaveAFolderCreated implements Task {
 

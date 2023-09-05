@@ -2,13 +2,13 @@ package net.serenitybdd.screenplay.jenkins;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.jenkins.tasks.CreateAFreestyleProject;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.SidePanel;
-import net.thucydides.core.annotations.Step;
 
 public class HaveAProjectCreated implements Task {
 

@@ -3,6 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.configuration.SaveTheChangesToBuildMonitor;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
@@ -11,7 +12,6 @@ import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
 import net.serenitybdd.screenplay.jenkins.user_interface.JenkinsHomePage;
 import net.serenitybdd.screenplay.jenkins.user_interface.NewViewPage;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Buttons;
-import net.thucydides.core.annotations.Step;
 
 public class CreateABuildMonitorView implements Task {
     public static CreateABuildMonitorView called(String name) {

@@ -3,12 +3,12 @@ package net.serenitybdd.screenplay.jenkins.actions;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import java.util.List;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplayx.actions.Evaluate;
-import net.thucydides.core.annotations.Step;
 
 public class EnterCode {
     public static EnterCode asFollows(String... lines) {
