@@ -61,7 +61,8 @@ public class JenkinsProcess {
                         "-Dhudson.DNSMultiCast.disabled=true",
                         "-jar",
                         jenkinsWar.toString(),
-                        "--httpPort=" + port)
+                        "--httpPort=" + port,
+                        "--enable-future-java")
                 .directory(jenkinsHome.toFile());
 
         process.environment().putAll(env);
