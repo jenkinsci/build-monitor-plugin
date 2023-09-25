@@ -11,6 +11,9 @@ updates:
       # See https://github.com/google/guice/wiki/Guice700
       - dependency-name: "com.google.inject:guice"
         versions: [">=7.0.0"]
+      # Bad release in Artifactory breaks Dependabot
+      - dependency-name: "com.sonyericsson.jenkins.plugins.bfa:build-failure-analyzer"
+        versions: ["2.27.0"]
       # This is the minimum Jenkins version
       - dependency-name: "org.jenkins-ci.main:cli"
       # Restrict updates to Jetty in the 11.x space
