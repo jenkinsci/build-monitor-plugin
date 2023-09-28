@@ -158,8 +158,9 @@
                 };
                 window.bindings={};
             </script>
-            <st:bind var="window.bindings['buildMonitor']" value="${it}" />
+            <st:bind var="buildMonitorBind" value="${it}" />
             <script>
+                window.bindings['buildMonitor'] = buildMonitorBind
                 window.makeStaplerProxy = window.originalMakeStaplerProxy;
                 try {
                     delete window.originalMakeStaplerProxy;
