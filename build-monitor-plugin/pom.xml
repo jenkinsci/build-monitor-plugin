@@ -139,7 +139,7 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>description-setter</artifactId>
-      <version>1.10</version>
+      <version>239.vd0a_6b_785f92d</version>
       <scope>test</scope>
     </dependency>
     <dependency>
