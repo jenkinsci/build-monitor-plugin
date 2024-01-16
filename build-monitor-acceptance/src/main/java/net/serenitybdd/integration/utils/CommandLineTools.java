@@ -6,8 +6,7 @@ import java.nio.file.Paths;
 
 public class CommandLineTools {
     public static Path java() {
-        String javaHomeString = Nulls.coalesce(
-                System.getenv("JENKINS_JAVA_HOME"), System.getenv("JAVA_HOME"), System.getProperty("java.home"));
+        String javaHomeString = Nulls.coalesce(System.getenv("JENKINS_JAVA_HOME"), System.getProperty("java.home"));
         if (javaHomeString == null) {
             throw new RuntimeException(
                     "'java' executable not found. Please set the JAVA_HOME env variable to point to your Java home directory.");
