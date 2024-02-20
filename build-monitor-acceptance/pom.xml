@@ -13,7 +13,7 @@
 
   <properties>
     <byte-buddy.version>1.14.11</byte-buddy.version>
-    <serenity.version>4.0.43</serenity.version>
+    <serenity.version>4.1.0</serenity.version>
     <slf4j.version>2.0.11</slf4j.version>
   </properties>
 
