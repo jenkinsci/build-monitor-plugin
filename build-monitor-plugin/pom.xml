@@ -49,8 +49,8 @@
     <dependencies>
       <dependency>
         <groupId>io.jenkins.tools.bom</groupId>
-        <artifactId>bom-2.401.x</artifactId>
-        <version>2465.va_e76ed7b_3061</version>
+        <artifactId>bom-2.414.x</artifactId>
+        <version>2839.v003b_4d9d24fd</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -61,7 +61,7 @@
     <dependency>
       <groupId>com.sonyericsson.jenkins.plugins.bfa</groupId>
       <artifactId>build-failure-analyzer</artifactId>
-      <version>2.4.2</version>
+      <version>2.5.0</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -97,7 +97,7 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>junit-realtime-test-reporter</artifactId>
-      <version>135.vf92a_7fe68b_15</version>
+      <version>146.v82b_01a_5d2b_3a_</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -139,7 +139,7 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>description-setter</artifactId>
-      <version>1.10</version>
+      <version>239.vd0a_6b_785f92d</version>
       <scope>test</scope>
     </dependency>
     <dependency>
