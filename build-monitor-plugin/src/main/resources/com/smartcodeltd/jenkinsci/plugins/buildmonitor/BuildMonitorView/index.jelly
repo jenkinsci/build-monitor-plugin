@@ -88,6 +88,7 @@
         <body class="build-monitor dashboard industrial"
               data-ng-app="buildMonitor"
               data-ng-controller="JobViews"
+              data-display-name="${it.displayName}"
               data-ng-class="{ 'colour-blind-mode': settings.colourBlind == 1, 'reduce-motion-mode': settings.reduceMotion == 1 }">
 
             <header>
@@ -198,7 +199,7 @@
                         proxyProvider.configureProxiesUsing(window.bindings);
 
                         cookieJarProvider.describe({
-                            label:     'buildMonitor.' + hashCodeOf('${it.displayName}'),
+                            label:     'buildMonitor.' + hashCodeOf(document.body.dataset.displayName),
                             shelfLife: 365
                         });
                     });
