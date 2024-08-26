@@ -22,7 +22,7 @@
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-bom</artifactId>
-        <version>11.0.23</version>
+        <version>10.0.23</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -34,7 +34,7 @@
       <dependency>
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
-        <version>2.26.1</version>
+        <version>2.28.0</version>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
@@ -194,6 +194,11 @@
             <id>display-info</id>
             <configuration>
               <rules>
+                <enforceBytecodeVersion>
+                  <excludes combine.children="append">
+                    <exclude>org.freemarker:freemarker</exclude>
+                  </excludes>
+                </enforceBytecodeVersion>
                 <requireUpperBoundDeps>
                   <excludes combine.children="append">
                     <exclude>org.htmlunit:htmlunit</exclude>
