@@ -13,7 +13,7 @@
 
   <properties>
     <byte-buddy.version>1.14.16</byte-buddy.version>
-    <serenity.version>4.1.4</serenity.version>
+    <serenity.version>4.1.14</serenity.version>
     <slf4j.version>2.0.12</slf4j.version>
   </properties>
 
@@ -54,7 +54,7 @@
       <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
-        <version>1.16.1</version>
+        <version>1.17.1</version>
       </dependency>
       <dependency>
         <groupId>commons-io</groupId>
@@ -74,7 +74,17 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-compress</artifactId>
-        <version>1.26.1</version>
+        <version>1.27.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.16.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-text</artifactId>
+        <version>1.12.0</version>
       </dependency>
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
