@@ -49,8 +49,8 @@
     <dependencies>
       <dependency>
         <groupId>io.jenkins.tools.bom</groupId>
-        <artifactId>bom-2.414.x</artifactId>
-        <version>2982.vdce2153031a_0</version>
+        <artifactId>bom-2.426.x</artifactId>
+        <version>3208.vb_21177d4b_cd9</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -71,7 +71,7 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>badge</artifactId>
-      <version>1.9.1</version>
+      <version>1.13</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -97,7 +97,6 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>junit-realtime-test-reporter</artifactId>
-      <version>149.v05a_d403e2f48</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -108,7 +107,6 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>view-job-filters</artifactId>
-      <version>377.v66f4b_796e5fa_</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -145,7 +143,6 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>external-monitor-job</artifactId>
-      <version>215.v2e88e894db_f8</version>
       <scope>test</scope>
     </dependency>
     <dependency>
