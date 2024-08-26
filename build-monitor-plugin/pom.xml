@@ -97,7 +97,7 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>junit-realtime-test-reporter</artifactId>
-      <version>146.v82b_01a_5d2b_3a_</version>
+      <version>149.v05a_d403e2f48</version>
       <optional>true</optional>
     </dependency>
     <dependency>
