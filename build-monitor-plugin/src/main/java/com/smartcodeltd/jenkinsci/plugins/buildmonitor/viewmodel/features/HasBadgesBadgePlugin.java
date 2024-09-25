@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Daniel Beland
@@ -57,6 +59,9 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
 
     public static class Badge {
         private final BadgeAction badge;
+        private static final Pattern BADGE_STYLE_PATTERN =
+                Pattern.compile("(border: (?<border>.*) solid (?<borderColor>.*);)?"
+                        + "(background: (?<background>.*);)?" + "(color: (?<color>.*);)?");
 
         public Badge(BadgeAction badge) {
             this.badge = badge;
@@ -69,29 +74,37 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
 
         @JsonProperty
         public final String color() {
-            return badge.getColor();
+            String style = badge.getStyle();
+            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
+            return matcher.matches() ? matcher.group("color") : null;
         }
 
         @JsonProperty
         public final String background() {
-            return badge.getBackground();
+            String style = badge.getStyle();
+            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
+            return matcher.matches() ? matcher.group("background") : null;
         }
 
         @JsonProperty
         public final String border() {
-            return badge.getBorder();
+            String style = badge.getStyle();
+            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
+            return matcher.matches() ? matcher.group("border") : null;
         }
 
         @JsonProperty
         public final String borderColor() {
-            return badge.getBorderColor();
+            String style = badge.getStyle();
+            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
+            return matcher.matches() ? matcher.group("borderColor") : null;
         }
     }
 
     private static class ActionFilter implements Predicate<BadgeAction> {
         @Override
         public boolean test(BadgeAction action) {
-            return action.getIconPath() == null;
+            return action.getIcon() == null;
         }
     }
 }

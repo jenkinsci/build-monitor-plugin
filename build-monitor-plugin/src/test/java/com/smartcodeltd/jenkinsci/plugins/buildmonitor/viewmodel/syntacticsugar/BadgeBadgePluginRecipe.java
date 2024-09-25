@@ -18,13 +18,13 @@ public class BadgeBadgePluginRecipe implements Supplier<BadgeAction> {
     }
 
     public BadgeBadgePluginRecipe withText(String text) {
-        when(badge.getIconPath()).thenReturn(null);
+        when(badge.getIcon()).thenReturn(null);
         lenient().when(badge.getText()).thenReturn(text);
         return this;
     }
 
     public BadgeBadgePluginRecipe withIcon(String icon, String text) {
-        when(badge.getIconPath()).thenReturn(icon);
+        when(badge.getIcon()).thenReturn(icon);
         lenient().when(badge.getText()).thenReturn(text);
         return this;
     }
