@@ -97,7 +97,6 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>junit-realtime-test-reporter</artifactId>
-      <version>149.v05a_d403e2f48</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -108,7 +107,6 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>view-job-filters</artifactId>
-      <version>382.vdf2d5e3f02f0</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -145,7 +143,6 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>external-monitor-job</artifactId>
-      <version>215.v2e88e894db_f8</version>
       <scope>test</scope>
     </dependency>
     <dependency>
