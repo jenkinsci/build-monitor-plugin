@@ -12,7 +12,7 @@ public class FailureCauseManagementPage {
             Target.the("the description textarea").locatedBy("//textarea[@name='_.description']");
     public static final Target Add_Indication = Button.called("Add Indication");
 
-    public static final Target Build_Log_Indication_Link = Link.called("Build Log Indication");
+    public static final Target Build_Log_Indication = Button.called("Build Log Indication");
     public static final Target Pattern_Field = Input.named("pattern");
 
     public static final Target Save = Button.called("Save");

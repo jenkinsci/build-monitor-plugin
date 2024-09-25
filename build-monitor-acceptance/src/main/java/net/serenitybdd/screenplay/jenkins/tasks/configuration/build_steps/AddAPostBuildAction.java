@@ -6,7 +6,7 @@ import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.jenkins.targets.Link;
+import net.serenitybdd.screenplay.jenkins.targets.Button;
 import net.serenitybdd.screenplay.jenkins.user_interface.ProjectConfigurationPage;
 import net.serenitybdd.screenplayx.actions.Scroll;
 
@@ -24,7 +24,7 @@ public class AddAPostBuildAction implements Task {
                 Sleep.of(1, TimeUnit.SECONDS),
                 Click.on(ProjectConfigurationPage.Add_Post_Build_Action),
                 Sleep.of(1, TimeUnit.SECONDS),
-                Click.on(Link.called(postBuildActionName)));
+                Click.on(Button.called(postBuildActionName)));
     }
 
     public AddAPostBuildAction(String postBuildActionName) {

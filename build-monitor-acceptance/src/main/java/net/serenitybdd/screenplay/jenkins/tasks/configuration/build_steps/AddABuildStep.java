@@ -6,7 +6,7 @@ import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.jenkins.targets.Link;
+import net.serenitybdd.screenplay.jenkins.targets.Button;
 import net.serenitybdd.screenplay.jenkins.user_interface.ProjectConfigurationPage;
 
 public class AddABuildStep implements Task {
@@ -22,7 +22,7 @@ public class AddABuildStep implements Task {
                 Click.on(ProjectConfigurationPage.Build_Steps),
                 Sleep.of(1, TimeUnit.SECONDS),
                 Click.on(ProjectConfigurationPage.Add_Build_Step),
-                Click.on(Link.called(buildStepName)));
+                Click.on(Button.called(buildStepName)));
     }
 
     public AddABuildStep(String buildStepName) {
