@@ -16,9 +16,9 @@ updates:
         versions: ["2.27.0"]
       # This is the minimum Jenkins version
       - dependency-name: "org.jenkins-ci.main:cli"
-      # Restrict updates to Jetty in the 11.x space
+      # Restrict updates to Jetty in the 10.x space
       - dependency-name: "org.eclipse.jetty:*"
-        versions: [">=12.0.0"]
+        versions: [">=11.0.0"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
