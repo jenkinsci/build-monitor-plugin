@@ -7,7 +7,7 @@ import hudson.model.Job;
 import hudson.model.View;
 import org.kohsuke.stapler.Ancestor;
 import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class RelativeLocation {
     private final Job job;
@@ -19,7 +19,7 @@ public class RelativeLocation {
     public String name() {
         ItemGroup ig = null;
 
-        StaplerRequest request = Stapler.getCurrentRequest();
+        StaplerRequest2 request = Stapler.getCurrentRequest2();
         for (Ancestor a : request.getAncestors()) {
             if (a.getObject() instanceof BuildMonitorView) {
                 ig = ((View) a.getObject()).getOwner().getItemGroup();
