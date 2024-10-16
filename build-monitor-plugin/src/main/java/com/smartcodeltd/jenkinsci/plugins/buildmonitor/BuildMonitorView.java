@@ -36,16 +36,16 @@ import hudson.model.Descriptor.FormException;
 import hudson.model.Job;
 import hudson.model.ListView;
 import hudson.model.View;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import javax.servlet.ServletException;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 
 /**
@@ -168,7 +168,7 @@ public class BuildMonitorView extends ListView {
     }
 
     @Override
-    protected void submit(StaplerRequest req) throws ServletException, IOException, FormException {
+    protected void submit(StaplerRequest2 req) throws ServletException, IOException, FormException {
         super.submit(req);
 
         JSONObject json = req.getSubmittedForm();
