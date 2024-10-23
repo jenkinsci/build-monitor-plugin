@@ -3,7 +3,7 @@
 angular.
     module('buildMonitor.services', ['ui.bootstrap.dialog', 'buildMonitor.templates', 'buildMonitor.cron', 'template/dialog/message.html']).
 
-    value('YahooCookie', YAHOO.util.Cookie).
+    value('persistentStorage', window.localStorage).
 
     service('notifyUser',function ($dialog, $window) {
         this.aboutInsufficientSupportOfCSS3 = function(feature) {
@@ -115,10 +115,9 @@ angular.
         };
     }]).
 
-    provider('cookieJar',function () {
+    provider('cookieJar', function () {
         var defaultAttributes = {
-                label: '',
-                shelfLife: 0
+                label: ''
             },
             attributes = {};
 
@@ -126,22 +125,11 @@ angular.
             attributes = cookieJarAttributes;
         }
 
-        this.$get = ['YahooCookie', function (YahooCookie) {
-            return new CookieJar(YahooCookie, angular.extend(defaultAttributes, attributes));
+        this.$get = ['persistentStorage', function (persistentStorage) {
+            return new CookieJar(persistentStorage, angular.extend(defaultAttributes, attributes));
         }];
 
-
-        function CookieJar(YahooCookie, attributes) {
-
-            function expiryDetailsBasedOn(days) {
-                if (days <= 0) {
-                    return {};
-                }
-
-                return {
-                    expires: new Date(+new Date() + (days * 1000 * 3600 * 24))
-                }
-            }
+        function CookieJar(persistentStorage, attributes) {
 
             function prefixed(name) {
                 return attributes.label
@@ -151,11 +139,10 @@ angular.
 
             return {
                 put: function (name, value) {
-                    YahooCookie.set(prefixed(name), value, expiryDetailsBasedOn(attributes.shelfLife));
+                    persistentStorage.setItem(prefixed(name), value);
                 },
                 get: function (name, defaultValue) {
-                    var value = YahooCookie.get(prefixed(name));
-
+                    var value = persistentStorage.getItem(prefixed(name));
                     return (value !== null)
                         ? value
                         : defaultValue;
