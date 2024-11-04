@@ -27,9 +27,6 @@
             <link rel="shortcut icon" href="${resURL}/favicon.ico" type="image/vnd.microsoft.icon" />
 
             <j:set var="yuiSuffix" value="${h.yuiSuffix}" />
-            <l:yui module="yahoo" />
-            <l:yui module="cookie" />
-
             <st:adjunct includes="org.kohsuke.stapler.bind"/>
 
             <j:forEach var="pd" items="${h.pageDecorators}">
@@ -199,8 +196,7 @@
                         proxyProvider.configureProxiesUsing(window.bindings);
 
                         cookieJarProvider.describe({
-                            label:     'buildMonitor.' + hashCodeOf(document.body.dataset.displayName),
-                            shelfLife: 365
+                            label:     'buildMonitor.' + hashCodeOf(document.body.dataset.displayName)
                         });
                     });
             </script>

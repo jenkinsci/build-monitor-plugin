@@ -25,8 +25,6 @@ module.exports = function(config) {
             'src/test/resources/vendor/angular-mocks-1.5.8.js',
             'src/test/resources/vendor/sinon-1.17.7.js',
             'src/test/resources/vendor/jasmine-sinon-0.4.0.js',
-            'src/test/resources/vendor/yahoo-2.9.0.min.js',
-            'src/test/resources/vendor/yahoo-cookie-2.9.0.min.js',
             'src/main/webapp/scripts/**/*.js',
             'src/test/javascript/**/*Spec.js',  // todo: deprecate the "Spec" suffix in favour of ".spec.js"
             'src/test/javascript/**/*.spec.js'
