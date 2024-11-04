@@ -12,7 +12,7 @@
   <name>Build Monitor Acceptance Tests</name>
 
   <properties>
-    <byte-buddy.version>1.15.4</byte-buddy.version>
+    <byte-buddy.version>1.15.10</byte-buddy.version>
     <serenity.version>4.2.6</serenity.version>
     <!-- TODO until in parent POM -->
     <maven.compiler.release>17</maven.compiler.release>
