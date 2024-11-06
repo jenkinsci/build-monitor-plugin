@@ -1,5 +1,5 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:st="jelly:stapler">
 
   <!-- BEGIN cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.532/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
 
@@ -129,17 +129,6 @@
 
   </f:section>
 
-  <script>
-    (function() {
-      Behaviour.specify("#recurse", 'ListView', 0, function(e) {
-        var nestedElements = document.querySelectorAll('SPAN.nested')
-        e.onclick = function() {
-          nestedElements.forEach(function(el) {
-            el.style.display = e.checked ? '' : 'none';
-          });
-        }
-      });
-    }());
-  </script>
+  <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.show-nested-jobs"/>
 
 </j:jelly>
