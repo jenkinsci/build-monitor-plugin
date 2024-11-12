@@ -55,30 +55,14 @@
             <script src="${resourcesURL}/vendor/angular-slider-5.4.0/rzslider.min.js"></script>
 
             <j:if test="${it.collectAnonymousUsageStatistics()}">
-                <script>
-                    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-
-                    ga('create', 'UA-61694827-4', 'auto', {
-                        'userId':     '${it.installation.anonymousCorrelationId()}',
-                        'sampleRate': 1
-                    });
-
-                    ga('set', {
-                        'forceSSL':       true,
-                        'appName':        'Build Monitor',
-                        'appId':          'build-monitor-plugin',
-
-                        'appVersion':     '${it.installation.buildMonitorVersion()}',
-                        'appInstallerId': '${h.version}',
-
-                        'dimension1':     '${it.installation.size()}',
-                        'dimension2':     '${it.items.size()}',
-                        'dimension3':     '${it.installation.audience()}',
-                        'dimension4':     '${it.installation.anonymousCorrelationId()}'
-                    });
-
-                    ga('send', 'screenview', {screenName: 'Dashboard'});
-                </script>
+                <span class="build-monitor-ga-data-holder"
+                        data-build-monitor-version="${it.installation.buildMonitorVersion()}"
+                        data-jenkins-version="${h.version}"
+                        data-installation-size="${it.installation.size()}"
+                        data-items-size="${it.items.size()}"
+                        data-installation-audience="${it.installation.audience()}"
+                        data-anonymous-correlation-id="${it.installation.anonymousCorrelationId()}"/>
+                <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.collect-usage-stats"/>
                 <script async="async" src='//www.google-analytics.com/analytics.js'></script>
             </j:if>
         </head>
@@ -128,44 +112,9 @@
                 </div>
             </footer>
 
-            <script>
-                /*
-                 * todo: (13.08.2013) Replace the below workaround with a custom Jelly tag (ExposeBindTag)
-                 *   extending either org.kohsuke.stapler.jelly.BindTag or AbstractStaplerTag,
-                 *   that would supersede currently defective BindTag implementation:
-                 *   - https://groups.google.com/forum/#!topic/jenkinsci-dev/S9bhX4ts0g4
-                 *   - https://issues.jenkins-ci.org/browse/JENKINS-18641
-                 *
-                 *   Defect in BindTag manifests itself by causing a JavaScript error and preventing scripts after
-                 *   the &lt;st:bind&gt; invocation from executing, which results in an "empty Build Monitor".
-                 *   The issue occurs on Jenkins 1.521-1.526, only if the jQuery plugin is used.
-                 *
-                 * Motivation behind a custom Jelly tag:
-                 *   Original implementation of the BindTag doesn't provide an easy way of handling AJAX errors,
-                 *   which may happen if a network connection is lost or when Jenkins is restarted (which then makes
-                 *   Stapler's binding hash obsolete and Jenkins return 404 for any subsequent requests).
-                 *
-                 *   Custom Jelly tag should generate a JSON object exposing the binding, leaving the implementation
-                 *   of the proxy to the Developer. It makes more sense for a developer to require a binding adapter
-                 *   implementation specific to their JavaScript framework of choice, rather than for Stapler to try
-                 *   to predict what JavaScript libraries will ever be used with it in the future...
-                 */
-                window.originalMakeStaplerProxy = window.makeStaplerProxy;
-                window.makeStaplerProxy = function(url, crumb, methods) {
-                    return { url: url, crumb: crumb, methods: methods }
-                };
-                window.bindings={};
-            </script>
+            <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.replace-stapler-proxy"/>
             <st:bind var="buildMonitorBind" value="${it}" />
-            <script>
-                window.bindings['buildMonitor'] = buildMonitorBind
-                window.makeStaplerProxy = window.originalMakeStaplerProxy;
-                try {
-                    delete window.originalMakeStaplerProxy;
-                } catch(e) {
-                    window["originalMakeStaplerProxy"] = undefined;
-                }
-            </script>
+            <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.restore-stapler-proxy"/>
 
             <!-- todo: use require.js and bundle it all up -->
             <script src="${resourcesURL}/scripts/app.js"></script>
@@ -180,26 +129,11 @@
             <script src="${resourcesURL}/scripts/expansions/build-number.js"></script>
             <script src="${resourcesURL}/scripts/expansions/build-time.js"></script>
             <script src="${resourcesURL}/scripts/slot.js"></script>
-            <script>
-                'use strict';
 
-                angular.
-
-                    module('buildMonitor').
-
-                    constant('BUILD_MONITOR_VERSION', '${it.installation.buildMonitorVersion()}').
-                    constant('CSRF_CRUMB_FIELD_NAME', '${it.csrfCrumbFieldName}').
-
-                    config(function(proxyProvider, cookieJarProvider, hashCodeProvider) {
-                        var hashCodeOf = hashCodeProvider.hashCodeOf;
-
-                        proxyProvider.configureProxiesUsing(window.bindings);
-
-                        cookieJarProvider.describe({
-                            label:     'buildMonitor.' + hashCodeOf(document.body.dataset.displayName)
-                        });
-                    });
-            </script>
+            <span class="build-monitor-data-holder" 
+                  data-build-monitor-version="${it.installation.buildMonitorVersion()}"
+                  data-csrf-crumb-field-name="${it.csrfCrumbFieldName}"/>
+            <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.init-build-monitor"/>
         </body>
     </html>
 </j:jelly>
