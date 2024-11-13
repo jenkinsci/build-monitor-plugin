@@ -55,13 +55,6 @@
             <script src="${resourcesURL}/vendor/angular-slider-5.4.0/rzslider.min.js"></script>
 
             <j:if test="${it.collectAnonymousUsageStatistics()}">
-                <span class="build-monitor-ga-data-holder"
-                        data-build-monitor-version="${it.installation.buildMonitorVersion()}"
-                        data-jenkins-version="${h.version}"
-                        data-installation-size="${it.installation.size()}"
-                        data-items-size="${it.items.size()}"
-                        data-installation-audience="${it.installation.audience()}"
-                        data-anonymous-correlation-id="${it.installation.anonymousCorrelationId()}"/>
                 <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.collect-usage-stats"/>
                 <script async="async" src='//www.google-analytics.com/analytics.js'></script>
             </j:if>
@@ -76,6 +69,15 @@
                 <a class="home-link" href="${rootURL}/" title="Jenkins">Jenkins</a>
                 <h1><a href="configure" title="Configure the '${it.title}' view">${it.title}</a></h1>
                 <st:include page="main-settings.jelly"/>
+                <j:if test="${it.collectAnonymousUsageStatistics()}">
+                    <span class="build-monitor-ga-data-holder"
+                          data-build-monitor-version="${it.installation.buildMonitorVersion()}"
+                          data-jenkins-version="${h.version}"
+                          data-installation-size="${it.installation.size()}"
+                          data-items-size="${it.items.size()}"
+                          data-installation-audience="${it.installation.audience()}"
+                          data-anonymous-correlation-id="${it.installation.anonymousCorrelationId()}"/>
+                </j:if>
             </header>
 
             <j:choose>
