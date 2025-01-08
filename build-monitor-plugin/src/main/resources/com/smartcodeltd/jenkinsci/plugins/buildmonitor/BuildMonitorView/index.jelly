@@ -26,7 +26,6 @@
 
             <link rel="shortcut icon" href="${resURL}/favicon.ico" type="image/vnd.microsoft.icon" />
 
-            <j:set var="yuiSuffix" value="${h.yuiSuffix}" />
             <st:adjunct includes="org.kohsuke.stapler.bind"/>
 
             <j:forEach var="pd" items="${h.pageDecorators}">
@@ -39,8 +38,6 @@
 
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
             <link rel="stylesheet" href="${resourcesURL}/styles/index.css"/>
-
-            <script src="${resURL}/scripts/yui/cookie/cookie-min.js"></script>
 
             <script src="${resourcesURL}/vendor/angular-${angularVersion}/angular.min.js"></script>
             <script src="${resourcesURL}/vendor/angular-${angularVersion}/angular-sanitize.min.js"></script>
