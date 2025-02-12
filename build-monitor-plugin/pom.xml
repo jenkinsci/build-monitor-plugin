@@ -50,7 +50,7 @@
       <dependency>
         <groupId>io.jenkins.tools.bom</groupId>
         <artifactId>bom-${jenkins.baseline}.x</artifactId>
-        <version>3944.v1a_e4f8b_452db_</version>
+        <version>4136.vca_c3202a_7fd1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -75,7 +75,6 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>claim</artifactId>
-      <version>554.va_f9b_58b_0a_088</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -135,7 +134,6 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>description-setter</artifactId>
-      <version>239.vd0a_6b_785f92d</version>
       <scope>test</scope>
     </dependency>
     <dependency>
