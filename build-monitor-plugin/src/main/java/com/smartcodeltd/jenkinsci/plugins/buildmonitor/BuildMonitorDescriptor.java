@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public final class BuildMonitorDescriptor extends ViewDescriptor {
 
@@ -36,7 +36,7 @@ public final class BuildMonitorDescriptor extends ViewDescriptor {
     }
 
     @Override
-    public boolean configure(StaplerRequest req, JSONObject json) {
+    public boolean configure(StaplerRequest2 req, JSONObject json) {
         req.bindJSON(this, json.getJSONObject("build-monitor"));
         save();
 
