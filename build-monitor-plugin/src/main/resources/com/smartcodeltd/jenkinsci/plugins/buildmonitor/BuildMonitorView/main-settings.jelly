@@ -11,7 +11,7 @@
                 <li class="new-version-available" data-ng-show="newVersionAvailable">
                     <h2>Good news :-)</h2>
                     <p>New version of Build Monitor is&amp;nbsp;<a href="http://bit.ly/JBMReleases" title="Check out the release notes">available now</a>!</p>
-                    <p>Upgrade via <a href="${h.inferHudsonURL(request)}pluginManager">Plugin Manager</a></p>
+                    <p>Upgrade via <a href="${h.inferHudsonURL(request2)}pluginManager">Plugin Manager</a></p>
                 </li>
                 <li class="settings-option">
                     <span class="slider-label">Text scale</span>
