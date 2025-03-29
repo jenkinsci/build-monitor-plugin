@@ -1,7 +1,6 @@
 # Jenkins CI Build Monitor Plugin
 
 [![Build Status](https://ci.jenkins.io/job/Plugins/job/build-monitor-plugin/job/master/badge/icon)](https://ci.jenkins.io/job/Plugins/job/build-monitor-plugin/job/master/)
-[![Join the chat at https://gitter.im/jenkins-build-monitor-plugin/Lobby](https://badges.gitter.im/jenkins-build-monitor-plugin/Lobby.svg)](https://gitter.im/jenkins-build-monitor-plugin/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/build-monitor-plugin.svg)](https://plugins.jenkins.io/build-monitor-plugin)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/build-monitor-plugin.svg?color=blue)](https://plugins.jenkins.io/build-monitor-plugin)
 
@@ -26,8 +25,6 @@ Have a question? Perhaps it's already been answered - check the [FAQ](#faq) sect
 
 ## Your feedback matters!
 
-Do you find Build Monitor useful? Give it a star! &#9733;
-
 Found a bug or want to give feedback? Raise [an issue](https://github.com/jenkinsci/build-monitor-plugin/issues?state=open)
 or submit a pull request ([start with this mini-dev guide](https://github.com/jenkinsci/build-monitor-plugin/wiki/Development-Guide), it might come in handy).
 
@@ -45,8 +42,6 @@ Simple, right? :-) You can have as many Build Monitor Views as you want - the mo
 ![Three columns view](docs/2_Three_columns_view.png)
 ![Supports Claim and Build Failure Analyzer plugins](docs/3_Two_columns_view_with_claim_and_build_failure_analyzer_plugins.png)
 ![Colour-blind mode](docs/4_Colour_blind_mode.png)
-
-**Please note** that you can change the number of columns and the size of the font using the gear icon in the top right corner.
 
 ## (A)TDD
 
