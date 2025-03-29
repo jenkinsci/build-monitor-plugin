@@ -3,6 +3,12 @@
 
 body { margin: 0; }
 
+*,
+*::before,
+*::after {
+  box-sizing: unset;
+}
+
 // todo: hide the nav if on mobile: www.html5rocks.com/en/mobile/fullscreen/
 .build-monitor.dashboard {
   height: 100vh;
