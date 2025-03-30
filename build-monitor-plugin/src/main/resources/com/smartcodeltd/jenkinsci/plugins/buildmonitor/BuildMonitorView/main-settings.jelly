@@ -22,12 +22,16 @@
                     <div class="jenkins-dropdown__separator" />
                 </li>
                 <li>
-                    <div class="jenkins-form-label">Text scale</div>
-                    <rzslider rz-slider-model="settings.fontSize" rz-slider-options="{ floor: 0.1, ceil: 5, step: 0.1, precision: 1 }"></rzslider>
+                    <div class="slider-wrapper">
+                        <div class="jenkins-form-label">Text scale</div>
+                        <rzslider rz-slider-model="settings.fontSize" rz-slider-options="{ floor: 0.1, ceil: 5, step: 0.1, precision: 1 }"></rzslider>
+                    </div>
                 </li>
                 <li>
-                    <div class="jenkins-form-label">Maximum number of columns</div>
-                    <rzslider rz-slider-model="settings.numberOfColumns" rz-slider-options="{ floor: 1, ceil: 20, step: 1, precision: 0 }"></rzslider>
+                    <div class="slider-wrapper">
+                        <div class="jenkins-form-label">Maximum number of columns</div>
+                        <rzslider rz-slider-model="settings.numberOfColumns" rz-slider-options="{ floor: 1, ceil: 20, step: 1, precision: 0 }"></rzslider>
+                    </div>
                 </li>
                 <li>
                     <div class="jenkins-dropdown__separator" />

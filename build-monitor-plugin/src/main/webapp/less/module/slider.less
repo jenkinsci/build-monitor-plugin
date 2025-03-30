@@ -1,19 +1,31 @@
 .rzslider {
+  .rz-bar {
+    background: var(--text-color-secondary);
+  }
+
   span.rz-bubble {
-    color: #fff;
+    color: var(--text-color);
   }
 
   span.rz-bubble.rz-limit {
-    color: #ccc;
+    color: var(--text-color-secondary);
   }
 
   span.rz-pointer {
-    background-color: #f5f5f5;
+    background-color: transparent;
+    outline: none;
 
-    &:after           { background-color: grey; }
+    &:after {
+      background-color: var(--text-color);
+      width: 12px;
+      height: 12px;
+      top: 10px;
+      left: 10px;
+      border-radius: 50%;
+    }
 
-    &:hover:after     { background-color: darkgrey; }
+    &:hover:after     { background-color: var(--text-color); }
 
-    &.rz-active:after { background-color: black; }
+    &.rz-active:after { background-color: var(--text-color); }
   }
 }
