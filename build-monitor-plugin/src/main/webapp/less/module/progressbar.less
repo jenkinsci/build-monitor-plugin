@@ -5,11 +5,15 @@
   }
 
   .project {
-    &.unknown    > .progress { background-color: #9d9d9d; }
-    &.successful > .progress { background-color: green; }
-    &.unstable   > .progress { background-color: #f9aa1c; }
-    &.failing    > .progress { background-color: firebrick; }
-    &.aborted    > .progress { background-color: #909090; }
+    .progress {
+      transition: var(--standard-transition);
+    }
+
+    &.successful > .progress { background-color: var(--success); }
+    &.unstable   > .progress { background-color: var(--warning); }
+    &.failing    > .progress { background-color: var(--error-color); }
+    &.unknown    > .progress { background-color: var(--text-color-secondary); }
+    &.aborted    > .progress { background-color: var(--text-color-secondary); }
   }
 
   &:not(.reduce-motion-mode) {
