@@ -98,9 +98,9 @@
             <j:choose>
                 <j:when test="${it.isEmpty()}">
                     <main class="main empty">
-                        <div class="notice">
-                            <p>It seems a bit empty here... Maybe you'd like to <a href="configure">add some projects</a> to this Build Monitor?</p>
-                        </div>
+                        <l:notice title="It seems a bit empty here...">
+                            Maybe you'd like to <a href="configure">add some projects</a> to this Build Monitor?
+                        </l:notice>
                     </main>
                 </j:when>
                 <j:otherwise>
