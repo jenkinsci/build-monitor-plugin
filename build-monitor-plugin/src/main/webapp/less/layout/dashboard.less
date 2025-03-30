@@ -3,6 +3,13 @@
 
 body { margin: 0; }
 
+// Unset the default Jenkins box-sizing to avoid conflicts
+*,
+*::before,
+*::after {
+  box-sizing: unset;
+}
+
 // todo: hide the nav if on mobile: www.html5rocks.com/en/mobile/fullscreen/
 .build-monitor.dashboard {
   height: 100vh;
