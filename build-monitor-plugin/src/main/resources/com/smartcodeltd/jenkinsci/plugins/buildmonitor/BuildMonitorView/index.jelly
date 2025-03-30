@@ -32,38 +32,12 @@
                 <st:include it="${pd}" page="header.jelly" optional="true" />
             </j:forEach>
 
-            <link rel="stylesheet" href="${resourcesURL}/styles/bootstrap-combined.2.3.2.min.css"/>
-            <link rel="stylesheet" href="${resourcesURL}/vendor/angular-slider-5.4.0/rzslider.min.css"/>
-
             <link rel="stylesheet" href="${resURL}/jsbundles/styles.css" type="text/css" />
-            <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
 
             <j:new var="dateNow" className="java.util.Date"/>
             <link rel="stylesheet" href="${resourcesURL}/styles/index.css?temp=${dateNow}"/>
-
-            <script src="${resourcesURL}/vendor/angular-${angularVersion}/angular.min.js"></script>
-            <script src="${resourcesURL}/vendor/angular-${angularVersion}/angular-sanitize.min.js"></script>
-            <script src="${resourcesURL}/vendor/angular-${angularVersion}/angular-animate.min.js"></script>
-
-            <script src="${resourcesURL}/vendor/modernizr.custom.27682.js"></script>
-            <script src="${resourcesURL}/vendor/ng-lodash-3.10.1.min.js"></script>
-            <script src="${resourcesURL}/vendor/ui-bootstrap-custom-tpls-0.4.0.js"></script>
-
-            <script src="${resourcesURL}/vendor/angular-slugify-1.0.0.js"></script>
-
-            <script src="${resourcesURL}/vendor/angular-slider-5.4.0/rzslider.min.js"></script>
-
-            <j:if test="${it.collectAnonymousUsageStatistics()}">
-                <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.collect-usage-stats"/>
-                <script async="async" src='//www.google-analytics.com/analytics.js'></script>
-            </j:if>
         </head>
-        <body class="build-monitor dashboard industrial"
-              data-ng-app="buildMonitor"
-              data-ng-controller="JobViews"
-              data-display-name="${it.displayName}"
-              data-ng-class="{ 'colour-blind-mode': settings.colourBlind == 1, 'reduce-motion-mode': settings.reduceMotion == 1 }">
-
+        <body>
             <header class="jenkins-header">
                 <div class="jenkins-header__navigation">
                     <a href="/jenkins/" class="app-jenkins-logo">
@@ -80,18 +54,8 @@
                 </div>
 
                 <div class="jenkins-header__actions">
-                    <st:include page="main-settings.jelly"/>
+<!--                    <st:include page="main-settings.jelly"/>-->
                 </div>
-
-                <j:if test="${it.collectAnonymousUsageStatistics()}">
-                    <template class="build-monitor-ga-data-holder"
-                          data-build-monitor-version="${it.installation.buildMonitorVersion()}"
-                          data-jenkins-version="${h.version}"
-                          data-installation-size="${it.installation.size()}"
-                          data-items-size="${it.items.size()}"
-                          data-installation-audience="${it.installation.audience()}"
-                          data-anonymous-correlation-id="${it.installation.anonymousCorrelationId()}"/>
-                </j:if>
             </header>
 
             <j:choose>
@@ -109,47 +73,24 @@
                 </j:otherwise>
             </j:choose>
 
-            <footer>
-                <div class="connectivity column">
-                    <notifier />
-                </div>
-                <div class="version-info column">
-                    <a href="https://github.com/jenkinsci/build-monitor-plugin"
-                       title="Learn more about the Build Monitor project"
-                       rel="external">Build Monitor</a>
-                    version
-                    <a href="https://github.com/jenkinsci/build-monitor-plugin/releases"
-                       title="Is your Build Monitor up to date?"
-                       rel="external">${it.installation.buildMonitorVersion()}</a>
-                    brought to you by
-                    <a href="https://bit.ly/JBMAbout"
-                       title="Check out my articles on software development and delivery, training courses, talks and public events!"
-                       rel="external">Jan Molak</a>
-                </div>
-            </footer>
-
-            <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.replace-stapler-proxy"/>
-            <st:bind var="buildMonitorBind" value="${it}" />
-            <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.restore-stapler-proxy"/>
-
-            <!-- todo: use require.js and bundle it all up -->
-            <script src="${resourcesURL}/scripts/app.js"></script>
-            <script src="${resourcesURL}/scripts/cron.js"></script>
-            <script src="${resourcesURL}/scripts/filters.js"></script>
-            <script src="${resourcesURL}/scripts/services.js"></script>
-            <script src="${resourcesURL}/scripts/stats.js"></script>
-            <script src="${resourcesURL}/scripts/jenkins.js"></script>
-            <script src="${resourcesURL}/scripts/controllers.js"></script>
-            <script src="${resourcesURL}/scripts/templates.js"></script>
-            <script src="${resourcesURL}/scripts/settings.js"></script>
-            <script src="${resourcesURL}/scripts/expansions/build-number.js"></script>
-            <script src="${resourcesURL}/scripts/expansions/build-time.js"></script>
-            <script src="${resourcesURL}/scripts/slot.js"></script>
-
-            <span class="build-monitor-data-holder" 
-                  data-build-monitor-version="${it.installation.buildMonitorVersion()}"
-                  data-csrf-crumb-field-name="${it.csrfCrumbFieldName}"/>
-            <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.init-build-monitor"/>
+<!--            <footer>-->
+<!--                <div class="connectivity column">-->
+<!--                    <notifier />-->
+<!--                </div>-->
+<!--                <div class="version-info column">-->
+<!--                    <a href="https://github.com/jenkinsci/build-monitor-plugin"-->
+<!--                       title="Learn more about the Build Monitor project"-->
+<!--                       rel="external">Build Monitor</a>-->
+<!--                    version-->
+<!--                    <a href="https://github.com/jenkinsci/build-monitor-plugin/releases"-->
+<!--                       title="Is your Build Monitor up to date?"-->
+<!--                       rel="external">${it.installation.buildMonitorVersion()}</a>-->
+<!--                    brought to you by-->
+<!--                    <a href="https://bit.ly/JBMAbout"-->
+<!--                       title="Check out my articles on software development and delivery, training courses, talks and public events!"-->
+<!--                       rel="external">Jan Molak</a>-->
+<!--                </div>-->
+<!--            </footer>-->
         </body>
     </html>
 </j:jelly>

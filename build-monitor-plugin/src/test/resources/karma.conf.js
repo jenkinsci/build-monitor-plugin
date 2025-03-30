@@ -15,17 +15,17 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'src/test/resources/custom_matchers.js',
-            'src/main/webapp/vendor/modernizr.custom.27682.js', // needed?
-            'src/main/webapp/vendor/angular-1.5.8/angular.js',
-            'src/main/webapp/vendor/angular-1.5.8/angular-animate.js',
-            'src/main/webapp/vendor/angular-1.5.8/angular-sanitize.js',
-            'src/main/webapp/vendor/angular-slider-5.4.0/rzslider.js',
-            'src/main/webapp/vendor/ng-lodash-3.10.1.min.js',
-            'src/main/webapp/vendor/ui-*.js',
+            '../../main/frontend/vendor/modernizr.custom.27682.js', // needed?
+            '../../main/frontend/vendor/angular-1.5.8/angular.js',
+            '../../main/frontend/vendor/angular-1.5.8/angular-animate.js',
+            '../../main/frontend/vendor/angular-1.5.8/angular-sanitize.js',
+            '../../main/frontend/vendor/angular-slider-5.4.0/rzslider.js',
+            '../../main/frontend/vendor/ng-lodash-3.10.1.min.js',
+            '../../main/frontend/vendor/ui-*.js',
             'src/test/resources/vendor/angular-mocks-1.5.8.js',
             'src/test/resources/vendor/sinon-1.17.7.js',
             'src/test/resources/vendor/jasmine-sinon-0.4.0.js',
-            'src/main/webapp/scripts/**/*.js',
+            '../../main/frontend/scripts/**/*.js',
             'src/test/javascript/**/*Spec.js',  // todo: deprecate the "Spec" suffix in favour of ".spec.js"
             'src/test/javascript/**/*.spec.js'
         ],

@@ -23,5 +23,5 @@ chromedriver.exe
 
 !.travis.yml
 
-build-monitor-plugin/src/main/webapp/styles/index.css
-build-monitor-plugin/src/main/webapp/styles/main.js
+build-monitor-plugin/src/main/frontend/styles/index.css
+build-monitor-plugin/src/main/frontend/styles/main.js
