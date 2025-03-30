@@ -98,8 +98,8 @@
             <j:choose>
                 <j:when test="${it.isEmpty()}">
                     <main class="main empty">
-                        <l:notice title="It seems a bit empty here...">
-                            Maybe you'd like to <a href="configure">add some projects</a> to this Build Monitor?
+                        <l:notice icon="symbol-tv-outline plugin-ionicons-api" title="It seems a bit empty here...">
+                            <a href="configure">Add some jobs</a>
                         </l:notice>
                     </main>
                 </j:when>
