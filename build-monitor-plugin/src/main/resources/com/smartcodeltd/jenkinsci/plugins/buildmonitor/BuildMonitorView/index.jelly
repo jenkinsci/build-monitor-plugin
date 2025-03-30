@@ -1,6 +1,5 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:x="jelly:xml">
-
     <st:contentType value="text/html;charset=UTF-8"/>
     <st:setHeader name="Expires" value="0" />
     <st:setHeader name="Cache-Control" value="no-cache,no-store,must-revalidate" />
@@ -8,10 +7,8 @@
     <j:new var="h" className="hudson.Functions"/>
     ${h.initPageVariables(context)}
 
-    <j:set var="isMSIE" value="${userAgent.contains('MSIE')}"/>
     <j:set var="resourcesURL" value="${resURL}/plugin/build-monitor-plugin" />
     <j:set var="jobsURL" value="${rootURL}/job" />
-    <j:set var="angularVersion" value="1.5.8" />
 
     <x:doctype name="html" />
     <html>
@@ -19,10 +16,6 @@
             ${h.checkPermission(it,permission)}
 
             <title>${it.displayName} - Jenkins</title>
-
-            <j:if test="${isMSIE}">
-                <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-            </j:if>
 
             <link rel="shortcut icon" href="${resURL}/favicon.ico" type="image/vnd.microsoft.icon" />
 
@@ -58,6 +51,13 @@
                 </div>
             </header>
 
+            <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.replace-stapler-proxy"/>
+            <st:bind var="buildMonitorBind" value="${it}" />
+            <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.restore-stapler-proxy"/>
+
+            <h1>${resourcesURL}</h1>
+            <h1>${jobsURL}</h1>
+
             <j:choose>
                 <j:when test="${it.isEmpty()}">
                     <main class="main empty">
@@ -67,30 +67,11 @@
                     </main>
                 </j:when>
                 <j:otherwise>
-                    <main class="main ng-cloak">
+                    <main>
                         <st:include page="widgets.jelly" />
                     </main>
                 </j:otherwise>
             </j:choose>
-
-<!--            <footer>-->
-<!--                <div class="connectivity column">-->
-<!--                    <notifier />-->
-<!--                </div>-->
-<!--                <div class="version-info column">-->
-<!--                    <a href="https://github.com/jenkinsci/build-monitor-plugin"-->
-<!--                       title="Learn more about the Build Monitor project"-->
-<!--                       rel="external">Build Monitor</a>-->
-<!--                    version-->
-<!--                    <a href="https://github.com/jenkinsci/build-monitor-plugin/releases"-->
-<!--                       title="Is your Build Monitor up to date?"-->
-<!--                       rel="external">${it.installation.buildMonitorVersion()}</a>-->
-<!--                    brought to you by-->
-<!--                    <a href="https://bit.ly/JBMAbout"-->
-<!--                       title="Check out my articles on software development and delivery, training courses, talks and public events!"-->
-<!--                       rel="external">Jan Molak</a>-->
-<!--                </div>-->
-<!--            </footer>-->
         </body>
     </html>
 </j:jelly>
