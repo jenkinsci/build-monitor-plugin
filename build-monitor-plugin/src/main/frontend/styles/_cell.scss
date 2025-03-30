@@ -16,10 +16,11 @@ $cell-padding: 1rem;
   border-radius: 1rem;
   font-size: 2rem;
   font-weight: 450 !important;
-  color: color-mix(in srgb, var(--psv-cell-color), var(--text-color) 10%) !important;
+  color: white !important;
   padding: $cell-padding;
   z-index: 0;
   transition: var(--standard-transition);
+  text-shadow: 0 0 1px rgb(0 0 0 / 0.15), 0 5px 15px rgb(0 0 0 / 0.15);
 
   &::before {
     content: "";
@@ -27,9 +28,10 @@ $cell-padding: 1rem;
     inset: 0;
     border-radius: inherit;
     transition: var(--standard-transition);
-    background: color-mix(in srgb, var(--psv-cell-color) var(--opacity-modifier, 100%), transparent);
+    background: color-mix(in oklch, var(--psv-cell-color) var(--opacity-modifier, 65%), transparent);
+    //border: var(--jenkins-border--subtle);
+    box-shadow: inset 0 0 1.5px oklch(from var(--psv-cell-color) l c h / 75%), inset 0 0 100px oklch(from var(--psv-cell-color) l c h / 15%);
     color: inherit;
-    opacity: 0.125;
   }
 
   &::after {
@@ -41,22 +43,15 @@ $cell-padding: 1rem;
     background: transparent;
     backdrop-filter: blur(0);
     visibility: collapse;
-    border-radius: 1rem;
+    border-radius: inherit;
   }
 
   &:hover {
-    &::before {
-      opacity: 0.2;
-    }
+    --opacity-modifier: 75%;
   }
 
   &:active {
-    z-index: 1;
-    border-radius: 0.66rem !important;
-
-    &::before {
-      border-radius: 0.66rem;
-    }
+    --opacity-modifier: 85%;
 
     &::after {
       inset: -5px;
@@ -81,10 +76,8 @@ $cell-padding: 1rem;
   &--in-progress {
     --psv-cell-color: var(--blue);
 
-    &:not(.psv-stage-cell) {
-      &::before {
-        animation: pulse-thing 2s ease infinite;
-      }
+    &::before {
+      animation: pulse-thing 2s ease infinite;
     }
   }
 

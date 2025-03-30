@@ -1,93 +1,91 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout">
-    <button class="jenkins-button jenkins-button--tertiary"
-            data-ng-click="toggleSettings = !toggleSettings"
-            data-ng-class="{ 'jenkins-button--tertiary': !toggleSettings }">
+    <button class="jenkins-button jenkins-button--tertiary">
         <l:icon src="symbol-settings" />
     </button>
 
-    <nav data-ng-controller="controlPanel" data-ng-init="built_at = '${it.installation.buildMonitorBuiltAt()}'; defaults.fontSize = ${it.textScale}; defaults.numberOfColumns = ${it.maxColumns}; defaults.colourBlind = ${it.colourBlindMode}; defaults.reduceMotion = ${it.reduceMotion}; defaults.showBadges = ${it.showBadges}; addCookie()">
-        <span data-ng-show="newVersionAvailable" class="notifications">!</span>
-        <section data-ng-class="{ showSettings:toggleSettings }">
-            <input id="settings-toggle" type="checkbox" class="settings jenkins-hidden" data-ng-model="toggleSettings" />
+<!--    <nav data-ng-controller="controlPanel" data-ng-init="built_at = '${it.installation.buildMonitorBuiltAt()}'; defaults.fontSize = ${it.textScale}; defaults.numberOfColumns = ${it.maxColumns}; defaults.colourBlind = ${it.colourBlindMode}; defaults.reduceMotion = ${it.reduceMotion}; defaults.showBadges = ${it.showBadges}; addCookie()">-->
+<!--        <span data-ng-show="newVersionAvailable" class="notifications">!</span>-->
+<!--        <section data-ng-class="{ showSettings:toggleSettings }">-->
+<!--            <input id="settings-toggle" type="checkbox" class="settings jenkins-hidden" data-ng-model="toggleSettings" />-->
 
-            <!-- workaround for angular-slider not working when initialised within a hidden element -->
-            <ul>
-                <li class="new-version-available" data-ng-show="newVersionAvailable">
-                    <h2>Good news :-)</h2>
-                    <p>New version of Build Monitor is&amp;nbsp;<a href="http://bit.ly/JBMReleases" title="Check out the release notes">available now</a>!</p>
-                    <p>Upgrade via <a href="${h.inferHudsonURL(request2)}manage/pluginManager">Plugin Manager</a></p>
-                </li>
-                <li data-ng-show="newVersionAvailable">
-                    <div class="jenkins-dropdown__separator" />
-                </li>
-                <li>
-                    <div class="slider-wrapper">
-                        <div class="jenkins-form-label">Text scale</div>
-                        <rzslider rz-slider-model="settings.fontSize" rz-slider-options="{ floor: 0.1, ceil: 5, step: 0.1, precision: 1 }"></rzslider>
-                    </div>
-                </li>
-                <li>
-                    <div class="slider-wrapper">
-                        <div class="jenkins-form-label">Maximum number of columns</div>
-                        <rzslider rz-slider-model="settings.numberOfColumns" rz-slider-options="{ floor: 1, ceil: 20, step: 1, precision: 0 }"></rzslider>
-                    </div>
-                </li>
-                <li>
-                    <div class="jenkins-dropdown__separator" />
-                </li>
-                <li>
-                    <div class="jenkins-checkbox">
-                        <input ng-model="settings.colourBlind"
-                               ng-false-value="'0'"
-                               ng-true-value="'1'"
-                               id="settings-colour-blind" type="checkbox" />
-                        <label for="settings-colour-blind" title="Applies a colour blind-friendly colour scheme">Color blind mode</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="jenkins-checkbox">
-                        <input ng-model="settings.reduceMotion"
-                               ng-false-value="'0'"
-                               ng-true-value="'1'"
-                               id="settings-reduce-motion" type="checkbox" />
-                        <label for="settings-reduce-motion" title="Reduces the amount of animation Build Monitor uses">Reduce motion</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="jenkins-checkbox">
-                        <input ng-model="settings.showBadges"
-                               ng-false-value="'0'"
-                               ng-true-value="'1'"
-                               id="settings-show-badges" type="checkbox" />
-                        <label for="settings-show-badges" title="Show the last build badges">Show badges</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="jenkins-dropdown__separator" />
-                </li>
-                <li>
-                    <a class="jenkins-dropdown__item"
-                       href="configure">
-                        <div class="jenkins-dropdown__item__icon">
-                            <l:icon src="symbol-settings" />
-                        </div>
-                        Edit View
-                    </a>
-                </li>
-                <li>
-                    <div class="jenkins-dropdown__separator" />
-                </li>
-                <li>
-                    <a class="jenkins-dropdown__item"
-                       data-ng-click="resetSettings()">
-                        <div class="jenkins-dropdown__item__icon">
-                            <l:icon src="symbol-refresh" />
-                        </div>
-                        Reset to default
-                    </a>
-                </li>
-            </ul>
-        </section>
-    </nav>
+<!--            &lt;!&ndash; workaround for angular-slider not working when initialised within a hidden element &ndash;&gt;-->
+<!--            <ul>-->
+<!--                <li class="new-version-available" data-ng-show="newVersionAvailable">-->
+<!--                    <h2>Good news :-)</h2>-->
+<!--                    <p>New version of Build Monitor is&amp;nbsp;<a href="http://bit.ly/JBMReleases" title="Check out the release notes">available now</a>!</p>-->
+<!--                    <p>Upgrade via <a href="${h.inferHudsonURL(request2)}manage/pluginManager">Plugin Manager</a></p>-->
+<!--                </li>-->
+<!--                <li data-ng-show="newVersionAvailable">-->
+<!--                    <div class="jenkins-dropdown__separator" />-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="slider-wrapper">-->
+<!--                        <div class="jenkins-form-label">Text scale</div>-->
+<!--                        <rzslider rz-slider-model="settings.fontSize" rz-slider-options="{ floor: 0.1, ceil: 5, step: 0.1, precision: 1 }"></rzslider>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="slider-wrapper">-->
+<!--                        <div class="jenkins-form-label">Maximum number of columns</div>-->
+<!--                        <rzslider rz-slider-model="settings.numberOfColumns" rz-slider-options="{ floor: 1, ceil: 20, step: 1, precision: 0 }"></rzslider>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="jenkins-dropdown__separator" />-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="jenkins-checkbox">-->
+<!--                        <input ng-model="settings.colourBlind"-->
+<!--                               ng-false-value="'0'"-->
+<!--                               ng-true-value="'1'"-->
+<!--                               id="settings-colour-blind" type="checkbox" />-->
+<!--                        <label for="settings-colour-blind" title="Applies a colour blind-friendly colour scheme">Color blind mode</label>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="jenkins-checkbox">-->
+<!--                        <input ng-model="settings.reduceMotion"-->
+<!--                               ng-false-value="'0'"-->
+<!--                               ng-true-value="'1'"-->
+<!--                               id="settings-reduce-motion" type="checkbox" />-->
+<!--                        <label for="settings-reduce-motion" title="Reduces the amount of animation Build Monitor uses">Reduce motion</label>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="jenkins-checkbox">-->
+<!--                        <input ng-model="settings.showBadges"-->
+<!--                               ng-false-value="'0'"-->
+<!--                               ng-true-value="'1'"-->
+<!--                               id="settings-show-badges" type="checkbox" />-->
+<!--                        <label for="settings-show-badges" title="Show the last build badges">Show badges</label>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="jenkins-dropdown__separator" />-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <a class="jenkins-dropdown__item"-->
+<!--                       href="configure">-->
+<!--                        <div class="jenkins-dropdown__item__icon">-->
+<!--                            <l:icon src="symbol-settings" />-->
+<!--                        </div>-->
+<!--                        Edit View-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="jenkins-dropdown__separator" />-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <a class="jenkins-dropdown__item"-->
+<!--                       data-ng-click="resetSettings()">-->
+<!--                        <div class="jenkins-dropdown__item__icon">-->
+<!--                            <l:icon src="symbol-refresh" />-->
+<!--                        </div>-->
+<!--                        Reset to default-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </section>-->
+<!--    </nav>-->
 </j:jelly>

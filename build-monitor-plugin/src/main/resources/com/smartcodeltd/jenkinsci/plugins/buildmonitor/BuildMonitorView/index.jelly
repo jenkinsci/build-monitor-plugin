@@ -18,7 +18,7 @@
                </div>
 
                <div class="jenkins-header__actions">
-                   <!--                    <st:include page="main-settings.jelly"/>-->
+                   <st:include page="main-settings.jelly"/>
                </div>
            </header>
 
