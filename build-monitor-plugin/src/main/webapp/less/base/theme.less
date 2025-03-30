@@ -1,9 +1,12 @@
 :root {
-  --background: oklch(from oklch(from oklch(65.13% 0.1987 265) 99% 0.015 h) 0.165 0.013 h);
+  --background: black;
 
   /* Colors */
   --accent-color: oklch(65.13% 0.1987 265);
   --white: oklch(from var(--accent-color) 99% 0.015 h);
+  --success-color: oklch(80.25% 0.2197 147.09deg / 75%);
+  --warning-color: oklch(79.58% 0.1862 62.09deg / 75%);
+  --error-color: oklch(66.82% 0.2393 29.84deg / 75%);
 
   /* Text */
   --text-color: oklch(from var(--accent-color) 99% 0.015 h);
@@ -24,7 +27,7 @@
           0 10px 20px rgba(0, 0, 20, 0.3);
 
   /* Card */
-  --card-background: color-mix(in oklch, var(--text-color-secondary) 7.5%, var(--background));
+  --card-background: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));
   --card-border-color: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));
 
   /* Render native browser elements in dark mode */

@@ -17,51 +17,31 @@
     .project {
 
       &.unknown > .progress.updated {
-          -webkit-animation: forUnknown 2.25s 2 alternate;
-          -moz-animation: forUnknown 2.25s 2 alternate;
-          animation: forUnknown 2.25s 2 alternate;
+          animation: forUnknown 2.25s;
       }
 
       &.successful > .progress.updated {
-          -webkit-animation: forSuccessful 2.25s 2 alternate;
-          -moz-animation: forSuccessful 2.25s 2 alternate;
-          animation: forSuccessful 2.25s 2 alternate;
+          animation: forSuccessful 2.25s;
       }
 
       &.unstable > .progress.updated {
-          -webkit-animation: forUnstable 2.25s 2 alternate;
-          -moz-animation: forUnstable 2.25s 2 alternate;
-          animation: forUnstable 2.25s 2 alternate;
+          animation: forUnstable 2.25s;
       }
 
       &.failing > .progress.updated {
-          -webkit-animation: forFailing 2.25s 2 alternate;
-          -moz-animation: forFailing 2.25s 2 alternate;
-          animation: forFailing 2.25s 2 alternate;
+          animation: forFailing 2.25s;
       }
 
       &.aborted > .progress.updated {
-          -webkit-animation: forAborted 2.25s 2 alternate;
-          -moz-animation: forAborted 2.25s 2 alternate;
-          animation: forAborted 2.25s 2 alternate;
+          animation: forAborted 2.25s;
       }
     }
   }
 }
 
 // progress bar animations
-@-webkit-keyframes  forUnknown    { 0% {background-color: #9d9d9d;}   100% {background-color: grey;} }
-@-moz-keyframes     forUnknown    { 0% {background-color: #9d9d9d;}   100% {background-color: grey;} }
-@keyframes          forUnknown    { 0% {background-color: #9d9d9d;}   100% {background-color: grey;} }
-@-webkit-keyframes  forSuccessful { 0% {background-color: green;}     100% {background-color: limegreen;} }
-@-moz-keyframes     forSuccessful { 0% {background-color: green;}     100% {background-color: limegreen;} }
-@keyframes          forSuccessful { 0% {background-color: green;}     100% {background-color: limegreen;} }
-@-webkit-keyframes  forUnstable   { 0% {background-color: #f9aa1c;}   100% {background-color: #ffc500;} }
-@-moz-keyframes     forUnstable   { 0% {background-color: #f9aa1c;}   100% {background-color: #ffc500;} }
-@keyframes          forUnstable   { 0% {background-color: #f9aa1c;}   100% {background-color: #ffc500;} }
-@-webkit-keyframes  forFailing    { 0% {background-color: firebrick;} 100% {background-color: red;} }
-@-moz-keyframes     forFailing    { 0% {background-color: firebrick;} 100% {background-color: red;} }
-@keyframes          forFailing    { 0% {background-color: firebrick;} 100% {background-color: red;} }
-@-webkit-keyframes  forAborted    { 0% {background-color: #909090;} 100% {background-color: #a9a9a9;} }
-@-moz-keyframes     forAborted    { 0% {background-color: #909090;} 100% {background-color: #a9a9a9;} }
-@keyframes          forAborted    { 0% {background-color: #909090;} 100% {background-color: #a9a9a9;} }
+@keyframes          forUnknown    { 50% {background-color: var(--text-color-secondary);} }
+@keyframes          forSuccessful { 50% {background-color: var(--success-color);} }
+@keyframes          forUnstable   { 50% {background-color: var(--warning-color);} }
+@keyframes          forFailing    { 50% {background-color: var(--error-color);} }
+@keyframes          forAborted    { 50% {background-color: var(--text-color-secondary);} }

@@ -45,17 +45,18 @@ h1,h2,h3,h4,h5,h6 {
     text-align:center;
     margin:0; padding:0;
 }
-.build-monitor header>h1 {
-    text-shadow: 2px 2px rgba(0,0,0,0.5);
-}
-h2 {
-    text-shadow: 1px 1px rgba(0,0,0,0.5);
+
+/* TODO - Validate this */
+#widgets {
+    * {
+        text-shadow: 0 0 1px rgba(0,0,0,0.05), 0 4px 4px rgba(0,0,0,0.1);
+    }
 }
 
 .build-monitor #widgets li a,
 .build-monitor #widgets li a:visited,
 .build-monitor header>h1>a{
-    color:white;
+    color: var(--text-color);
 }
 .build-monitor a:hover {
     text-decoration: underline;
@@ -69,13 +70,14 @@ h2 {
     margin: 0 0 0.5em 0;
 }
 
-.build-monitor .unknown    { background-color:#474747; }
-.build-monitor .successful { background-color:darkgreen; }
-.build-monitor .unstable   { background-color:#f59400; }
-.build-monitor .failing    { background-color:darkred; }
+.build-monitor .successful { background-color: oklch(from var(--success-color) l c h / 0.65); }
+.build-monitor .unstable   { background-color: oklch(from var(--warning-color) l c h / 0.65); }
+.build-monitor .failing    { background-color: oklch(from var(--error-color) l c h / 0.65); }
 /* same grey background because in each case there's no visibility of what's wrong with the build */
+.build-monitor .unknown,
 .build-monitor .aborted,
-.build-monitor .disabled   { background-color:grey; }
+.build-monitor .disabled   { background-color: oklch(from var(--text-color-secondary) l c h / 0.65); }
+
 .build-monitor .disabled h2 { text-decoration: line-through; }
 
 /*

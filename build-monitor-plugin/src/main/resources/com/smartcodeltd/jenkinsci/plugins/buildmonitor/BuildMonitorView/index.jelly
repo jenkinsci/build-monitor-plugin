@@ -18,7 +18,7 @@
         <head resURL="${resURL}">
             ${h.checkPermission(it,permission)}
 
-            <title>${it.displayName}</title>
+            <title>${it.displayName} - Jenkins</title>
 
             <j:if test="${isMSIE}">
                 <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
@@ -32,7 +32,6 @@
                 <st:include it="${pd}" page="header.jelly" optional="true" />
             </j:forEach>
 
-            <link rel="stylesheet" href="${resourcesURL}/styles/normalize.css"/>
             <link rel="stylesheet" href="${resourcesURL}/styles/bootstrap-combined.2.3.2.min.css"/>
             <link rel="stylesheet" href="${resourcesURL}/vendor/angular-slider-5.4.0/rzslider.min.css"/>
 

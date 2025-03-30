@@ -14,7 +14,7 @@
 
       .slots .slot {
         font-size:     1.5em;
-        font-weight:   bold;
+        font-weight:   500;
 
         text-overflow: ellipsis;
         white-space:   nowrap;
@@ -61,13 +61,13 @@
 
     & {
       position:      relative;
-      border-radius: 10px;
+      border-radius: 1rem;
       overflow-y:    hidden;
       min-height:    0px;
 
       header {
         position: relative;   // so that the stacking order works correctly: https://developers.google.com/web/updates/2012/09/Stacking-Changes-Coming-to-position-fixed-elements
-        margin:   8px 8px 0 8px;
+        margin:   8px calc(var(--section-padding) / 2) 0 calc(var(--section-padding) / 2);
         overflow: hidden;
 
         ul.details {
@@ -96,8 +96,8 @@
       }
 
       .slots {
-        .slot-1 { text-align: left;  padding: 0 0   4px 8px; }
-        .slot-2 { text-align: right; padding: 0 8px 4px 0; }
+        .slot-1 { text-align: left;  padding: 0 0 0 calc(var(--section-padding) / 2); }
+        .slot-2 { text-align: right; padding: 0 calc(var(--section-padding) / 2) 0 0; }
       }
 
       & > .progress {
@@ -123,10 +123,8 @@
     // Theme
 
     & {
-      .box-shadow(2px 2px 1px rgba(0,0,0,0.5));
-
       & > .progress {
-        border-radius:  10px;
+        border-radius: inherit;
       }
     }
   }
