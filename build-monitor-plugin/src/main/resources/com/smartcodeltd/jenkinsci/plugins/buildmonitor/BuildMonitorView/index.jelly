@@ -38,7 +38,9 @@
 
             <link rel="stylesheet" href="${resURL}/jsbundles/styles.css" type="text/css" />
             <link rel="stylesheet" href="${resourcesURL}/themes/industrial.css"/>
-            <link rel="stylesheet" href="${resourcesURL}/styles/index.css"/>
+
+            <j:new var="dateNow" className="java.util.Date"/>
+            <link rel="stylesheet" href="${resourcesURL}/styles/index.css?temp=${dateNow}"/>
 
             <script src="${resourcesURL}/vendor/angular-${angularVersion}/angular.min.js"></script>
             <script src="${resourcesURL}/vendor/angular-${angularVersion}/angular-sanitize.min.js"></script>
@@ -63,12 +65,27 @@
               data-display-name="${it.displayName}"
               data-ng-class="{ 'colour-blind-mode': settings.colourBlind == 1, 'reduce-motion-mode': settings.reduceMotion == 1 }">
 
-            <header>
-                <a class="home-link" href="${rootURL}/" title="Jenkins">Jenkins</a>
-                <h1><a href="configure" title="Configure the '${it.title}' view">${it.title}</a></h1>
-                <st:include page="main-settings.jelly"/>
+            <header class="jenkins-header">
+                <div class="jenkins-header__navigation">
+                    <a href="/jenkins/" class="app-jenkins-logo">
+                        <img src="/jenkins/static/6d1ce266/images/svgs/logo.svg" aria-hidden="true" id="jenkins-head-icon"/>
+                        <span class="jenkins-mobile-hide">Jenkins</span>
+                    </a>
+                    <div id="breadcrumbBar" class="jenkins-breadcrumbs" aria-label="breadcrumb">
+                        <ol class="jenkins-breadcrumbs__list" id="breadcrumbs">
+                            <li data-type="breadcrumb-item" class="jenkins-breadcrumbs__list-item">
+                                <span>${it.title}</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="jenkins-header__actions">
+                    <st:include page="main-settings.jelly"/>
+                </div>
+
                 <j:if test="${it.collectAnonymousUsageStatistics()}">
-                    <span class="build-monitor-ga-data-holder"
+                    <template class="build-monitor-ga-data-holder"
                           data-build-monitor-version="${it.installation.buildMonitorVersion()}"
                           data-jenkins-version="${h.version}"
                           data-installation-size="${it.installation.size()}"

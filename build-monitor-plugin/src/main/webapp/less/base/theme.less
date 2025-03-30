@@ -1,0 +1,32 @@
+:root {
+  --background: oklch(from oklch(from oklch(65.13% 0.1987 265) 99% 0.015 h) 0.165 0.013 h);
+
+  /* Colors */
+  --accent-color: oklch(65.13% 0.1987 265);
+  --white: oklch(from var(--accent-color) 99% 0.015 h);
+
+  /* Text */
+  --text-color: oklch(from var(--accent-color) 99% 0.015 h);
+  --text-color-secondary: oklch(from var(--white) 0.65 0.038 h);
+
+  /* Form */
+  --input-color: oklch(from var(--text-color-secondary) l c h / 0.03);
+  --input-border: oklch(from var(--text-color-secondary) l c h / 0.3);
+  --input-border-hover: oklch(from var(--text-color-secondary) l c h / 0.4);
+  --focus-input-glow: oklch(from var(--focus-input-border) l c h / 0.2);
+
+  /* Dropdowns */
+  --dropdown-box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+          inset var(--jenkins-border--subtle-shadow),
+          0 0 8px 2px rgba(0, 0, 20, 0.05),
+          0 0 1px 1px rgba(0, 0, 20, 0.025),
+          0 10px 20px rgba(0, 0, 20, 0.3);
+
+  /* Card */
+  --card-background: color-mix(in oklch, var(--text-color-secondary) 7.5%, var(--background));
+  --card-border-color: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));
+
+  /* Render native browser elements in dark mode */
+  color-scheme: dark;
+}

@@ -3,13 +3,6 @@
 
 body { margin: 0; }
 
-// Unset the default Jenkins box-sizing to avoid conflicts
-*,
-*::before,
-*::after {
-  box-sizing: unset;
-}
-
 // todo: hide the nav if on mobile: www.html5rocks.com/en/mobile/fullscreen/
 .build-monitor.dashboard {
   height: 100vh;
@@ -21,7 +14,11 @@ body { margin: 0; }
   margin: auto;
 
   &>header {
-    height: 58px;
+    --header-color: var(--text-color);
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    height: 4.125rem;
     flex-shrink: 0;
   }
 
@@ -37,7 +34,8 @@ body { margin: 0; }
     .flex-direction(column);
     .justify-content(space-between);
 
-    padding: 0px 8px 4px 8px  ;
+    padding: 0 calc(var(--section-padding) / 2);
+    padding-bottom: 4px;
   }
 
   &>footer {
@@ -62,7 +60,6 @@ body { margin: 0; }
 
     p {
       margin: 0;
-      color:  #ddd;
     }
   }
 }
