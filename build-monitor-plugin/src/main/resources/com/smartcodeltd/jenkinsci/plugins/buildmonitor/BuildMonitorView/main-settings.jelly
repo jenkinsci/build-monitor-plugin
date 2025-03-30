@@ -84,7 +84,7 @@
                         <div class="jenkins-dropdown__item__icon">
                             <l:icon src="symbol-refresh" />
                         </div>
-                        Reset to defaults
+                        Reset to default
                     </a>
                 </li>
             </ul>
