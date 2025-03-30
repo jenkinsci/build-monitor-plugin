@@ -6,11 +6,13 @@
   <f:section title="${%Job Filters}">
 
   <f:entry title="${%Status Filter}" help="/help/view-config/statusFilter.html">
-    <select name="statusFilter" class="setting-input">
-      <f:option value="" selected="${it.statusFilter==null}">${%All selected jobs}</f:option>
-      <f:option value="1" selected="${it.statusFilter==true}">${%Enabled jobs only}</f:option>
-      <f:option value="2" selected="${it.statusFilter==false}">${%Disabled jobs only}</f:option>
-    </select>
+    <div class="jenkins-select">
+      <select name="statusFilter" class="jenkins-select__input">
+        <f:option value="" selected="${it.statusFilter==null}">${%All selected jobs}</f:option>
+        <f:option value="1" selected="${it.statusFilter==true}">${%Enabled jobs only}</f:option>
+        <f:option value="2" selected="${it.statusFilter==false}">${%Disabled jobs only}</f:option>
+      </select>
+    </div>
   </f:entry>
 
   <f:entry title="${%Recurse in subfolders}" field="recurse">
@@ -58,14 +60,16 @@
   </f:entry>
 
   <f:entry title="${%Ordered by}">
-    <select name="order" class="setting-input">
-      <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
-      <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
-      <f:option value="ByFullName" selected="${it.currentOrder()=='ByFullName'}">${%Full name}</f:option>
-      <f:option value="ByStatus" selected="${it.currentOrder()=='ByStatus'}">${%Status}</f:option>
-      <f:option value="ByLastBuildTime" selected="${it.currentOrder()=='ByLastBuildTime'}">${%Last build time}</f:option>
-      <f:option value="ByEstimatedDuration" selected="${it.currentOrder()=='ByEstimatedDuration'}">${%Estimated duration}</f:option>
-    </select>
+    <div class="jenkins-select">
+      <select name="order" class="jenkins-select__input">
+        <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
+        <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
+        <f:option value="ByFullName" selected="${it.currentOrder()=='ByFullName'}">${%Full name}</f:option>
+        <f:option value="ByStatus" selected="${it.currentOrder()=='ByStatus'}">${%Status}</f:option>
+        <f:option value="ByLastBuildTime" selected="${it.currentOrder()=='ByLastBuildTime'}">${%Last build time}</f:option>
+        <f:option value="ByEstimatedDuration" selected="${it.currentOrder()=='ByEstimatedDuration'}">${%Estimated duration}</f:option>
+      </select>
+    </div>
   </f:entry>
 
   </f:section>
@@ -101,26 +105,32 @@
     </f:entry>
 
     <f:entry title="${%Failure Analyzer Plugin: Field to display}" help="${descriptor.getHelpFile('buildFailureAnalyzerDisplayedField')}">
-          <select name="buildFailureAnalyzerDisplayedField" class="setting-input">
-			<f:option value="Name" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='Name'}">${%Name}</f:option>
-			<f:option value="Description" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='Description'}">${%Description}</f:option>
-			<f:option value="None" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='None'}">${%None}</f:option>
-          </select>
-        </f:entry>
+      <div class="jenkins-select">
+        <select name="buildFailureAnalyzerDisplayedField" class="jenkins-select__input">
+          <f:option value="Name" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='Name'}">${%Name}</f:option>
+          <f:option value="Description" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='Description'}">${%Description}</f:option>
+          <f:option value="None" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='None'}">${%None}</f:option>
+        </select>
+      </div>
+    </f:entry>
 
     <f:entry title="${%Display badges}" help="${descriptor.getHelpFile('displayBadges')}">
-      <select name="displayBadges" class="setting-input">
-        <f:option value="Always" selected='${it.currentDisplayBadges()=="Always"}'>${%Always}</f:option>
-        <f:option value="Never" selected="${it.currentDisplayBadges()=='Never'}">${%Never}</f:option>
-        <f:option value="UserSetting" selected="${it.currentDisplayBadges()=='UserSetting'}">${%User Setting}</f:option>
-      </select>
+      <div class="jenkins-select">
+        <select name="displayBadges" class="jenkins-select__input">
+          <f:option value="Always" selected='${it.currentDisplayBadges()=="Always"}'>${%Always}</f:option>
+          <f:option value="Never" selected="${it.currentDisplayBadges()=='Never'}">${%Never}</f:option>
+          <f:option value="UserSetting" selected="${it.currentDisplayBadges()=='UserSetting'}">${%User Setting}</f:option>
+        </select>
+      </div>
     </f:entry>
 
     <f:entry title="${%Display badges from}" help="${descriptor.getHelpFile('displayBadgesFrom')}">
-      <select name="displayBadgesFrom" class="setting-input">
-        <f:option value="GetLastBuild" selected='${it.currentDisplayBadgesFrom()=="GetLastBuild"}'>${%Last Build}</f:option>
-        <f:option value="GetLastCompletedBuild" selected="${it.currentDisplayBadgesFrom()=='GetLastCompletedBuild'}">${%Last Completed Build}</f:option>
-      </select>
+      <div class="jenkins-select">
+        <select name="displayBadgesFrom" class="jenkins-select__input">
+          <f:option value="GetLastBuild" selected='${it.currentDisplayBadgesFrom()=="GetLastBuild"}'>${%Last Build}</f:option>
+          <f:option value="GetLastCompletedBuild" selected="${it.currentDisplayBadgesFrom()=='GetLastCompletedBuild'}">${%Last Completed Build}</f:option>
+        </select>
+      </div>
     </f:entry>
 
     <f:entry title="${%Display JUnit Realtime progress}" help="${descriptor.getHelpFile('displayJUnitProgress')}">
