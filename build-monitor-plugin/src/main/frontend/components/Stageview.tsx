@@ -68,9 +68,20 @@ function Stageview() {
     }, [builds]);
 
     useEffect(() => {
-        const url = "http://localhost:8080/jenkins/$stapler/bound/7350d360-2fb2-4943-8d56-cadd2275f2a4/fetchJobViews";
-        
-        fetch(url)
+        // @ts-ignore
+        const crumb =  window.bindings.buildMonitor.crumb;
+        // @ts-ignore
+        const url = "http://localhost:8080" + window.bindings.buildMonitor.url + "/fetchJobViews";
+        // const url2 = "http://localhost:8080/jenkins/$stapler/bound/7350d360-2fb2-4943-8d56-cadd2275f2a4/fetchJobViews";
+
+        console.log(crumb)
+        console.log(url)
+
+        fetch(url, {
+            // @ts-ignore
+            headers: {
+                crumb: crumb,
+        }})
             .then(response => {
                 return response.json();
             })

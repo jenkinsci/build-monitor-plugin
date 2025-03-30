@@ -33574,14 +33574,25 @@ function Stageview() {
         generateColumns();
     }, [builds]);
     (0, react_1.useEffect)(() => {
-        const url = "";
-        fetch('http://localhost:8080/jenkins/job/coming%20back/wfapi/runs?since=%235&fullStages=true&_=1690120329481')
+        // @ts-ignore
+        const crumb = window.bindings.buildMonitor.crumb;
+        // @ts-ignore
+        const url = "http://localhost:8080" + window.bindings.buildMonitor.url + "/fetchJobViews";
+        // const url2 = "http://localhost:8080/jenkins/$stapler/bound/7350d360-2fb2-4943-8d56-cadd2275f2a4/fetchJobViews";
+        console.log(crumb);
+        console.log(url);
+        fetch(url, {
+            // @ts-ignore
+            headers: {
+                crumb: crumb,
+            }
+        })
             .then(response => {
             return response.json();
         })
             .then(data => setBuilds(data));
         const intervalID = setInterval(() => {
-            fetch('http://localhost:8080/jenkins/job/coming%20back/wfapi/runs?since=%235&fullStages=true&_=1690120329481')
+            fetch(url)
                 .then(response => {
                 return response.json();
             })
