@@ -52,11 +52,6 @@ h2 {
     text-shadow: 1px 1px rgba(0,0,0,0.5);
 }
 
-/*.build-monitor a {*/
-/*    color: #73BFFF;*/
-/*    text-decoration: none;*/
-/*}*/
-
 .build-monitor #widgets li a,
 .build-monitor #widgets li a:visited,
 .build-monitor header>h1>a{
