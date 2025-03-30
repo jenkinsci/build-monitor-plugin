@@ -1,0 +1,25 @@
+.psv-stage-cell {
+  position: relative;
+  overflow: hidden;
+
+  .durationboi {
+    position: absolute;
+    inset: 0;
+    border-radius: 0;
+    background: currentColor;
+    pointer-events: none;
+    transition: 0.3s ease;
+    opacity: 0;
+
+    &--animate {
+      opacity: 0.2;
+      animation: pulse-thing 2s ease infinite;
+    }
+  }
+
+  @keyframes pulse-thing {
+    50% {
+      opacity: 0.05;
+    }
+  }
+}

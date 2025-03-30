@@ -1,0 +1,58 @@
+:root {
+  --app-card-background: transparent;
+  --app-card-border-color: var(--table-background);
+
+  @media (prefers-color-scheme: dark) {
+    --app-card-background: hsla(240, 75%, 85%, 0.05);
+    --app-card-border-color: transparent;
+  }
+}
+
+
+.app-card {
+  --card-padding: calc(1rem + 2px);
+
+  position: relative;
+  background: var(--app-card-background);
+  border-radius: 1rem;
+  margin-bottom: var(--section-padding);
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 550;
+    padding: var(--card-padding);
+    padding-bottom: 1rem;
+
+    .psv-card__expand {
+      color: var(--text-color-secondary);
+
+      &:hover {
+        color: var(--text-color);
+      }
+
+      svg {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
+
+  &__contents {
+    display: flex;
+    overflow: auto;
+    padding: 0 var(--card-padding) var(--card-padding);
+    padding-right: 0;
+    max-height: 400px;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 2px solid var(--app-card-border-color);
+    pointer-events: none;
+  }
+}

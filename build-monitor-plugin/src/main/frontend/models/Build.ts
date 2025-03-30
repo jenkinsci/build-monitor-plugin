@@ -14,9 +14,8 @@ export interface Build {
 }
 
 export type BuildStatus = 'NOT_EXECUTED' |
-    'ABORTED' |
-    'SUCCESS' |
+    'aborted' |
+    'successful' |
     'IN_PROGRESS' |
-    'PAUSED_PENDING_INPUT' |
-    'FAILED' |
+    'failing' |
     'UNSTABLE';

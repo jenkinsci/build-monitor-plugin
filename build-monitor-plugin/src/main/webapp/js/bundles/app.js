@@ -2,6 +2,132 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/main/frontend/app.scss":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/main/frontend/app.scss ***!
+  \*****************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(true);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".shineofthesun {\n  display: grid;\n  grid-template-columns: 1fr;\n}\n\n.lablething1, .lablething2 {\n  display: block;\n  grid-row-start: 1;\n  grid-column-start: 1;\n}\n\n.lablething2 {\n  opacity: 0;\n  translate: 0 0.5lh;\n  filter: blur(1px);\n}\n\n.lablething1animating {\n  translate: 0 -0.5lh;\n  opacity: 0;\n  transition: 0.3s ease;\n  filter: blur(1px);\n}\n\n.lablething2animating {\n  translate: 0;\n  opacity: 1;\n  transition: 0.3s ease;\n  filter: blur(0);\n  transition-delay: 0.1s;\n}\n\n:root {\n  --app-card-background: transparent;\n  --app-card-border-color: var(--table-background);\n}\n@media (prefers-color-scheme: dark) {\n  :root {\n    --app-card-background: hsla(240, 75%, 85%, 0.05);\n    --app-card-border-color: transparent;\n  }\n}\n\n.app-card {\n  --card-padding: calc(1rem + 2px);\n  position: relative;\n  background: var(--app-card-background);\n  border-radius: 1rem;\n  margin-bottom: var(--section-padding);\n}\n.app-card__heading {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  font-weight: 550;\n  padding: var(--card-padding);\n  padding-bottom: 1rem;\n}\n.app-card__heading .psv-card__expand {\n  color: var(--text-color-secondary);\n}\n.app-card__heading .psv-card__expand:hover {\n  color: var(--text-color);\n}\n.app-card__heading .psv-card__expand svg {\n  width: 1rem;\n  height: 1rem;\n}\n.app-card__contents {\n  display: flex;\n  overflow: auto;\n  padding: 0 var(--card-padding) var(--card-padding);\n  padding-right: 0;\n  max-height: 400px;\n}\n.app-card::after {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  border: 2px solid var(--app-card-border-color);\n  pointer-events: none;\n}\n\n.psv-cell {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-direction: column;\n  border: none;\n  appearance: none;\n  background: none;\n  height: 100%;\n  cursor: pointer;\n  width: 100%;\n  text-decoration: none !important;\n  border-radius: 1rem;\n  font-size: 2rem;\n  font-weight: 450 !important;\n  color: color-mix(in srgb, var(--psv-cell-color), var(--text-color) 10%) !important;\n  padding: 1rem;\n  z-index: 0;\n  transition: var(--standard-transition);\n}\n.psv-cell::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  transition: var(--standard-transition);\n  background: color-mix(in srgb, var(--psv-cell-color) var(--opacity-modifier, 100%), transparent);\n  color: inherit;\n  opacity: 0.125;\n}\n.psv-cell::after {\n  content: \"\";\n  position: absolute;\n  inset: -10px;\n  z-index: -1;\n  transition: var(--standard-transition);\n  background: transparent;\n  backdrop-filter: blur(0);\n  visibility: collapse;\n  border-radius: 1rem;\n}\n.psv-cell:hover::before {\n  opacity: 0.2;\n}\n.psv-cell:active {\n  z-index: 1;\n  border-radius: 0.66rem !important;\n}\n.psv-cell:active::before {\n  border-radius: 0.66rem;\n}\n.psv-cell:active::after {\n  inset: -5px;\n  background: color-mix(in srgb, var(--psv-cell-color), transparent 90%);\n  backdrop-filter: blur(10px);\n  visibility: visible;\n}\n.psv-cell--successful {\n  --psv-cell-color: var(--success-color);\n}\n.psv-cell--failing {\n  --psv-cell-color: var(--destructive-color);\n}\n.psv-cell--warning {\n  --psv-cell-color: var(--warning-color);\n}\n.psv-cell--in-progress {\n  --psv-cell-color: var(--blue);\n}\n.psv-cell--in-progress:not(.psv-stage-cell)::before {\n  animation: pulse-thing 2s ease infinite;\n}\n.psv-cell__details {\n  position: absolute;\n  left: 1rem;\n  right: 1rem;\n  bottom: 1rem;\n  display: flex;\n  justify-content: space-between;\n}\n.psv-cell__time {\n  font-size: 0.625rem;\n  opacity: 0.75;\n}\n\n.psv-stage-cell {\n  position: relative;\n  overflow: hidden;\n}\n.psv-stage-cell .durationboi {\n  position: absolute;\n  inset: 0;\n  border-radius: 0;\n  background: currentColor;\n  pointer-events: none;\n  transition: 0.3s ease;\n  opacity: 0;\n}\n.psv-stage-cell .durationboi--animate {\n  opacity: 0.2;\n  animation: pulse-thing 2s ease infinite;\n}\n@keyframes pulse-thing {\n  50% {\n    opacity: 0.05;\n  }\n}\n\n:root {\n  --background: black;\n  /* Colors */\n  --accent-color: oklch(65.13% 0.1987 265);\n  --white: oklch(from var(--accent-color) 99% 0.015 h);\n  --success-color: oklch(80.25% 0.2197 147.09deg / 75%);\n  --warning-color: oklch(79.58% 0.1862 62.09deg / 75%);\n  --error-color: oklch(66.82% 0.2393 29.84deg / 75%);\n  /* Text */\n  --text-color: oklch(from var(--accent-color) 99% 0.015 h);\n  --text-color-secondary: oklch(from var(--white) 0.65 0.038 h);\n  /* Form */\n  --input-color: oklch(from var(--text-color-secondary) l c h / 0.03);\n  --input-border: oklch(from var(--text-color-secondary) l c h / 0.3);\n  --input-border-hover: oklch(from var(--text-color-secondary) l c h / 0.4);\n  --focus-input-glow: oklch(from var(--focus-input-border) l c h / 0.2);\n  /* Dropdowns */\n  --dropdown-box-shadow:\n          inset 0 0 0 1px rgba(255, 255, 255, 0.025),\n          inset var(--jenkins-border--subtle-shadow),\n          0 0 8px 2px rgba(0, 0, 20, 0.05),\n          0 0 1px 1px rgba(0, 0, 20, 0.025),\n          0 10px 20px rgba(0, 0, 20, 0.3);\n  /* Card */\n  --card-background: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));\n  --card-border-color: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));\n  /* Render native browser elements in dark mode */\n  color-scheme: dark;\n}\n\n.psv-job-grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  gap: calc(var(--section-padding) / 2);\n  padding-inline: calc(var(--section-padding) / 2);\n  padding-bottom: calc(var(--section-padding) / 2);\n  height: calc(100vh - 66px);\n}\n\n.psv-stageview {\n  -webkit-border-horizontal-spacing: 0;\n  -webkit-border-vertical-spacing: 0;\n  border-spacing: 0 2px;\n  margin-right: 1rem;\n  margin-top: 2px;\n  margin-bottom: -2px;\n}\n.psv-stageview tr {\n  height: 60px;\n  max-height: 60px;\n}\n.psv-stageview th, .psv-stageview td {\n  padding: 0;\n  border-collapse: collapse;\n  min-width: 130px;\n  max-width: 220px;\n  height: 60px;\n  max-height: 60px;\n}\n.psv-stageview th p, .psv-stageview td p {\n  word-wrap: break-word;\n  white-space: pre-line;\n}\n.psv-stageview__heading th {\n  vertical-align: bottom;\n  padding: 0.66rem;\n}\n.psv-stageview__heading th p {\n  margin: 0;\n  text-align: center;\n  font-size: 13px;\n}\n.psv-stageview__heading th p:last-of-type {\n  margin-top: 4px;\n  color: var(--text-color-secondary);\n  font-size: 0.66rem;\n}\n.psv-stageview .psv-stageview__build {\n  text-align: center;\n}\n.psv-stageview .psv-stageview__build .jenkins-button, .psv-stageview .psv-stageview__build .psv-cell {\n  height: 60px;\n}\n.psv-stageview .psv-stageview__build td .jenkins-button, .psv-stageview .psv-stageview__build td .psv-cell {\n  border-radius: 0;\n}\n.psv-stageview .psv-stageview__build td:first-of-type .jenkins-button, .psv-stageview .psv-stageview__build td:first-of-type .psv-cell {\n  border-radius: 0.66rem;\n}\n.psv-stageview .psv-stageview__build td:not(:first-of-type):nth-of-type(odd) {\n  --opacity-modifier: 90%;\n}\n.psv-stageview .psv-stageview__build td:nth-of-type(2) {\n  padding-left: 3px;\n}\n.psv-stageview .psv-stageview__build td:nth-of-type(2) .jenkins-button, .psv-stageview .psv-stageview__build td:nth-of-type(2) .psv-cell {\n  border-radius: 10px 0 0 0.66rem;\n}\n.psv-stageview .psv-stageview__build td:last-of-type .jenkins-button, .psv-stageview .psv-stageview__build td:last-of-type .psv-cell {\n  border-radius: 0 10px 10px 0;\n}", "",{"version":3,"sources":["/Users/janfaracik/Developer/jenkins-plugins/build-monitor-plugin/build-monitor-plugin/src/main/frontend/styles/_animatable-label.scss","app.scss","/Users/janfaracik/Developer/jenkins-plugins/build-monitor-plugin/build-monitor-plugin/src/main/frontend/styles/_cards.scss","/Users/janfaracik/Developer/jenkins-plugins/build-monitor-plugin/build-monitor-plugin/src/main/frontend/styles/_cell.scss","/Users/janfaracik/Developer/jenkins-plugins/build-monitor-plugin/build-monitor-plugin/src/main/frontend/styles/_stage-cell.scss","/Users/janfaracik/Developer/jenkins-plugins/build-monitor-plugin/build-monitor-plugin/src/main/frontend/styles/_stageview.scss"],"names":[],"mappings":"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","file":"app.scss","sourcesContent":[".shineofthesun {\n  display: grid;\n  grid-template-columns: 1fr;\n}\n\n.lablething1, .lablething2 {\n  display: block;\n  grid-row-start: 1;\n  grid-column-start: 1;\n}\n\n.lablething2 {\n  opacity: 0;\n  translate: 0 0.5lh;\n  filter: blur(1px);\n}\n\n.lablething1animating {\n  translate: 0 -0.5lh;\n  opacity: 0;\n  transition: 0.3s ease;\n  filter: blur(1px);\n}\n\n.lablething2animating {\n  translate: 0;\n  opacity: 1;\n  transition: 0.3s ease;\n  filter: blur(0);\n  transition-delay: 0.1s;\n}\n",".shineofthesun {\n  display: grid;\n  grid-template-columns: 1fr;\n}\n\n.lablething1, .lablething2 {\n  display: block;\n  grid-row-start: 1;\n  grid-column-start: 1;\n}\n\n.lablething2 {\n  opacity: 0;\n  translate: 0 0.5lh;\n  filter: blur(1px);\n}\n\n.lablething1animating {\n  translate: 0 -0.5lh;\n  opacity: 0;\n  transition: 0.3s ease;\n  filter: blur(1px);\n}\n\n.lablething2animating {\n  translate: 0;\n  opacity: 1;\n  transition: 0.3s ease;\n  filter: blur(0);\n  transition-delay: 0.1s;\n}\n\n:root {\n  --app-card-background: transparent;\n  --app-card-border-color: var(--table-background);\n}\n@media (prefers-color-scheme: dark) {\n  :root {\n    --app-card-background: hsla(240, 75%, 85%, 0.05);\n    --app-card-border-color: transparent;\n  }\n}\n\n.app-card {\n  --card-padding: calc(1rem + 2px);\n  position: relative;\n  background: var(--app-card-background);\n  border-radius: 1rem;\n  margin-bottom: var(--section-padding);\n}\n.app-card__heading {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  font-weight: 550;\n  padding: var(--card-padding);\n  padding-bottom: 1rem;\n}\n.app-card__heading .psv-card__expand {\n  color: var(--text-color-secondary);\n}\n.app-card__heading .psv-card__expand:hover {\n  color: var(--text-color);\n}\n.app-card__heading .psv-card__expand svg {\n  width: 1rem;\n  height: 1rem;\n}\n.app-card__contents {\n  display: flex;\n  overflow: auto;\n  padding: 0 var(--card-padding) var(--card-padding);\n  padding-right: 0;\n  max-height: 400px;\n}\n.app-card::after {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  border: 2px solid var(--app-card-border-color);\n  pointer-events: none;\n}\n\n.psv-cell {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-direction: column;\n  border: none;\n  appearance: none;\n  background: none;\n  height: 100%;\n  cursor: pointer;\n  width: 100%;\n  text-decoration: none !important;\n  border-radius: 1rem;\n  font-size: 2rem;\n  font-weight: 450 !important;\n  color: color-mix(in srgb, var(--psv-cell-color), var(--text-color) 10%) !important;\n  padding: 1rem;\n  z-index: 0;\n  transition: var(--standard-transition);\n}\n.psv-cell::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  transition: var(--standard-transition);\n  background: color-mix(in srgb, var(--psv-cell-color) var(--opacity-modifier, 100%), transparent);\n  color: inherit;\n  opacity: 0.125;\n}\n.psv-cell::after {\n  content: \"\";\n  position: absolute;\n  inset: -10px;\n  z-index: -1;\n  transition: var(--standard-transition);\n  background: transparent;\n  backdrop-filter: blur(0);\n  visibility: collapse;\n  border-radius: 1rem;\n}\n.psv-cell:hover::before {\n  opacity: 0.2;\n}\n.psv-cell:active {\n  z-index: 1;\n  border-radius: 0.66rem !important;\n}\n.psv-cell:active::before {\n  border-radius: 0.66rem;\n}\n.psv-cell:active::after {\n  inset: -5px;\n  background: color-mix(in srgb, var(--psv-cell-color), transparent 90%);\n  backdrop-filter: blur(10px);\n  visibility: visible;\n}\n.psv-cell--successful {\n  --psv-cell-color: var(--success-color);\n}\n.psv-cell--failing {\n  --psv-cell-color: var(--destructive-color);\n}\n.psv-cell--warning {\n  --psv-cell-color: var(--warning-color);\n}\n.psv-cell--in-progress {\n  --psv-cell-color: var(--blue);\n}\n.psv-cell--in-progress:not(.psv-stage-cell)::before {\n  animation: pulse-thing 2s ease infinite;\n}\n.psv-cell__details {\n  position: absolute;\n  left: 1rem;\n  right: 1rem;\n  bottom: 1rem;\n  display: flex;\n  justify-content: space-between;\n}\n.psv-cell__time {\n  font-size: 0.625rem;\n  opacity: 0.75;\n}\n\n.psv-stage-cell {\n  position: relative;\n  overflow: hidden;\n}\n.psv-stage-cell .durationboi {\n  position: absolute;\n  inset: 0;\n  border-radius: 0;\n  background: currentColor;\n  pointer-events: none;\n  transition: 0.3s ease;\n  opacity: 0;\n}\n.psv-stage-cell .durationboi--animate {\n  opacity: 0.2;\n  animation: pulse-thing 2s ease infinite;\n}\n@keyframes pulse-thing {\n  50% {\n    opacity: 0.05;\n  }\n}\n\n:root {\n  --background: black;\n  /* Colors */\n  --accent-color: oklch(65.13% 0.1987 265);\n  --white: oklch(from var(--accent-color) 99% 0.015 h);\n  --success-color: oklch(80.25% 0.2197 147.09deg / 75%);\n  --warning-color: oklch(79.58% 0.1862 62.09deg / 75%);\n  --error-color: oklch(66.82% 0.2393 29.84deg / 75%);\n  /* Text */\n  --text-color: oklch(from var(--accent-color) 99% 0.015 h);\n  --text-color-secondary: oklch(from var(--white) 0.65 0.038 h);\n  /* Form */\n  --input-color: oklch(from var(--text-color-secondary) l c h / 0.03);\n  --input-border: oklch(from var(--text-color-secondary) l c h / 0.3);\n  --input-border-hover: oklch(from var(--text-color-secondary) l c h / 0.4);\n  --focus-input-glow: oklch(from var(--focus-input-border) l c h / 0.2);\n  /* Dropdowns */\n  --dropdown-box-shadow:\n          inset 0 0 0 1px rgba(255, 255, 255, 0.025),\n          inset var(--jenkins-border--subtle-shadow),\n          0 0 8px 2px rgba(0, 0, 20, 0.05),\n          0 0 1px 1px rgba(0, 0, 20, 0.025),\n          0 10px 20px rgba(0, 0, 20, 0.3);\n  /* Card */\n  --card-background: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));\n  --card-border-color: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));\n  /* Render native browser elements in dark mode */\n  color-scheme: dark;\n}\n\n.psv-job-grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  gap: calc(var(--section-padding) / 2);\n  padding-inline: calc(var(--section-padding) / 2);\n  padding-bottom: calc(var(--section-padding) / 2);\n  height: calc(100vh - 66px);\n}\n\n.psv-stageview {\n  -webkit-border-horizontal-spacing: 0;\n  -webkit-border-vertical-spacing: 0;\n  border-spacing: 0 2px;\n  margin-right: 1rem;\n  margin-top: 2px;\n  margin-bottom: -2px;\n}\n.psv-stageview tr {\n  height: 60px;\n  max-height: 60px;\n}\n.psv-stageview th, .psv-stageview td {\n  padding: 0;\n  border-collapse: collapse;\n  min-width: 130px;\n  max-width: 220px;\n  height: 60px;\n  max-height: 60px;\n}\n.psv-stageview th p, .psv-stageview td p {\n  word-wrap: break-word;\n  white-space: pre-line;\n}\n.psv-stageview__heading th {\n  vertical-align: bottom;\n  padding: 0.66rem;\n}\n.psv-stageview__heading th p {\n  margin: 0;\n  text-align: center;\n  font-size: 13px;\n}\n.psv-stageview__heading th p:last-of-type {\n  margin-top: 4px;\n  color: var(--text-color-secondary);\n  font-size: 0.66rem;\n}\n.psv-stageview .psv-stageview__build {\n  text-align: center;\n}\n.psv-stageview .psv-stageview__build .jenkins-button, .psv-stageview .psv-stageview__build .psv-cell {\n  height: 60px;\n}\n.psv-stageview .psv-stageview__build td .jenkins-button, .psv-stageview .psv-stageview__build td .psv-cell {\n  border-radius: 0;\n}\n.psv-stageview .psv-stageview__build td:first-of-type .jenkins-button, .psv-stageview .psv-stageview__build td:first-of-type .psv-cell {\n  border-radius: 0.66rem;\n}\n.psv-stageview .psv-stageview__build td:not(:first-of-type):nth-of-type(odd) {\n  --opacity-modifier: 90%;\n}\n.psv-stageview .psv-stageview__build td:nth-of-type(2) {\n  padding-left: 3px;\n}\n.psv-stageview .psv-stageview__build td:nth-of-type(2) .jenkins-button, .psv-stageview .psv-stageview__build td:nth-of-type(2) .psv-cell {\n  border-radius: 10px 0 0 0.66rem;\n}\n.psv-stageview .psv-stageview__build td:last-of-type .jenkins-button, .psv-stageview .psv-stageview__build td:last-of-type .psv-cell {\n  border-radius: 0 10px 10px 0;\n}",":root {\n  --app-card-background: transparent;\n  --app-card-border-color: var(--table-background);\n\n  @media (prefers-color-scheme: dark) {\n    --app-card-background: hsla(240, 75%, 85%, 0.05);\n    --app-card-border-color: transparent;\n  }\n}\n\n\n.app-card {\n  --card-padding: calc(1rem + 2px);\n\n  position: relative;\n  background: var(--app-card-background);\n  border-radius: 1rem;\n  margin-bottom: var(--section-padding);\n\n  &__heading {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    font-weight: 550;\n    padding: var(--card-padding);\n    padding-bottom: 1rem;\n\n    .psv-card__expand {\n      color: var(--text-color-secondary);\n\n      &:hover {\n        color: var(--text-color);\n      }\n\n      svg {\n        width: 1rem;\n        height: 1rem;\n      }\n    }\n  }\n\n  &__contents {\n    display: flex;\n    overflow: auto;\n    padding: 0 var(--card-padding) var(--card-padding);\n    padding-right: 0;\n    max-height: 400px;\n  }\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    inset: 0;\n    border-radius: inherit;\n    border: 2px solid var(--app-card-border-color);\n    pointer-events: none;\n  }\n}\n","$cell-padding: 1rem;\n\n.psv-cell {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-direction: column;\n  border: none;\n  appearance: none;\n  background: none;\n  height: 100%;\n  cursor: pointer;\n  width: 100%;\n  text-decoration: none !important;\n  border-radius: 1rem;\n  font-size: 2rem;\n  font-weight: 450 !important;\n  color: color-mix(in srgb, var(--psv-cell-color), var(--text-color) 10%) !important;\n  padding: $cell-padding;\n  z-index: 0;\n  transition: var(--standard-transition);\n\n  &::before {\n    content: \"\";\n    position: absolute;\n    inset: 0;\n    border-radius: inherit;\n    transition: var(--standard-transition);\n    background: color-mix(in srgb, var(--psv-cell-color) var(--opacity-modifier, 100%), transparent);\n    color: inherit;\n    opacity: 0.125;\n  }\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    inset: -10px;\n    z-index: -1;\n    transition: var(--standard-transition);\n    background: transparent;\n    backdrop-filter: blur(0);\n    visibility: collapse;\n    border-radius: 1rem;\n  }\n\n  &:hover {\n    &::before {\n      opacity: 0.2;\n    }\n  }\n\n  &:active {\n    z-index: 1;\n    border-radius: 0.66rem !important;\n\n    &::before {\n      border-radius: 0.66rem;\n    }\n\n    &::after {\n      inset: -5px;\n      background: color-mix(in srgb, var(--psv-cell-color), transparent 90%);\n      backdrop-filter: blur(10px);\n      visibility: visible;\n    }\n  }\n\n  &--successful {\n    --psv-cell-color: var(--success-color);\n  }\n\n  &--failing {\n    --psv-cell-color: var(--destructive-color);\n  }\n\n  &--warning {\n    --psv-cell-color: var(--warning-color);\n  }\n\n  &--in-progress {\n    --psv-cell-color: var(--blue);\n\n    &:not(.psv-stage-cell) {\n      &::before {\n        animation: pulse-thing 2s ease infinite;\n      }\n    }\n  }\n\n  &__details {\n    position: absolute;\n    left: $cell-padding;\n    right: $cell-padding;\n    bottom: $cell-padding;\n    display: flex;\n    justify-content: space-between;\n  }\n\n  &__time {\n    font-size: 0.625rem;\n    opacity: 0.75;\n  }\n}\n",".psv-stage-cell {\n  position: relative;\n  overflow: hidden;\n\n  .durationboi {\n    position: absolute;\n    inset: 0;\n    border-radius: 0;\n    background: currentColor;\n    pointer-events: none;\n    transition: 0.3s ease;\n    opacity: 0;\n\n    &--animate {\n      opacity: 0.2;\n      animation: pulse-thing 2s ease infinite;\n    }\n  }\n\n  @keyframes pulse-thing {\n    50% {\n      opacity: 0.05;\n    }\n  }\n}\n",":root {\n  --background: black;\n\n  /* Colors */\n  --accent-color: oklch(65.13% 0.1987 265);\n  --white: oklch(from var(--accent-color) 99% 0.015 h);\n  --success-color: oklch(80.25% 0.2197 147.09deg / 75%);\n  --warning-color: oklch(79.58% 0.1862 62.09deg / 75%);\n  --error-color: oklch(66.82% 0.2393 29.84deg / 75%);\n\n  /* Text */\n  --text-color: oklch(from var(--accent-color) 99% 0.015 h);\n  --text-color-secondary: oklch(from var(--white) 0.65 0.038 h);\n\n  /* Form */\n  --input-color: oklch(from var(--text-color-secondary) l c h / 0.03);\n  --input-border: oklch(from var(--text-color-secondary) l c h / 0.3);\n  --input-border-hover: oklch(from var(--text-color-secondary) l c h / 0.4);\n  --focus-input-glow: oklch(from var(--focus-input-border) l c h / 0.2);\n\n  /* Dropdowns */\n  --dropdown-box-shadow:\n          inset 0 0 0 1px rgba(255, 255, 255, 0.025),\n          inset var(--jenkins-border--subtle-shadow),\n          0 0 8px 2px rgba(0, 0, 20, 0.05),\n          0 0 1px 1px rgba(0, 0, 20, 0.025),\n          0 10px 20px rgba(0, 0, 20, 0.3);\n\n  /* Card */\n  --card-background: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));\n  --card-border-color: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));\n\n  /* Render native browser elements in dark mode */\n  color-scheme: dark;\n}\n\n.psv-job-grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  gap: calc(var(--section-padding) / 2);\n  padding-inline: calc(var(--section-padding) / 2);\n  padding-bottom: calc(var(--section-padding) / 2);\n  height: calc(100vh - 66px);\n}\n\n.psv-stageview {\n  -webkit-border-horizontal-spacing: 0;\n  -webkit-border-vertical-spacing: 0;\n  //width: 100%;\n  //table-layout: fixed;\n  border-spacing: 0 2px;\n  margin-right: 1rem;\n  margin-top: 2px;\n  margin-bottom: -2px;\n\n  tr {\n    height: 60px;\n    max-height: 60px;\n    //overflow: hidden;\n  }\n\n  th, td {\n    padding: 0;\n    border-collapse: collapse;\n    min-width: 130px;\n    max-width: 220px;\n    height: 60px;\n    max-height: 60px;\n    //overflow: hidden;\n\n    p {\n      word-wrap: break-word;\n      white-space: pre-line;\n    }\n  }\n\n  &__heading {\n    //th:first-of-type {\n    //  text-align: right;\n    //  vertical-align: bottom;\n    //  padding: 0.66rem;\n    //  color: var(--text-color-secondary);\n    //  font-size: 0.66rem;\n    //  font-weight: 500;\n    //  text-wrap: balance;\n    //}\n\n    th {\n      vertical-align: bottom;\n      padding: 0.66rem;\n\n      p {\n        margin: 0;\n        text-align: center;\n        font-size: 13px;\n      }\n\n      p:last-of-type {\n        margin-top: 4px;\n        color: var(--text-color-secondary);\n        font-size: 0.66rem;\n      }\n    }\n  }\n\n  .psv-stageview__build {\n    text-align: center;\n\n    .jenkins-button, .psv-cell{\n      height: 60px;\n    }\n\n    td {\n      .jenkins-button, .psv-cell {\n        border-radius: 0;\n      }\n    }\n\n    td:first-of-type {\n      .jenkins-button, .psv-cell {\n        border-radius: 0.66rem;\n      }\n    }\n\n    td:not(:first-of-type):nth-of-type(odd) {\n      --opacity-modifier: 90%;\n    }\n\n    td:nth-of-type(2) {\n      padding-left: 3px;\n\n      .jenkins-button, .psv-cell{\n        border-radius: 10px 0 0 0.66rem;\n      }\n    }\n\n    td:last-of-type {\n      .jenkins-button, .psv-cell{\n        border-radius: 0 10px 10px 0;\n      }\n    }\n  }\n}\n"]}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/api.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+// eslint-disable-next-line func-names
+module.exports = function (useSourceMap) {
+  var list = []; // return the list of modules as css string
+
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item, useSourceMap);
+
+      if (item[2]) {
+        return "@media ".concat(item[2], " {").concat(content, "}");
+      }
+
+      return content;
+    }).join('');
+  }; // import a list of modules into the list
+  // eslint-disable-next-line func-names
+
+
+  list.i = function (modules, mediaQuery, dedupe) {
+    if (typeof modules === 'string') {
+      // eslint-disable-next-line no-param-reassign
+      modules = [[null, modules, '']];
+    }
+
+    var alreadyImportedModules = {};
+
+    if (dedupe) {
+      for (var i = 0; i < this.length; i++) {
+        // eslint-disable-next-line prefer-destructuring
+        var id = this[i][0];
+
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+
+    for (var _i = 0; _i < modules.length; _i++) {
+      var item = [].concat(modules[_i]);
+
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      if (mediaQuery) {
+        if (!item[2]) {
+          item[2] = mediaQuery;
+        } else {
+          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        }
+      }
+
+      list.push(item);
+    }
+  };
+
+  return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+  var content = item[1] || ''; // eslint-disable-next-line prefer-destructuring
+
+  var cssMapping = item[3];
+
+  if (!cssMapping) {
+    return content;
+  }
+
+  if (useSourceMap && typeof btoa === 'function') {
+    var sourceMapping = toComment(cssMapping);
+    var sourceURLs = cssMapping.sources.map(function (source) {
+      return "/*# sourceURL=".concat(cssMapping.sourceRoot || '').concat(source, " */");
+    });
+    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+  }
+
+  return [content].join('\n');
+} // Adapted from convert-source-map (MIT)
+
+
+function toComment(sourceMap) {
+  // eslint-disable-next-line no-undef
+  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+  var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
+  return "/*# ".concat(data, " */");
+}
+
+/***/ }),
+
 /***/ "./node_modules/react-dom/cjs/react-dom.development.js":
 /*!*************************************************************!*\
   !*** ./node_modules/react-dom/cjs/react-dom.development.js ***!
@@ -33374,28 +33500,351 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./src/main/frontend/components/BuildHeader.tsx":
-/*!******************************************************!*\
-  !*** ./src/main/frontend/components/BuildHeader.tsx ***!
-  \******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ "./src/main/frontend/app.scss":
+/*!************************************!*\
+  !*** ./src/main/frontend/app.scss ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_app_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./app.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/main/frontend/app.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_app_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const utils_1 = __webpack_require__(/*! ./utils */ "./src/main/frontend/components/utils.ts");
-function BuildHeader({ build }) {
-    function toDate(milli) {
-        return new Date(milli).toLocaleTimeString('en-gb', { month: "short", day: "numeric" });
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_app_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_app_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_app_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
+  \****************************************************************************/
+/***/ ((module) => {
+
+
+
+var stylesInDOM = [];
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+  for (var i = 0; i < stylesInDOM.length; i++) {
+    if (stylesInDOM[i].identifier === identifier) {
+      result = i;
+      break;
     }
-    return (react_1.default.createElement("a", { href: build.id, className: "psv-cell psv-cell" + (0, utils_1.buildStatusToClass)(build.status) },
-        build.name,
-        react_1.default.createElement("div", { className: 'psv-cell__time' }, toDate(build.startTimeMillis))));
+  }
+  return result;
 }
-exports["default"] = BuildHeader;
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var indexByIdentifier = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3],
+      supports: item[4],
+      layer: item[5]
+    };
+    if (indexByIdentifier !== -1) {
+      stylesInDOM[indexByIdentifier].references++;
+      stylesInDOM[indexByIdentifier].updater(obj);
+    } else {
+      var updater = addElementStyle(obj, options);
+      options.byIndex = i;
+      stylesInDOM.splice(i, 0, {
+        identifier: identifier,
+        updater: updater,
+        references: 1
+      });
+    }
+    identifiers.push(identifier);
+  }
+  return identifiers;
+}
+function addElementStyle(obj, options) {
+  var api = options.domAPI(options);
+  api.update(obj);
+  var updater = function updater(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
+        return;
+      }
+      api.update(obj = newObj);
+    } else {
+      api.remove();
+    }
+  };
+  return updater;
+}
+module.exports = function (list, options) {
+  options = options || {};
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDOM[index].references--;
+    }
+    var newLastIdentifiers = modulesToDom(newList, options);
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+      var _index = getIndexByIdentifier(_identifier);
+      if (stylesInDOM[_index].references === 0) {
+        stylesInDOM[_index].updater();
+        stylesInDOM.splice(_index, 1);
+      }
+    }
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/insertBySelector.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/insertBySelector.js ***!
+  \********************************************************************/
+/***/ ((module) => {
+
+
+
+var memo = {};
+
+/* istanbul ignore next  */
+function getTarget(target) {
+  if (typeof memo[target] === "undefined") {
+    var styleTarget = document.querySelector(target);
+
+    // Special case to return head of iframe instead of iframe itself
+    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+      try {
+        // This will throw an exception if access to iframe is blocked
+        // due to cross-origin restrictions
+        styleTarget = styleTarget.contentDocument.head;
+      } catch (e) {
+        // istanbul ignore next
+        styleTarget = null;
+      }
+    }
+    memo[target] = styleTarget;
+  }
+  return memo[target];
+}
+
+/* istanbul ignore next  */
+function insertBySelector(insert, style) {
+  var target = getTarget(insert);
+  if (!target) {
+    throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+  }
+  target.appendChild(style);
+}
+module.exports = insertBySelector;
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/insertStyleElement.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/insertStyleElement.js ***!
+  \**********************************************************************/
+/***/ ((module) => {
+
+
+
+/* istanbul ignore next  */
+function insertStyleElement(options) {
+  var element = document.createElement("style");
+  options.setAttributes(element, options.attributes);
+  options.insert(element, options.options);
+  return element;
+}
+module.exports = insertStyleElement;
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js ***!
+  \**********************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+/* istanbul ignore next  */
+function setAttributesWithoutAttributes(styleElement) {
+  var nonce =  true ? __webpack_require__.nc : 0;
+  if (nonce) {
+    styleElement.setAttribute("nonce", nonce);
+  }
+}
+module.exports = setAttributesWithoutAttributes;
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/styleDomAPI.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/styleDomAPI.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+
+
+/* istanbul ignore next  */
+function apply(styleElement, options, obj) {
+  var css = "";
+  if (obj.supports) {
+    css += "@supports (".concat(obj.supports, ") {");
+  }
+  if (obj.media) {
+    css += "@media ".concat(obj.media, " {");
+  }
+  var needLayer = typeof obj.layer !== "undefined";
+  if (needLayer) {
+    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
+  }
+  css += obj.css;
+  if (needLayer) {
+    css += "}";
+  }
+  if (obj.media) {
+    css += "}";
+  }
+  if (obj.supports) {
+    css += "}";
+  }
+  var sourceMap = obj.sourceMap;
+  if (sourceMap && typeof btoa !== "undefined") {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  }
+
+  // For old IE
+  /* istanbul ignore if  */
+  options.styleTagTransform(css, styleElement, options.options);
+}
+function removeStyleElement(styleElement) {
+  // istanbul ignore if
+  if (styleElement.parentNode === null) {
+    return false;
+  }
+  styleElement.parentNode.removeChild(styleElement);
+}
+
+/* istanbul ignore next  */
+function domAPI(options) {
+  if (typeof document === "undefined") {
+    return {
+      update: function update() {},
+      remove: function remove() {}
+    };
+  }
+  var styleElement = options.insertStyleElement(options);
+  return {
+    update: function update(obj) {
+      apply(styleElement, options, obj);
+    },
+    remove: function remove() {
+      removeStyleElement(styleElement);
+    }
+  };
+}
+module.exports = domAPI;
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/styleTagTransform.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/styleTagTransform.js ***!
+  \*********************************************************************/
+/***/ ((module) => {
+
+
+
+/* istanbul ignore next  */
+function styleTagTransform(css, styleElement) {
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css;
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild);
+    }
+    styleElement.appendChild(document.createTextNode(css));
+  }
+}
+module.exports = styleTagTransform;
+
+/***/ }),
+
+/***/ "./src/main/frontend/apis/api.ts":
+/*!***************************************!*\
+  !*** ./src/main/frontend/apis/api.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getJobs = void 0;
+function getJobs() {
+    return new Promise((resolve, reject) => {
+        // @ts-ignore
+        buildMonitorBind.fetchJobViews((e) => {
+            if (e && e.responseJSON && e.responseJSON.data) {
+                console.log(e.responseJSON.data);
+                resolve(e.responseJSON.data);
+            }
+            else {
+                reject(new Error("Failed to fetch job data"));
+            }
+        });
+    });
+}
+exports.getJobs = getJobs;
 
 
 /***/ }),
@@ -33451,38 +33900,44 @@ const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules
 const Label_1 = __importDefault(__webpack_require__(/*! ./Label */ "./src/main/frontend/components/Label.tsx"));
 const utils_1 = __webpack_require__(/*! ./utils */ "./src/main/frontend/components/utils.ts");
 const time_1 = __importDefault(__webpack_require__(/*! ../utils/time */ "./src/main/frontend/utils/time.ts"));
-function StageCell({ stage, column }) {
-    var _a;
-    if (!stage) {
+function StageCell({ job }) {
+    if (!job) {
         return (react_1.default.createElement("button", { className: 'psv-cell psv-cell--null' }));
     }
-    let percentage = 100;
-    if (stage.status === 'IN_PROGRESS') {
-        const duration = stage.durationMillis - stage.pauseDurationMillis;
-        const expectedDuration = (_a = column.averageDuration) !== null && _a !== void 0 ? _a : 0;
-        percentage = (duration / expectedDuration) * 100;
-        if (percentage > 100) {
-            percentage = 95;
-        }
-    }
-    function clicky() {
-        const div = document.createElement("pre");
-        // fetch(stage.stageFlowNodes[0]._links.log.href)
-        //     .then(response => {
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         div.textContent = JSON.stringify(data);
-        //         // @ts-ignore
-        //         dialog.modal(div, {
-        //             maxWidth: "1000px",
-        //             title: 'hello world',
-        //         });
-        //     });
-    }
-    return (react_1.default.createElement("button", { onClick: () => clicky(), className: "psv-cell psv-cell" + (0, utils_1.buildStatusToClass)(stage.status) + " psv-stage-cell" },
-        react_1.default.createElement(Label_1.default, { text: (0, time_1.default)(stage.durationMillis, 2) }),
-        react_1.default.createElement("div", { className: "durationboi " + (percentage !== 100 ? 'durationboi--animate' : ''), style: { width: percentage + "%" } })));
+    // let percentage = 100;
+    // if (stage.status === 'IN_PROGRESS') {
+    //     const duration = stage.durationMillis - stage.pauseDurationMillis;
+    //     const expectedDuration = column.averageDuration ?? 0;
+    //
+    //     percentage = (duration / expectedDuration) * 100;
+    //
+    //     if (percentage > 100) {
+    //         percentage = 95;
+    //     }
+    // }
+    // function clicky() {
+    //     const div = document.createElement("pre")
+    //
+    //     // fetch(stage.stageFlowNodes[0]._links.log.href)
+    //     //     .then(response => {
+    //     //         return response.json();
+    //     //     })
+    //     //     .then(data => {
+    //     //         div.textContent = JSON.stringify(data);
+    //     //         // @ts-ignore
+    //     //         dialog.modal(div, {
+    //     //             maxWidth: "1000px",
+    //     //             title: 'hello world',
+    //     //         });
+    //     //     });
+    // }
+    return (react_1.default.createElement("a", { href: job.url, className: "psv-cell psv-cell" + (0, utils_1.buildStatusToClass)(job.status) + " psv-stage-cell" },
+        (0, utils_1.isRunning)(job.status) && react_1.default.createElement("div", { className: "durationboi durationboi--animate", style: { width: job.progress + "%" } }),
+        react_1.default.createElement(Label_1.default, { text: job.name }),
+        react_1.default.createElement(Label_1.default, { text: job.headline }),
+        react_1.default.createElement("div", { className: "psv-cell__details" },
+            react_1.default.createElement(Label_1.default, { text: job.lastCompletedBuild.name }),
+            react_1.default.createElement(Label_1.default, { text: (0, time_1.default)(job.lastCompletedBuild.timeElapsedSince) }))));
 }
 exports["default"] = StageCell;
 
@@ -33524,103 +33979,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const Label_1 = __importDefault(__webpack_require__(/*! ./Label */ "./src/main/frontend/components/Label.tsx"));
-const BuildHeader_1 = __importDefault(__webpack_require__(/*! ./BuildHeader */ "./src/main/frontend/components/BuildHeader.tsx"));
 const StageCell_1 = __importDefault(__webpack_require__(/*! ./StageCell */ "./src/main/frontend/components/StageCell.tsx"));
-const time_1 = __importDefault(__webpack_require__(/*! ../utils/time */ "./src/main/frontend/utils/time.ts"));
+const api_1 = __webpack_require__(/*! ../apis/api */ "./src/main/frontend/apis/api.ts");
 function Stageview() {
-    const [columns, setColumns] = (0, react_1.useState)([]);
-    const [builds, setBuilds] = (0, react_1.useState)([]);
-    function generateColumns() {
-        let firstNonInProgressJob = builds
-            .find(build => build.status !== 'IN_PROGRESS');
-        if (!firstNonInProgressJob) {
-            firstNonInProgressJob = builds[0];
-        }
-        if (!firstNonInProgressJob) {
-            return [];
-        }
-        setColumns(firstNonInProgressJob.stages.map(stage => ({ name: stage.name,
-            averageDuration: averageDuration(stage.id),
-            durationMillis: stage.durationMillis })));
-    }
-    function averageDuration(id, includeInProgress = true) {
-        const durations = builds
-            .flatMap(build => build.stages)
-            .filter(e => e.id === id)
-            .filter(e => e.status !== 'IN_PROGRESS')
-            .map(s => s.durationMillis);
-        if (!durations || durations.length === 0) {
-            return null;
-        }
-        let duration = durations.reduce((p, c) => p + c) / durations.length;
-        if (includeInProgress) {
-            const inProgressDurations = builds
-                .flatMap(build => build.stages)
-                .filter(e => e.id === id)
-                .filter(e => e.status === 'IN_PROGRESS')
-                .map(s => s.durationMillis);
-            if (!inProgressDurations || inProgressDurations.length === 0) {
-                return duration;
-            }
-            const inProgressDuration = inProgressDurations.reduce((p, c) => p + c) / inProgressDurations.length;
-            if (inProgressDuration > duration) {
-                duration = (duration + inProgressDuration) / 2;
-            }
-        }
-        return duration;
-    }
+    const [jobs, setJobs] = (0, react_1.useState)([]);
     (0, react_1.useEffect)(() => {
-        generateColumns();
-    }, [builds]);
-    (0, react_1.useEffect)(() => {
-        // @ts-ignore
-        const crumb = window.bindings.buildMonitor.crumb;
-        // @ts-ignore
-        const url = "http://localhost:8080" + window.bindings.buildMonitor.url + "/fetchJobViews";
-        // const url2 = "http://localhost:8080/jenkins/$stapler/bound/7350d360-2fb2-4943-8d56-cadd2275f2a4/fetchJobViews";
-        console.log(crumb);
-        console.log(url);
-        fetch(url, {
-            // @ts-ignore
-            headers: {
-                crumb: crumb,
-            }
-        })
-            .then(response => {
-            return response.json();
-        })
-            .then(data => setBuilds(data));
+        (0, api_1.getJobs)().then(jobs => setJobs(jobs));
         const intervalID = setInterval(() => {
-            fetch(url)
-                .then(response => {
-                return response.json();
-            })
-                .then(data => setBuilds(data));
+            (0, api_1.getJobs)().then(jobs => setJobs(jobs));
         }, 3000);
         return () => clearInterval(intervalID);
     }, []);
-    return (react_1.default.createElement("table", { className: "psv-stageview" },
-        react_1.default.createElement("thead", { className: "psv-stageview__heading" },
-            react_1.default.createElement("tr", null,
-                react_1.default.createElement("th", null),
-                columns.map((column) => {
-                    var _a;
-                    return (react_1.default.createElement("th", null,
-                        react_1.default.createElement("p", null, column.name),
-                        react_1.default.createElement("p", null,
-                            react_1.default.createElement(Label_1.default, { text: (0, time_1.default)((_a = column.averageDuration) !== null && _a !== void 0 ? _a : 0, 2) }))));
-                }))),
-        react_1.default.createElement("tbody", { className: "psv-stageview__body" }, builds.map((build) => {
-            return (react_1.default.createElement("tr", { className: "psv-stageview__build" },
-                react_1.default.createElement("td", { width: "180px" },
-                    react_1.default.createElement(BuildHeader_1.default, { build: build })),
-                columns.map((column) => {
-                    const stage = build.stages[columns.indexOf(column)];
-                    return (react_1.default.createElement("td", null,
-                        react_1.default.createElement(StageCell_1.default, { stage: stage, column: column })));
-                })));
-        }))));
+    return (react_1.default.createElement("div", { className: "psv-job-grid" }, jobs.map(job => (react_1.default.createElement(StageCell_1.default, { key: job.url, job: job })))));
 }
 exports["default"] = Stageview;
 
@@ -33635,20 +34005,24 @@ exports["default"] = Stageview;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.buildStatusToClass = void 0;
+exports.isRunning = exports.buildStatusToClass = void 0;
 function buildStatusToClass(status) {
+    const stat = status.split(" ")[0];
     const map = {
         'NOT_EXECUTED': '--null',
-        'ABORTED': '--null',
-        'SUCCESS': '--success',
+        'aborted': '--null',
+        'successful': '--successful',
         'IN_PROGRESS': '--in-progress',
-        'PAUSED_PENDING_INPUT': '--null',
-        'FAILED': '--destructive',
+        'failing': '--failing',
         'UNSTABLE': '--warning'
     };
-    return map[status];
+    return map[stat];
 }
 exports.buildStatusToClass = buildStatusToClass;
+function isRunning(status) {
+    return status.includes('running');
+}
+exports.isRunning = isRunning;
 
 
 /***/ }),
@@ -33690,7 +34064,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const ReactDOMClient = __importStar(__webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js"));
 const Stageview_1 = __importDefault(__webpack_require__(/*! ./components/Stageview */ "./src/main/frontend/components/Stageview.tsx"));
-// import './app.scss';
+__webpack_require__(/*! ./app.scss */ "./src/main/frontend/app.scss");
 const rootElement = document.getElementById("graph");
 if (!rootElement)
     throw new Error("Failed to find the 'graph' element");
@@ -33849,6 +34223,46 @@ exports["default"] = time;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -33856,6 +34270,11 @@ exports["default"] = time;
 /******/ 			if (!module.children) module.children = [];
 /******/ 			return module;
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/nonce */
+/******/ 	(() => {
+/******/ 		__webpack_require__.nc = undefined;
 /******/ 	})();
 /******/ 	
 /************************************************************************/

@@ -226,6 +226,7 @@ public class BuildMonitorView extends ListView {
      */
     @JavaScriptMethod
     public JSONObject fetchJobViews() throws Exception {
+        System.out.println("Hello ive been called!");
         return Respond.withSuccess(jobViews());
     }
 

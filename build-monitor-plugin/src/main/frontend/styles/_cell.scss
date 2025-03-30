@@ -1,0 +1,104 @@
+$cell-padding: 1rem;
+
+.psv-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: none;
+  appearance: none;
+  background: none;
+  height: 100%;
+  cursor: pointer;
+  width: 100%;
+  text-decoration: none !important;
+  border-radius: 1rem;
+  font-size: 2rem;
+  font-weight: 450 !important;
+  color: color-mix(in srgb, var(--psv-cell-color), var(--text-color) 10%) !important;
+  padding: $cell-padding;
+  z-index: 0;
+  transition: var(--standard-transition);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    transition: var(--standard-transition);
+    background: color-mix(in srgb, var(--psv-cell-color) var(--opacity-modifier, 100%), transparent);
+    color: inherit;
+    opacity: 0.125;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    z-index: -1;
+    transition: var(--standard-transition);
+    background: transparent;
+    backdrop-filter: blur(0);
+    visibility: collapse;
+    border-radius: 1rem;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 0.2;
+    }
+  }
+
+  &:active {
+    z-index: 1;
+    border-radius: 0.66rem !important;
+
+    &::before {
+      border-radius: 0.66rem;
+    }
+
+    &::after {
+      inset: -5px;
+      background: color-mix(in srgb, var(--psv-cell-color), transparent 90%);
+      backdrop-filter: blur(10px);
+      visibility: visible;
+    }
+  }
+
+  &--successful {
+    --psv-cell-color: var(--success-color);
+  }
+
+  &--failing {
+    --psv-cell-color: var(--destructive-color);
+  }
+
+  &--warning {
+    --psv-cell-color: var(--warning-color);
+  }
+
+  &--in-progress {
+    --psv-cell-color: var(--blue);
+
+    &:not(.psv-stage-cell) {
+      &::before {
+        animation: pulse-thing 2s ease infinite;
+      }
+    }
+  }
+
+  &__details {
+    position: absolute;
+    left: $cell-padding;
+    right: $cell-padding;
+    bottom: $cell-padding;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__time {
+    font-size: 0.625rem;
+    opacity: 0.75;
+  }
+}

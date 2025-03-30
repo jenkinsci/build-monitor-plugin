@@ -1,15 +1,20 @@
 import {BuildStatus} from "../models/Build";
 
-export function buildStatusToClass(status: BuildStatus) {
+export function buildStatusToClass(status: string) {
+    const stat = status.split(" ")[0] as BuildStatus;
+
     const map: {[key in BuildStatus]: string} = {
         'NOT_EXECUTED': '--null',
-        'ABORTED': '--null',
-        'SUCCESS': '--success',
+        'aborted': '--null',
+        'successful': '--successful',
         'IN_PROGRESS': '--in-progress',
-        'PAUSED_PENDING_INPUT': '--null',
-        'FAILED': '--destructive',
+        'failing': '--failing',
         'UNSTABLE': '--warning'
     }
 
-    return map[status];
+    return map[stat];
+}
+
+export function isRunning(status: string) {
+    return status.includes('running');
 }
