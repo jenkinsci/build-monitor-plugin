@@ -68,16 +68,16 @@ function Stageview() {
     }, [builds]);
 
     useEffect(() => {
-        const url = "";
+        const url = "http://localhost:8080/jenkins/$stapler/bound/7350d360-2fb2-4943-8d56-cadd2275f2a4/fetchJobViews";
         
-        fetch('http://localhost:8080/jenkins/job/coming%20back/wfapi/runs?since=%235&fullStages=true&_=1690120329481')
+        fetch(url)
             .then(response => {
                 return response.json();
             })
             .then(data => setBuilds(data));
 
         const intervalID = setInterval(() =>  {
-            fetch('http://localhost:8080/jenkins/job/coming%20back/wfapi/runs?since=%235&fullStages=true&_=1690120329481')
+            fetch(url)
                 .then(response => {
                     return response.json();
                 })
