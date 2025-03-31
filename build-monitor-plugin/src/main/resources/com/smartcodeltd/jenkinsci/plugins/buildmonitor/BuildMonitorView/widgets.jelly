@@ -1,9 +1,5 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:x="jelly:xml">
-    <div>
-        <div id="graph"
-             data-timezone="${it.timeZone}"
-             objectUrl="${rootURL}/${it.target.url}" />
-        <script src="${rootURL}/plugin/build-monitor-plugin/js/bundles/app.js" />
-    </div>
+<j:jelly xmlns:j="jelly:core">
+    <div id="graph" />
+    <script src="${rootURL}/plugin/build-monitor-plugin/js/bundles/app.js" />
 </j:jelly>

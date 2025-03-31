@@ -60,25 +60,37 @@ const OutsideButtonWithDropdown = () => {
             }}
           >
             <div className="jenkins-dropdown">
-              <Slider label={"Text size"} />
-              <Slider label={"Maximum number of columns"} />
+              <Slider
+                label={"Text size"}
+                min={0.1}
+                max={5}
+                defaultValue={1}
+                step={0.1}
+              />
+              <Slider
+                label={"Maximum number of columns"}
+                min={1}
+                max={20}
+                defaultValue={2}
+                step={1}
+              />
               <div className={"jenkins-dropdown__separator"} />
               <div className={"bs-checkboxes"}>
                 <div className="jenkins-checkbox">
-                <input
-                  ng-model="settings.colourBlind"
-                  ng-false-value="'0'"
-                  ng-true-value="'1'"
-                  id="settings-colour-blind"
-                  type="checkbox"
-                />
-                <label
-                  htmlFor="settings-colour-blind"
-                  title="Applies a colour blind-friendly colour scheme"
-                >
-                  Color blind mode
-                </label>
-              </div>
+                  <input
+                    ng-model="settings.colourBlind"
+                    ng-false-value="'0'"
+                    ng-true-value="'1'"
+                    id="settings-colour-blind"
+                    type="checkbox"
+                  />
+                  <label
+                    htmlFor="settings-colour-blind"
+                    title="Applies a colour blind-friendly colour scheme"
+                  >
+                    Color blind mode
+                  </label>
+                </div>
                 <div className="jenkins-checkbox">
                   <input
                     ng-model="settings.reduceMotion"
@@ -118,7 +130,9 @@ const OutsideButtonWithDropdown = () => {
                 Edit View
               </a>
               <div className={"jenkins-dropdown__separator"} />
-              <button className={"jenkins-dropdown__item"}>
+              <button
+                className={"jenkins-dropdown__item jenkins-!-warning-color"}
+              >
                 <div className={"jenkins-dropdown__item__icon"}>
                   {RESET_SYMBOL}
                 </div>

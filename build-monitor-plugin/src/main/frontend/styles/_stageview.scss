@@ -10,7 +10,7 @@
 
   /* Text */
   --text-color: oklch(from var(--accent-color) 99% 0.015 h);
-  --text-color-secondary: oklch(from var(--white) 0.75 0.038 h);
+  --text-color-secondary: gray;
 
   /* Form */
   --input-color: oklch(from var(--text-color-secondary) l c h / 0.03);
@@ -26,14 +26,17 @@
   /* Card */
   --card-background: color-mix(
     in oklch,
-    var(--text-color-secondary) 10%,
+    var(--text-color-secondary) 20%,
     var(--background)
   );
   --card-border-color: color-mix(
     in oklch,
-    var(--text-color-secondary) 10%,
+    var(--text-color-secondary) 20%,
     var(--background)
   );
+
+  /* Border */
+  --jenkins-border-color: color-mix(in srgb, gray 15%, transparent);
 
   /* Render native browser elements in dark mode */
   color-scheme: dark;
