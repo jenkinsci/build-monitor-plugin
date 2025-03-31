@@ -1,5 +1,5 @@
 import React from "react";
-import Label from "./Label";
+import Label from "./label";
 import { buildStatusToClass } from "./utils";
 import time from "../utils/time";
 import { Job } from "../models/job";

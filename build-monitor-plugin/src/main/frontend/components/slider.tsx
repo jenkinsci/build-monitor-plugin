@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import Label from "./Label";
+import React, { ChangeEvent } from "react";
+import Label from "./label";
 
 export default function Slider({
   label,
   min,
   max,
-  defaultValue,
   step,
+  value,
+  setValue,
 }: {
   label: string;
   min: number;
   max: number;
-  defaultValue: number;
   step: number;
+  value: number;
+  setValue: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
-  const [value, setValue] = useState<number>(defaultValue);
-
   return (
     <div className={"bs-slider__container"}>
       <p className={"jenkins-form-label"}>
@@ -34,9 +34,9 @@ export default function Slider({
         type="range"
         min={min}
         max={max}
-        defaultValue={value}
+        value={value}
         step={step}
-        onChange={(e) => setValue(Number(e.target.value))}
+        onChange={setValue}
       />
     </div>
   );

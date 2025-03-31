@@ -138,7 +138,5 @@
     </f:entry>
 
   </f:section>
-
-  <st:adjunct includes="com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView.show-nested-jobs"/>
-
+  
 </j:jelly>

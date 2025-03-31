@@ -14,7 +14,7 @@ $cell-padding: 1rem;
   width: 100%;
   text-decoration: none !important;
   border-radius: 1rem;
-  font-size: 2rem;
+  font-size: 2em;
   font-weight: 450 !important;
   color: white !important;
   padding: $cell-padding;
@@ -68,6 +68,10 @@ $cell-padding: 1rem;
     --psv-cell-color: var(--warning-color);
   }
 
+  &--null {
+    --psv-cell-color: var(--text-color-secondary);
+  }
+
   &--in-progress {
     --psv-cell-color: var(--blue);
 
@@ -89,7 +93,7 @@ $cell-padding: 1rem;
     position: absolute;
     inset: 0;
     border-radius: 0;
-    background: currentColor;
+    background: var(--psv-cell-color);
     pointer-events: none;
     transition: 0.3s ease;
     opacity: 0;
