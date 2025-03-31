@@ -7,7 +7,8 @@
     "mvnbuild": "npm run build",
     "mvntest": "npm run test",
     "build": "webpack --mode production",
-    "build:dev": "webpack --mode development --watch"
+    "build:dev": "webpack --mode development --watch",
+    "lint:fix": "prettier --write src/main/frontend/"
   },
   "repository": {
     "type": "git",

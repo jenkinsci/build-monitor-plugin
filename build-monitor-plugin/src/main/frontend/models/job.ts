@@ -1,4 +1,4 @@
-import {BuildStatus} from "./Build";
+import { BuildStatus } from "./Build";
 
 export interface Job {
   name: string;

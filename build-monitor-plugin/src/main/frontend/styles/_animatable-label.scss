@@ -3,7 +3,8 @@
   grid-template-columns: 1fr;
 }
 
-.lablething1, .lablething2 {
+.lablething1,
+.lablething2 {
   display: block;
   grid-row-start: 1;
   grid-column-start: 1;

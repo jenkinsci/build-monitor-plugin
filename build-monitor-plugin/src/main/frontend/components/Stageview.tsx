@@ -1,28 +1,28 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import StageCell from "./StageCell";
-import {Job} from "../models/job";
-import {getJobs} from "../apis/api";
+import { Job } from "../models/job";
+import { getJobs } from "../apis/api";
 
 function Stageview() {
-    const [jobs, setJobs] = useState<Job[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
 
-    useEffect(() => {
-        getJobs().then(jobs => setJobs(jobs));
+  useEffect(() => {
+    getJobs().then((jobs) => setJobs(jobs));
 
-        const intervalID = setInterval(() =>  {
-            getJobs().then(jobs => setJobs(jobs));
-        }, 3000);
+    const intervalID = setInterval(() => {
+      getJobs().then((jobs) => setJobs(jobs));
+    }, 3000);
 
-        return () => clearInterval(intervalID);
-    }, [])
+    return () => clearInterval(intervalID);
+  }, []);
 
-    return (
-      <div className="psv-job-grid">
-          {jobs.map(job => (
-            <StageCell key={job.url} job={job} />
-          ))}
-      </div>
-    )
+  return (
+    <div className="psv-job-grid">
+      {jobs.map((job) => (
+        <StageCell key={job.url} job={job} />
+      ))}
+    </div>
+  );
 }
 
-export default Stageview
+export default Stageview;

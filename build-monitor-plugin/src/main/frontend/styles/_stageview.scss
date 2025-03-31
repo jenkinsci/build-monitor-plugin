@@ -10,7 +10,7 @@
 
   /* Text */
   --text-color: oklch(from var(--accent-color) 99% 0.015 h);
-  --text-color-secondary: oklch(from var(--white) 0.65 0.038 h);
+  --text-color-secondary: oklch(from var(--white) 0.75 0.038 h);
 
   /* Form */
   --input-color: oklch(from var(--text-color-secondary) l c h / 0.03);
@@ -19,16 +19,21 @@
   --focus-input-glow: oklch(from var(--focus-input-border) l c h / 0.2);
 
   /* Dropdowns */
-  --dropdown-box-shadow:
-          inset 0 0 0 1px rgba(255, 255, 255, 0.025),
-          inset var(--jenkins-border--subtle-shadow),
-          0 0 8px 2px rgba(0, 0, 20, 0.05),
-          0 0 1px 1px rgba(0, 0, 20, 0.025),
-          0 10px 20px rgba(0, 0, 20, 0.3);
+  --dropdown-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+    inset var(--jenkins-border--subtle-shadow), 0 0 8px 2px rgba(0, 0, 20, 0.05),
+    0 0 1px 1px rgba(0, 0, 20, 0.025), 0 10px 20px rgba(0, 0, 20, 0.3);
 
   /* Card */
-  --card-background: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));
-  --card-border-color: color-mix(in oklch, var(--text-color-secondary) 10%, var(--background));
+  --card-background: color-mix(
+    in oklch,
+    var(--text-color-secondary) 10%,
+    var(--background)
+  );
+  --card-border-color: color-mix(
+    in oklch,
+    var(--text-color-secondary) 10%,
+    var(--background)
+  );
 
   /* Render native browser elements in dark mode */
   color-scheme: dark;

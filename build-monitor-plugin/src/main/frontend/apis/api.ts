@@ -1,4 +1,4 @@
-import {Job} from "../models/job";
+import { Job } from "../models/job";
 
 export function getJobs(): Promise<Job[]> {
   return new Promise((resolve, reject) => {

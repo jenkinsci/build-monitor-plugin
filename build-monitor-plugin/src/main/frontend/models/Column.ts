@@ -1,5 +1,5 @@
 export interface Column {
-    name: string;
-    averageDuration: number | null;
-    durationMillis: number;
+  name: string;
+  averageDuration: number | null;
+  durationMillis: number;
 }
