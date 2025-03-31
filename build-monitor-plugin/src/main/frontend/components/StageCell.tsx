@@ -1,6 +1,6 @@
 import React from "react";
 import Label from "./Label";
-import { buildStatusToClass, isRunning } from "./utils";
+import { buildStatusToClass } from "./utils";
 import time from "../utils/time";
 import { Job } from "../models/job";
 
@@ -12,12 +12,10 @@ function StageCell({ job }: { job: Job }) {
       href={job.url}
       className={"psv-cell psv-cell" + buildStatusToClass(job.status)}
     >
-      {isRunning(job.status) && (
-        <div
-          className={"durationboi durationboi--animate"}
-          style={{ width: job.progress + "%" }}
-        ></div>
-      )}
+      <div
+        className={"durationboi durationboi--animate"}
+        style={{ width: job.progress + "%" }}
+      ></div>
 
       <Label
         text={job.name}

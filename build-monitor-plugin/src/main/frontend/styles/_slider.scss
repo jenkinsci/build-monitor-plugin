@@ -1,0 +1,41 @@
+.bs-slider__container {
+  margin: 0.5rem;
+  min-width: 220px;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.bs-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  border-radius: 5px;
+  background: var(--input-border);
+  outline: none;
+  transition: background .2s;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--input-border-hover);
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    background: var(--text-color);
+  }
+}
+
+// TODO move
+.bs-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.5rem;
+}
