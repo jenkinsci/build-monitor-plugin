@@ -38,6 +38,7 @@ class CreateAProject implements Task {
         actor.attemptsTo(
                 Click.on(SidePanel.New_Item_Link),
                 Enter.theValue(name).into(NewJobPage.Item_Name_Field),
+                Scroll.to(projectType),
                 Choose.the(projectType),
                 Scroll.to(Buttons.OK),
                 Click.on(Buttons.OK),
