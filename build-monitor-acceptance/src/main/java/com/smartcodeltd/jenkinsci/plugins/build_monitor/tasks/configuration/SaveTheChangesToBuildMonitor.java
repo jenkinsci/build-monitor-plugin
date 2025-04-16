@@ -16,6 +16,6 @@ public class SaveTheChangesToBuildMonitor implements Task {
     @Step("{0} saves the changes and leaves the configuration screen")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(Click.on(Buttons.OK));
+        actor.attemptsTo(Click.on(Buttons.Save));
     }
 }
