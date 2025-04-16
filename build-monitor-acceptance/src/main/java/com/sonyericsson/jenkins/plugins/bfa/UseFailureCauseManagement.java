@@ -9,7 +9,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.jenkins.tasks.configuration.TodoList;
-import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Breadcrumbs;
+import net.serenitybdd.screenplay.jenkins.user_interface.navigation.SidePanel;
 
 public class UseFailureCauseManagement implements Task {
     public static UseFailureCauseManagement to(Task... defineFailureCauses) {
@@ -22,7 +22,7 @@ public class UseFailureCauseManagement implements Task {
         actor.attemptsTo(
                 Click.on(JenkinsHomePageWithBFA.Failure_Cause_Management_Link),
                 defineFailureCauses,
-                Click.on(Breadcrumbs.Jenkins_Link));
+                Click.on(SidePanel.Back_to_Dashboard));
     }
 
     private final TodoList defineFailureCauses = TodoList.empty();
