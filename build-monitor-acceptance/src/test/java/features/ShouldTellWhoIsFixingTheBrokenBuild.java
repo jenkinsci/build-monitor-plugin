@@ -10,12 +10,9 @@ import com.smartcodeltd.jenkinsci.plugins.build_monitor.matchers.ProjectInformat
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.model.ProjectStatus;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.questions.ProjectWidget;
 import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.HaveABuildMonitorViewCreated;
-import com.smartcodeltd.jenkinsci.plugins.build_monitor.tasks.Sleep;
 import hudson.plugins.claim.HaveAFailingClaimableProjectCreated;
 import hudson.plugins.claim.tasks.Claim;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import net.serenitybdd.integration.jenkins.JenkinsInstance;
 import net.serenitybdd.integration.jenkins.environment.rules.ApplicativeTestRule;
 import net.serenitybdd.integration.jenkins.environment.rules.RegisterUserAccount;
@@ -54,7 +51,6 @@ public class ShouldTellWhoIsFixingTheBrokenBuild extends BuildMonitorAcceptanceT
                 .attemptsTo(
                         HaveABuildMonitorViewCreated.showingAllTheProjects(),
                         Claim.lastBrokenBuildOf("Responsibly Developed").saying("My bad, fixing now"),
-                        Sleep.of(1, TimeUnit.SECONDS),
                         GoBack.to("Build Monitor"));
 
         then(ben)

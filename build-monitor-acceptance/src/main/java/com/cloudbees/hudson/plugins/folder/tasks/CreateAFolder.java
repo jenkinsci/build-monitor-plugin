@@ -11,7 +11,6 @@ import net.serenitybdd.screenplay.jenkins.actions.Choose;
 import net.serenitybdd.screenplay.jenkins.user_interface.NewJobPage;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.Buttons;
 import net.serenitybdd.screenplay.jenkins.user_interface.navigation.SidePanel;
-import net.serenitybdd.screenplayx.actions.Scroll;
 import org.openqa.selenium.Keys;
 
 public class CreateAFolder implements Task {
@@ -24,10 +23,8 @@ public class CreateAFolder implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 Click.on(SidePanel.New_Item_Link),
-                Enter.theValue(name).into(NewJobPage.Item_Name_Field),
-                Scroll.to(NewJobPage.Folder),
                 Choose.the(NewJobPage.Folder),
-                Click.on(Buttons.OK),
+                Enter.theValue(name).into(NewJobPage.Item_Name_Field).thenHit(Keys.ENTER),
                 Click.on(Buttons.Save));
     }
 
