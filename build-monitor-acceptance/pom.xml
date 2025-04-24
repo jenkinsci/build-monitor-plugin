@@ -12,7 +12,7 @@
   <name>Build Monitor Acceptance Tests</name>
 
   <properties>
-    <byte-buddy.version>1.17.2</byte-buddy.version>
+    <byte-buddy.version>1.17.5</byte-buddy.version>
     <serenity.version>4.2.16</serenity.version>
   </properties>
 
@@ -33,7 +33,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>33.4.5-jre</version>
+        <version>33.4.7-jre</version>
       </dependency>
       <dependency>
         <groupId>com.google.inject</groupId>
@@ -78,7 +78,7 @@
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-        <version>1.18.36</version>
+        <version>1.18.38</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
