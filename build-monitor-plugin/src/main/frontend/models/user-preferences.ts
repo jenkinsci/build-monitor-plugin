@@ -1,4 +1,4 @@
-export interface Statee {
+export interface UserPreferences {
   textSize: number;
   maximumNumberOfColumns: number;
   colorBlindMode: boolean;

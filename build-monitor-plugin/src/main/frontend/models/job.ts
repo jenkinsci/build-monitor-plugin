@@ -1,7 +1,8 @@
 export interface Job {
   name: string;
   url: string;
-  status: string;
+  status: JobStatus;
+  disabled: boolean;
   hashCode: number;
   progress: number;
   estimatedDuration: string;
@@ -16,5 +17,33 @@ export interface Job {
     description: string;
     timeElapsedSince: number;
   };
-  currentBuilds: any[]; // TODO If you know the shape of builds, replace `any` with a proper type
+  currentBuilds: {
+    name: string;
+    url: string;
+    result: any; // todo
+    isRunning: boolean;
+    elapsedTime: string; // todo
+    timeElapsedSince: string; // todo
+    duration: string;
+    estimatedDuration: string;
+    progress: number;
+    description: string;
+    isPipeline: boolean;
+    pipelineStages: string[];
+    hasPreviousBuild: boolean;
+    previousBuild: any; // todo
+    culprits: string[];
+    committers: string[];
+    // detailsOf // todo
+    // allDetailsOf // todo
+  };
 }
+
+// Aligns with build-monitor-plugin/src/main/java/com/smartcodeltd/jenkinsci/plugins/buildmonitor/viewmodel/CssStatus.java
+export type JobStatus =
+  | "successful"
+  | "unstable"
+  | "failing"
+  | "unknown"
+  | "aborted"
+  | "running";

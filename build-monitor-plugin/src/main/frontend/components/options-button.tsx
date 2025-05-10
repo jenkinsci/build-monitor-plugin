@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { RESET_SYMBOL, SETTINGS_SYMBOL } from "../utils/symbols";
 import Slider from "./slider";
-import { Statee } from "../models/state";
+import { UserPreferences } from "../models/user-preferences.ts";
 import { defaultState } from "./container";
 import Checkbox from "./checkbox";
 import Dropdown from "./dropdown.tsx";
 
 interface OptionsButtonProps {
-  state: Statee;
-  setState: (value: ((prevState: Statee) => Statee) | Statee) => void;
+  state: UserPreferences;
+  setState: (
+    value: ((prevState: UserPreferences) => UserPreferences) | UserPreferences,
+  ) => void;
 }
 
 const OutsideButtonWithDropdown = ({ state, setState }: OptionsButtonProps) => {
@@ -102,7 +104,7 @@ const OutsideButtonWithDropdown = ({ state, setState }: OptionsButtonProps) => {
               </button>,
             ]}
           />,
-          buttonPortal
+          buttonPortal,
         )}
     </>
   );

@@ -1,11 +1,12 @@
 import React from "react";
 import Label from "./label";
-import { buildStatusToClass } from "./utils";
 import time from "../utils/time";
 import { Job } from "../models/job";
+import { buildStatusToClass } from "../utils/utils.ts";
 
 function StageCell({ job }: { job: Job }) {
-  const highlightColor = "color-mix(in srgb, var(--psv-cell-color) 75%, var(--text-color))"
+  const highlightColor =
+    "color-mix(in srgb, var(--psv-cell-color) 75%, var(--text-color))";
 
   return (
     <a

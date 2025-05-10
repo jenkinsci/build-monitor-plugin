@@ -24,12 +24,8 @@ public class CssStatus {
             status = statuses.getOrDefault(result, "unknown");
         }
 
-        if (job.isDisabled()) {
-            status += " disabled";
-        }
-
         if (job.isRunning()) {
-            status += " running";
+            status = "running";
         }
 
         return status;

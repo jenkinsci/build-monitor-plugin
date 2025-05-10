@@ -42,16 +42,18 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import jenkins.model.Jenkins;
+import jenkins.model.ModelObjectWithContextMenu;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest2;
+import org.kohsuke.stapler.StaplerResponse2;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 
 /**
  * @author Jan Molak
  */
-public class BuildMonitorView extends ListView {
+public class BuildMonitorView extends ListView implements ModelObjectWithContextMenu {
     @Extension
     public static final BuildMonitorDescriptor descriptor = new BuildMonitorDescriptor();
 
@@ -309,4 +311,9 @@ public class BuildMonitorView extends ListView {
     @Deprecated // use Config instead
     private Comparator<Job<?, ?>>
             order; // note: this field can be removed when people stop using versions prior to 1.6+build.150
+
+    @Override
+    public ContextMenu doContextMenu(StaplerRequest2 request, StaplerResponse2 response) {
+        return new ContextMenu().addHeader("Other Build Monitors").add(new MenuItem("test", "", "hello i am test"));
+    }
 }

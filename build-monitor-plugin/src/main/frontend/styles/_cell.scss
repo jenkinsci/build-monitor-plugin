@@ -89,7 +89,7 @@ $cell-padding: 1rem;
     --psv-cell-color: var(--text-color-secondary);
   }
 
-  &--in-progress {
+  &--running {
     --psv-cell-color: var(--blue);
 
     &::before {
