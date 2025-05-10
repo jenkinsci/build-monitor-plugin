@@ -10,7 +10,9 @@
 
            <st:bind var="buildMonitorBind" value="${it}" />
 
-           <div id="graph" />
+           <h1>${it}</h1>
+
+           <div id="app" data-build-monitor-id="${it.id}" />
 
            <script src="${rootURL}/plugin/build-monitor-plugin/js/bundles/app.js" />
        </l:main-panel>

@@ -2,24 +2,26 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { RESET_SYMBOL, SETTINGS_SYMBOL } from "../utils/symbols";
 import Slider from "./slider";
-import { UserPreferences } from "../models/user-preferences.ts";
-import { defaultState } from "./container";
 import Checkbox from "./checkbox";
 import Dropdown from "./dropdown.tsx";
+import { useUserPreferences } from "../providers/user-preference-provider.tsx";
 
 interface OptionsButtonProps {
-  state: UserPreferences;
-  setState: (
-    value: ((prevState: UserPreferences) => UserPreferences) | UserPreferences,
-  ) => void;
-  disabled: boolean;
+  amountOfJobs: number;
 }
 
-const OutsideButtonWithDropdown = ({
-  state,
-  setState,
-  disabled,
-}: OptionsButtonProps) => {
+const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
+  const {
+    textSize,
+    setTextSize,
+    maximumNumberOfColumns,
+    setMaximumNumberOfColumns,
+    colorBlindMode,
+    setColorBlindMode,
+    showBadges,
+    setShowBadges,
+    reset,
+  } = useUserPreferences();
   const [ready, setReady] = useState(false);
   const buttonPortal = document.querySelector(".jenkins-header__actions")!;
 
@@ -30,40 +32,28 @@ const OutsideButtonWithDropdown = ({
     }
   }, []);
 
-  const resetState = () => {
-    setState(defaultState);
-  };
-
   return (
     <>
       {ready &&
         createPortal(
           <Dropdown
-            disabled={disabled}
+            disabled={amountOfJobs === 0}
             items={[
               <Slider
                 label={"Text size"}
                 min={0.1}
                 max={5}
-                value={state.textSize}
-                setValue={(e) =>
-                  setState((prevState) => ({
-                    ...prevState,
-                    textSize: Number(e.target.value),
-                  }))
-                }
+                value={textSize}
+                setValue={(e) => setTextSize(Number(e.target.value))}
                 step={0.1}
               />,
               <Slider
                 label={"Maximum number of columns"}
                 min={1}
-                max={20}
-                value={state.maximumNumberOfColumns}
+                max={Math.min(amountOfJobs, 20)}
+                value={Math.min(amountOfJobs, maximumNumberOfColumns)}
                 setValue={(e) =>
-                  setState((prevState) => ({
-                    ...prevState,
-                    maximumNumberOfColumns: Number(e.target.value),
-                  }))
+                  setMaximumNumberOfColumns(Number(e.target.value))
                 }
                 step={1}
               />,
@@ -72,24 +62,14 @@ const OutsideButtonWithDropdown = ({
                 <Checkbox
                   label={"Show badges"}
                   id="settings-show-badges"
-                  value={state.showBadges}
-                  setValue={(e) =>
-                    setState((prevState) => ({
-                      ...prevState,
-                      showBadges: e,
-                    }))
-                  }
+                  value={showBadges}
+                  setValue={(e) => setShowBadges(e)}
                 />
                 <Checkbox
                   label={"Color blind mode"}
                   id="settings-color-blind-mode"
-                  value={state.colorBlindMode}
-                  setValue={(e) =>
-                    setState((prevState) => ({
-                      ...prevState,
-                      colorBlindMode: e,
-                    }))
-                  }
+                  value={colorBlindMode}
+                  setValue={(e) => setColorBlindMode(e)}
                 />
               </div>,
               "separator",
@@ -101,7 +81,7 @@ const OutsideButtonWithDropdown = ({
               "separator",
               <button
                 className={"jenkins-dropdown__item jenkins-!-warning-color"}
-                onClick={resetState}
+                onClick={reset}
               >
                 <div className={"jenkins-dropdown__item__icon"}>
                   {RESET_SYMBOL}
