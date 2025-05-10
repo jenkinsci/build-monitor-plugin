@@ -23,7 +23,7 @@ function Container() {
     <>
       <div
         className="psv-job-grid"
-        style={{ fontSize: state.textSize + "rem", gridTemplateColumns: "1fr ".repeat(state.maximumNumberOfColumns) }}
+        style={{ fontSize: state.textSize + "rem", gridTemplateColumns: "1fr ".repeat(Math.min(jobs.length, state.maximumNumberOfColumns)) }}
       >
         {jobs.map((job) => (
           <StageCell key={job.url} job={job} />
