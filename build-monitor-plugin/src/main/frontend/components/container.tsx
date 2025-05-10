@@ -62,7 +62,7 @@ function Container() {
 export const defaultState: UserPreferences = {
   colorBlindMode: false,
   maximumNumberOfColumns: 3,
-  showBadges: false,
+  showBadges: true,
   textSize: 1,
 };
 
