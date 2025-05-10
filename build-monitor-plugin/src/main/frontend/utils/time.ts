@@ -35,7 +35,7 @@ export default function time(ago: number) {
 
     return (rounded === 1 ? unitOfTime.singular : unitOfTime.plural).replace(
       "%d",
-      rounded
+      rounded,
     );
   }
 
@@ -54,7 +54,7 @@ export default function time(ago: number) {
       return approximate(
         ago / unitsOfTime[0].divisor,
         unitsOfTime[0],
-        unitsOfTime.slice(1)
+        unitsOfTime.slice(1),
       );
   }
 }

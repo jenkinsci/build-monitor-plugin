@@ -1,19 +1,21 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:x="jelly:xml">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
     <l:layout title="idk" type="full-screen">
        <l:main-panel>
            <header class="jenkins-header">
-               <div class="jenkins-header__navigation">
-                   <a href="/jenkins/" class="app-jenkins-logo">
-                       <img src="/jenkins/static/6d1ce266/images/svgs/logo.svg" aria-hidden="true" id="jenkins-head-icon"/>
-                       <span class="jenkins-mobile-hide">Jenkins</span>
-                   </a>
-                   <div id="breadcrumbBar" class="jenkins-breadcrumbs" aria-label="breadcrumb">
-                       <ol class="jenkins-breadcrumbs__list" id="breadcrumbs">
-                           <li data-type="breadcrumb-item" class="jenkins-breadcrumbs__list-item">
-                               <span>${it.title}</span>
-                           </li>
-                       </ol>
+               <div class="jenkins-header__main">
+                   <div class="jenkins-header__navigation">
+                       <a href="/jenkins/" class="app-jenkins-logo">
+                           <img src="/jenkins/static/6d1ce266/images/svgs/logo.svg" aria-hidden="true" id="jenkins-head-icon"/>
+                           <span class="jenkins-mobile-hide">Jenkins</span>
+                       </a>
+                       <div id="breadcrumbBar" class="jenkins-breadcrumbs" aria-label="breadcrumb">
+                           <ol class="jenkins-breadcrumbs__list" id="breadcrumbs">
+                               <li data-type="breadcrumb-item" class="jenkins-breadcrumbs__list-item">
+                                   <span>${it.title}</span>
+                               </li>
+                           </ol>
+                       </div>
                    </div>
                </div>
 
