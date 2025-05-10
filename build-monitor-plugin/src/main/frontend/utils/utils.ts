@@ -7,7 +7,7 @@ export function buildStatusToClass(status: JobStatus) {
     unstable: "--warning",
     unknown: "--null",
     running: "--running",
-    aborted: "--null"
+    aborted: "--null",
   };
 
   return map[status];

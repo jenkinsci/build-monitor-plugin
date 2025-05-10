@@ -40,13 +40,21 @@ function Container() {
               }}
             >
               {jobs.map((job) => (
-                <StageCell key={job.url} job={job} colorBlindMode={state.colorBlindMode} />
+                <StageCell
+                  key={job.url}
+                  job={job}
+                  colorBlindMode={state.colorBlindMode}
+                />
               ))}
             </div>
           )}
         </>
       )}
-      <OptionsButton state={state} setState={setState} />
+      <OptionsButton
+        state={state}
+        setState={setState}
+        disabled={jobs.length === 0}
+      />
     </>
   );
 }

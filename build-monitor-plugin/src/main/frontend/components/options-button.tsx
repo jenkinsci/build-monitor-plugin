@@ -12,9 +12,14 @@ interface OptionsButtonProps {
   setState: (
     value: ((prevState: UserPreferences) => UserPreferences) | UserPreferences,
   ) => void;
+  disabled: boolean;
 }
 
-const OutsideButtonWithDropdown = ({ state, setState }: OptionsButtonProps) => {
+const OutsideButtonWithDropdown = ({
+  state,
+  setState,
+  disabled,
+}: OptionsButtonProps) => {
   const [ready, setReady] = useState(false);
   const buttonPortal = document.querySelector(".jenkins-header__actions")!;
 
@@ -34,6 +39,7 @@ const OutsideButtonWithDropdown = ({ state, setState }: OptionsButtonProps) => {
       {ready &&
         createPortal(
           <Dropdown
+            disabled={disabled}
             items={[
               <Slider
                 label={"Text size"}
