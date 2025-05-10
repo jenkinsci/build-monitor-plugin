@@ -5,7 +5,7 @@ import time from "../utils/time";
 import { Job } from "../models/job";
 
 function StageCell({ job }: { job: Job }) {
-  const highlightColor = "oklch(from var(--psv-cell-color) calc(l + 0.2) c h)";
+  const highlightColor = "color-mix(in srgb, var(--psv-cell-color) 75%, var(--text-color))"
 
   return (
     <a
@@ -21,7 +21,7 @@ function StageCell({ job }: { job: Job }) {
         text={job.name}
         style={{
           fontWeight: "550",
-          color: "oklch(from var(--psv-cell-color) calc(l + 100) c h)",
+          color: "color-mix(in srgb, var(--psv-cell-color), var(--text-color))",
         }}
       ></Label>
       <Label

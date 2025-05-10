@@ -16,13 +16,12 @@ $cell-padding: 1rem;
   border-radius: 1rem;
   font-size: 2em;
   font-weight: 450 !important;
-  color: white !important;
   padding: $cell-padding;
   z-index: 0;
   transition: var(--standard-transition);
   text-shadow:
-    0 0 1px rgb(0 0 0 / 0.15),
-    0 5px 15px rgb(0 0 0 / 0.15);
+    0 0 1px color-mix(in srgb, var(--background) 15%, transparent),
+    0 5px 15px color-mix(in srgb, var(--background) 15%, transparent);
   outline: none;
   overflow: hidden;
 
