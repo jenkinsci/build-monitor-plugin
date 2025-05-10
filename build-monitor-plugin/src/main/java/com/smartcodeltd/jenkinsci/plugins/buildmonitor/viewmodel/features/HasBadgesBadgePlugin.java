@@ -92,16 +92,20 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
 
         @JsonProperty
         public final String border() {
-            String style = badge.getStyle();
-            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
-            return matcher.matches() ? matcher.group("border") : null;
+//            String style = badge.getStyle();
+//            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
+//            return matcher.matches() ? matcher.group("border") : null;
+            // TODO - this is breaking
+            return null;
         }
 
         @JsonProperty
         public final String borderColor() {
-            String style = badge.getStyle();
-            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
-            return matcher.matches() ? matcher.group("borderColor") : null;
+//            String style = badge.getStyle();
+//            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
+//            return matcher.matches() ? matcher.group("borderColor") : null;
+            // TODO - this is breaking
+            return null;
         }
     }
 
