@@ -44,6 +44,14 @@
 //  color-scheme: dark;
 //}
 
+@mixin animation-delay-list($count, $delay-step) {
+  @for $i from 1 through $count {
+    &:nth-of-type(#{$i}) {
+      animation-delay: #{($i * $delay-step)}s;
+    }
+  }
+}
+
 .psv-job-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -51,4 +59,17 @@
   padding-inline: calc(var(--section-padding) / 2);
   padding-bottom: calc(var(--section-padding) / 2);
   height: calc(100vh - 66px);
+
+  & > * {
+    animation: scale-in 0.15s ease-in-out both;
+    @include animation-delay-list(20, 0.025);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    scale: 95%;
+    filter: blur(5px) saturate(0%);
+  }
 }
