@@ -37,7 +37,6 @@ function Container() {
 export const defaultState: Statee = {
   colorBlindMode: false,
   maximumNumberOfColumns: 3,
-  reduceMotion: false,
   showBadges: false,
   textSize: 1,
 };

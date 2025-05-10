@@ -88,10 +88,6 @@
       <f:checkbox id="colourBlindMode" field="colourBlindMode" />
     </f:entry>
 
-    <f:entry title="${%Enable Reduce motion}">
-      <f:checkbox id="reduceMotion" field="reduceMotion" />
-    </f:entry>
-
     <f:entry title="${%Enable Show badges}">
       <f:checkbox id="showBadges" field="showBadges" />
     </f:entry>

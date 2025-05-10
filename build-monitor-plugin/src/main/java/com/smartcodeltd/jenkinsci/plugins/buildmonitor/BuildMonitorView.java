@@ -118,12 +118,6 @@ public class BuildMonitorView extends ListView {
 
     // used in the configure-entries.jelly and main-settings.jelly forms
     @SuppressWarnings("unused")
-    public boolean isReduceMotion() {
-        return currentConfig().getReduceMotion();
-    }
-
-    // used in the configure-entries.jelly and main-settings.jelly forms
-    @SuppressWarnings("unused")
     public boolean isShowBadges() {
         return currentConfig().getShowBadges();
     }
@@ -181,7 +175,6 @@ public class BuildMonitorView extends ListView {
             String textScale = req.getParameter("textScale");
 
             currentConfig().setColourBlindMode(json.optBoolean("colourBlindMode", false));
-            currentConfig().setReduceMotion(json.optBoolean("reduceMotion", false));
             currentConfig().setShowBadges(json.optBoolean("showBadges", true));
             currentConfig().setDisplayBadges(req.getParameter("displayBadges"));
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));

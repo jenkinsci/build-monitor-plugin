@@ -44,7 +44,6 @@ public class ConfigurationAsCodeTest {
         assertThat(view.getConfig().getDisplayJUnitProgress(), is(false));
         assertThat(view.getConfig().getMaxColumns(), is(3));
         assertThat(view.getConfig().getOrder(), isA(ByStatus.class));
-        assertThat(view.getConfig().getReduceMotion(), is(true));
         assertThat(view.getConfig().getShowBadges(), is(false));
     }
 

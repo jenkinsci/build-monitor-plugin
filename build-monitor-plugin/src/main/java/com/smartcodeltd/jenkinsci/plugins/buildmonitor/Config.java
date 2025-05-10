@@ -20,7 +20,6 @@ public class Config implements Describable<Config> {
 
     private Boolean colourBlindMode;
     private Boolean displayCommitters;
-    private Boolean reduceMotion;
     private Integer maxColumns;
     private Double textScale;
     private Boolean showBadges;
@@ -80,14 +79,6 @@ public class Config implements Describable<Config> {
 
     public void setDisplayCommitters(boolean flag) {
         this.displayCommitters = flag;
-    }
-
-    public boolean getReduceMotion() {
-        return Optional.ofNullable(reduceMotion).orElse(false);
-    }
-
-    public void setReduceMotion(boolean flag) {
-        this.reduceMotion = flag;
     }
 
     public boolean getShowBadges() {

@@ -43,11 +43,6 @@ Simple, right? :-) You can have as many Build Monitor Views as you want - the mo
 ![Supports Claim and Build Failure Analyzer plugins](docs/3_Two_columns_view_with_claim_and_build_failure_analyzer_plugins.png)
 ![Colour-blind mode](docs/4_Colour_blind_mode.png)
 
-## (A)TDD
-
-If you'd like to understand more about the logic behind the Build Monitor Plugin,
-have a look at the [tests that drove the design](/build-monitor-plugin/src/test/java/com/smartcodeltd/jenkinsci/plugins).
-
 ## FAQ
 
 ### How do I let my teammates know that I'm fixing a broken build?
@@ -70,14 +65,6 @@ You have several options here:
 
 ### Red and green colours are lovely, but I'm colour blind ...
 There's a colour blind mode you can [enable in the Settings](https://github.com/jenkinsci/build-monitor-plugin/issues/30#issuecomment-35849019)
-
-## Open Source Software Used
-
-* [Angular.js](http://angularjs.org/)
-* [Angular-slider](http://prajwalkman.github.io/angular-slider/)
-* Customised [Angular Bootstrap](http://angular-ui.github.io/bootstrap/)
-* [HTML5 Boilerplate](http://html5boilerplate.com/) normalize.css
-* [OpenSans font](http://www.google.com/fonts/specimen/Open+Sans) by Steve Matteson
 
 ## Friends of Build Monitor
 

@@ -14,9 +14,11 @@
   padding-bottom: calc(var(--section-padding) / 2);
   height: calc(100vh - 66px);
 
-  & > * {
-    animation: scale-in 0.15s ease-in-out both;
-    @include animation-delay-list(20, 0.025);
+  @media screen and (prefers-reduced-motion: no-preference) {
+    & > * {
+      animation: scale-in 0.15s ease-in-out both;
+      @include animation-delay-list(20, 0.025);
+    }
   }
 }
 

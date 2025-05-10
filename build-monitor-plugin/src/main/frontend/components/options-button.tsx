@@ -73,17 +73,6 @@ const OutsideButtonWithDropdown = ({ state, setState }: OptionsButtonProps) => {
                   }
                 />
                 <Checkbox
-                  label={"Reduce motion"}
-                  id="settings-reduce-motion"
-                  value={state.reduceMotion}
-                  setValue={(e) =>
-                    setState((prevState) => ({
-                      ...prevState,
-                      reduceMotion: e,
-                    }))
-                  }
-                />
-                <Checkbox
                   label={"Color blind mode"}
                   id="settings-color-blind-mode"
                   value={state.colorBlindMode}

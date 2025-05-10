@@ -10,6 +10,5 @@ jenkins:
           order: "byStatus"
           displayCommitters: false
           colourBlindMode: true
-          reduceMotion: true
           displayJUnitProgress: false
           showBadges: false
