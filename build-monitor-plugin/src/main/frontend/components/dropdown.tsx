@@ -62,7 +62,7 @@ export default function Dropdown({
         }
       >
         <button
-          className={"jenkins-button " + className}
+          className={"jenkins-button jenkins-button--tertiary " + className}
           type="button"
           disabled={disabled}
           onClick={visible ? hide : show}

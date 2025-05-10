@@ -1,48 +1,48 @@
-:root {
-  --background: black;
-
-  /* Colors */
-  --accent-color: oklch(65.13% 0.1987 265);
-  --white: oklch(from var(--accent-color) 99% 0.015 h);
-  --success-color: oklch(80.25% 0.2197 147.09deg / 75%);
-  --warning-color: oklch(79.58% 0.1862 62.09deg / 75%);
-  --error-color: oklch(66.82% 0.2393 29.84deg / 75%);
-
-  /* Text */
-  --text-color: oklch(from var(--accent-color) 99% 0.015 h);
-  --text-color-secondary: gray;
-
-  /* Form */
-  --input-color: oklch(from var(--text-color-secondary) l c h / 0.03);
-  --input-border: oklch(from var(--text-color-secondary) l c h / 0.3);
-  --input-border-hover: oklch(from var(--text-color-secondary) l c h / 0.4);
-  --focus-input-glow: oklch(from var(--focus-input-border) l c h / 0.2);
-
-  /* Dropdowns */
-  --dropdown-box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
-    inset var(--jenkins-border--subtle-shadow),
-    0 0 8px 2px rgba(0, 0, 20, 0.05), 0 0 1px 1px rgba(0, 0, 20, 0.025),
-    0 10px 20px rgba(0, 0, 20, 0.3);
-
-  /* Card */
-  --card-background: color-mix(
-    in oklch,
-    var(--text-color-secondary) 20%,
-    var(--background)
-  );
-  --card-border-color: color-mix(
-    in oklch,
-    var(--text-color-secondary) 20%,
-    var(--background)
-  );
-
-  /* Border */
-  --jenkins-border-color: color-mix(in srgb, gray 15%, transparent);
-
-  /* Render native browser elements in dark mode */
-  color-scheme: dark;
-}
+//:root {
+//  --background: black;
+//
+//  /* Colors */
+//  --accent-color: oklch(65.13% 0.1987 265);
+//  --white: oklch(from var(--accent-color) 99% 0.015 h);
+//  --success-color: oklch(80.25% 0.2197 147.09deg / 75%);
+//  --warning-color: oklch(79.58% 0.1862 62.09deg / 75%);
+//  --error-color: oklch(66.82% 0.2393 29.84deg / 75%);
+//
+//  /* Text */
+//  --text-color: oklch(from var(--accent-color) 99% 0.015 h);
+//  --text-color-secondary: gray;
+//
+//  /* Form */
+//  --input-color: oklch(from var(--text-color-secondary) l c h / 0.03);
+//  --input-border: oklch(from var(--text-color-secondary) l c h / 0.3);
+//  --input-border-hover: oklch(from var(--text-color-secondary) l c h / 0.4);
+//  --focus-input-glow: oklch(from var(--focus-input-border) l c h / 0.2);
+//
+//  /* Dropdowns */
+//  --dropdown-box-shadow:
+//    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+//    inset var(--jenkins-border--subtle-shadow),
+//    0 0 8px 2px rgba(0, 0, 20, 0.05), 0 0 1px 1px rgba(0, 0, 20, 0.025),
+//    0 10px 20px rgba(0, 0, 20, 0.3);
+//
+//  /* Card */
+//  --card-background: color-mix(
+//    in oklch,
+//    var(--text-color-secondary) 20%,
+//    var(--background)
+//  );
+//  --card-border-color: color-mix(
+//    in oklch,
+//    var(--text-color-secondary) 20%,
+//    var(--background)
+//  );
+//
+//  /* Border */
+//  --jenkins-border-color: color-mix(in srgb, gray 15%, transparent);
+//
+//  /* Render native browser elements in dark mode */
+//  color-scheme: dark;
+//}
 
 .psv-job-grid {
   display: grid;
