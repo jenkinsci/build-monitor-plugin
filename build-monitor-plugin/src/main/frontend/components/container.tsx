@@ -22,7 +22,7 @@ function Container() {
   return (
     <>
       <div
-        className="psv-job-grid"
+        className="bs-grid"
         style={{ fontSize: state.textSize + "rem", gridTemplateColumns: "1fr ".repeat(Math.min(jobs.length, state.maximumNumberOfColumns)) }}
       >
         {jobs.map((job) => (

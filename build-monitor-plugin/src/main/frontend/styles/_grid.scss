@@ -6,12 +6,14 @@
   }
 }
 
-.psv-job-grid {
+.bs-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: calc(var(--section-padding) / 2);
   padding-inline: calc(var(--section-padding) / 2);
   padding-bottom: calc(var(--section-padding) / 2);
+  // Force all rows to have equal height
+  grid-auto-rows: 1fr;
   height: calc(100vh - 66px);
 
   @media screen and (prefers-reduced-motion: no-preference) {

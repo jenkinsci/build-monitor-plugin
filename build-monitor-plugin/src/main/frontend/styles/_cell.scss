@@ -24,6 +24,7 @@ $cell-padding: 1rem;
     0 5px 15px color-mix(in srgb, var(--background) 15%, transparent);
   outline: none;
   overflow: hidden;
+  text-align: center;
 
   &::before,
   &::after {
