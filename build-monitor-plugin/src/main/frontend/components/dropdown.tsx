@@ -2,6 +2,7 @@ import Tippy, { TippyProps } from "@tippyjs/react";
 import { isValidElement, ReactElement, ReactNode, useState } from "react";
 
 import Tooltip from "./tooltip.tsx";
+import {SETTINGS_SYMBOL} from "../utils/symbols.tsx";
 
 /**
  * A customized (and customizable) implementation of Tippy dropdowns
@@ -16,7 +17,7 @@ export default function Dropdown({
   const hide = () => setVisible(false);
 
   return (
-    <Tooltip content={"More actions"}>
+    <Tooltip content={"Settings"}>
       <Tippy
         visible={visible}
         onClickOutside={hide}
@@ -66,11 +67,7 @@ export default function Dropdown({
           disabled={disabled}
           onClick={visible ? hide : show}
         >
-          <div className="jenkins-overflow-button__ellipsis">
-            <span />
-            <span />
-            <span />
-          </div>
+          {SETTINGS_SYMBOL}
         </button>
       </Tippy>
     </Tooltip>
