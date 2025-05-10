@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Build Monitor",
   "private": true,
+  "type": "module",
   "scripts": {
     "mvnbuild": "npm run build",
     "mvntest": "npm run test",
@@ -20,7 +21,8 @@
   },
   "dependencies": {
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "@tippyjs/react": "4.2.6"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.6.3",

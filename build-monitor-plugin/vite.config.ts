@@ -15,11 +15,11 @@ export default defineConfig({
     cssCodeSplit: true,
     rollupOptions: {
       input: {
-        "pipeline-console-view":
+        "app":
           "src/main/frontend/index.tsx",
       },
       output: {
-        entryFileNames: "[name]-bundle.js",
+        entryFileNames: "[name].js",
         dir: "src/main/webapp/js/bundles",
       },
     },

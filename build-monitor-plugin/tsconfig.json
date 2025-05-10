@@ -1,13 +1,25 @@
 {
-    "compilerOptions": {
-      "outDir": "./src/main/frontend/js",
-      "sourceMap": true,
-      "noImplicitAny": true,
-      "strict": true,
-      "module": "commonjs",
-      "target": "es6",
-      "jsx": "react",
-      "resolveJsonModule": true,
-      "esModuleInterop": true
-    }
-  }
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noImplicitAny": true,
+    "useUnknownInCatchVariables": false,
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom/vitest"]
+  },
+  "include": ["./src/main/frontend/"]
+}
