@@ -23,7 +23,7 @@ function Container() {
     <>
       <div
         className="psv-job-grid"
-        style={{ fontSize: state.textSize + "rem" }}
+        style={{ fontSize: state.textSize + "rem", gridTemplateColumns: "1fr ".repeat(state.maximumNumberOfColumns) }}
       >
         {jobs.map((job) => (
           <StageCell key={job.url} job={job} />
@@ -36,7 +36,7 @@ function Container() {
 
 export const defaultState: Statee = {
   colorBlindMode: false,
-  maximumNumberOfColumns: 2,
+  maximumNumberOfColumns: 3,
   reduceMotion: false,
   showBadges: false,
   textSize: 1,
