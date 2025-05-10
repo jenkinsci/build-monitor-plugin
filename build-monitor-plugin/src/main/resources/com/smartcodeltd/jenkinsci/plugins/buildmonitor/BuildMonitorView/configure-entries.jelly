@@ -1,5 +1,5 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:st="jelly:stapler">
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
 
   <!-- BEGIN cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.532/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
 

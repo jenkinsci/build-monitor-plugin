@@ -1,6 +1,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
-    <l:layout title="idk" type="full-screen">
+    <l:layout title="${it.displayName}" type="full-screen">
        <l:main-panel>
            <header class="jenkins-header">
                <div class="jenkins-header__main">
@@ -12,7 +12,8 @@
                        <div id="breadcrumbBar" class="jenkins-breadcrumbs" aria-label="breadcrumb">
                            <ol class="jenkins-breadcrumbs__list" id="breadcrumbs">
                                <li data-type="breadcrumb-item" class="jenkins-breadcrumbs__list-item">
-                                   <span>${it.title}</span>
+                                   <span>${it.displayName}</span>
+                                   <span class="jenkins-!-margin-left-1" style="color: var(--text-color-secondary)">${it.description}</span>
                                </li>
                            </ol>
                        </div>

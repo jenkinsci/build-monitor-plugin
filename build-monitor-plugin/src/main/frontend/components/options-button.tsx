@@ -90,7 +90,7 @@ const OutsideButtonWithDropdown = ({ state, setState }: OptionsButtonProps) => {
             {
               icon: SETTINGS_SYMBOL,
               text: "Edit View",
-              href: "",
+              href: "configure",
             },
             "separator",
             <button
