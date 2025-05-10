@@ -1,11 +1,9 @@
-.jenkins-header {
-  position: relative;
-}
-
+// The reset button doesn't fill the full width otherwise
 .jenkins-dropdown__item {
   width: 100%;
 }
 
+// The 'No jobs' notice doesn't fill the full height otherwise
 .jenkins-notice {
   height: 100%;
 }
