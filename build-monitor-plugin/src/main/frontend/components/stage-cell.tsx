@@ -4,14 +4,14 @@ import time from "../utils/time";
 import { Job } from "../models/job";
 import { buildStatusToClass } from "../utils/utils.ts";
 
-function StageCell({ job }: { job: Job }) {
+function StageCell({job, colorBlindMode}: { job: Job, colorBlindMode: boolean }) {
   const highlightColor =
     "color-mix(in srgb, var(--psv-cell-color) 75%, var(--text-color))";
 
   return (
     <a
       href={job.url}
-      className={"psv-cell psv-cell" + buildStatusToClass(job.status)}
+      className={"psv-cell psv-cell" + buildStatusToClass(job.status) + " " + (colorBlindMode ? "psv-cell--color-blind-mode" : "")}
     >
       <div
         className={"durationboi durationboi--animate"}

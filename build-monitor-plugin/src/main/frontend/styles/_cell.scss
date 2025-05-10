@@ -48,12 +48,14 @@ $cell-padding: 1rem;
     color: inherit;
   }
 
-  &::after {
-    background: var(--psv-cell-color);
-    mask-image: var(--cell-texture, url("data:"));
-    mask-position: center;
-    mask-size: 2rem;
-    opacity: 0.5;
+  &--color-blind-mode {
+    &::after {
+      background: var(--psv-cell-color);
+      mask-image: var(--cell-texture, url("data:"));
+      mask-position: center;
+      mask-size: 6rem;
+      opacity: 0.5;
+    }
   }
 
   &:hover {
@@ -78,7 +80,7 @@ $cell-padding: 1rem;
 
   &--failing {
     --psv-cell-color: var(--destructive-color);
-    //--cell-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><rect width='10' height='10' fill='transparent'/><path d='M0,10 L10,0 M-2,2 L2,-2 M8,12 L12,8' stroke='black' stroke-width='2'/></svg>");
+    --cell-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><rect width='10' height='10' fill='transparent'/><path d='M0,10 L10,0 M-2,2 L2,-2 M8,12 L12,8' stroke='black' stroke-width='2'/></svg>");
   }
 
   &--warning {
@@ -87,6 +89,7 @@ $cell-padding: 1rem;
 
   &--null {
     --psv-cell-color: var(--text-color-secondary);
+    --cell-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><polygon points='50,0 100,50 50,100 0,50' fill='black'/></svg>");
   }
 
   &--running {

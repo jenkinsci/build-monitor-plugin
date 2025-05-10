@@ -40,7 +40,7 @@ function Container() {
               }}
             >
               {jobs.map((job) => (
-                <StageCell key={job.url} job={job} />
+                <StageCell key={job.url} job={job} colorBlindMode={state.colorBlindMode} />
               ))}
             </div>
           )}
