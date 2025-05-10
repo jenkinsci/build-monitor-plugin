@@ -2,45 +2,17 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
     <l:layout title="${it.displayName}" type="full-screen">
        <l:main-panel>
-           <header class="jenkins-header">
-               <div class="jenkins-header__main">
-                   <div class="jenkins-header__navigation">
-                       <a href="/jenkins/" class="app-jenkins-logo">
-                           <img src="/jenkins/static/6d1ce266/images/svgs/logo.svg" aria-hidden="true" id="jenkins-head-icon"/>
-                           <span class="jenkins-mobile-hide">Jenkins</span>
-                       </a>
-                       <div id="breadcrumbBar" class="jenkins-breadcrumbs" aria-label="breadcrumb">
-                           <ol class="jenkins-breadcrumbs__list" id="breadcrumbs">
-                               <li data-type="breadcrumb-item" class="jenkins-breadcrumbs__list-item">
-                                   <span>${it.displayName}</span>
-                                   <span class="jenkins-!-margin-left-1" style="color: var(--text-color-secondary)">${it.description}</span>
-                               </li>
-                           </ol>
-                       </div>
-                   </div>
-               </div>
-
-               <div class="jenkins-header__actions">
-                   <!-- Placeholder for React -->
-               </div>
-           </header>
+           <l:pageHeader title="${null}"
+                         logoAlt="${null}"
+                         searchPlaceholder="${null}"
+                         searchHelpUrl="$null}"
+                         logout="${null}"/>
 
            <st:bind var="buildMonitorBind" value="${it}" />
 
-           <j:choose>
-               <j:when test="${it.isEmpty()}">
-                   <main class="main empty">
-                       <l:notice icon="symbol-tv-outline plugin-ionicons-api" title="It seems a bit empty here...">
-                           <a href="configure">Add some jobs</a>
-                       </l:notice>
-                   </main>
-               </j:when>
-               <j:otherwise>
-                   <main>
-                       <st:include page="widgets.jelly" />
-                   </main>
-               </j:otherwise>
-           </j:choose>
+           <div id="graph" />
+
+           <script src="${rootURL}/plugin/build-monitor-plugin/js/bundles/app.js" />
        </l:main-panel>
     </l:layout>
 </j:jelly>

@@ -1,5 +1,0 @@
-<?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core">
-    <div id="graph" />
-    <script src="${rootURL}/plugin/build-monitor-plugin/js/bundles/app.js" />
-</j:jelly>

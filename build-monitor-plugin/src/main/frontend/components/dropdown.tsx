@@ -2,7 +2,7 @@ import Tippy, { TippyProps } from "@tippyjs/react";
 import { isValidElement, ReactElement, ReactNode, useState } from "react";
 
 import Tooltip from "./tooltip.tsx";
-import {SETTINGS_SYMBOL} from "../utils/symbols.tsx";
+import { SETTINGS_SYMBOL } from "../utils/symbols.tsx";
 
 /**
  * A customized (and customizable) implementation of Tippy dropdowns
