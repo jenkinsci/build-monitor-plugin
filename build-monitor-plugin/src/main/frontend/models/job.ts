@@ -37,6 +37,13 @@ export interface Job {
     // detailsOf // todo
     // allDetailsOf // todo
   };
+  badges: {
+    background: string | null;
+    color: string | null;
+    text: "Build Started";
+    borderColor: string | null;
+    border: string | null;
+  }[];
 }
 
 // Aligns with build-monitor-plugin/src/main/java/com/smartcodeltd/jenkinsci/plugins/buildmonitor/viewmodel/CssStatus.java

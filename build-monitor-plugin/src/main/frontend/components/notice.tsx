@@ -2,7 +2,7 @@ import { BUILD_MONITOR_SYMBOL } from "../utils/symbols.tsx";
 
 export default function Notice() {
   return (
-    <div className="bs-grid">
+    <div className="bm-grid">
       <div className={"jenkins-notice"}></div>
       <div className={"jenkins-notice"}></div>
       <div className={"jenkins-notice"}></div>

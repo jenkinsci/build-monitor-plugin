@@ -17,7 +17,7 @@ export default function Slider({
   setValue: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
-    <div className={"bs-slider__container"}>
+    <div className={"bm-slider__container"}>
       <p className={"jenkins-form-label"}>
         {label}
         <Label
@@ -30,7 +30,7 @@ export default function Slider({
         />
       </p>
       <input
-        className={"bs-slider"}
+        className={"bm-slider"}
         type="range"
         min={min}
         max={max}

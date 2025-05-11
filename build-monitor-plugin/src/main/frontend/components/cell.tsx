@@ -3,16 +3,24 @@ import Label from "./label";
 import time from "../utils/time";
 import { Job } from "../models/job";
 import { buildStatusToClass } from "../utils/utils.ts";
+import {useUserPreferences} from "../providers/user-preference-provider.tsx";
 
-function StageCell({
-  job,
-  colorBlindMode,
-}: {
-  job: Job;
-  colorBlindMode: boolean;
-}) {
+function Cell({ job }: { job: Job }) {
+  const { colorBlindMode, showBadges } = useUserPreferences();
+
   const highlightColor =
     "color-mix(in srgb, var(--psv-cell-color) 75%, var(--text-color))";
+
+  let badges = <></>;
+  if (job.badges && showBadges) {
+    badges = (
+      <>
+        {job.badges.map((badge) => (
+          <p className={"bm-badge"}>{badge.text}</p>
+        ))}
+      </>
+    );
+  }
 
   return (
     <a
@@ -40,6 +48,7 @@ function StageCell({
         text={job.headline}
         style={{ fontSize: "0.75em", color: highlightColor }}
       ></Label>
+      {badges}
 
       <div className={"psv-cell__details"}>
         <Label
@@ -59,4 +68,4 @@ function StageCell({
   );
 }
 
-export default StageCell;
+export default Cell;

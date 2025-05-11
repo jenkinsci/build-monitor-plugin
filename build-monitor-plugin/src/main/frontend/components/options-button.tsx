@@ -58,7 +58,7 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
                 step={1}
               />,
               "separator",
-              <div className={"bs-checkboxes"}>
+              <div className={"bm-checkboxes"}>
                 <Checkbox
                   label={"Show badges"}
                   id="settings-show-badges"

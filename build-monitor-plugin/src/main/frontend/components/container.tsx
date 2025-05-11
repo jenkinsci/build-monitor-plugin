@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import StageCell from "./stage-cell";
+import Cell from "./cell.tsx";
 import { Job } from "../models/job";
 import { getJobs } from "../apis/api";
 import OptionsButton from "./options-button";
@@ -32,7 +32,7 @@ function Container() {
           {jobs.length === 0 && <Notice />}
           {jobs.length > 0 && (
             <div
-              className="bs-grid"
+              className="bm-grid"
               style={{
                 fontSize: textSize + "rem",
                 gridTemplateColumns: "1fr ".repeat(
@@ -41,11 +41,7 @@ function Container() {
               }}
             >
               {jobs.map((job) => (
-                <StageCell
-                  key={job.url}
-                  job={job}
-                  colorBlindMode={colorBlindMode}
-                />
+                <Cell key={job.url} job={job} />
               ))}
             </div>
           )}
