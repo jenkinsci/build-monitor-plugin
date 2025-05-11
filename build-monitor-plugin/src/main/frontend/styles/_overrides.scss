@@ -6,4 +6,5 @@
 // The 'No jobs' notice doesn't fill the full height otherwise
 .jenkins-notice {
   height: 100%;
+  min-height: 0;
 }
