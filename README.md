@@ -1,8 +1,13 @@
-# Jenkins CI Build Monitor Plugin
+# Build Monitor Plugin
 
 [![Build Status](https://ci.jenkins.io/job/Plugins/job/build-monitor-plugin/job/master/badge/icon)](https://ci.jenkins.io/job/Plugins/job/build-monitor-plugin/job/master/)
+[![Gitter](https://badges.gitter.im/jenkinsci/ux-sig.svg)](https://gitter.im/jenkinsci/ux-sig?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/build-monitor-plugin.svg)](https://plugins.jenkins.io/build-monitor-plugin)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/build-monitor-plugin.svg?color=blue)](https://plugins.jenkins.io/build-monitor-plugin)
+
+![preview.png](docs/preview.png)
+
+## Introduction
 
 Build Monitor Plugin provides a highly visible view of the status of selected Jenkins jobs.
 
@@ -23,12 +28,7 @@ Have a question? Perhaps it's already been answered - check the [FAQ](#faq) sect
 * UI configuration is stored in a cookie, making it possible to display different number of columns and using different font size on each of the screens at your office.
 * Can work in a colour-blind-friendly mode; [learn more](https://github.com/jenkinsci/build-monitor-plugin/issues/30#issuecomment-35849019)
 
-## Your feedback matters!
-
-Found a bug or want to give feedback? Raise [an issue](https://github.com/jenkinsci/build-monitor-plugin/issues?state=open)
-or submit a pull request ([start with this mini-dev guide](https://github.com/jenkinsci/build-monitor-plugin/wiki/Development-Guide), it might come in handy).
-
-## Setting up
+## Getting started
 
 To create a new Build Monitor View, click on the "New View" tab, select "Build Monitor View" and select jobs you wish to display on the monitor.
 
@@ -63,11 +63,7 @@ You have several options here:
 1. **use job filters**: Build Monitor supports Jenkins [View Job Filters Plugin](https://plugins.jenkins.io/view-job-filters/), if you have it installed
 1. get a bigger screen ...
 
-### Red and green colours are lovely, but I'm colour blind ...
-There's a colour blind mode you can [enable in the Settings](https://github.com/jenkinsci/build-monitor-plugin/issues/30#issuecomment-35849019)
+## Your feedback matters!
 
-## Friends of Build Monitor
-
-Build Monitor is continuously delivered to a Jenkins near you thanks to:
-* the time and commitment of [the author](http://smartcodeltd.co.uk/) and [the contributors](https://github.com/jenkinsci/build-monitor-plugin/graphs/contributors)
-* the [acceptance tests](/build-monitor-acceptance/src/test/java)
+Found a bug or want to give feedback? Raise [an issue](https://github.com/jenkinsci/build-monitor-plugin/issues?state=open)
+or submit a pull request ([start with this mini-dev guide](https://github.com/jenkinsci/build-monitor-plugin/wiki/Development-Guide), it might come in handy).
