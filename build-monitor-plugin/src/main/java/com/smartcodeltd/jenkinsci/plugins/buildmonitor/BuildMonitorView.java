@@ -46,7 +46,7 @@ import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest2;
-import org.kohsuke.stapler.bind.JavaScriptMethod;
+import org.kohsuke.stapler.WebMethod;
 
 /**
  * @author Jan Molak
@@ -217,7 +217,7 @@ public class BuildMonitorView extends ListView {
      *
      * @return Json representation of JobViews
      */
-    @JavaScriptMethod
+    @WebMethod(name = "fetchJobViews")
     public JSONObject fetchJobViews() throws Exception {
         return Respond.withSuccess(jobViews());
     }

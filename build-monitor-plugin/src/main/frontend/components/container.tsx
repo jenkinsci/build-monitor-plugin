@@ -5,22 +5,31 @@ import { getJobs } from "../apis/api";
 import OptionsButton from "./options-button";
 import Notice from "./notice.tsx";
 import { useUserPreferences } from "../providers/user-preference-provider.tsx";
+import { useDialog } from "../providers/dialog-provider.tsx";
 
 function Container() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { textSize, maximumNumberOfColumns } =
-    useUserPreferences();
+
+  const { createDialog } = useDialog();
+  const { textSize, maximumNumberOfColumns } = useUserPreferences();
 
   useEffect(() => {
-    getJobs().then((jobs) => {
-      setIsLoading(false);
-      setJobs(jobs);
-    });
+    const fetchJobs = async () => {
+      try {
+        const jobs = await getJobs();
 
-    const intervalID = setInterval(() => {
-      getJobs().then((jobs) => setJobs(jobs));
-    }, 3000);
+        setJobs(jobs);
+      } catch (error) {
+        createDialog(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchJobs();
+
+    const intervalID = setInterval(fetchJobs, 3000);
 
     return () => clearInterval(intervalID);
   }, []);

@@ -41,10 +41,7 @@ function Cell({ job }: { job: Job }) {
           color: "color-mix(in srgb, var(--bm-cell-color), var(--text-color))",
         }}
       ></Label>
-      <Label
-        text={job.headline}
-        style={{ fontSize: "0.75em" }}
-      ></Label>
+      <Label text={job.headline} style={{ fontSize: "0.75em" }}></Label>
       {badges}
 
       <div className={"bm-cell__details"}>

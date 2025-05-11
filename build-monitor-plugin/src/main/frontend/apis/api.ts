@@ -1,14 +1,11 @@
 import { Job } from "../models/job";
 
-export function getJobs(): Promise<Job[]> {
-  return new Promise((resolve, reject) => {
-    // @ts-ignore
-    buildMonitorBind.fetchJobViews((e: any) => {
-      if (e && e.responseJSON && e.responseJSON.data) {
-        resolve(e.responseJSON.data as Job[]);
-      } else {
-        reject(new Error("Failed to fetch job data"));
-      }
-    });
-  });
+export async function getJobs(): Promise<Job[]> {
+  const response = await fetch("fetchJobViews");
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch jobs: ${response.statusText}`);
+  }
+
+  return (await response.json())["data"] as Job[];
 }
