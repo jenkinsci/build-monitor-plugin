@@ -1,6 +1,6 @@
 $cell-padding: 1rem;
 
-.psv-cell {
+.bm-cell {
   position: relative;
   display: flex;
   align-items: center;
@@ -9,9 +9,9 @@ $cell-padding: 1rem;
   border: none;
   appearance: none;
   background: none;
-  height: 100%;
+  //height: 100%;
   cursor: pointer;
-  width: 100%;
+  //width: 100%;
   text-decoration: none !important;
   border-radius: 1rem;
   font-size: 2em;
@@ -25,6 +25,7 @@ $cell-padding: 1rem;
   outline: none;
   overflow: hidden;
   text-align: center;
+  color: color-mix(in srgb, var(--bm-cell-color) 75%, var(--text-color)) !important;
 
   &::before,
   &::after {
@@ -38,19 +39,19 @@ $cell-padding: 1rem;
     transition: var(--standard-transition);
     background: color-mix(
       in oklch,
-      var(--psv-cell-color) var(--opacity-modifier, 65%),
+      var(--bm-cell-color) var(--opacity-modifier, 65%),
       transparent
     );
     box-shadow:
-      inset 0 0 1.5px oklch(from var(--psv-cell-color) l c h / 75%),
-      inset 0 0 100px oklch(from var(--psv-cell-color) l c h / 15%),
+      inset 0 0 1.5px oklch(from var(--bm-cell-color) l c h / 75%),
+      inset 0 0 100px oklch(from var(--bm-cell-color) l c h / 15%),
       0 0 0 8px transparent;
     color: inherit;
   }
 
   &--color-blind-mode {
     &::after {
-      background: var(--psv-cell-color);
+      background: var(--bm-cell-color);
       mask-image: var(--cell-texture, url("data:"));
       mask-position: center;
       mask-size: 6rem;
@@ -68,32 +69,32 @@ $cell-padding: 1rem;
 
     &::before {
       box-shadow:
-        inset 0 0 1.5px oklch(from var(--psv-cell-color) l c h / 75%),
-        inset 0 0 100px oklch(from var(--psv-cell-color) l c h / 15%),
-        0 0 0 4px color-mix(in oklch, var(--psv-cell-color) 50%, transparent);
+        inset 0 0 1.5px oklch(from var(--bm-cell-color) l c h / 75%),
+        inset 0 0 100px oklch(from var(--bm-cell-color) l c h / 15%),
+        0 0 0 4px color-mix(in oklch, var(--bm-cell-color) 50%, transparent);
     }
   }
 
   &--successful {
-    --psv-cell-color: var(--success-color);
+    --bm-cell-color: var(--success-color);
   }
 
   &--failing {
-    --psv-cell-color: var(--destructive-color);
+    --bm-cell-color: var(--destructive-color);
     --cell-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><rect width='10' height='10' fill='transparent'/><path d='M0,10 L10,0 M-2,2 L2,-2 M8,12 L12,8' stroke='black' stroke-width='2'/></svg>");
   }
 
   &--warning {
-    --psv-cell-color: var(--warning-color);
+    --bm-cell-color: var(--warning-color);
     --cell-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><polygon points='50,0 100,50 50,100 0,50' fill='black'/></svg>");
   }
 
   &--null {
-    --psv-cell-color: var(--text-color-secondary);
+    --bm-cell-color: var(--text-color-secondary);
   }
 
   &--running {
-    --psv-cell-color: var(--blue);
+    --bm-cell-color: var(--blue);
 
     &::before {
       animation: pulse-thing 2s ease infinite;
@@ -117,7 +118,7 @@ $cell-padding: 1rem;
     position: absolute;
     inset: 0;
     border-radius: 0;
-    background: var(--psv-cell-color);
+    background: var(--bm-cell-color);
     pointer-events: none;
     transition: 0.3s ease;
     opacity: 0;

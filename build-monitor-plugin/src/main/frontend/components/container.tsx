@@ -9,7 +9,7 @@ import { useUserPreferences } from "../providers/user-preference-provider.tsx";
 function Container() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { textSize, maximumNumberOfColumns, colorBlindMode } =
+  const { textSize, maximumNumberOfColumns } =
     useUserPreferences();
 
   useEffect(() => {
