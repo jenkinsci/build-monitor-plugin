@@ -15,8 +15,8 @@
     </div>
   </f:entry>
 
-  <f:entry title="${%Recurse in subfolders}" field="recurse">
-    <f:checkbox id="recurse"/>
+  <f:entry field="recurse">
+    <f:checkbox id="recurse" title="${%Recurse in subfolders}" />
   </f:entry>
 
   <f:entry title="${%Jobs}">
