@@ -1,18 +1,18 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core">
     <nav data-ng-controller="controlPanel" data-ng-init="built_at = '${it.installation.buildMonitorBuiltAt()}'; defaults.fontSize = ${it.textScale}; defaults.numberOfColumns = ${it.maxColumns}; defaults.colourBlind = ${it.colourBlindMode}; defaults.reduceMotion = ${it.reduceMotion}; defaults.showBadges = ${it.showBadges}; addCookie()">
-        <span data-ng-show="newVersionAvailable" class="notifications">!</span>
         <section data-ng-class="{ showSettings:toggleSettings }">
             <input id="settings-toggle" type="checkbox" class="settings" data-ng-model="toggleSettings" />
             <label for="settings-toggle" title="Configure Build Monitor Settings">Settings</label>
 
             <!-- workaround for angular-slider not working when initialised within a hidden element -->
             <ul>
-                <li class="new-version-available" data-ng-show="newVersionAvailable">
-                    <h2>Good news :-)</h2>
-                    <p>New version of Build Monitor is&amp;nbsp;<a href="http://bit.ly/JBMReleases" title="Check out the release notes">available now</a>!</p>
-                    <p>Upgrade via <a href="${h.inferHudsonURL(request2)}pluginManager">Plugin Manager</a></p>
-                </li>
+                <a class="jenkins-button jenkins-button--primary bm-revamp"
+                   href="https://github.com/jenkinsci/build-monitor-plugin/pull/1108"
+                   target="_blank">
+                    This plugin is changing
+                    <div>Have your say!</div>
+                </a>
                 <li class="settings-option">
                     <span class="slider-label">Text scale</span>
                     <rzslider rz-slider-model="settings.fontSize" rz-slider-options="{ floor: 0.1, ceil: 5, step: 0.1, precision: 1 }"></rzslider>
