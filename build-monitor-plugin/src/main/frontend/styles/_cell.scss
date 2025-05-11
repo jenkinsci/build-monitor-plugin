@@ -39,7 +39,7 @@ $cell-padding: 1rem;
     transition: var(--standard-transition);
     background: color-mix(
       in oklch,
-      var(--bm-cell-color) var(--opacity-modifier, 65%),
+      var(--bm-cell-color) var(--opacity-modifier, 60%),
       transparent
     );
     box-shadow:
@@ -60,12 +60,12 @@ $cell-padding: 1rem;
   }
 
   &:hover {
-    --opacity-modifier: 75%;
+    --opacity-modifier: 70%;
   }
 
   &:active,
   &:focus {
-    --opacity-modifier: 85%;
+    --opacity-modifier: 80%;
 
     &::before {
       box-shadow:
