@@ -2,7 +2,9 @@ import React from "react";
 import { Job } from "../../models/job.ts";
 
 export default function Tests({ job }: { job: Job }) {
-  if (!job.realtimeTests) return null;
+  if (!job.realtimeTests) {
+    return null;
+  }
 
   return (
     <li className="realtime-tests">
