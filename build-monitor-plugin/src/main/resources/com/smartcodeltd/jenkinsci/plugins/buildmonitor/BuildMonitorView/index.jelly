@@ -10,7 +10,9 @@
 
            <st:bind var="buildMonitorBind" value="${it}" />
 
-           <div id="app" data-build-monitor-id="${it.displayName.hashCode()}" />
+           <div id="app"
+                data-build-monitor-id="${it.displayName.hashCode()}"
+                data-build-monitor-description="${it.description}" />
 
            <script src="${rootURL}/plugin/build-monitor-plugin/js/bundles/app.js" />
        </l:main-panel>

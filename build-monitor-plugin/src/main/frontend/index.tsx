@@ -4,6 +4,7 @@ import Container from "./components/container";
 import "./app.scss";
 import { UserPreferencesProvider } from "./providers/user-preference-provider.tsx";
 import { UseDialogProvider } from "./providers/dialog-provider.tsx";
+import PageDescription from "./components/page-description.tsx";
 
 const rootElement = document.getElementById("app");
 if (!rootElement) throw new Error("Failed to find the 'graph' element");
@@ -14,6 +15,9 @@ root.render(
   <UseDialogProvider>
     <UserPreferencesProvider monitorId={rootElement.dataset.buildMonitorId!}>
       <Container />
+      <PageDescription
+        description={rootElement.dataset.buildMonitorDescription}
+      />
     </UserPreferencesProvider>
   </UseDialogProvider>,
 );
