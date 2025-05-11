@@ -47,18 +47,14 @@ export interface Job {
     author: string;
     reason: string;
   };
-  problems?: {
-    value: string[];
-  };
+  problems?: string[];
   realtimeTests?: {
-    value: {
-      estimatedRemainingTime: string;
-      completedPercentages: number[];
-      completedTests: number;
-      expectedTests: number;
-      style: string;
-    }[];
-  };
+    estimatedRemainingTime: string;
+    completedPercentages: number[];
+    completedTests: number;
+    expectedTests: number;
+    style: string;
+  }[];
 }
 
 // Aligns with build-monitor-plugin/src/main/java/com/smartcodeltd/jenkinsci/plugins/buildmonitor/viewmodel/CssStatus.java
