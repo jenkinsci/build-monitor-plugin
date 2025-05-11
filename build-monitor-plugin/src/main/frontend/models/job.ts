@@ -43,7 +43,7 @@ export interface Job {
     border: string | null;
   }[];
   claim?: {
-    isActive: boolean;
+    active: boolean;
     author: string;
     reason: string;
   };

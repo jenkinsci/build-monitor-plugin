@@ -19,6 +19,15 @@ function Cell({ job }: { job: Job }) {
     );
   }
 
+  let claimedBy = <></>;
+  if (job.claim) {
+    claimedBy = (
+      <>
+        <p>Claimed by {job.claim.author}: {job.claim.reason}</p>
+      </>
+    )
+  }
+
   return (
     <a
       href={job.url}
@@ -43,6 +52,7 @@ function Cell({ job }: { job: Job }) {
       ></Label>
       <Label text={job.headline} style={{ fontSize: "0.75em" }}></Label>
       {badges}
+      {claimedBy}
 
       <div className={"bm-cell__details"}>
         <Label
