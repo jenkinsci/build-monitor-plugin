@@ -101,7 +101,7 @@ $cell-padding: 1rem;
     --bm-cell-color: var(--blue);
 
     &::before {
-      animation: pulse-thing 2s ease infinite;
+      animation: pulse-thing 3s ease infinite;
     }
   }
 
@@ -118,7 +118,7 @@ $cell-padding: 1rem;
     justify-content: space-between;
   }
 
-  .durationboi {
+  .bm-cell-duration {
     position: absolute;
     inset: 0;
     border-radius: 0;
@@ -129,13 +129,13 @@ $cell-padding: 1rem;
 
     &--animate {
       opacity: 0.2;
-      animation: pulse-thing 2s ease infinite;
+      animation: pulse-thing 2s ease-in-out infinite;
     }
   }
 
   @keyframes pulse-thing {
     50% {
-      opacity: 0.05;
+      opacity: 0.25;
     }
   }
 }

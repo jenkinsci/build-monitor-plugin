@@ -16,6 +16,7 @@ interface MonitorPreferences {
   setMaximumNumberOfColumns: (val: number) => void;
   setShowBadges: (val: boolean) => void;
   reset: () => void;
+  isResettable: boolean;
 }
 
 const defaultPreferences = {
@@ -135,6 +136,12 @@ export const UserPreferencesProvider = ({
         setMaximumNumberOfColumns: setMaximumNumberOfColumnsState,
         setShowBadges: setShowBadgesState,
         reset,
+        isResettable:
+          colorBlindMode === defaultPreferences.colorBlindMode &&
+          textSize === defaultPreferences.textSize &&
+          maximumNumberOfColumns ===
+            defaultPreferences.maximumNumberOfColumns &&
+          showBadges === defaultPreferences.showBadges,
       }}
     >
       {children}

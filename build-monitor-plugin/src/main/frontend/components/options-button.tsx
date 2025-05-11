@@ -21,6 +21,7 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
     showBadges,
     setShowBadges,
     reset,
+    isResettable,
   } = useUserPreferences();
   const [ready, setReady] = useState(false);
   const buttonPortal = document.querySelector(".jenkins-header__actions")!;
@@ -82,6 +83,7 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
               <button
                 className={"jenkins-dropdown__item jenkins-!-warning-color"}
                 onClick={reset}
+                disabled={isResettable}
               >
                 <div className={"jenkins-dropdown__item__icon"}>
                   {RESET_SYMBOL}

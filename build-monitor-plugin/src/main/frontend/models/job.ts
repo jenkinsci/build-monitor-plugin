@@ -34,16 +34,31 @@ export interface Job {
     previousBuild: any; // todo
     culprits: string[];
     committers: string[];
-    // detailsOf // todo
-    // allDetailsOf // todo
   };
-  badges: {
+  badges?: {
     background: string | null;
     color: string | null;
-    text: "Build Started";
+    text: string;
     borderColor: string | null;
     border: string | null;
   }[];
+  claim?: {
+    isActive: boolean;
+    author: string;
+    reason: string;
+  };
+  problems?: {
+    value: string[];
+  };
+  realtimeTests?: {
+    value: {
+      estimatedRemainingTime: string;
+      completedPercentages: number[];
+      completedTests: number;
+      expectedTests: number;
+      style: string;
+    }[];
+  };
 }
 
 // Aligns with build-monitor-plugin/src/main/java/com/smartcodeltd/jenkinsci/plugins/buildmonitor/viewmodel/CssStatus.java

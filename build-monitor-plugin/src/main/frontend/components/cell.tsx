@@ -30,7 +30,7 @@ function Cell({ job }: { job: Job }) {
       }
     >
       <div
-        className={"durationboi durationboi--animate"}
+        className={"bm-cell-duration bm-cell-duration--animate"}
         style={{ width: job.progress + "%" }}
       ></div>
 
