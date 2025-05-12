@@ -1,0 +1,13 @@
+.bm-claim {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  border-radius: 100px;
+  padding: 5px;
+
+  img {
+    width: 1.5em;
+    height: 1.5em;
+  }
+}

@@ -1,6 +1,17 @@
 import { Job } from "../../models/job.ts";
+import './tests.scss';
 
 export default function Tests({ job }: { job: Job }) {
+  job.realtimeTests = [
+    {
+      estimatedRemainingTime: "2m 30s",
+      completedPercentages: [10, 30, 50],
+      completedTests: 3,
+      expectedTests: 6,
+      style: "success",
+    },
+  ];
+
   if (!job.realtimeTests) {
     return null;
   }
@@ -11,7 +22,7 @@ export default function Tests({ job }: { job: Job }) {
         const title = `${realtimeTest.completedTests} / ${realtimeTest.expectedTests}, Remaining Time: ~ ${realtimeTest.estimatedRemainingTime}`;
 
         return (
-          <div className={""} title={title} key={index}>
+          <div className={"bs-progress"} title={title} key={index}>
             {realtimeTest.completedPercentages[1] > 0 && (
               <div
                 className="bar bar-progress2"

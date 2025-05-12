@@ -14,7 +14,7 @@ $cell-padding: 1rem;
   //width: 100%;
   text-decoration: none !important;
   border-radius: 1rem;
-  font-size: 2em;
+  font-size: 1.5em;
   font-weight: 450 !important;
   padding: $cell-padding;
   z-index: 0;
@@ -30,6 +30,11 @@ $cell-padding: 1rem;
     var(--bm-cell-color) 75%,
     var(--text-color)
   ) !important;
+
+  * {
+    font-size: inherit;
+    color: inherit;
+  }
 
   &::before,
   &::after {

@@ -4,7 +4,7 @@ import time from "../utils/time";
 import { buildStatusToClass } from "../utils/utils.ts";
 import Label from "./label";
 import Badges from "./snippets/badges.tsx";
-import Claim from "./snippets/claims.tsx";
+import Claim from "./snippets/claim.tsx";
 import Problems from "./snippets/problems.tsx";
 import Tests from "./snippets/tests.tsx";
 
@@ -29,11 +29,12 @@ function Cell({ job }: { job: Job }) {
       <Label
         text={job.name}
         style={{
+          fontSize: '1.25em',
           fontWeight: "550",
           color: "color-mix(in srgb, var(--bm-cell-color), var(--text-color))",
         }}
       />
-      <Label text={job.headline} style={{ fontSize: "0.75em" }} />
+      <Label text={job.headline} />
 
       <Claim job={job} />
       <Problems job={job} />
@@ -43,12 +44,10 @@ function Cell({ job }: { job: Job }) {
       <div className={"bm-cell__details"}>
         <Label
           text={job.lastCompletedBuild.name}
-          style={{ fontSize: "0.75em" }}
         />
         <Label
           text={time(job.lastCompletedBuild.timeElapsedSince)}
           style={{
-            fontSize: "0.75em",
             textAlign: "right",
           }}
         />

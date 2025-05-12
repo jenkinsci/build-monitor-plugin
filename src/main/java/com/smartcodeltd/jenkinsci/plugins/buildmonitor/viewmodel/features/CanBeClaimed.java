@@ -2,7 +2,12 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
+import hudson.model.User;
 import hudson.plugins.claim.ClaimBuildAction;
+import hudson.tasks.UserAvatarResolver;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.Collections;
 import java.util.Optional;
 
 public class CanBeClaimed implements Feature {
@@ -43,6 +48,15 @@ public class CanBeClaimed implements Feature {
         @JsonProperty
         public String reason() {
             return details.getReason();
+        }
+
+        @JsonProperty
+        public String avatar() {
+            return UserAvatarResolver.resolve(getUserFromId(details.getClaimedBy()), "48x48");
+        }
+
+        protected final User getUserFromId(String userId) {
+            return User.getById(userId, false);
         }
     }
 }

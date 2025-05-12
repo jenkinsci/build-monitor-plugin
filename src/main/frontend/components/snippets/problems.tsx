@@ -7,8 +7,8 @@ export default function Problems({ job }: { job: Job }) {
 
   return (
     <>
-      <p>{job.problems.length} problems identified</p>
-      <ul className="identified-failures">
+      <div>{job.problems.length} {job.problems.length === 1 ? 'problem identified' : 'problems identified'}</div>
+      <ul>
         {job.problems.map((problem) => (
           <li key={problem}>{problem}</li>
         ))}

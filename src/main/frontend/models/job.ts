@@ -46,6 +46,7 @@ export interface Job {
     active: boolean;
     author: string;
     reason: string;
+    avatar?: string;
   };
   problems?: string[];
   realtimeTests?: {
