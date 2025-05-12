@@ -9,7 +9,7 @@
     "mvntest": "npm run test",
     "build": "vite build --mode production",
     "build:dev": "vite build --mode production --watch",
-    "lint:fix": "prettier --write src/main/frontend/ && eslint --fix"
+    "lint:fix": "prettier --write src/main/frontend/ && eslint --fix src/main/frontend/"
   },
   "repository": {
     "type": "git",

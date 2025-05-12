@@ -1,5 +1,4 @@
 import { Job } from "../../models/job.ts";
-import React from "react";
 
 export default function Claim({ job }: { job: Job }) {
   if (!job.claim || !job.claim.active) {

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+
+import { useUserPreferences } from "../context/user-preference-provider.tsx";
 import { RESET_SYMBOL, SETTINGS_SYMBOL } from "../utils/symbols";
-import Slider from "./slider";
 import Checkbox from "./checkbox";
 import Dropdown from "./dropdown.tsx";
-import { useUserPreferences } from "../context/user-preference-provider.tsx";
+import Slider from "./slider";
 
 interface OptionsButtonProps {
   amountOfJobs: number;
@@ -41,6 +42,7 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
             disabled={amountOfJobs === 0}
             items={[
               <Slider
+                key={"text-size"}
                 label={"Text size"}
                 min={0.1}
                 max={5}
@@ -49,6 +51,7 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
                 step={0.1}
               />,
               <Slider
+                key={"maximum-number-of-columns"}
                 label={"Maximum number of columns"}
                 min={1}
                 max={Math.min(amountOfJobs, 20)}
@@ -59,7 +62,7 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
                 step={1}
               />,
               "separator",
-              <div className={"bm-checkboxes"}>
+              <div key={"show-badges"} className={"bm-checkboxes"}>
                 <Checkbox
                   label={"Show badges"}
                   id="settings-show-badges"
@@ -81,6 +84,7 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
               },
               "separator",
               <button
+                key={"reset"}
                 className={"jenkins-dropdown__item jenkins-!-warning-color"}
                 onClick={reset}
                 disabled={isResettable}

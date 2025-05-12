@@ -1,4 +1,3 @@
-import React from "react";
 import { Job } from "../../models/job.ts";
 
 export default function Tests({ job }: { job: Job }) {
@@ -17,12 +16,12 @@ export default function Tests({ job }: { job: Job }) {
               <div
                 className="bar bar-progress2"
                 style={{ width: `${realtimeTest.completedPercentages[1]}%` }}
-              ></div>
+              />
             )}
             <div
               className="bar"
               style={{ width: `${realtimeTest.completedPercentages[0]}%` }}
-            ></div>
+            />
           </div>
         );
       })}

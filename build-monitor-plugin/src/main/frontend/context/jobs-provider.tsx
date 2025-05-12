@@ -1,7 +1,14 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
+import { getJobs } from "../apis/api.ts";
 import { Job } from "../models/job.ts";
 import { useDialog } from "./dialog-provider.tsx";
-import { getJobs } from "../apis/api.ts";
 
 interface JobsContextType {
   jobs: Job[];
@@ -10,9 +17,7 @@ interface JobsContextType {
 
 const JobsContext = createContext<JobsContextType | undefined>(undefined);
 
-export const JobsProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const JobsProvider = ({ children }: { children: ReactNode }) => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { createDialog } = useDialog();

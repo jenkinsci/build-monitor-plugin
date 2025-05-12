@@ -1,9 +1,8 @@
-import React from "react";
-import Cell from "./cell.tsx";
-import OptionsButton from "./options-button";
-import Notice from "./notice.tsx";
-import { useUserPreferences } from "../context/user-preference-provider.tsx";
 import { useJobs } from "../context/jobs-provider.tsx";
+import { useUserPreferences } from "../context/user-preference-provider.tsx";
+import Cell from "./cell.tsx";
+import Notice from "./notice.tsx";
+import OptionsButton from "./options-button";
 
 function Container() {
   const { jobs, isLoading } = useJobs();

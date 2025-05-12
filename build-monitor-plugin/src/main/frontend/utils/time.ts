@@ -1,34 +1,34 @@
 export default function time(ago: number) {
-  const seconds = 1000,
-    minutes = 60 * seconds,
-    hours = 60 * minutes,
-    days = 24 * hours,
-    months = 30 * days,
-    years = 12 * months,
-    unitsOfTime = [
-      { divisor: seconds, singular: "%d second ago", plural: "%d seconds ago" },
-      {
-        divisor: minutes / seconds,
-        singular: "%d minute ago",
-        plural: "%d minutes ago",
-      },
-      {
-        divisor: hours / minutes,
-        singular: "%d hour ago",
-        plural: "%d hours ago",
-      },
-      { divisor: days / hours, singular: "%d day ago", plural: "%d days ago" },
-      {
-        divisor: months / days,
-        singular: "%d month ago",
-        plural: "%d months ago",
-      },
-      {
-        divisor: years / months,
-        singular: "over a year ago",
-        plural: "hasn't run in ages!",
-      },
-    ];
+  const seconds = 1000;
+  const minutes = 60 * seconds;
+  const hours = 60 * minutes;
+  const days = 24 * hours;
+  const months = 30 * days;
+  const years = 12 * months;
+  const unitsOfTime = [
+    { divisor: seconds, singular: "%d second ago", plural: "%d seconds ago" },
+    {
+      divisor: minutes / seconds,
+      singular: "%d minute ago",
+      plural: "%d minutes ago",
+    },
+    {
+      divisor: hours / minutes,
+      singular: "%d hour ago",
+      plural: "%d hours ago",
+    },
+    { divisor: days / hours, singular: "%d day ago", plural: "%d days ago" },
+    {
+      divisor: months / days,
+      singular: "%d month ago",
+      plural: "%d months ago",
+    },
+    {
+      divisor: years / months,
+      singular: "over a year ago",
+      plural: "hasn't run in ages!",
+    },
+  ];
 
   function humanFriendly(remainder: any, unitOfTime: any) {
     const rounded = Math.round(remainder);

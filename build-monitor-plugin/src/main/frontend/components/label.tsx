@@ -1,5 +1,4 @@
-import React, { CSSProperties } from "react";
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 
 function Label({ text, style = {} }: { text: string; style?: CSSProperties }) {
   const [oldText, setOldText] = useState(text);

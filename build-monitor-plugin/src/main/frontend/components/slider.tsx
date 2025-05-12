@@ -1,4 +1,5 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
+
 import Label from "./label";
 
 export default function Slider({

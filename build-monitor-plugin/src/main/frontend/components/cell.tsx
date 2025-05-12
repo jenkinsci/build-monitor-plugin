@@ -1,11 +1,10 @@
-import React from "react";
-import Label from "./label";
-import time from "../utils/time";
-import { Job } from "../models/job";
-import { buildStatusToClass } from "../utils/utils.ts";
 import { useUserPreferences } from "../context/user-preference-provider.tsx";
-import Claim from "./snippets/claims.tsx";
+import { Job } from "../models/job";
+import time from "../utils/time";
+import { buildStatusToClass } from "../utils/utils.ts";
+import Label from "./label";
 import Badges from "./snippets/badges.tsx";
+import Claim from "./snippets/claims.tsx";
 import Problems from "./snippets/problems.tsx";
 import Tests from "./snippets/tests.tsx";
 
@@ -25,7 +24,7 @@ function Cell({ job }: { job: Job }) {
       <div
         className={"bm-cell-duration bm-cell-duration--animate"}
         style={{ width: job.progress + "%" }}
-      ></div>
+      />
 
       <Label
         text={job.name}
@@ -33,8 +32,8 @@ function Cell({ job }: { job: Job }) {
           fontWeight: "550",
           color: "color-mix(in srgb, var(--bm-cell-color), var(--text-color))",
         }}
-      ></Label>
-      <Label text={job.headline} style={{ fontSize: "0.75em" }}></Label>
+      />
+      <Label text={job.headline} style={{ fontSize: "0.75em" }} />
 
       <Claim job={job} />
       <Problems job={job} />
