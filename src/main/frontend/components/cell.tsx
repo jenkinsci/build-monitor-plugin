@@ -34,7 +34,10 @@ function Cell({ job }: { job: Job }) {
           color: "color-mix(in srgb, var(--bm-cell-color), var(--text-color))",
         }}
       />
-      <Label text={job.headline} />
+
+      {job.headline && (
+        <Label text={job.headline} />
+      )}
 
       <Claim job={job} />
       <Problems job={job} />

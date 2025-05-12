@@ -2,8 +2,7 @@
   display: flex;
   align-items: end;
   justify-content: center;
-  font-size: 0.85em;
-  animation: zoom-in var(--standard-transition) both;
+  animation: zoom-in var(--standard-transition) 0.1s both;
 }
 
 .bm-claim__bubble {
@@ -14,7 +13,7 @@
   background: var(--background);
   border-radius: 100px;
   padding: 0.4em 1em;
-  font-size: 0.9em;
+  font-size: 0.765em;
 
   &::after {
     content: "";
@@ -39,7 +38,7 @@
   border-radius: 100px;
   padding: 0.35em 0.65em 0.35em 0.45em;
   gap: 0.35em;
-  font-size: 0.75em;
+  font-size: 0.6375em;
   font-weight: 500;
   translate: 0.75em 0.75em;
 

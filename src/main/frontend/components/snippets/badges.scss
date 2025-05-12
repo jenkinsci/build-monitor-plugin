@@ -1,14 +1,9 @@
 .bm-badge {
   color: inherit;
   border: var(--jenkins-border-width) solid currentColor;
-  padding: 0.0625em 0.5em;
+  padding: 0.4em 1em;
   border-radius: 10rem;
-  animation: zoom-in var(--standard-transition) both;
-}
-
-@keyframes zoom-in {
-  from {
-    opacity: 0;
-    scale: 90%;
-  }
+  animation: zoom-in var(--standard-transition) 0.1s both;
+  margin: 0;
+  font-size: 0.765em;
 }
