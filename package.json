@@ -20,9 +20,10 @@
     "url": "https://github.com/jenkinsci/build-monitor-plugin/issues"
   },
   "dependencies": {
+    "@tippyjs/react": "4.2.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "@tippyjs/react": "4.2.6"
+    "react-text-transition": "3.1.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.6.3",

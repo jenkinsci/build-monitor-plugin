@@ -17,10 +17,7 @@ node
 node_modules
 
 use-node
+
 .DS_Store
 
-chromedriver.exe
-
-!.travis.yml
-
-build-monitor-plugin/src/main/webapp
+src/main/webapp/
