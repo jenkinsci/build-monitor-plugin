@@ -29,7 +29,7 @@ function Cell({ job }: { job: Job }) {
       <Label
         text={job.name}
         style={{
-          fontSize: '1.25em',
+          fontSize: "1.25em",
           fontWeight: "550",
           color: "color-mix(in srgb, var(--bm-cell-color), var(--text-color))",
         }}
@@ -42,9 +42,7 @@ function Cell({ job }: { job: Job }) {
       <Badges job={job} />
 
       <div className={"bm-cell__details"}>
-        <Label
-          text={job.lastCompletedBuild.name}
-        />
+        <Label text={job.lastCompletedBuild.name} />
         <Label
           text={time(job.lastCompletedBuild.timeElapsedSince)}
           style={{

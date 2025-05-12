@@ -1,23 +1,24 @@
+import "./tests.scss";
+
 import { Job } from "../../models/job.ts";
-import './tests.scss';
 
 export default function Tests({ job }: { job: Job }) {
-  job.realtimeTests = [
-    {
-      estimatedRemainingTime: "2m 30s",
-      completedPercentages: [10, 30, 50],
-      completedTests: 3,
-      expectedTests: 6,
-      style: "success",
-    },
-  ];
+  // job.realtimeTests = [
+  //   {
+  //     estimatedRemainingTime: "2m 30s",
+  //     completedPercentages: [30, 30],
+  //     completedTests: 3,
+  //     expectedTests: 6,
+  //     style: "success",
+  //   },
+  // ];
 
   if (!job.realtimeTests) {
     return null;
   }
 
   return (
-    <li className="realtime-tests">
+    <div className="realtime-tests">
       {job.realtimeTests.map((realtimeTest, index) => {
         const title = `${realtimeTest.completedTests} / ${realtimeTest.expectedTests}, Remaining Time: ~ ${realtimeTest.estimatedRemainingTime}`;
 
@@ -36,6 +37,6 @@ export default function Tests({ job }: { job: Job }) {
           </div>
         );
       })}
-    </li>
+    </div>
   );
 }

@@ -1,5 +1,6 @@
+import "./claim.scss";
+
 import { Job } from "../../models/job.ts";
-import './claim.scss';
 
 export default function Claim({ job }: { job: Job }) {
   if (!job.claim || !job.claim.active) {
@@ -8,12 +9,22 @@ export default function Claim({ job }: { job: Job }) {
 
   let avatar = <></>;
   if (job.claim.avatar) {
-    avatar = <img className={"jenkins-avatar"} width={10} height={10} src={job.claim.avatar} alt={job.claim.author + " avatar"} aria-hidden="true" />
+    avatar = (
+      <img
+        className={"jenkins-avatar"}
+        width={10}
+        height={10}
+        src={job.claim.avatar}
+        alt={job.claim.author + " avatar"}
+        aria-hidden="true"
+      />
+    );
   }
 
   return (
     <div className="bm-claim">
-      Claimed by {avatar} {job.claim.author}: {job.claim.reason}
+      <span className={"bm-claim__bubble"}>{job.claim.reason}</span>
+      <span className={"bm-claim__person"}>{avatar} <span>{job.claim.author}</span></span>
     </div>
   );
 }

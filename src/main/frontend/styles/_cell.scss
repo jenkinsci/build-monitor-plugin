@@ -6,12 +6,11 @@ $cell-padding: 1rem;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  gap: 0.75em;
   border: none;
   appearance: none;
   background: none;
-  //height: 100%;
   cursor: pointer;
-  //width: 100%;
   text-decoration: none !important;
   border-radius: 1rem;
   font-size: 1.5em;
@@ -34,6 +33,7 @@ $cell-padding: 1rem;
   * {
     font-size: inherit;
     color: inherit;
+    text-box: trim-both;
   }
 
   &::before,
