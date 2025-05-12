@@ -58,13 +58,18 @@ $cell-padding: 1rem;
     color: inherit;
   }
 
+  &::after {
+    background: var(--bm-cell-color);
+    mask-image: var(--cell-texture, url("data:"));
+    mask-position: center;
+    mask-size: 6rem;
+    opacity: 0;
+    transition: opacity var(--standard-transition);
+  }
+
   &--color-blind-mode {
     &::after {
-      background: var(--bm-cell-color);
-      mask-image: var(--cell-texture, url("data:"));
-      mask-position: center;
-      mask-size: 6rem;
-      opacity: 0.5;
+      opacity: 0.4;
     }
   }
 
@@ -100,6 +105,7 @@ $cell-padding: 1rem;
 
   &--null {
     --bm-cell-color: var(--text-color-secondary);
+    --cell-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><circle cx='5' cy='5' r='2' fill='black' /></svg>");
   }
 
   &--running {
