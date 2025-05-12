@@ -35,7 +35,7 @@ function Cell({ job }: { job: Job }) {
         }}
       />
 
-      {job.headline && (
+      {job.headline && !job.claim?.active && (
         <Label text={job.headline} />
       )}
 
