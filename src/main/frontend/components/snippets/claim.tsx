@@ -24,7 +24,9 @@ export default function Claim({ job }: { job: Job }) {
   return (
     <div className="bm-claim">
       <span className={"bm-claim__bubble"}>{job.claim.reason}</span>
-      <span className={"bm-claim__person"}>{avatar} <span>{job.claim.author}</span></span>
+      <span className={"bm-claim__person"}>
+        {avatar} <span>{job.claim.author}</span>
+      </span>
     </div>
   );
 }

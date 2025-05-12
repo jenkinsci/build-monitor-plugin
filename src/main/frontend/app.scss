@@ -4,3 +4,9 @@
 @use "styles/grid";
 @use "styles/overrides";
 @use "styles/slider";
+
+@media (prefers-contrast: more) {
+  :root {
+    --bm-contrast: var(--text-color);
+  }
+}

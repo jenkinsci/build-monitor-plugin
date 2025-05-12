@@ -31,13 +31,12 @@ function Cell({ job }: { job: Job }) {
         style={{
           fontSize: "1.25em",
           fontWeight: "550",
-          color: "color-mix(in srgb, var(--bm-cell-color), var(--text-color))",
+          color:
+            "var(--bm-contrast, color-mix(in srgb, var(--bm-cell-color), var(--text-color)))",
         }}
       />
 
-      {job.headline && !job.claim?.active && (
-        <Label text={job.headline} />
-      )}
+      {job.headline && !job.claim?.active && <Label text={job.headline} />}
 
       <Claim job={job} />
       <Problems job={job} />

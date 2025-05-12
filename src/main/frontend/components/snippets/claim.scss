@@ -10,19 +10,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(
-                  in srgb,
-                  var(--bm-cell-color) 10%,
-                  var(--white)
-  );
+  background: color-mix(in srgb, var(--bm-cell-color) 10%, var(--white));
   border-radius: 21px;
   padding: 0.4em 1em;
   font-size: 0.765em;
-  color: color-mix(
-                  in srgb,
-                  var(--bm-cell-color) 45%,
-                  var(--black)
-  );
+  color: color-mix(in srgb, var(--bm-cell-color) 45%, var(--black));
   box-shadow: inset 0 1px 1px var(--white);
   text-wrap: balance;
 
@@ -45,11 +37,8 @@
   align-items: center;
   justify-content: center;
   background: color-mix(in srgb, var(--bm-cell-color), transparent);
-  color: color-mix(
-                  in srgb,
-                  var(--bm-cell-color) 10%,
-                  var(--white)
-  );
+  color: color-mix(in srgb, var(--bm-cell-color) 10%, var(--white));
+  box-shadow: inset var(--jenkins-border--subtle-shadow);
   border-radius: 100px;
   padding: 0.35em 0.65em 0.35em 0.45em;
   gap: 0.35em;

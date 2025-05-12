@@ -24,11 +24,18 @@ $cell-padding: 1rem;
   outline: none;
   overflow: hidden;
   text-align: center;
-  color: color-mix(
-    in srgb,
-    var(--bm-cell-color) 75%,
-    var(--text-color)
+  color: var(
+    --bm-contrast,
+    color-mix(in srgb, var(--bm-cell-color) 75%, var(--text-color))
   ) !important;
+  background: color-mix(
+    in oklch,
+    var(--bm-cell-color) var(--opacity-modifier, 45%),
+    transparent
+  );
+  box-shadow:
+    inset var(--jenkins-border--subtle-shadow),
+    var(--form-input-glow);
 
   * {
     font-size: inherit;
@@ -36,7 +43,6 @@ $cell-padding: 1rem;
     text-box: trim-both;
   }
 
-  &::before,
   &::after {
     content: "";
     position: absolute;
@@ -44,49 +50,36 @@ $cell-padding: 1rem;
     border-radius: inherit;
   }
 
-  &::before {
-    transition: var(--standard-transition);
-    background: color-mix(
-      in oklch,
-      var(--bm-cell-color) var(--opacity-modifier, 60%),
-      transparent
-    );
-    box-shadow:
-      inset 0 0 1.5px oklch(from var(--bm-cell-color) l c h / 75%),
-      inset 0 0 100px oklch(from var(--bm-cell-color) l c h / 15%),
-      0 0 0 8px transparent;
-    color: inherit;
-  }
-
   &::after {
     background: var(--bm-cell-color);
     mask-image: var(--cell-texture, url("data:"));
     mask-position: center;
-    mask-size: 6rem;
+    mask-size: 6.25rem;
     opacity: 0;
-    transition: opacity var(--standard-transition);
+
+    @media screen and (prefers-reduced-motion: no-preference) {
+      transition: var(--standard-transition);
+    }
   }
 
   &--color-blind-mode {
     &::after {
-      opacity: 0.4;
+      opacity: 0.35;
+      mask-size: 6rem;
     }
   }
 
   &:hover {
-    --opacity-modifier: 70%;
+    --opacity-modifier: 55%;
   }
 
   &:active,
   &:focus {
-    --opacity-modifier: 80%;
+    --opacity-modifier: 65%;
 
-    &::before {
-      box-shadow:
-        inset 0 0 1.5px oklch(from var(--bm-cell-color) l c h / 75%),
-        inset 0 0 100px oklch(from var(--bm-cell-color) l c h / 15%),
-        0 0 0 4px color-mix(in oklch, var(--bm-cell-color) 50%, transparent);
-    }
+    box-shadow:
+      inset var(--jenkins-border--subtle-shadow),
+      0 0 0 0.25rem oklch(from var(--bm-cell-color) l c h / 30%);
   }
 
   &--successful {
