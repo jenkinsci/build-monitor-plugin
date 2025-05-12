@@ -1,6 +1,6 @@
 import { Job } from "../../models/job.ts";
 import React from "react";
-import { useUserPreferences } from "../../providers/user-preference-provider.tsx";
+import { useUserPreferences } from "../../context/user-preference-provider.tsx";
 
 export default function Badges({ job }: { job: Job }) {
   const { showBadges } = useUserPreferences();

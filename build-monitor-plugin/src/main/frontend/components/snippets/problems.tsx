@@ -2,6 +2,8 @@ import { Job } from "../../models/job.ts";
 import React from "react";
 
 export default function Problems({ job }: { job: Job }) {
+  job.problems = ["hello world", "testing"];
+
   if (!job.problems || job.problems.length === 0) {
     return;
   }

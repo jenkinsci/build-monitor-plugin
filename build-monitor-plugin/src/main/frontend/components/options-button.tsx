@@ -4,7 +4,7 @@ import { RESET_SYMBOL, SETTINGS_SYMBOL } from "../utils/symbols";
 import Slider from "./slider";
 import Checkbox from "./checkbox";
 import Dropdown from "./dropdown.tsx";
-import { useUserPreferences } from "../providers/user-preference-provider.tsx";
+import { useUserPreferences } from "../context/user-preference-provider.tsx";
 
 interface OptionsButtonProps {
   amountOfJobs: number;

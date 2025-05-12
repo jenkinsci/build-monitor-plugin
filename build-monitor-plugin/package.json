@@ -9,11 +9,11 @@
     "mvntest": "npm run test",
     "build": "vite build --mode production",
     "build:dev": "vite build --mode production --watch",
-    "lint:fix": "prettier --write src/main/frontend/"
+    "lint:fix": "prettier --write src/main/frontend/ && eslint --fix"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jenkinsci/build-monitor-plugin.git"
+    "url": "git@github.com:jenkinsci/build-monitor-plugin.git"
   },
   "license": "MIT",
   "bugs": {

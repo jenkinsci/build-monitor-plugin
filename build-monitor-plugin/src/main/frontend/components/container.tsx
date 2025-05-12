@@ -1,38 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Cell from "./cell.tsx";
-import { Job } from "../models/job";
-import { getJobs } from "../apis/api";
 import OptionsButton from "./options-button";
 import Notice from "./notice.tsx";
-import { useUserPreferences } from "../providers/user-preference-provider.tsx";
-import { useDialog } from "../providers/dialog-provider.tsx";
+import { useUserPreferences } from "../context/user-preference-provider.tsx";
+import { useJobs } from "../context/jobs-provider.tsx";
 
 function Container() {
-  const [jobs, setJobs] = useState<Job[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const { createDialog } = useDialog();
+  const { jobs, isLoading } = useJobs();
   const { textSize, maximumNumberOfColumns } = useUserPreferences();
-
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const jobs = await getJobs();
-
-        setJobs(jobs);
-      } catch (error) {
-        createDialog(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchJobs();
-
-    const intervalID = setInterval(fetchJobs, 3000);
-
-    return () => clearInterval(intervalID);
-  }, []);
 
   return (
     <>

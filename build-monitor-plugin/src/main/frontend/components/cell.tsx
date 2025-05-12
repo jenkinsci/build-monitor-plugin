@@ -3,7 +3,7 @@ import Label from "./label";
 import time from "../utils/time";
 import { Job } from "../models/job";
 import { buildStatusToClass } from "../utils/utils.ts";
-import { useUserPreferences } from "../providers/user-preference-provider.tsx";
+import { useUserPreferences } from "../context/user-preference-provider.tsx";
 import Claim from "./snippets/claims.tsx";
 import Badges from "./snippets/badges.tsx";
 import Problems from "./snippets/problems.tsx";
