@@ -17,7 +17,7 @@ Have a question? Perhaps it's already been answered - check the [FAQ](#faq) sect
 
 ## Features
 
-* Displays the status and progress of selected jobs. The view is updated automatically every couple of seconds using AJAX, so no "Enable Auto Refresh" needed.
+* Displays the status and progress of selected jobs. The view is updated automatically every few seconds.
 * Displays the names of people who might be responsible for "breaking the build".
 * Supports the [Claim plugin](https://plugins.jenkins.io/claim/), so that you can see who's fixing a broken build
 * Supports [View Job Filters](https://plugins.jenkins.io/view-job-filters/), so that you can easily create Build Monitors for "slow builds", "only failing", etc.
@@ -25,7 +25,7 @@ Have a question? Perhaps it's already been answered - check the [FAQ](#faq) sect
 * Supports [CloudBees Folders Plugin](https://plugins.jenkins.io/cloudbees-folder/), so that you can have project- and team-specific nested Build Monitors; [learn more](http://bit.ly/JBMBuild117)
 * Supports [Pipeline Plugin](https://plugins.jenkins.io/workflow-aggregator/), so that the currently executing stage(s) are shown.
 * The number of columns and size of the font used is easily customisable, making it trivial to accommodate screens of different sizes.
-* UI configuration is stored in a cookie, making it possible to display different number of columns and using different font size on each of the screens at your office.
+* UI configuration is stored in local storage, making it possible to display different number of columns and using different font size on each of the screens at your office.
 * Can work in a colour-blind-friendly mode; [learn more](https://github.com/jenkinsci/build-monitor-plugin/issues/30#issuecomment-35849019)
 
 ## Getting started
