@@ -15,6 +15,24 @@
   <name>Build Monitor</name>
   <url>https://github.com/jenkinsci/build-monitor-plugin</url>
 
+  <licenses>
+    <license>
+      <name>MIT license</name>
+      <comments>All source code is under the MIT license.</comments>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>jan-molak</id>
+      <name>Jan Molak</name>
+      <email>jan.molak+build.monitor@smartcodeltd.co.uk</email>
+      <organization>smartcode ltd</organization>
+      <organizationUrl>http://smartcodeltd.co.uk</organizationUrl>
+      <timezone>Europe/London</timezone>
+    </developer>
+  </developers>
+
   <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
     <connection>scm:git:https://github.com/${gitHubRepo}.git</connection>
     <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
@@ -40,38 +58,6 @@
     <node.version>22.14.0</node.version>
     <npm.version>11.2.0</npm.version>
   </properties>
-
-  <repositories>
-    <repository>
-      <id>repo.jenkins-ci.org</id>
-      <url>https://repo.jenkins-ci.org/public/</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>repo.jenkins-ci.org</id>
-      <url>https://repo.jenkins-ci.org/public/</url>
-    </pluginRepository>
-  </pluginRepositories>
-
-  <licenses>
-    <license>
-      <name>MIT license</name>
-      <comments>All source code is under the MIT license.</comments>
-    </license>
-  </licenses>
-
-  <developers>
-    <developer>
-      <id>jan-molak</id>
-      <name>Jan Molak</name>
-      <email>jan.molak+build.monitor@smartcodeltd.co.uk</email>
-      <organization>smartcode ltd</organization>
-      <organizationUrl>http://smartcodeltd.co.uk</organizationUrl>
-      <timezone>Europe/London</timezone>
-    </developer>
-  </developers>
 
   <dependencyManagement>
     <dependencies>
@@ -195,4 +181,18 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <repositories>
+    <repository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>

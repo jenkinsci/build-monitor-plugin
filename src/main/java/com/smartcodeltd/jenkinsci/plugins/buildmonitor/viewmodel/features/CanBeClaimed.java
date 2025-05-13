@@ -5,9 +5,6 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import hudson.model.User;
 import hudson.plugins.claim.ClaimBuildAction;
 import hudson.tasks.UserAvatarResolver;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.Collections;
 import java.util.Optional;
 
 public class CanBeClaimed implements Feature {
