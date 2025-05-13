@@ -16,6 +16,8 @@
   grid-auto-rows: 1fr;
   // Fill the height of the parent container
   flex: 1 1 auto;
+  // TODO - remove this/find a better way?
+  max-height: 100vh;
 
   @media screen and (prefers-reduced-motion: no-preference) {
     & > * {
