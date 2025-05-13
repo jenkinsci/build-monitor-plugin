@@ -54,7 +54,7 @@ export interface Job {
     completedPercentages: number[];
     completedTests: number;
     expectedTests: number;
-    style: string;
+    style: "" | "red";
   }[];
 }
 

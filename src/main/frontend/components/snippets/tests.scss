@@ -1,100 +1,30 @@
 .bs-progress {
   display: flex;
   overflow: hidden;
-  background-color: var(--background);
-  width: 200px;
+  background: color-mix(in srgb, var(--bm-cell-color) 10%, var(--white));
+  width: 180px;
   height: 0.5em;
   border-radius: 10px;
   padding: var(--jenkins-border-width);
-}
 
-.bs-progress .bar {
-  width: 0;
-  height: 100%;
-  border-radius: 100px;
-  background-color: var(--accent-color);
-  transition: width 0.6s ease;
-}
+  .bar {
+    width: 0;
+    height: 100%;
+    border-radius: 100px;
+    background-color: var(--accent-color);
+    transition: width 0.6s ease;
 
-.bs-progress-striped .bar {
-  background-color: #149bdf;
-  background-image: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.15) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.15) 75%,
-    transparent 75%,
-    transparent
-  );
-  background-size: 40px 40px;
-}
-.bs-progress.active .bar {
-  animation: progress-bar-stripes 2s linear infinite;
-}
-.bs-progress-danger .bar,
-.bs-progress .bar-danger {
-  background: var(--error-color);
-}
-.bs-progress-danger.bs-progress-striped .bar,
-.bs-progress-striped .bar-danger {
-  background: var(--error-color);
-}
-.bs-progress-success .bar,
-.bs-progress .bar-success {
-  background: var(--success-color);
-}
-.bs-progress-success.bs-progress-striped .bar,
-.bs-progress-striped .bar-success {
-  background-color: #62c462;
-  background-image: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.15) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.15) 75%,
-    transparent 75%,
-    transparent
-  );
-}
-.bs-progress-info .bar,
-.bs-progress .bar-info {
-  background-color: #4bb1cf;
-  background-image: linear-gradient(to bottom, #5bc0de, #339bb9);
-  background-repeat: repeat-x;
-}
-.bs-progress-info.bs-progress-striped .bar,
-.bs-progress-striped .bar-info {
-  background-color: #5bc0de;
-  background-image: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.15) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.15) 75%,
-    transparent 75%,
-    transparent
-  );
-}
-.bs-progress-warning .bar,
-.bs-progress .bar-warning {
-  background: var(--warning-color);
-}
-.bs-progress-warning.bs-progress-striped .bar,
-.bs-progress-striped .bar-warning {
-  background: var(--warning-color);
-}
+    &.bar-progress2 {
+      opacity: 0.6;
+    }
+    &.bar-progress2 + .bar {
+      order: -1;
+    }
+  }
 
-/**
- * Make the second progress bar less opaque
- * Adjust the radius of both bars when the second is present
- */
-.bar.bar-progress2 {
-  opacity: 0.6;
-}
-.bar.bar-progress2 + .bar {
-  order: -1;
+  &--red {
+    .bar {
+      background-color: var(--error-color);
+    }
+  }
 }
