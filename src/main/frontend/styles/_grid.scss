@@ -14,7 +14,8 @@
   padding-bottom: calc(var(--section-padding) / 2);
   // Force all rows to have equal height
   grid-auto-rows: 1fr;
-  height: calc(100vh - 66px);
+  // Fill the height of the parent container
+  flex: 1 1 auto;
 
   @media screen and (prefers-reduced-motion: no-preference) {
     & > * {

@@ -1,3 +1,19 @@
+// We need the grid to fill the available space of the page
+// The available space is dynamic due to varying header sizes, as well as system messages
+#page-body {
+  position: fixed;
+  inset: 0;
+}
+
+#main-panel {
+  display: flex;
+  flex-direction: column;
+
+  #app {
+    display: contents;
+  }
+}
+
 // The reset button doesn't fill the full width otherwise
 .jenkins-dropdown__item {
   width: 100%;
