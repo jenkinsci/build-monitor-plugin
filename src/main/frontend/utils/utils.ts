@@ -1,6 +1,10 @@
-import { JobStatus } from "../models/job.ts";
+import {Job, JobStatus} from "../models/job.ts";
 
-export function buildStatusToClass(status: JobStatus) {
+export function buildStatusToClass(job: Job) {
+  if (job.disabled) {
+    return "--disabled"
+  }
+
   const map: { [key in JobStatus]: string } = {
     successful: "--successful",
     failing: "--failing",
@@ -10,5 +14,5 @@ export function buildStatusToClass(status: JobStatus) {
     aborted: "--null",
   };
 
-  return map[status];
+  return map[job.status];
 }

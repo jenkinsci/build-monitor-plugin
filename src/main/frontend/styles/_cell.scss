@@ -101,6 +101,11 @@ $cell-padding: 1rem;
     --cell-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><circle cx='5' cy='5' r='2' fill='black' /></svg>");
   }
 
+  &--disabled {
+    --bm-cell-color: var(--text-color-secondary);
+    opacity: 0.4;
+  }
+
   &--running {
     --bm-cell-color: var(--blue);
 

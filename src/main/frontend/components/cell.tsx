@@ -16,7 +16,7 @@ function Cell({ job }: { job: Job }) {
       href={job.url}
       className={
         "bm-cell bm-cell" +
-        buildStatusToClass(job.status) +
+        buildStatusToClass(job) +
         " " +
         (colorBlindMode ? "bm-cell--color-blind-mode" : "")
       }
