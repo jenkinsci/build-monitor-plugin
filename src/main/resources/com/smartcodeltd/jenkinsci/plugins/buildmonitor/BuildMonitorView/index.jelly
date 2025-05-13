@@ -1,5 +1,5 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout">
     <l:layout title="${it.displayName}" type="full-screen">
        <l:main-panel>
            <l:pageHeader title="${null}"
@@ -7,8 +7,6 @@
                          searchPlaceholder="${null}"
                          searchHelpUrl="$null}"
                          logout="${null}"/>
-
-           <st:bind var="buildMonitorBind" value="${it}" />
 
            <div id="app"
                 data-build-monitor-id="${it.displayName.hashCode()}"
