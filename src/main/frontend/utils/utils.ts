@@ -1,8 +1,8 @@
-import {Job, JobStatus} from "../models/job.ts";
+import { Job, JobStatus } from "../models/job.ts";
 
 export function buildStatusToClass(job: Job) {
   if (job.disabled) {
-    return "--disabled"
+    return "--disabled";
   }
 
   const map: { [key in JobStatus]: string } = {
