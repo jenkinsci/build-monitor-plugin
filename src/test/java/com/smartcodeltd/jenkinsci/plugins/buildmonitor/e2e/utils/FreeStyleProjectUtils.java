@@ -51,5 +51,9 @@ public class FreeStyleProjectUtils {
         public FreeStyleProject get() {
             return project;
         }
+
+        public FluentFreeStyleProject withDescription(String s) {
+            return this;
+        }
     }
 }

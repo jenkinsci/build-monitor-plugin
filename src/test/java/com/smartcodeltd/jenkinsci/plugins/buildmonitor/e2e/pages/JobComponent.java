@@ -37,6 +37,12 @@ public class JobComponent {
         return this;
     }
 
+    public JobComponent hasIdentifiedProblem(String badgeName) {
+        Locator badge = component.locator(".bm-badge").getByText(badgeName);
+        assertThat(badge).isVisible();
+        return this;
+    }
+
     public JobComponent hasBadge(String badgeName) {
         Locator badge = component.locator(".bm-badge").getByText(badgeName);
         assertThat(badge).isVisible();

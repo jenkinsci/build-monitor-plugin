@@ -1,7 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils;
 
 import com.cloudbees.hudson.plugins.folder.Folder;
-import hudson.model.TopLevelItem;
+import hudson.model.FreeStyleProject;
 import java.io.IOException;
 import org.jvnet.hudson.test.JenkinsRule;
 
@@ -28,15 +28,21 @@ public class FolderUtils {
             this.folder = folder;
         }
 
-        public FolderUtils.FluentFolder addJobs(TopLevelItem... project) {
+        public FluentFolder createFreeStyleProject(String name) {
             try {
-                for (TopLevelItem topLevelItem : project) {
-                    folder.add(topLevelItem, topLevelItem.getName());
-                }
+                folder.createProject(FreeStyleProject.class, name);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return this;
+        }
+
+        public FluentFolder createFolder(String name) {
+            try {
+                return new FluentFolder(jenkins, folder.createProject(Folder.class, name));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         public Folder get() {
