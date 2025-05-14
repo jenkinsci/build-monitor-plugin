@@ -3,11 +3,9 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils;
 import com.google.common.io.Resources;
 import hudson.model.FreeStyleProject;
 import hudson.model.Result;
-
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
@@ -39,8 +37,7 @@ public class TestUtils {
         return job.getLastBuild();
     }
 
-    public static WorkflowJob createJob(JenkinsRule jenkins, String jobName, String jenkinsFileName)
-            throws Exception {
+    public static WorkflowJob createJob(JenkinsRule jenkins, String jobName, String jenkinsFileName) throws Exception {
         WorkflowJob job = jenkins.createProject(WorkflowJob.class, jobName);
 
         URL resource = Resources.getResource(TestUtils.class, jenkinsFileName);

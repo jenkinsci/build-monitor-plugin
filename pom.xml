@@ -151,6 +151,12 @@
       <artifactId>test-harness</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- TODO - Confirm what dependency we actually need for badges -->
+    <dependency>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>pipeline-graph-view</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>description-setter</artifactId>
@@ -181,12 +187,6 @@
       <artifactId>workflow-basic-steps</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- TODO - Confirm what dependency we actually need for badges -->
-    <dependency>
-      <groupId>io.jenkins.plugins</groupId>
-      <artifactId>pipeline-graph-view</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
@@ -207,4 +207,16 @@
       <url>https://repo.jenkins-ci.org/public/</url>
     </pluginRepository>
   </pluginRepositories>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

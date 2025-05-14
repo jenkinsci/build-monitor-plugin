@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                addBadge text: 'Coverage'
+                addBadge text: 'Example badge'
             }
         }
     }

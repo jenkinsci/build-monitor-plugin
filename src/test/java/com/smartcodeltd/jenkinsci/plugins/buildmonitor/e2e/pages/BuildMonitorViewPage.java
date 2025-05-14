@@ -34,6 +34,13 @@ public class BuildMonitorViewPage extends JenkinsPage<BuildMonitorViewPage> {
         return this;
     }
 
+    public JobComponent getJob(String jobName) {
+        Locator job = page.locator(".bm-cell h2")
+                .getByText(jobName)
+                .locator("xpath=ancestor::*[contains(@class, 'bm-cell')]");
+        return JobComponent.from(job);
+    }
+
     public BuildMonitorViewPage hasJob(String jobName) {
         Locator link = page.locator(".bm-cell h2").getByText(jobName);
         assertThat(link).isVisible();
