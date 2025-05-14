@@ -14,7 +14,7 @@ import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
 @WithJenkins
 @UsePlaywright(PlaywrightConfig.class)
-public class ProjectStatusShouldBeEasyToDetermineTest {
+class ProjectStatusShouldBeEasyToDetermineTest {
 
     @Test
     void visualisingASuccessfulProject(Page p, JenkinsRule j) {

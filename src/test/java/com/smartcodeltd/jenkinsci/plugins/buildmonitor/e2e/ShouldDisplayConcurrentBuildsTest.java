@@ -1,6 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e;
 
-public class ShouldDisplayConcurrentBuildsTest {
+class ShouldDisplayConcurrentBuildsTest {
 
     //    private static String My_App = "My App";
     //

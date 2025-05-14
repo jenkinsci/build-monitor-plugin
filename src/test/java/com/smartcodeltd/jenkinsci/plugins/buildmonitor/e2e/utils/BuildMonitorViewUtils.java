@@ -2,7 +2,9 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView;
 import hudson.model.TopLevelItem;
+
 import java.io.IOException;
+
 import org.jvnet.hudson.test.JenkinsRule;
 
 public class BuildMonitorViewUtils {
@@ -33,6 +35,16 @@ public class BuildMonitorViewUtils {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            return this;
+        }
+
+        public FluentBuildMonitorView displayAllProjects() {
+            view.setIncludeRegex(".*");
+            return this;
+        }
+
+        public FluentBuildMonitorView displayNestedProjectsFromSubfolders() {
+            view.setRecurse(true);
             return this;
         }
 

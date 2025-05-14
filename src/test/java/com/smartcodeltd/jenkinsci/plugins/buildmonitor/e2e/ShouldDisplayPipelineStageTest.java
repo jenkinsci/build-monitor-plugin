@@ -1,6 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e;
 
-public class ShouldDisplayPipelineStageTest {
+class ShouldDisplayPipelineStageTest {
 
     //    Actor donald = Actor.named("Donald");
     //

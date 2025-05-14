@@ -13,7 +13,7 @@ import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
 @WithJenkins
 @UsePlaywright(PlaywrightConfig.class)
-public class ShouldDisplayTestProgressTest {
+class ShouldDisplayTestProgressTest {
 
     @Test
     void test(Page p, JenkinsRule j) {

@@ -14,7 +14,7 @@ import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
 @WithJenkins
 @UsePlaywright(PlaywrightConfig.class)
-public class ShouldDisplayBadgesTest {
+class ShouldDisplayBadgesTest {
 
     // TODO - add tests for showing/hiding badges
 

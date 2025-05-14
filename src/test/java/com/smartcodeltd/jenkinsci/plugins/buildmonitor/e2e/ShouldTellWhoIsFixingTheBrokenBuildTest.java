@@ -1,6 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e;
 
-public class ShouldTellWhoIsFixingTheBrokenBuildTest {
+class ShouldTellWhoIsFixingTheBrokenBuildTest {
 
     //    JenkinsUser ben;
     //

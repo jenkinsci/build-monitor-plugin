@@ -1,42 +1,35 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e;
 
-public class ShouldSupportCloudBeesFoldersTest {
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils.createBuildMonitorView;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.FolderUtils.createFolder;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.FreeStyleProjectUtils.createFreeStyleProject;
 
-    //    Actor anna = Actor.named("Anna");
-    //
-    //    @Before
-    //    public void actorCanBrowseTheWeb() {
-    //        anna.can(BrowseTheWeb.with(browser));
-    //    }
-    //
-    //    @Test
-    //    public void visualising_projects_nested_in_folders() {
-    //
-    //        givenThat(anna)
-    //                .wasAbleTo(
-    //                        Navigate.to(jenkins.url()),
-    //                        HaveAFolderCreated.called("Search Services")
-    //                                .andInsideIt(
-    //                                        HaveANestedProjectCreated.called("Librarian"),
-    //                                        HaveAFolderCreated.called("Contracts")
-    //                                                .andInsideIt(HaveANestedProjectCreated.called("Third Party
-    // System"))),
-    //                        Navigate.to(jenkins.url()));
-    //
-    //        when(anna)
-    //                .attemptsTo(CreateABuildMonitorView.called("Build Monitor")
-    //                        .andConfigureItTo(
-    //                                DisplayAllProjects.usingARegularExpression(),
-    // DisplayNestedProjects.fromSubfolders()));
-    //
-    //        then(anna)
-    //                .should(seeThat(
-    //                        ProjectWidget.of("Search Services » Librarian").state(),
-    // WebElementStateMatchers.isVisible()));
-    //        then(anna)
-    //                .should(seeThat(
-    //                        ProjectWidget.of("Search Services » Contracts » Third Party System")
-    //                                .state(),
-    //                        WebElementStateMatchers.isVisible()));
-    //    }
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.junit.UsePlaywright;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.config.PlaywrightConfig;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.pages.BuildMonitorViewPage;
+import org.junit.jupiter.api.Test;
+import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
+
+@WithJenkins
+@UsePlaywright(PlaywrightConfig.class)
+class ShouldSupportCloudBeesFoldersTest {
+
+    @Test
+    void test(Page p, JenkinsRule j) {
+        createFolder(j, "Search Services")
+                .addJobs(
+                        createFreeStyleProject(j, "Third Party System").get(),
+                        createFolder(j, "Contracts")
+                                .addJobs(createFreeStyleProject(j, "Librarian").get())
+                                .get());
+        var view =
+                createBuildMonitorView(j, "Build Monitor").displayAllProjects().displayNestedProjectsFromSubfolders();
+
+        BuildMonitorViewPage.from(p, view)
+                .goTo()
+                .hasJob("Search Services » Librarian")
+                .hasJob("Search Services » Contracts » Third Party System");
+    }
 }

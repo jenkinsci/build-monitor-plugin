@@ -14,7 +14,7 @@ import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
 @WithJenkins
 @UsePlaywright(PlaywrightConfig.class)
-public class ShouldSupportExternalProjectsTest {
+class ShouldSupportExternalProjectsTest {
 
     @Test
     void test(Page p, JenkinsRule j) {
