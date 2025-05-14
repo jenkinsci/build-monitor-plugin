@@ -12,7 +12,6 @@ import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils.addProjectToView;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils.createBuildMonitorView;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.TestUtils.createAndRunJob;
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.TestUtils.createFreeStyleProject;
 
 @WithJenkins
 @UsePlaywright(PlaywrightConfig.class)
@@ -40,7 +39,7 @@ public class ShouldDisplayBadgesTest {
         BuildMonitorViewPage.from(p, view).goTo().hasJobsCount(1).hasJob(run.getParent().getDisplayName());
 
         try {
-            Thread.sleep(1000000);
+            Thread.sleep(10000000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
