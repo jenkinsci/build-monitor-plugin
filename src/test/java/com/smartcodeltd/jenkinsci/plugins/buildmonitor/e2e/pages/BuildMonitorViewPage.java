@@ -5,18 +5,15 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils;
 
 public class BuildMonitorViewPage extends JenkinsPage<BuildMonitorViewPage> {
 
-    private final BuildMonitorView view;
-
-    private BuildMonitorViewPage(Page page, BuildMonitorView view) {
-        super(page, view.getAbsoluteUrl());
-        this.view = view;
+    private BuildMonitorViewPage(Page page, BuildMonitorViewUtils.FluentBuildMonitorView view) {
+        super(page, view.get().getAbsoluteUrl());
     }
 
-    public static BuildMonitorViewPage from(Page page, BuildMonitorView view) {
+    public static BuildMonitorViewPage from(Page page, BuildMonitorViewUtils.FluentBuildMonitorView view) {
         return new BuildMonitorViewPage(page, view);
     }
 

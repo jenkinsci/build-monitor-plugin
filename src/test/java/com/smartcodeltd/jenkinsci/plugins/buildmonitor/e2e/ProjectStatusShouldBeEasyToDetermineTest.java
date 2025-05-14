@@ -1,8 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e;
 
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils.addProjectToView;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils.createBuildMonitorView;
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.TestUtils.createFreeStyleProject;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.FreeStyleProjectUtils.createFreeStyleProject;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
@@ -19,15 +18,9 @@ public class ProjectStatusShouldBeEasyToDetermineTest {
 
     @Test
     void visualisingASuccessfulProject(Page p, JenkinsRule j) {
-        var project = createFreeStyleProject(j, "Successful");
-        project.scheduleBuild2(0);
-        try {
-            j.assertBuildStatus(Result.SUCCESS, project.scheduleBuild2(0));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        var view = createBuildMonitorView(j, "Build Monitor");
-        addProjectToView(project, view);
+        var project =
+                createFreeStyleProject(j, "Successful").run(Result.SUCCESS).getProject();
+        var view = createBuildMonitorView(j, "Build Monitor").addJobs(project);
 
         BuildMonitorViewPage.from(p, view)
                 .goTo()
@@ -38,15 +31,11 @@ public class ProjectStatusShouldBeEasyToDetermineTest {
 
     @Test
     void visualisingAFailingProject(Page p, JenkinsRule j) {
-        var project = createFreeStyleProject(j, "Failing");
-        project.getBuildersList().add(new hudson.tasks.Shell("exit 1"));
-        try {
-            j.assertBuildStatus(Result.FAILURE, project.scheduleBuild2(0));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        var view = createBuildMonitorView(j, "Build Monitor");
-        addProjectToView(project, view);
+        var project = createFreeStyleProject(j, "Failing")
+                .addTask(new hudson.tasks.Shell("exit 1"))
+                .run(Result.FAILURE)
+                .getProject();
+        var view = createBuildMonitorView(j, "Build Monitor").addJobs(project);
 
         BuildMonitorViewPage.from(p, view)
                 .goTo()

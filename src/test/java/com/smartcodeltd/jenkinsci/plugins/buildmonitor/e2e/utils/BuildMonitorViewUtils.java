@@ -7,21 +7,37 @@ import org.jvnet.hudson.test.JenkinsRule;
 
 public class BuildMonitorViewUtils {
 
-    public static BuildMonitorView createBuildMonitorView(JenkinsRule jenkins, String name) {
+    public static FluentBuildMonitorView createBuildMonitorView(JenkinsRule jenkins, String name) {
         try {
-            jenkins.getInstance().addView(new BuildMonitorView(name, null));
-            return (BuildMonitorView) jenkins.getInstance().getView(name);
+            BuildMonitorView view = new BuildMonitorView(name, null);
+            jenkins.getInstance().addView(view);
+            return new FluentBuildMonitorView(
+                    (BuildMonitorView) jenkins.getInstance().getView(name));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static BuildMonitorView addProjectToView(TopLevelItem project, BuildMonitorView view) {
-        try {
-            view.add(project);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public static class FluentBuildMonitorView {
+        private final BuildMonitorView view;
+
+        public FluentBuildMonitorView(BuildMonitorView view) {
+            this.view = view;
         }
-        return view;
+
+        public FluentBuildMonitorView addJobs(TopLevelItem... project) {
+            try {
+                for (TopLevelItem topLevelItem : project) {
+                    view.add(topLevelItem);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return this;
+        }
+
+        public BuildMonitorView get() {
+            return view;
+        }
     }
 }

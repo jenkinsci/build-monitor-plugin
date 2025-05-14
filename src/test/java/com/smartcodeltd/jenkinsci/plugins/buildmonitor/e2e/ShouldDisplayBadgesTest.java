@@ -1,8 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e;
 
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils.addProjectToView;
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils.createBuildMonitorView;
-import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.TestUtils.createAndRunJob;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.PipelineJobUtils.createPipelineJob;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
@@ -21,14 +20,10 @@ public class ShouldDisplayBadgesTest {
 
     @Test
     void test(Page p, JenkinsRule j) {
-        var run = createAndRunJob(j, "Lemonworld CI", "singleStagePipeline.jenkinsfile", Result.SUCCESS);
+        var run = createPipelineJob(j, "Lemonworld CI", "singleStagePipeline.jenkinsfile")
+                .run(Result.SUCCESS);
+        var view = createBuildMonitorView(j, "Build Monitor").addJobs(run.getParent());
 
-        var view = createBuildMonitorView(j, "Build Monitor");
-        addProjectToView(run.getParent(), view);
-
-        BuildMonitorViewPage.from(p, view)
-                .goTo()
-                .getJob("Lemonworld CI")
-                .hasBadge("Example badge");
+        BuildMonitorViewPage.from(p, view).goTo().getJob("Lemonworld CI").hasBadge("Example badge");
     }
 }
