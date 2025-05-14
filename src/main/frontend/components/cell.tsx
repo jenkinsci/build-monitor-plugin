@@ -26,15 +26,17 @@ function Cell({ job }: { job: Job }) {
         style={{ width: job.progress + "%" }}
       />
 
-      <Label
-        text={job.name}
-        style={{
-          fontSize: "1.25em",
-          fontWeight: "550",
-          color:
-            "var(--bm-contrast, color-mix(in srgb, var(--bm-cell-color), var(--text-color)))",
-        }}
-      />
+      <h2>
+        <Label
+          text={job.name}
+          style={{
+            fontSize: "1.25em",
+            fontWeight: "550",
+            color:
+              "var(--bm-contrast, color-mix(in srgb, var(--bm-cell-color), var(--text-color)))",
+          }}
+        />
+      </h2>
 
       {job.headline && !job.claim?.active && <Label text={job.headline} />}
 

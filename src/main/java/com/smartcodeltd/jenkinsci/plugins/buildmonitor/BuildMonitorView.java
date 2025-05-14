@@ -314,7 +314,7 @@ public class BuildMonitorView extends ListView implements ModelObjectWithContext
 
     @Override
     public ContextMenu doContextMenu(StaplerRequest2 request, StaplerResponse2 response) {
-        ContextMenu contextMenu = new ContextMenu().addHeader("Build Monitors");
+        ContextMenu contextMenu = new ContextMenu();
 
         for (View view : Jenkins.getInstanceOrNull().getViews().stream()
                 .filter(e -> e instanceof BuildMonitorView)
