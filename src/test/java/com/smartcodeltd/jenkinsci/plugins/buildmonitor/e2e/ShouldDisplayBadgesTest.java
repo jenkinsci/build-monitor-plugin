@@ -20,10 +20,10 @@ public class ShouldDisplayBadgesTest {
 
     @Test
     void test(Page p, JenkinsRule j) {
-        var run = createPipelineJob(j, "Lemonworld CI", "singleStagePipeline.jenkinsfile")
+        var run = createPipelineJob(j, "Example job", "singleStagePipeline.jenkinsfile")
                 .run(Result.SUCCESS);
         var view = createBuildMonitorView(j, "Build Monitor").addJobs(run.getParent());
 
-        BuildMonitorViewPage.from(p, view).goTo().getJob("Lemonworld CI").hasBadge("Example badge");
+        BuildMonitorViewPage.from(p, view).goTo().getJob("Example job").hasBadge("Example badge");
     }
 }

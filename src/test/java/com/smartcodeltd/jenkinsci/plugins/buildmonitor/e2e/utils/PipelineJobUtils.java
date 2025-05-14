@@ -36,6 +36,14 @@ public class PipelineJobUtils {
             this.job = job;
         }
 
+        public void run() {
+            try {
+                job.scheduleBuild2(0);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         public WorkflowRun run(Result expectedResult) {
             try {
                 WorkflowRun build = job.scheduleBuild2(0).get();

@@ -42,4 +42,10 @@ public class JobComponent {
         assertThat(badge).isVisible();
         return this;
     }
+
+    public JobComponent hasTestProgressBars() {
+        Locator badge = component.locator(".bs-progress");
+        assertThat(badge).isVisible();
+        return this;
+    }
 }

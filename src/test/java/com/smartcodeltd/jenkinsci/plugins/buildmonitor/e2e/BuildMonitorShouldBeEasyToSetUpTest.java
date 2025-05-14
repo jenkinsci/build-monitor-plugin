@@ -17,7 +17,7 @@ class BuildMonitorShouldBeEasyToSetUpTest {
 
     @Test
     void test(Page p, JenkinsRule j) {
-        var project = createFreeStyleProject(j, "Lemonworld CI").get();
+        var project = createFreeStyleProject(j, "Example job").get();
         var view = createBuildMonitorView(j, "Build Monitor").addJobs(project);
 
         BuildMonitorViewPage.from(p, view).goTo().hasJobsCount(1).hasJob(project.getDisplayName());

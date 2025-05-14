@@ -1,8 +1,14 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e;
 
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils.createBuildMonitorView;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.PipelineJobUtils.createPipelineJob;
+
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.config.PlaywrightConfig;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.pages.BuildMonitorViewPage;
 import org.junit.jupiter.api.Test;
+import org.jvnet.hudson.test.JenkinsRule;
 import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
 @WithJenkins
@@ -10,28 +16,18 @@ import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 public class ShouldDisplayTestProgressTest {
 
     @Test
-    void test() {
-        //        givenThat(richard)
-        //                .wasAbleTo(
-        //                        Navigate.to(jenkins.url()),
-        //                        HaveAPipelineProjectCreated.called("My Pipeline")
-        //                                .andConfiguredTo(
-        //                                        SetPipelineDefinition.asFollows(
-        //                                                GroovyScriptThat.Pause_In_Middle_Of_Tests.code()),
-        //                                        Disable.executingConcurrentBuilds()),
-        //                        ScheduleABuild.of("My Pipeline"),
-        //                        Navigate.to(jenkins.url()),
-        //                        ScheduleABuild.of("My Pipeline"));
-        //
-        //        when(richard)
-        //                .attemptsTo(CreateABuildMonitorView.called("Build Monitor")
-        //                        .andConfigureItTo(
-        //                                DisplayAllProjects.usingARegularExpression(),
-        // DisplayJunitRealtimeProgress.bars()));
-        //
-        //        then(richard)
-        //                .should(seeThat(
-        //                        ProjectWidget.of("My Pipeline").testProgressBars(),
-        //                        WebElementStateMatchers.isCurrentlyVisible()));
+    void test(Page p, JenkinsRule j) {
+        var job = createPipelineJob(j, "Example job", "pauseInMiddleOfTests.jenkinsfile");
+        job.run();
+        var view = createBuildMonitorView(j, "Build Monitor").addJobs(job.get());
+
+        BuildMonitorViewPage.from(p, view).goTo().getJob(job.get().getDisplayName());
+        //                .hasTestProgressBars();
+
+        try {
+            Thread.sleep(10000000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
