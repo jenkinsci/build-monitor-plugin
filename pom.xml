@@ -51,7 +51,7 @@
     <revision>1.14</revision>
     <changelist>999999-SNAPSHOT</changelist>
     <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
-    <jenkins.baseline>2.479</jenkins.baseline>
+    <jenkins.baseline>2.504</jenkins.baseline>
     <jenkins.version>2.510-SNAPSHOT</jenkins.version>
     <gitHubRepo>jenkinsci/build-monitor-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
@@ -64,7 +64,7 @@
       <dependency>
         <groupId>io.jenkins.tools.bom</groupId>
         <artifactId>bom-${jenkins.baseline}.x</artifactId>
-        <version>4607.v67a_4791074d7</version>
+        <version>4740.v75a_90f6fefb_7</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
