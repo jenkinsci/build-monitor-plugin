@@ -43,6 +43,10 @@ $cell-padding: 1rem;
     text-box: trim-both;
   }
 
+  h2 {
+    margin: 0;
+  }
+
   &::after {
     content: "";
     position: absolute;
