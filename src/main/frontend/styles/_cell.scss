@@ -118,6 +118,10 @@ $cell-padding: 1rem;
     }
   }
 
+  a {
+    color: inherit !important;
+  }
+
   & > * {
     z-index: 10;
   }

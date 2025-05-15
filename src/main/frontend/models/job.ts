@@ -29,12 +29,12 @@ export interface Job {
     progress: number;
     description: string;
     isPipeline: boolean;
-    pipelineStages: string[];
+    pipelineStages: string;
     hasPreviousBuild: boolean;
     previousBuild: any; // todo
     culprits: string[];
     committers: string[];
-  };
+  }[];
   badges?: {
     background: string | null;
     color: string | null;

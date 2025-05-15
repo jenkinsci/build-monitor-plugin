@@ -1,9 +1,10 @@
 import { useUserPreferences } from "../context/user-preference-provider.tsx";
 import { Job } from "../models/job";
-import time from "../utils/time";
 import { buildStatusToClass } from "../utils/utils.ts";
 import Label from "./label";
 import Badges from "./snippets/badges.tsx";
+import BuildNumber from "./snippets/build-number.tsx";
+import BuildTime from "./snippets/build-time.tsx";
 import Claim from "./snippets/claim.tsx";
 import Problems from "./snippets/problems.tsx";
 import Tests from "./snippets/tests.tsx";
@@ -46,13 +47,9 @@ function Cell({ job }: { job: Job }) {
       <Badges job={job} />
 
       <div className={"bm-cell__details"}>
-        <Label text={job.lastCompletedBuild.name} />
-        <Label
-          text={time(job.lastCompletedBuild.timeElapsedSince)}
-          style={{
-            textAlign: "right",
-          }}
-        />
+        <BuildNumber job={job} />
+
+        <BuildTime job={job} />
       </div>
     </a>
   );
