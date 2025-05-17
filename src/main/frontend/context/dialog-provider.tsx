@@ -4,11 +4,17 @@ interface ProviderResponse {
   createDialog: (error: string) => void;
 }
 
+declare global {
+  interface Window {
+    notificationBar: any;
+  }
+}
+
 const DialogContext = createContext<ProviderResponse | undefined>(undefined);
 
 export const UseDialogProvider = ({ children }: { children: ReactNode }) => {
   function createDialog(error: string) {
-    alert(error);
+    window.notificationBar.show(error, window.notificationBar.ERROR);
   }
 
   return (

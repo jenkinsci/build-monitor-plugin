@@ -28,7 +28,7 @@ export const JobsProvider = ({ children }: { children: ReactNode }) => {
         const jobs = await getJobs();
         setJobs(jobs);
       } catch (error) {
-        createDialog(error);
+        createDialog("Failed to fetch jobs");
       } finally {
         setIsLoading(false);
       }
