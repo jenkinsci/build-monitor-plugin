@@ -13,7 +13,7 @@
 
   <properties>
     <byte-buddy.version>1.17.6</byte-buddy.version>
-    <serenity.version>4.2.16</serenity.version>
+    <serenity.version>4.2.34</serenity.version>
   </properties>
 
   <dependencyManagement>
@@ -46,6 +46,11 @@
         <version>1.4.21</version>
       </dependency>
       <dependency>
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>1.11.0</version>
+      </dependency>
+      <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
         <version>1.18.0</version>
@@ -66,14 +71,29 @@
         <version>${byte-buddy.version}</version>
       </dependency>
       <dependency>
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna</artifactId>
+        <version>5.17.0</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-compress</artifactId>
         <version>1.27.1</version>
       </dependency>
       <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-text</artifactId>
+        <version>1.13.1</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
         <version>4.5.14</version>
+      </dependency>
+      <dependency>
+        <groupId>org.htmlunit</groupId>
+        <artifactId>htmlunit</artifactId>
+        <version>4.13.0</version>
       </dependency>
       <dependency>
         <groupId>org.projectlombok</groupId>
