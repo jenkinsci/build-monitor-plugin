@@ -27,7 +27,7 @@
     "karma-junit-reporter": "2.0.1",
     "karma-phantomjs-launcher": "1.0.4",
     "less-loader": "12.3.0",
-    "mini-css-extract-plugin": "2.9.2",
+    "mini-css-extract-plugin": "2.9.3",
     "style-loader": "4.0.0",
     "webpack": "5.100.2",
     "webpack-cli": "6.0.1",
