@@ -41,7 +41,7 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
           <>
             <span className={"bm-credit"}>
               Brought to you by{" "}
-              <a href="https://bit.ly/JBMAbout" target="_alt">
+              <a href="https://www.linkedin.com/in/janmolak/" target="_alt">
                 Jan Molak
               </a>{" "}
               and{" "}
