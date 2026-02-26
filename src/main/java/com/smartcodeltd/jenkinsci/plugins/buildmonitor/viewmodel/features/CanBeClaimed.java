@@ -49,10 +49,17 @@ public class CanBeClaimed implements Feature {
 
         @JsonProperty
         public String avatar() {
-            return UserAvatarResolver.resolve(getUserFromId(details.getClaimedBy()), "48x48");
+            User userFromId = getUserFromId(details.getClaimedBy());
+            if (userFromId == null) {
+                return "symbol-person-circle";
+            }
+            return UserAvatarResolver.resolve(userFromId, "48x48");
         }
 
         protected final User getUserFromId(String userId) {
+            if (userId == null) {
+                return null;
+            }
             return User.getById(userId, false);
         }
     }
