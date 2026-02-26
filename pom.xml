@@ -151,6 +151,7 @@
       <artifactId>test-harness</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- TODO - Confirm what dependency we actually need for badges -->
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>description-setter</artifactId>
@@ -164,12 +165,12 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>scm-api</artifactId>
-      <scope>test</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>script-security</artifactId>
-      <scope>test</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins.workflow</groupId>
