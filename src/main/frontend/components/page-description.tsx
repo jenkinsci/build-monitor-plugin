@@ -14,12 +14,7 @@ const PageDescription = ({ description }: { description?: string }) => {
   const descriptionPortal = breadcrumbs[breadcrumbs.length - 1];
 
   return createPortal(
-    <p
-      className="jenkins-!-margin-left-1"
-      style={{ color: "var(--text-color-secondary)" }}
-    >
-      {description}
-    </p>,
+    <p className="bm-description">{description}</p>,
     descriptionPortal,
   );
 };

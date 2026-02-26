@@ -29,6 +29,12 @@
   min-height: 0;
 }
 
+.bm-description {
+  margin-left: 0.375rem;
+  color: var(--text-color-secondary);
+  text-wrap: nowrap;
+}
+
 .bm-credit {
   color: var(--text-color-secondary);
   font-size: var(--font-size-sm);
