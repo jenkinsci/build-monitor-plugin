@@ -1,11 +1,8 @@
 # Build Monitor Plugin
 
-[![Build Status](https://ci.jenkins.io/job/Plugins/job/build-monitor-plugin/job/master/badge/icon)](https://ci.jenkins.io/job/Plugins/job/build-monitor-plugin/job/master/)
 [![Gitter](https://badges.gitter.im/jenkinsci/ux-sig.svg)](https://gitter.im/jenkinsci/ux-sig?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/build-monitor-plugin.svg)](https://plugins.jenkins.io/build-monitor-plugin)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/build-monitor-plugin.svg?color=blue)](https://plugins.jenkins.io/build-monitor-plugin)
-
-![preview.png](docs/preview.png)
 
 ## Introduction
 
