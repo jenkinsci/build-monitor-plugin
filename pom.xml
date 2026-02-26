@@ -151,12 +151,6 @@
       <artifactId>test-harness</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- TODO - Confirm what dependency we actually need for badges -->
-    <dependency>
-      <groupId>io.jenkins.plugins</groupId>
-      <artifactId>pipeline-graph-view</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>description-setter</artifactId>
