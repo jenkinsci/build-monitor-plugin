@@ -1,1 +1,1 @@
-addBadge(icon: 'symbol-rocket plugin-ionicons-api', text: 'Example badge')
+addBadge text: 'Example badge'

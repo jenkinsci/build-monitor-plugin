@@ -111,7 +111,7 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
     private static class ActionFilter implements Predicate<BadgeAction> {
         @Override
         public boolean test(BadgeAction action) {
-            return action.getText() != null;
+            return action.getIcon() == null;
         }
     }
 }
