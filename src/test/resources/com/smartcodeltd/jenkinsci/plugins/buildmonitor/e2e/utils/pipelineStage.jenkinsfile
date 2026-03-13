@@ -1,10 +1,1 @@
-pipeline {
-    agent any
-    stages {
-        stage('Compile') {
-            steps {
-              sleep 50
-            }
-        }
-    }
-}
+sleep 50
