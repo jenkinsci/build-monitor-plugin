@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges> {
 
     private final com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config;
-    private ActionFilter filter = new ActionFilter();
+    private final ActionFilter filter = new ActionFilter();
     private JobView job;
 
     public HasBadgesBadgePlugin(com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config config) {
@@ -111,7 +111,7 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
     private static class ActionFilter implements Predicate<BadgeAction> {
         @Override
         public boolean test(BadgeAction action) {
-            return action.getIcon() == null;
+            return action.getText() != null;
         }
     }
 }

@@ -51,7 +51,7 @@ public class CanBeClaimed implements Feature {
         public String avatar() {
             User userFromId = getUserFromId(details.getClaimedBy());
             if (userFromId == null) {
-                return "symbol-person-circle";
+                return null;
             }
             return UserAvatarResolver.resolve(userFromId, "48x48");
         }

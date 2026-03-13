@@ -1,10 +1,1 @@
-pipeline {
-    agent any
-    stages {
-        stage('Hello') {
-            steps {
-                addBadge text: 'Example badge'
-            }
-        }
-    }
-}
+addBadge(icon: 'symbol-rocket plugin-ionicons-api', text: 'Example badge')
