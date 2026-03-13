@@ -1,1 +1,3 @@
-sleep 50
+stage('Compile') {
+    sleep 50
+}
