@@ -131,11 +131,6 @@ public class BuildMonitorView extends ListView {
         return currentConfig().getDisplayJUnitProgress();
     }
 
-    @SuppressWarnings("unused") // used in .jelly
-    public boolean collectAnonymousUsageStatistics() {
-        return descriptor.getPermissionToCollectAnonymousUsageStatistics();
-    }
-
     @Override
     protected void initColumns() {}
 
