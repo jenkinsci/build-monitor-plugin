@@ -36,11 +36,8 @@ export interface Job {
     committers: string[];
   }[];
   badges?: {
-    background: string | null;
-    color: string | null;
+    style: string | undefined;
     text: string;
-    borderColor: string | null;
-    border: string | null;
   }[];
   claim?: {
     active: boolean;

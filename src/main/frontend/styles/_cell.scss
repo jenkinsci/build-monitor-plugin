@@ -56,7 +56,6 @@ $cell-padding: 1rem;
 
   &::after {
     background: var(--bm-cell-color);
-    mask-image: var(--cell-texture, url("data:"));
     mask-position: center;
     mask-size: 6.25rem;
     opacity: 0;
