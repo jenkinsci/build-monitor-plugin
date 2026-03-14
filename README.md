@@ -29,16 +29,15 @@ Have a question? Perhaps it's already been answered - check the [FAQ](#faq) sect
 
 To create a new Build Monitor View, click on the "New View" tab, select "Build Monitor View" and select jobs you wish to display on the monitor.
 
-![Setting up](docs/Setting_up.png)
+![Setting up](docs/setting-up.png)
 
 Simple, right? :-) You can have as many Build Monitor Views as you want - the most popular approach is to have one per team or one per project.
 
 # A picture is worth a thousand words
 
-![Adding jobs](docs/1_Adding_jobs.png)
-![Three columns view](docs/2_Three_columns_view.png)
-![Supports Claim and Build Failure Analyzer plugins](docs/3_Two_columns_view_with_claim_and_build_failure_analyzer_plugins.png)
-![Colour-blind mode](docs/4_Colour_blind_mode.png)
+![Adding jobs](docs/empty.png)
+![Three columns view](docs/jobs.png)
+![Colour-blind mode](docs/color-blind-mode.png)
 
 ## FAQ
 
