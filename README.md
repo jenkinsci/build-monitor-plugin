@@ -16,20 +16,20 @@ Have a question? Perhaps it's already been answered - check the [FAQ](#faq) sect
 
 * Displays the status and progress of selected jobs. The view is updated automatically every few seconds.
 * Displays the names of people who might be responsible for "breaking the build".
-* Supports the [Claim plugin](https://plugins.jenkins.io/claim/), so that you can see who's fixing a broken build
+* Supports [Claim plugin](https://plugins.jenkins.io/claim/), so that you can see who's fixing a broken build.
 * Supports [View Job Filters](https://plugins.jenkins.io/view-job-filters/), so that you can easily create Build Monitors for "slow builds", "only failing", etc.
-* Supports [Build Failure Analyzer](https://plugins.jenkins.io/build-failure-analyzer/), so that you know not only *who*, but also *what* broke the build; [learn more](http://bit.ly/JBMBuild102)
-* Supports [CloudBees Folders Plugin](https://plugins.jenkins.io/cloudbees-folder/), so that you can have project- and team-specific nested Build Monitors; [learn more](http://bit.ly/JBMBuild117)
-* Supports [Pipeline Plugin](https://plugins.jenkins.io/workflow-aggregator/), so that the currently executing stage(s) are shown.
+* Supports [Build Failure Analyzer](https://plugins.jenkins.io/build-failure-analyzer/), so that you know not only *who*, but also *what* broke the build.
+* Supports [Folder plugin](https://plugins.jenkins.io/cloudbees-folder/), so that you can have project- and team-specific nested Build Monitors.
+* Supports [Pipeline plugin](https://plugins.jenkins.io/workflow-aggregator/), so that the currently executing stage(s) are shown.
+* Supports [Theme Manager plugin](https://plugins.jenkins.io/theme-manager/), so you can easily switch between different themes.
+* Supports [Customizable Header plugin](https://plugins.jenkins.io/customizable-header/), so your team can have a custom header on your Build Monitor.
 * The number of columns and size of the font used is easily customisable, making it trivial to accommodate screens of different sizes.
-* UI configuration is stored in local storage, making it possible to display different number of columns and using different font size on each of the screens at your office.
-* Can work in a colour-blind-friendly mode; [learn more](https://github.com/jenkinsci/build-monitor-plugin/issues/30#issuecomment-35849019)
+* UI is configurable, you can have a different number of columns _and_ use a different font size on each of the screens in your office.
+* Can work in a color-blind-friendly mode.
 
 ## Getting started
 
 To create a new Build Monitor View, click on the "New View" tab, select "Build Monitor View" and select jobs you wish to display on the monitor.
-
-![Setting up](docs/setting-up.png)
 
 Simple, right? :-) You can have as many Build Monitor Views as you want - the most popular approach is to have one per team or one per project.
 
