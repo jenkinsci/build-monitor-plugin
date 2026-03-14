@@ -1,0 +1,159 @@
+$cell-padding: 1rem;
+
+.bm-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.75em;
+  border: none;
+  appearance: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: none !important;
+  border-radius: 1rem;
+  font-size: 1.5em;
+  font-weight: 450 !important;
+  padding: $cell-padding;
+  z-index: 0;
+  transition: var(--standard-transition);
+  text-shadow:
+    0 0 1px color-mix(in srgb, var(--background) 15%, transparent),
+    0 5px 15px color-mix(in srgb, var(--background) 15%, transparent);
+  outline: none;
+  overflow: hidden;
+  text-align: center;
+  color: var(
+    --bm-contrast,
+    color-mix(in srgb, var(--bm-cell-color) 75%, var(--text-color))
+  ) !important;
+  background: color-mix(
+    in oklch,
+    var(--bm-cell-color) var(--opacity-modifier, 45%),
+    transparent
+  );
+  box-shadow:
+    inset var(--jenkins-border--subtle-shadow),
+    var(--form-input-glow);
+
+  * {
+    font-size: inherit;
+    color: inherit;
+    text-box: trim-both;
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  &::after {
+    background: var(--bm-cell-color);
+    mask-image: var(--cell-texture, url("data:"));
+    mask-position: center;
+    mask-size: 6.25rem;
+    opacity: 0;
+
+    @media screen and (prefers-reduced-motion: no-preference) {
+      transition: var(--standard-transition);
+    }
+  }
+
+  &--color-blind-mode {
+    &::after {
+      opacity: 0.35;
+      mask-size: 6rem;
+    }
+  }
+
+  &:hover {
+    --opacity-modifier: 55%;
+  }
+
+  &:active,
+  &:focus {
+    --opacity-modifier: 65%;
+
+    box-shadow:
+      inset var(--jenkins-border--subtle-shadow),
+      0 0 0 0.25rem oklch(from var(--bm-cell-color) l c h / 30%);
+  }
+
+  &--successful {
+    --bm-cell-color: var(--success-color);
+  }
+
+  &--failing {
+    --bm-cell-color: var(--destructive-color);
+    --cell-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><rect width='10' height='10' fill='transparent'/><path d='M0,10 L10,0 M-2,2 L2,-2 M8,12 L12,8' stroke='black' stroke-width='2'/></svg>");
+  }
+
+  &--warning {
+    --bm-cell-color: var(--warning-color);
+    --cell-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><polygon points='50,0 100,50 50,100 0,50' fill='black'/></svg>");
+  }
+
+  &--null {
+    --bm-cell-color: var(--text-color-secondary);
+    --cell-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><circle cx='5' cy='5' r='2' fill='black' /></svg>");
+  }
+
+  &--disabled {
+    --bm-cell-color: var(--text-color-secondary);
+    opacity: 0.4;
+  }
+
+  &--running {
+    --bm-cell-color: var(--blue);
+
+    &::before {
+      animation: pulse-thing 3s ease infinite;
+    }
+  }
+
+  a {
+    color: inherit !important;
+  }
+
+  & > * {
+    z-index: 10;
+  }
+
+  &__details {
+    position: absolute;
+    left: $cell-padding;
+    right: $cell-padding;
+    bottom: $cell-padding;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  .bm-cell-duration {
+    position: absolute;
+    inset: 0;
+    border-radius: 0;
+    background: var(--bm-cell-color);
+    pointer-events: none;
+    transition: 0.3s ease;
+    opacity: 0;
+
+    &--animate {
+      opacity: 0.2;
+      animation: pulse-thing 2s ease-in-out infinite;
+    }
+  }
+
+  @keyframes pulse-thing {
+    50% {
+      opacity: 0.25;
+    }
+  }
+}

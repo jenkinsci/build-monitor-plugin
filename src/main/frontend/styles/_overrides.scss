@@ -1,0 +1,53 @@
+// We need the grid to fill the available space of the page
+// The available space is dynamic due to varying header sizes, as well as system messages
+#page-body {
+  position: fixed;
+  inset: 0;
+}
+
+#main-panel {
+  display: flex;
+  flex-direction: column;
+
+  #page-header {
+    max-height: var(--header-height);
+  }
+
+  #app {
+    display: contents;
+  }
+}
+
+// The reset button doesn't fill the full width otherwise
+.jenkins-dropdown__item {
+  width: 100%;
+}
+
+// The 'No jobs' notice doesn't fill the full height otherwise
+.jenkins-notice {
+  height: 100%;
+  min-height: 0;
+  margin-bottom: 0;
+}
+
+.bm-description {
+  margin-left: 0.375rem;
+  color: var(--text-color-secondary);
+  text-wrap: nowrap;
+}
+
+.bm-credit {
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-sm);
+  text-wrap: nowrap;
+  margin-right: 0.5rem;
+  transition: opacity var(--standard-transition);
+
+  &:not(:hover) {
+    opacity: 0.5;
+
+    a {
+      color: var(--text-color-secondary);
+    }
+  }
+}

@@ -1,0 +1,138 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+
+  <!-- BEGIN cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.532/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
+
+  <f:section title="${%Job Filters}">
+
+  <f:entry title="${%Status Filter}" help="/help/view-config/statusFilter.html">
+    <div class="jenkins-select">
+      <select name="statusFilter" class="jenkins-select__input">
+        <f:option value="" selected="${it.statusFilter==null}">${%All selected jobs}</f:option>
+        <f:option value="1" selected="${it.statusFilter==true}">${%Enabled jobs only}</f:option>
+        <f:option value="2" selected="${it.statusFilter==false}">${%Disabled jobs only}</f:option>
+      </select>
+    </div>
+  </f:entry>
+
+  <f:entry field="recurse">
+    <f:checkbox id="recurse" title="${%Recurse in subfolders}" />
+  </f:entry>
+
+  <f:entry title="${%Jobs}">
+    <div class="listview-jobs">
+      <j:forEach var="job" items="${h.getAllTopLevelItems(it.ownerItemGroup)}">
+        <j:set var="spanClass" value=""/>
+        <j:set var="spanStyle" value=""/>
+        <j:if test="${job.parent!=it.ownerItemGroup}">
+          <j:set var="spanClass" value="nested"/>
+          <j:set var="spanStyle" value="${it.recurse?'':'display:none'}"/>
+        </j:if>
+        <span class="${spanClass}" style="${spanStyle}">
+          <f:checkbox name="item_${job.getRelativeNameFromGroup(it.ownerItemGroup)}" checked="${it.jobNamesContains(job)}" title="${h.getRelativeDisplayNameFrom(job,it.ownerItemGroup)}" tooltip="${job.fullName}" json="true"/>
+          <br/>
+        </span>
+      </j:forEach>
+    </div>
+  </f:entry>
+
+  <f:optionalBlock name="useincluderegex" title="${%Use a regular expression to include jobs into the view}"
+                   checked="${it.includeRegex != null}" help="/help/view-config/includeregex.html">
+    <f:entry title="${%Regular expression}">
+      <f:textbox name="includeRegex" field="includeRegex" />
+    </f:entry>
+  </f:optionalBlock>
+
+  <j:if test="${it.hasJobFilterExtensions()}">
+    <f:block>
+      <f:repeatableHeteroProperty field="jobFilters" hasHeader="true" addCaption="${%Add Job Filter}" />
+    </f:block>
+  </j:if>
+
+  </f:section>
+
+  <!-- END cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.532/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
+
+  <f:section title="${%Build Monitor - View Settings}">
+
+  <f:entry title="${%Title}">
+    <f:textbox name="title" value="${it.title}"/>
+  </f:entry>
+
+  <f:entry title="${%Ordered by}">
+    <div class="jenkins-select">
+      <select name="order" class="jenkins-select__input">
+        <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
+        <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
+        <f:option value="ByFullName" selected="${it.currentOrder()=='ByFullName'}">${%Full name}</f:option>
+        <f:option value="ByStatus" selected="${it.currentOrder()=='ByStatus'}">${%Status}</f:option>
+        <f:option value="ByLastBuildTime" selected="${it.currentOrder()=='ByLastBuildTime'}">${%Last build time}</f:option>
+        <f:option value="ByEstimatedDuration" selected="${it.currentOrder()=='ByEstimatedDuration'}">${%Estimated duration}</f:option>
+      </select>
+    </div>
+  </f:entry>
+
+  </f:section>
+
+  <f:section title="${%Build Monitor - Default Display Settings}">
+
+    <f:entry title="${%Text scale}" field="textScale">
+      <f:textbox name="textScale" value="${it.textScale}" />
+    </f:entry>
+
+    <f:entry title="${%Maximum number of columns}" field="maxColumns">
+      <f:textbox name="maxColumns" value="${it.maxColumns}" />
+    </f:entry>
+
+    <f:entry title="${%Enable Colour blind mode}">
+      <f:checkbox id="colourBlindMode" field="colourBlindMode" />
+    </f:entry>
+
+    <f:entry title="${%Enable Show badges}">
+      <f:checkbox id="showBadges" field="showBadges" />
+    </f:entry>
+
+  </f:section>
+
+  <f:section title="${%Build Monitor - Widget Settings}">
+
+    <f:entry title="${%Display committers}" help="${descriptor.getHelpFile('displayCommitters')}">
+      <f:checkbox id="displayCommitters" field="displayCommitters" />
+    </f:entry>
+
+    <f:entry title="${%Failure Analyzer Plugin: Field to display}" help="${descriptor.getHelpFile('buildFailureAnalyzerDisplayedField')}">
+      <div class="jenkins-select">
+        <select name="buildFailureAnalyzerDisplayedField" class="jenkins-select__input">
+          <f:option value="Name" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='Name'}">${%Name}</f:option>
+          <f:option value="Description" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='Description'}">${%Description}</f:option>
+          <f:option value="None" selected="${it.currentbuildFailureAnalyzerDisplayedField()=='None'}">${%None}</f:option>
+        </select>
+      </div>
+    </f:entry>
+
+    <f:entry title="${%Display badges}" help="${descriptor.getHelpFile('displayBadges')}">
+      <div class="jenkins-select">
+        <select name="displayBadges" class="jenkins-select__input">
+          <f:option value="Always" selected='${it.currentDisplayBadges()=="Always"}'>${%Always}</f:option>
+          <f:option value="Never" selected="${it.currentDisplayBadges()=='Never'}">${%Never}</f:option>
+          <f:option value="UserSetting" selected="${it.currentDisplayBadges()=='UserSetting'}">${%User Setting}</f:option>
+        </select>
+      </div>
+    </f:entry>
+
+    <f:entry title="${%Display badges from}" help="${descriptor.getHelpFile('displayBadgesFrom')}">
+      <div class="jenkins-select">
+        <select name="displayBadgesFrom" class="jenkins-select__input">
+          <f:option value="GetLastBuild" selected='${it.currentDisplayBadgesFrom()=="GetLastBuild"}'>${%Last Build}</f:option>
+          <f:option value="GetLastCompletedBuild" selected="${it.currentDisplayBadgesFrom()=='GetLastCompletedBuild'}">${%Last Completed Build}</f:option>
+        </select>
+      </div>
+    </f:entry>
+
+    <f:entry title="${%Display JUnit Realtime progress}" help="${descriptor.getHelpFile('displayJUnitProgress')}">
+      <f:checkbox id="displayJUnitProgress" field="displayJUnitProgress" />
+    </f:entry>
+
+  </f:section>
+  
+</j:jelly>
