@@ -9,6 +9,7 @@ export default function Slider({
   step,
   value,
   setValue,
+  disabled,
 }: {
   label: string;
   min: number;
@@ -16,6 +17,7 @@ export default function Slider({
   step: number;
   value: number;
   setValue: (e: ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }) {
   return (
     <div className={"bm-slider__container"}>
@@ -38,6 +40,7 @@ export default function Slider({
         value={value}
         step={step}
         onChange={setValue}
+        disabled={disabled}
       />
     </div>
   );

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
+import { useConfirmation } from "../context/confirmation-provider.tsx";
 import { useUserPreferences } from "../context/user-preference-provider.tsx";
-import { RESET_SYMBOL, SETTINGS_SYMBOL } from "../utils/symbols";
+import { DELETE_SYMBOL, RESET_SYMBOL, SETTINGS_SYMBOL } from "../utils/symbols";
 import Checkbox from "./checkbox";
 import Dropdown from "./dropdown.tsx";
 import Slider from "./slider";
@@ -26,6 +27,8 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
   } = useUserPreferences();
   const [ready, setReady] = useState(false);
   const buttonPortal = document.querySelector(".jenkins-header__actions")!;
+  const { createConfirmation } = useConfirmation();
+  const controlsEnabled = amountOfJobs === 0;
 
   useEffect(() => {
     if (buttonPortal) {
@@ -50,7 +53,6 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
               </a>
             </span>
             <Dropdown
-              disabled={amountOfJobs === 0}
               items={[
                 <Slider
                   key={"text-size"}
@@ -60,6 +62,7 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
                   value={textSize}
                   setValue={(e) => setTextSize(Number(e.target.value))}
                   step={0.1}
+                  disabled={controlsEnabled}
                 />,
                 <Slider
                   key={"maximum-number-of-columns"}
@@ -71,6 +74,7 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
                     setMaximumNumberOfColumns(Number(e.target.value))
                   }
                   step={1}
+                  disabled={controlsEnabled || amountOfJobs === 1}
                 />,
                 "separator",
                 <div key={"show-badges"} className={"bm-checkboxes"}>
@@ -79,12 +83,14 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
                     id="settings-show-badges"
                     value={showBadges}
                     setValue={(e) => setShowBadges(e)}
+                    disabled={controlsEnabled}
                   />
                   <Checkbox
                     label={"Color blind mode"}
                     id="settings-color-blind-mode"
                     value={colorBlindMode}
                     setValue={(e) => setColorBlindMode(e)}
+                    disabled={controlsEnabled}
                   />
                 </div>,
                 "separator",
@@ -93,7 +99,6 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
                   text: "Edit View",
                   href: "configure",
                 },
-                "separator",
                 <button
                   key={"reset"}
                   className={"jenkins-dropdown__item jenkins-!-warning-color"}
@@ -104,6 +109,25 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
                     {RESET_SYMBOL}
                   </div>
                   Reset to default
+                </button>,
+                "separator",
+                <button
+                  key={"delete"}
+                  className={
+                    "jenkins-dropdown__item jenkins-!-destructive-color"
+                  }
+                  onClick={() =>
+                    createConfirmation(
+                      "Are you sure you want to delete this view?",
+                      "This won't delete the jobs inside of it.",
+                      "doDelete",
+                    )
+                  }
+                >
+                  <div className={"jenkins-dropdown__item__icon"}>
+                    {DELETE_SYMBOL}
+                  </div>
+                  Delete View
                 </button>,
               ]}
             />

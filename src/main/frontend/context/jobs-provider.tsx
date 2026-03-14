@@ -8,7 +8,7 @@ import {
 
 import { getJobs } from "../apis/api.ts";
 import { Job } from "../models/job.ts";
-import { useDialog } from "./dialog-provider.tsx";
+import { useNotification } from "./notification-provider.tsx";
 
 interface JobsContextType {
   jobs: Job[];
@@ -20,7 +20,7 @@ const JobsContext = createContext<JobsContextType | undefined>(undefined);
 export const JobsProvider = ({ children }: { children: ReactNode }) => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { createDialog } = useDialog();
+  const { createNotification } = useNotification();
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -28,7 +28,7 @@ export const JobsProvider = ({ children }: { children: ReactNode }) => {
         const jobs = await getJobs();
         setJobs(jobs);
       } catch (error) {
-        createDialog("Failed to fetch jobs");
+        createNotification("Failed to fetch jobs");
       } finally {
         setIsLoading(false);
       }
@@ -38,7 +38,7 @@ export const JobsProvider = ({ children }: { children: ReactNode }) => {
     const intervalID = setInterval(fetchJobs, 3000);
 
     return () => clearInterval(intervalID);
-  }, [createDialog]);
+  }, [createNotification]);
 
   return (
     <JobsContext.Provider value={{ jobs, isLoading }}>
