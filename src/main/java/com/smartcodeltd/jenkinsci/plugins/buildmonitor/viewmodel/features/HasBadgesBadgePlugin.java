@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -58,9 +59,11 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
 
     public static class Badge {
         private final BadgeAction badge;
-        private static final Pattern BADGE_STYLE_PATTERN =
-                Pattern.compile("(border: (?<border>.*) solid (?<borderColor>.*);)?"
-                        + "(background: (?<background>.*);)?" + "(color: (?<color>.*);)?");
+        private static final Pattern COLOR_PATTERN = Pattern.compile("(?:^|\\s)color:\\s*(?<color>[^;]+)");
+        private static final Pattern BACKGROUND_PATTERN =
+                Pattern.compile("(?:^|\\s)background:\\s*(?<background>[^;]+)");
+        private static final Pattern BORDER_PATTERN =
+                Pattern.compile("(?:^|\\s)border:\\s*(?<border>\\S+)\\s+solid\\s+(?<borderColor>[^;]+)");
 
         public Badge(BadgeAction badge) {
             this.badge = badge;
@@ -73,38 +76,42 @@ public class HasBadgesBadgePlugin implements Feature<HasBadgesBadgePlugin.Badges
 
         @JsonProperty
         public final String color() {
-            //            String style = badge.getStyle();
-            //            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
-            //            return matcher.matches() ? matcher.group("color") : null;
-            // TODO - this is breaking
-            return null;
+            String style = badge.getStyle();
+            if (style == null) {
+                return null;
+            }
+            Matcher matcher = COLOR_PATTERN.matcher(style);
+            return matcher.find() ? matcher.group("color").trim() : null;
         }
 
         @JsonProperty
         public final String background() {
-            //            String style = badge.getStyle();
-            //            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
-            //            return matcher.matches() ? matcher.group("background") : null;
-            // TODO - this is breaking
-            return null;
+            String style = badge.getStyle();
+            if (style == null) {
+                return null;
+            }
+            Matcher matcher = BACKGROUND_PATTERN.matcher(style);
+            return matcher.find() ? matcher.group("background").trim() : null;
         }
 
         @JsonProperty
         public final String border() {
-            //            String style = badge.getStyle();
-            //            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
-            //            return matcher.matches() ? matcher.group("border") : null;
-            // TODO - this is breaking
-            return null;
+            String style = badge.getStyle();
+            if (style == null) {
+                return null;
+            }
+            Matcher matcher = BORDER_PATTERN.matcher(style);
+            return matcher.find() ? matcher.group("border").trim() : null;
         }
 
         @JsonProperty
         public final String borderColor() {
-            //            String style = badge.getStyle();
-            //            Matcher matcher = BADGE_STYLE_PATTERN.matcher(style);
-            //            return matcher.matches() ? matcher.group("borderColor") : null;
-            // TODO - this is breaking
-            return null;
+            String style = badge.getStyle();
+            if (style == null) {
+                return null;
+            }
+            Matcher matcher = BORDER_PATTERN.matcher(style);
+            return matcher.find() ? matcher.group("borderColor").trim() : null;
         }
     }
 
