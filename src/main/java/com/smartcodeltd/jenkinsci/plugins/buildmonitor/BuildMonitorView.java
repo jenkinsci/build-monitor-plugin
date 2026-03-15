@@ -131,6 +131,11 @@ public class BuildMonitorView extends ListView {
         return currentConfig().getDisplayJUnitProgress();
     }
 
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public int getAutoRefreshEvery() {
+        return currentConfig().getAutoRefreshEvery();
+    }
+
     @Override
     protected void initColumns() {}
 
@@ -163,6 +168,7 @@ public class BuildMonitorView extends ListView {
             currentConfig()
                     .setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
             currentConfig().setDisplayJUnitProgress(json.optBoolean("displayJUnitProgress", true));
+            currentConfig().setAutoRefreshEvery(json.optInt("autoRefreshEvery", 4));
 
             try {
                 currentConfig().setOrder(orderIn(requestedOrdering));

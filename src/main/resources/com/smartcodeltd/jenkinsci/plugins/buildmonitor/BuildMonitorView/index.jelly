@@ -14,7 +14,8 @@
                 data-appearance-text-size="${it.textScale}"
                 data-appearance-maximum-number-of-columns="${it.maxColumns}"
                 data-appearance-color-blind-mode="${it.colourBlindMode}"
-                data-appearance-show-badges="${it.showBadges}" />
+                data-appearance-show-badges="${it.showBadges}"
+                data-auto-refresh-every="${it.autoRefreshEvery}" />
 
            <script src="${rootURL}/plugin/build-monitor-plugin/js/bundles/app.js" />
        </l:main-panel>

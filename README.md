@@ -14,7 +14,7 @@ Have a question? Perhaps it's already been answered - check the [FAQ](#faq) sect
 
 ## Features
 
-* Displays the status and progress of selected jobs. The view is updated automatically every few seconds.
+* Displays the status and progress of selected jobs. By default, the view refreshes every 4 seconds. This can be configured.
 * Displays the names of people who might be responsible for "breaking the build".
 * Supports [Claim plugin](https://plugins.jenkins.io/claim/), so that you can see who's fixing a broken build.
 * Supports [View Job Filters](https://plugins.jenkins.io/view-job-filters/), so that you can easily create Build Monitors for "slow builds", "only failing", etc.

@@ -111,6 +111,11 @@
       <f:checkbox id="displayJUnitProgress" field="displayJUnitProgress" />
     </f:entry>
 
+    <f:entry title="${%Auto refresh every}"
+             description="${%How often this view refreshes, in seconds.}"
+             field="autoRefreshEvery">
+      <f:number min="1" clazz="number" />
+    </f:entry>
   </f:section>
 
   <f:section title="${%Appearance}"
