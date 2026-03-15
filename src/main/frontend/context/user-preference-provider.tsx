@@ -48,11 +48,11 @@ const loadFromLocalStorage = <T,>(key: string, fallback: T): T => {
 export const UserPreferencesProvider = ({
   monitorId,
   children,
-  defaults,
+  defaultPreferences,
 }: {
   monitorId: string;
   children: ReactNode;
-  defaults: {
+  defaultPreferences: {
     textSize: number;
     maximumNumberOfColumns: number;
     colorBlindMode: boolean;
@@ -65,20 +65,20 @@ export const UserPreferencesProvider = ({
   const showBadgesKey = makeKey(monitorId, "showBadges");
 
   const [colorBlindMode, setColorBlindModeState] = useState<boolean>(
-    loadFromLocalStorage(colorBlindKey, defaults.colorBlindMode),
+    loadFromLocalStorage(colorBlindKey, defaultPreferences.colorBlindMode),
   );
   const [textSize, setTextSizeState] = useState<number>(
-    loadFromLocalStorage(textSizeKey, defaults.textSize),
+    loadFromLocalStorage(textSizeKey, defaultPreferences.textSize),
   );
   const [maximumNumberOfColumns, setMaximumNumberOfColumnsState] =
     useState<number>(
       loadFromLocalStorage(
         maximumNumberOfColumnsKey,
-        defaults.maximumNumberOfColumns,
+        defaultPreferences.maximumNumberOfColumns,
       ),
     );
   const [showBadges, setShowBadgesState] = useState<boolean>(
-    loadFromLocalStorage(showBadgesKey, defaults.showBadges),
+    loadFromLocalStorage(showBadgesKey, defaultPreferences.showBadges),
   );
 
   useEffect(() => {
@@ -101,10 +101,10 @@ export const UserPreferencesProvider = ({
   }, [showBadges]);
 
   function reset() {
-    setColorBlindModeState(defaults.colorBlindMode);
-    setTextSizeState(defaults.textSize);
-    setMaximumNumberOfColumnsState(defaults.maximumNumberOfColumns);
-    setShowBadgesState(defaults.showBadges);
+    setColorBlindModeState(defaultPreferences.colorBlindMode);
+    setTextSizeState(defaultPreferences.textSize);
+    setMaximumNumberOfColumnsState(defaultPreferences.maximumNumberOfColumns);
+    setShowBadgesState(defaultPreferences.showBadges);
   }
 
   return (
@@ -120,10 +120,11 @@ export const UserPreferencesProvider = ({
         setShowBadges: setShowBadgesState,
         reset,
         isResettable:
-          colorBlindMode === defaults.colorBlindMode &&
-          textSize === defaults.textSize &&
-          maximumNumberOfColumns === defaults.maximumNumberOfColumns &&
-          showBadges === defaults.showBadges,
+          colorBlindMode === defaultPreferences.colorBlindMode &&
+          textSize === defaultPreferences.textSize &&
+          maximumNumberOfColumns ===
+            defaultPreferences.maximumNumberOfColumns &&
+          showBadges === defaultPreferences.showBadges,
       }}
     >
       {children}
