@@ -112,7 +112,7 @@
     </f:entry>
 
     <f:entry title="${%Auto refresh every}"
-             description="${%How often this view refreshes automatically, in seconds.}"
+             description="${%How often this view refreshes, in seconds.}"
              field="autoRefreshEvery">
       <f:number min="1" clazz="number" />
     </f:entry>
