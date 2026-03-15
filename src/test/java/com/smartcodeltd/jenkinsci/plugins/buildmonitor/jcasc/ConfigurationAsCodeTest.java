@@ -43,6 +43,7 @@ class ConfigurationAsCodeTest {
         assertThat(view.getConfig().getMaxColumns(), is(2));
         assertThat(view.getConfig().getOrder(), isA(ByStatus.class));
         assertThat(view.getConfig().getShowBadges(), is(false));
+        assertThat(view.getConfig().getAutoRefreshEvery(), is(10));
     }
 
     @Test

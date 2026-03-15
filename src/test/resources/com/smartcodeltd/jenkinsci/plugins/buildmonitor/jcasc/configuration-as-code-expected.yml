@@ -1,5 +1,6 @@
 - buildMonitor:
     config:
+      autoRefreshEvery: 10
       colourBlindMode: true
       displayBadgesFrom: "getLastBuild"
       displayCommitters: false

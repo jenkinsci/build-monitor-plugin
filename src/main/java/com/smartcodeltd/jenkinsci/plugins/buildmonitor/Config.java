@@ -27,6 +27,7 @@ public class Config implements Describable<Config> {
     private GetBuildViewModel displayBadgesFrom;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     private Boolean displayJUnitProgress;
+    private Integer autoRefreshEvery;
 
     public static Config defaultConfig() {
         return new Config();
@@ -113,8 +114,16 @@ public class Config implements Describable<Config> {
         this.displayJUnitProgress = flag;
     }
 
+    public int getAutoRefreshEvery() {
+        return Optional.ofNullable(autoRefreshEvery).orElse(3);
+    }
+
+    public void setAutoRefreshEvery(int autoRefreshEvery) {
+        this.autoRefreshEvery = autoRefreshEvery;
+    }
+
     public int getMaxColumns() {
-        return Optional.ofNullable(maxColumns).orElse(3);
+        return Optional.ofNullable(maxColumns).orElse(4);
     }
 
     public void setMaxColumns(int maxColumns) {

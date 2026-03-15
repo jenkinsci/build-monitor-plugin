@@ -29,7 +29,9 @@ root.render(
           showBadges: rootElement.dataset.appearanceShowBadges === "true",
         }}
       >
-        <JobsProvider>
+        <JobsProvider
+          autoRefreshEvery={Number(rootElement.dataset.autoRefreshEvery)}
+        >
           <Container />
           <PageDescription
             description={rootElement.dataset.buildMonitorDescription}
@@ -37,6 +39,5 @@ root.render(
         </JobsProvider>
       </UserPreferencesProvider>
     </UseConfirmationProvider>
-    ,
   </UseNotificationProvider>,
 );

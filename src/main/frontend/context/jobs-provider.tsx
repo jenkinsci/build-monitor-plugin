@@ -17,7 +17,13 @@ interface JobsContextType {
 
 const JobsContext = createContext<JobsContextType | undefined>(undefined);
 
-export const JobsProvider = ({ children }: { children: ReactNode }) => {
+export const JobsProvider = ({
+  children,
+  autoRefreshEvery,
+}: {
+  children: ReactNode;
+  autoRefreshEvery: number;
+}) => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { createNotification } = useNotification();
@@ -35,7 +41,7 @@ export const JobsProvider = ({ children }: { children: ReactNode }) => {
     };
 
     fetchJobs();
-    const intervalID = setInterval(fetchJobs, 3000);
+    const intervalID = setInterval(fetchJobs, autoRefreshEvery * 1000);
 
     return () => clearInterval(intervalID);
   }, [createNotification]);
