@@ -55,6 +55,7 @@
     <jenkins.version>${jenkins.baseline}.3</jenkins.version>
     <gitHubRepo>jenkinsci/build-monitor-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
+    <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
     <node.version>22.14.0</node.version>
     <npm.version>11.2.0</npm.version>
   </properties>

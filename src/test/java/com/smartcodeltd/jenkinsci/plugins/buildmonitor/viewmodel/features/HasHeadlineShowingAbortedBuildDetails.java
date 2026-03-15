@@ -13,32 +13,32 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
 import hudson.model.User;
 import jenkins.model.Jenkins;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-public class HasHeadlineShowingAbortedBuildDetails {
+class HasHeadlineShowingAbortedBuildDetails {
 
     private JobView view;
 
     private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void beforeEach() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
         mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void afterEach() {
         mockedJenkins.close();
     }
 
     @Test
-    public void should_tell_who_aborted_the_build() {
+    void should_tell_who_aborted_the_build() {
         try (MockedStatic<User> mockedUser = mockStatic(User.class)) {
             view = a(jobView()
                     .which(hasHeadlineThatShowsCommitters())
@@ -49,7 +49,7 @@ public class HasHeadlineShowingAbortedBuildDetails {
     }
 
     @Test
-    public void should_tell_if_a_build_was_aborted() {
+    void should_tell_if_a_build_was_aborted() {
         view = a(jobView()
                 .which(hasHeadlineThatDoesNotShowCommitters())
                 .of(a(job().whereTheLast(build().wasAbortedBy("Abe", null)))));

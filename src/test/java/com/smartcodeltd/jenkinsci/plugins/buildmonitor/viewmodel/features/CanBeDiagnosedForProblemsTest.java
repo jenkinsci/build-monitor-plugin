@@ -13,31 +13,32 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.Config.BuildFailureAnalyz
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import hudson.model.Result;
 import jenkins.model.Jenkins;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-public class CanBeDiagnosedForProblemsTest {
+class CanBeDiagnosedForProblemsTest {
+
     private JobView job;
 
     private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void beforeEach() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
         mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void afterEach() {
         mockedJenkins.close();
     }
 
     @Test
-    public void should_describe_known_problems() {
+    void should_describe_known_problems() {
         String rogueAi = "Pod bay doors didn't open";
 
         job = a(jobView()

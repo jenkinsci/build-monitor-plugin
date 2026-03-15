@@ -1,7 +1,7 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor.pipeline;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
@@ -11,13 +11,13 @@ import hudson.Plugin;
 import hudson.model.AbstractBuild;
 import jenkins.model.Jenkins;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-public class PipelineHelperTest {
+class PipelineHelperTest {
 
     @Test
-    public void isWorkflowRun() {
+    void isWorkflowRun() {
         try (MockedStatic<Jenkins> mockedJenkins = mockStatic(Jenkins.class)) {
             Jenkins jenkins = createMockJenkins(mockedJenkins);
             Plugin mockedPipeline = mock(Plugin.class);
@@ -29,7 +29,7 @@ public class PipelineHelperTest {
     }
 
     @Test
-    public void isNotWorkflowRun() {
+    void isNotWorkflowRun() {
         try (MockedStatic<Jenkins> mockedJenkins = mockStatic(Jenkins.class)) {
             createMockJenkins(mockedJenkins);
             AbstractBuild abstractBuild = mock(AbstractBuild.class);
