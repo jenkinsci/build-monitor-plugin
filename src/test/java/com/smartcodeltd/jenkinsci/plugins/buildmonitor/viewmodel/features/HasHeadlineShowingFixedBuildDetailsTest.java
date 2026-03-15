@@ -13,32 +13,32 @@ import static org.mockito.Mockito.mockStatic;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
 import jenkins.model.Jenkins;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-public class HasHeadlineShowingFixedBuildDetailsTest {
+class HasHeadlineShowingFixedBuildDetailsTest {
 
     private JobView view;
 
     private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void beforeEach() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
         mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void afterEach() {
         mockedJenkins.close();
     }
 
     @Test
-    public void should_tell_who_fixed_the_broken_build() {
+    void should_tell_who_fixed_the_broken_build() {
         view = a(jobView()
                 .which(hasHeadlineThatShowsCommitters())
                 .of(a(job().whereTheLast(build().succeededThanksTo("Adam"))
@@ -48,7 +48,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_list_committers_who_fixed_the_broken_build() {
+    void should_list_committers_who_fixed_the_broken_build() {
         view = a(jobView()
                 .which(hasHeadlineThatShowsCommitters())
                 .of(a(job().whereTheLast(build().succeededThanksTo("Adam", "Connor"))
@@ -58,7 +58,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_congratulate_anonymously_if_broken_build_was_fixed_without_known_committers() {
+    void should_congratulate_anonymously_if_broken_build_was_fixed_without_known_committers() {
         view = a(jobView()
                 .which(hasHeadlineThatShowsCommitters())
                 .of(a(job().whereTheLast(build().succeededThanksTo())
@@ -68,7 +68,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_congratulate_anonymously_when_the_build_is_fixed_but_the_committers_should_not_be_displayed() {
+    void should_congratulate_anonymously_when_the_build_is_fixed_but_the_committers_should_not_be_displayed() {
         view = a(jobView()
                 .which(hasHeadlineThatDoesNotShowCommitters())
                 .of(a(job().whereTheLast(build().succeededThanksTo("Adam"))
@@ -78,7 +78,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_not_congratulate_if_previous_succeeded() {
+    void should_not_congratulate_if_previous_succeeded() {
         view = a(jobView()
                 .which(hasHeadlineThatShowsCommitters())
                 .of(a(job().whereTheLast(build().succeededThanksTo("Adam"))
@@ -88,7 +88,7 @@ public class HasHeadlineShowingFixedBuildDetailsTest {
     }
 
     @Test
-    public void should_not_congratulate_if_no_failure_before() {
+    void should_not_congratulate_if_no_failure_before() {
         view = a(jobView()
                 .which(hasHeadlineThatShowsCommitters())
                 .of(a(job().whereTheLast(build().succeededThanksTo("Adam")))));

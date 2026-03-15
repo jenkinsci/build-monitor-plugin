@@ -17,38 +17,39 @@ import static org.mockito.Mockito.mockStatic;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import jenkins.model.Jenkins;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-public class HasBadgesBadgePluginTest {
+class HasBadgesBadgePluginTest {
+
     private JobView job;
 
     private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void beforeEach() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
         mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void afterEach() {
         mockedJenkins.close();
     }
 
     @Test
-    public void should_support_job_without_badges() {
+    void should_support_job_without_badges() {
         job = a(jobView().which(hasBadgePluginBadges(withDefaultConfig())).of(a(job())));
 
         assertThat(serialisedBadgesDetailsOf(job), is(nullValue()));
     }
 
     @Test
-    public void should_convert_badges_to_json() {
+    void should_convert_badges_to_json() {
         job = a(jobView()
                 .which(hasBadgePluginBadges(withDefaultConfig()))
                 .of(a(job().whereTheLast(build().hasBadges(
@@ -59,7 +60,7 @@ public class HasBadgesBadgePluginTest {
     }
 
     @Test
-    public void should_ignore_badges_with_icon() {
+    void should_ignore_badges_with_icon() {
         job = a(jobView()
                 .which(hasBadgePluginBadges(withDefaultConfig()))
                 .of(a(job().whereTheLast(build().hasBadges(
@@ -70,7 +71,7 @@ public class HasBadgesBadgePluginTest {
     }
 
     @Test
-    public void should_report_badges_from_latest_build() {
+    void should_report_badges_from_latest_build() {
         job = a(jobView()
                 .which(hasBadgePluginBadges(withDefaultConfig()))
                 .of(a(job().whereTheLast(build().isStillBuilding()
@@ -83,7 +84,7 @@ public class HasBadgesBadgePluginTest {
     }
 
     @Test
-    public void should_report_badges_from_last_completed_build() {
+    void should_report_badges_from_last_completed_build() {
         job = a(jobView()
                 .which(hasBadgePluginBadges(withConfig().withBadgesFromLastCompletedBuild()))
                 .of(a(job().whereTheLast(build().isStillBuilding()

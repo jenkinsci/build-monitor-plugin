@@ -6,11 +6,12 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 
 import java.util.Collection;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class BreadthFirstNodeTraversalTest {
+class BreadthFirstNodeTraversalTest {
+
     @Test
-    public void traversal_should_identify_the_stage_nodes() {
+    void traversal_should_identify_the_stage_nodes() {
         TestNode head = normalNode(
                 "A1",
                 withParent(stageNode("B1", withParent(normalNode("C1")), withParent(normalNode("C2")))),
@@ -23,7 +24,7 @@ public class BreadthFirstNodeTraversalTest {
     }
 
     @Test
-    public void stages_should_not_be_repeated() {
+    void stages_should_not_be_repeated() {
         TestNode head = normalNode("A1", withParent(stageNode("B1")), withParent(stageNode("B1")));
 
         List<String> stages = findStages(head);

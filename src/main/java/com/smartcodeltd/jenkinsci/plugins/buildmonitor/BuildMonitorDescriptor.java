@@ -43,17 +43,6 @@ public final class BuildMonitorDescriptor extends ViewDescriptor {
         return true;
     }
 
-    private boolean permissionToCollectAnonymousUsageStatistics = true;
-
-    public boolean getPermissionToCollectAnonymousUsageStatistics() {
-        return this.permissionToCollectAnonymousUsageStatistics;
-    }
-
-    @SuppressWarnings("unused") // used in global.jelly
-    public void setPermissionToCollectAnonymousUsageStatistics(boolean collect) {
-        this.permissionToCollectAnonymousUsageStatistics = collect;
-    }
-
     @SuppressWarnings({"lgtm[jenkins/csrf]", "lgtm[jenkins/no-permission-check]"})
     public FormValidation doCheckMaxColumns(@QueryParameter String value) {
         String v = Util.fixEmpty(value);

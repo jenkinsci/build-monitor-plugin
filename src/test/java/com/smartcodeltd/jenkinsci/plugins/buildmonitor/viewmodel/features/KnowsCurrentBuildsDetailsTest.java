@@ -17,31 +17,32 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.KnowsC
 import java.util.Date;
 import java.util.List;
 import jenkins.model.Jenkins;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-public class KnowsCurrentBuildsDetailsTest {
+class KnowsCurrentBuildsDetailsTest {
+
     private JobView view;
 
     private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void beforeEach() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
         mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void afterEach() {
         mockedJenkins.close();
     }
 
     @Test
-    public void should_know_current_build_number() {
+    void should_know_current_build_number() {
         view = a(jobView()
                 .which(new KnowsCurrentBuildsDetails())
                 .of(a(job().whereTheLast(build().isStillBuilding().and().hasNumber(5)))));
@@ -50,7 +51,7 @@ public class KnowsCurrentBuildsDetailsTest {
     }
 
     @Test
-    public void should_use_build_name_if_its_known() {
+    void should_use_build_name_if_its_known() {
         view = a(jobView()
                 .which(new KnowsCurrentBuildsDetails())
                 .of(a(job().whereTheLast(build().isStillBuilding().and().hasName("1.3.4+build.15")))));
@@ -59,7 +60,7 @@ public class KnowsCurrentBuildsDetailsTest {
     }
 
     @Test
-    public void should_know_the_url_of_the_last_build() {
+    void should_know_the_url_of_the_last_build() {
         view = a(jobView()
                 .which(new KnowsCurrentBuildsDetails())
                 .of(a(job().whereTheLast(build().isStillBuilding().and().hasNumber(22))))
@@ -73,7 +74,7 @@ public class KnowsCurrentBuildsDetailsTest {
      */
 
     @Test
-    public void should_know_how_long_a_build_has_been_running_for() throws Exception {
+    void should_know_how_long_a_build_has_been_running_for() throws Exception {
 
         String startTime = "13:10:00",
                 sixSecondsLater = "13:10:06",

@@ -14,38 +14,39 @@ import static org.mockito.Mockito.mockStatic;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import hudson.model.Result;
 import jenkins.model.Jenkins;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-public class KnowsLastCompletedBuildDetailsTest {
+class KnowsLastCompletedBuildDetailsTest {
+
     private JobView view;
 
     private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void beforeEach() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
         mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void afterEach() {
         mockedJenkins.close();
     }
 
     @Test
-    public void should_know_current_build_number() {
+    void should_know_current_build_number() {
         view = a(jobView().which(new KnowsLastCompletedBuildDetails()).of(a(job().whereTheLast(build().hasNumber(5)))));
 
         assertThat(lastCompletedBuildOf(view).name(), is("#5"));
     }
 
     @Test
-    public void should_use_build_name_if_its_known() {
+    void should_use_build_name_if_its_known() {
         view = a(jobView()
                 .which(new KnowsLastCompletedBuildDetails())
                 .of(a(job().whereTheLast(build().hasName("1.3.4+build.15")))));
@@ -54,7 +55,7 @@ public class KnowsLastCompletedBuildDetailsTest {
     }
 
     @Test
-    public void should_know_the_url_of_the_last_build() {
+    void should_know_the_url_of_the_last_build() {
         view = a(jobView()
                 .which(new KnowsLastCompletedBuildDetails())
                 .of(a(job().whereTheLast(build().hasNumber(22))))
@@ -68,7 +69,7 @@ public class KnowsLastCompletedBuildDetailsTest {
      */
 
     @Test
-    public void should_know_how_long_the_last_build_took_once_its_finished() {
+    void should_know_how_long_the_last_build_took_once_its_finished() {
         view = a(jobView()
                 .which(new KnowsLastCompletedBuildDetails())
                 .of(a(job().whereTheLast(
@@ -81,7 +82,7 @@ public class KnowsLastCompletedBuildDetailsTest {
      * Last build, last success and last failure (ISO 8601)
      */
     @Test
-    public void should_know_how_long_since_the_last_build_happened() throws Exception {
+    void should_know_how_long_since_the_last_build_happened() throws Exception {
         String tenMinutesInMilliseconds = String.format("%d", 10 * 60 * 1000);
 
         view = a(jobView()

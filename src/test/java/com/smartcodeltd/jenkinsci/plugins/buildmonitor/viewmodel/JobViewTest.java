@@ -20,15 +20,15 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.facade.RelativeLocation;
 import hudson.model.Result;
 import java.util.List;
 import jenkins.model.Jenkins;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
 /**
  * @author Jan Molak
  */
-public class JobViewTest {
+class JobViewTest {
 
     private static final String theName = "some-TLAs-followed-by-a-project-name";
     private static final String displayName = "Pretty name that has some actual meaning";
@@ -39,15 +39,15 @@ public class JobViewTest {
     private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void beforeEach() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
         mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void afterEach() {
         mockedJenkins.close();
     }
 
@@ -56,7 +56,7 @@ public class JobViewTest {
      * section, where you can set a user-friendly "Display Name"
      */
     @Test
-    public void delegates_the_process_of_determining_the_relative_job_name() {
+    void delegates_the_process_of_determining_the_relative_job_name() {
         when(relativeLocation.name()).thenReturn(theName);
 
         view = a(jobView().of(a(job().withName(theName))).with(relativeLocation));
@@ -67,7 +67,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void delegates_the_process_of_determining_the_relative_url() {
+    void delegates_the_process_of_determining_the_relative_url() {
         String expectedUrl = "job/" + theName;
         when(relativeLocation.url()).thenReturn(expectedUrl);
 
@@ -84,21 +84,21 @@ public class JobViewTest {
      */
 
     @Test
-    public void progress_of_a_not_started_job_should_be_zero() {
+    void progress_of_a_not_started_job_should_be_zero() {
         view = a(jobView().of(a(job())));
 
         assertThat(view.progress(), is(0));
     }
 
     @Test
-    public void progress_of_a_finished_job_should_be_zero() {
+    void progress_of_a_finished_job_should_be_zero() {
         view = a(jobView().of(a(job().whereTheLast(build().finishedWith(Result.SUCCESS)))));
 
         assertThat(view.progress(), is(0));
     }
 
     @Test
-    public void progress_of_a_nearly_finished_job_should_be_100() throws Exception {
+    void progress_of_a_nearly_finished_job_should_be_100() throws Exception {
         view = a(jobView()
                 .of(a(job().whereTheLast(build().isStillBuilding()
                         .startedAt("12:00:00")
@@ -110,7 +110,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void progress_of_a_job_thats_taking_longer_than_expected_should_be_100() throws Exception {
+    void progress_of_a_job_thats_taking_longer_than_expected_should_be_100() throws Exception {
         view = a(jobView()
                 .of(a(job().whereTheLast(build().isStillBuilding()
                         .startedAt("12:00:00")
@@ -122,7 +122,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_calculate_the_progress_of_a_running_job() throws Exception {
+    void should_calculate_the_progress_of_a_running_job() throws Exception {
         view = a(jobView()
                 .of(a(job().whereTheLast(build().isStillBuilding()
                         .startedAt("13:10:00")
@@ -134,7 +134,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_know_how_long_the_next_build_is_supposed_to_take() {
+    void should_know_how_long_the_next_build_is_supposed_to_take() {
         view = a(jobView()
                 .of(a(job().whereTheLast(
                                 build().finishedWith(Result.SUCCESS).and().usuallyTakes(5)))));
@@ -143,7 +143,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_not_say_anything_if_it_doesnt_know_how_long_the_next_build_is_supposed_to_take() {
+    void should_not_say_anything_if_it_doesnt_know_how_long_the_next_build_is_supposed_to_take() {
         view = a(jobView().of(a(job())));
 
         assertThat(view.estimatedDuration(), is(""));
@@ -154,42 +154,42 @@ public class JobViewTest {
      */
 
     @Test
-    public void should_describe_the_job_as_successful_if_the_last_build_succeeded() {
+    void should_describe_the_job_as_successful_if_the_last_build_succeeded() {
         view = a(jobView().of(a(job().whereTheLast(build().finishedWith(Result.SUCCESS)))));
 
         assertThat(view.status(), containsString("successful"));
     }
 
     @Test
-    public void should_describe_the_job_as_failing_if_the_last_build_failed() {
+    void should_describe_the_job_as_failing_if_the_last_build_failed() {
         view = a(jobView().of(a(job().whereTheLast(build().finishedWith(Result.FAILURE)))));
 
         assertThat(view.status(), containsString("failing"));
     }
 
     @Test
-    public void should_describe_the_job_as_aborted_if_the_last_build_was_aborted() {
+    void should_describe_the_job_as_aborted_if_the_last_build_was_aborted() {
         view = a(jobView().of(a(job().whereTheLast(build().finishedWith(Result.ABORTED)))));
 
         assertThat(view.status(), containsString("aborted"));
     }
 
     @Test
-    public void should_describe_the_job_as_unstable_if_the_last_build_is_unstable() {
+    void should_describe_the_job_as_unstable_if_the_last_build_is_unstable() {
         view = a(jobView().of(a(job().whereTheLast(build().finishedWith(Result.UNSTABLE)))));
 
         assertThat(view.status(), containsString("unstable"));
     }
 
     @Test
-    public void should_describe_the_state_of_the_job_as_unknown_when_it_is_yet_to_be_determined() {
+    void should_describe_the_state_of_the_job_as_unknown_when_it_is_yet_to_be_determined() {
         view = a(jobView().of(a(job())));
 
         assertThat(view.status(), containsString("unknown"));
     }
 
     @Test
-    public void should_describe_the_job_as_running_if_it_is_running() {
+    void should_describe_the_job_as_running_if_it_is_running() {
         List<JobView> views = asFollows(
                 a(jobView().of(a(job().whereTheLast(build().hasntStartedYet())))),
                 a(jobView().of(a(job().whereTheLast(build().isStillBuilding())))),
@@ -201,21 +201,21 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_describe_the_job_as_disabled_if_not_buildable() {
+    void should_describe_the_job_as_disabled_if_not_buildable() {
         view = a(jobView().of(a(job().thatIsNotBuildable())));
 
         assertThat(view.status(), containsString("disabled"));
     }
 
     @Test
-    public void should_describe_the_job_as_enabled_if_external_job() {
+    void should_describe_the_job_as_enabled_if_external_job() {
         view = a(jobView().of(a(job().thatIsAnExternalJob())));
 
         assertThat(view.status(), not(containsString("disabled")));
     }
 
     @Test
-    public void should_describe_the_job_as_disabled_and_failing_if_the_last_build_failed_and_the_job_is_disabled() {
+    void should_describe_the_job_as_disabled_and_failing_if_the_last_build_failed_and_the_job_is_disabled() {
         view = a(jobView().of(a(job().thatIsNotBuildable().whereTheLast(build().finishedWith(Result.FAILURE)))));
 
         assertThat(view.status(), containsString("disabled"));
@@ -224,7 +224,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_describe_the_job_as_running_and_successful_if_it_is_running_and_the_previous_build_succeeded() {
+    void should_describe_the_job_as_running_and_successful_if_it_is_running_and_the_previous_build_succeeded() {
         List<JobView> views = asFollows(
                 a(jobView()
                         .of(a(job().whereTheLast(build().hasntStartedYet())
@@ -244,7 +244,7 @@ public class JobViewTest {
     }
 
     @Test
-    public void should_describe_the_job_as_running_and_failing_if_it_is_running_and_the_previous_build_failed() {
+    void should_describe_the_job_as_running_and_failing_if_it_is_running_and_the_previous_build_failed() {
         List<JobView> views = asFollows(
                 a(jobView()
                         .of(a(job().whereTheLast(build().hasntStartedYet())
@@ -268,7 +268,7 @@ public class JobViewTest {
      */
 
     @Test
-    public void
+    void
             should_describe_the_job_as_successful_when_there_are_several_builds_running_in_parallel_and_the_last_completed_was_successful() {
         view = a(jobView()
                 .of(a(job().whereTheLast(build().isStillBuilding())
@@ -281,7 +281,7 @@ public class JobViewTest {
 
     // TODO - if its necessary to show past statuses, restore this
     //    @Test
-    //    public void
+    //    void
     //
     // should_describe_the_job_as_failing_when_there_are_several_builds_running_in_parallel_and_the_last_completed_failed() {
     //        view = a(jobView()
@@ -293,7 +293,7 @@ public class JobViewTest {
     //    }
 
     @Test
-    public void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() {
+    void public_api_should_return_reasonable_defaults_for_jobs_that_never_run() {
         view = a(jobView().of(a(job().thatHasNeverRun())));
 
         assertThat(view.estimatedDuration(), is(""));

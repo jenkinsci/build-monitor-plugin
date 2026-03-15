@@ -7,32 +7,33 @@ import static org.hamcrest.core.Is.is;
 
 import hudson.util.FormValidation;
 import org.apache.commons.lang.StringEscapeUtils;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
-public class BuildMonitorDescriptorTest {
+@WithJenkins
+class BuildMonitorDescriptorTest {
+
+    private JenkinsRule jenkins;
 
     private BuildMonitorDescriptor validator;
 
-    @Rule
-    public final JenkinsRule jenkins = new JenkinsRule();
-
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void beforeEach(JenkinsRule rule) {
+        jenkins = rule;
         validator = new BuildMonitorDescriptor();
     }
 
     @Test
-    public void form_validator_should_allow_valid_reg_ex_specifying_what_jobs_to_include() {
+    void form_validator_should_allow_valid_reg_ex_specifying_what_jobs_to_include() {
         for (String regex : asFollows(null, "", ".*", "myproject-.*")) {
             assertThat(itShouldAllow(regex), validator.doCheckIncludeRegex(regex).kind, is(FormValidation.Kind.OK));
         }
     }
 
     @Test
-    public void form_validator_should_advise_how_a_regex_could_be_improved() {
+    void form_validator_should_advise_how_a_regex_could_be_improved() {
         FormValidation result = validator.doCheckIncludeRegex(")");
 
         assertThat(result.kind, is(FormValidation.Kind.ERROR));
