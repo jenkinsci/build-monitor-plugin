@@ -19,13 +19,6 @@ interface MonitorPreferences {
   isResettable: boolean;
 }
 
-const defaultPreferences = {
-  colorBlindMode: false,
-  textSize: 1,
-  maximumNumberOfColumns: 3,
-  showBadges: true,
-};
-
 const UserPreferencesContext = createContext<MonitorPreferences | undefined>(
   undefined,
 );
@@ -55,9 +48,16 @@ const loadFromLocalStorage = <T,>(key: string, fallback: T): T => {
 export const UserPreferencesProvider = ({
   monitorId,
   children,
+  defaults,
 }: {
   monitorId: string;
   children: ReactNode;
+  defaults: {
+    textSize: number;
+    maximumNumberOfColumns: number;
+    colorBlindMode: boolean;
+    showBadges: boolean;
+  };
 }) => {
   const colorBlindKey = makeKey(monitorId, "colorBlind");
   const textSizeKey = makeKey(monitorId, "textSize");
@@ -65,20 +65,20 @@ export const UserPreferencesProvider = ({
   const showBadgesKey = makeKey(monitorId, "showBadges");
 
   const [colorBlindMode, setColorBlindModeState] = useState<boolean>(
-    loadFromLocalStorage(colorBlindKey, defaultPreferences.colorBlindMode),
+    loadFromLocalStorage(colorBlindKey, defaults.colorBlindMode),
   );
   const [textSize, setTextSizeState] = useState<number>(
-    loadFromLocalStorage(textSizeKey, defaultPreferences.textSize),
+    loadFromLocalStorage(textSizeKey, defaults.textSize),
   );
   const [maximumNumberOfColumns, setMaximumNumberOfColumnsState] =
     useState<number>(
       loadFromLocalStorage(
         maximumNumberOfColumnsKey,
-        defaultPreferences.maximumNumberOfColumns,
+        defaults.maximumNumberOfColumns,
       ),
     );
   const [showBadges, setShowBadgesState] = useState<boolean>(
-    loadFromLocalStorage(showBadgesKey, defaultPreferences.showBadges),
+    loadFromLocalStorage(showBadgesKey, defaults.showBadges),
   );
 
   useEffect(() => {
@@ -101,27 +101,10 @@ export const UserPreferencesProvider = ({
   }, [showBadges]);
 
   function reset() {
-    setColorBlindModeState(defaultPreferences.colorBlindMode);
-    setTextSizeState(defaultPreferences.textSize);
-    setMaximumNumberOfColumnsState(defaultPreferences.maximumNumberOfColumns);
-    setShowBadgesState(defaultPreferences.showBadges);
-
-    window.localStorage.setItem(
-      colorBlindKey,
-      String(defaultPreferences.colorBlindMode),
-    );
-    window.localStorage.setItem(
-      textSizeKey,
-      String(defaultPreferences.textSize),
-    );
-    window.localStorage.setItem(
-      maximumNumberOfColumnsKey,
-      String(defaultPreferences.maximumNumberOfColumns),
-    );
-    window.localStorage.setItem(
-      showBadgesKey,
-      String(defaultPreferences.showBadges),
-    );
+    setColorBlindModeState(defaults.colorBlindMode);
+    setTextSizeState(defaults.textSize);
+    setMaximumNumberOfColumnsState(defaults.maximumNumberOfColumns);
+    setShowBadgesState(defaults.showBadges);
   }
 
   return (
@@ -137,11 +120,10 @@ export const UserPreferencesProvider = ({
         setShowBadges: setShowBadgesState,
         reset,
         isResettable:
-          colorBlindMode === defaultPreferences.colorBlindMode &&
-          textSize === defaultPreferences.textSize &&
-          maximumNumberOfColumns ===
-            defaultPreferences.maximumNumberOfColumns &&
-          showBadges === defaultPreferences.showBadges,
+          colorBlindMode === defaults.colorBlindMode &&
+          textSize === defaults.textSize &&
+          maximumNumberOfColumns === defaults.maximumNumberOfColumns &&
+          showBadges === defaults.showBadges,
       }}
     >
       {children}

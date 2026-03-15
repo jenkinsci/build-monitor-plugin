@@ -17,7 +17,18 @@ const root = createRoot(rootElement);
 root.render(
   <UseNotificationProvider>
     <UseConfirmationProvider>
-      <UserPreferencesProvider monitorId={rootElement.dataset.buildMonitorId!}>
+      <UserPreferencesProvider
+        monitorId={rootElement.dataset.buildMonitorId!}
+        defaults={{
+          textSize: Number(rootElement.dataset.appearanceTextSize),
+          maximumNumberOfColumns: Number(
+            rootElement.dataset.appearanceMaximumNumberOfColumns,
+          ),
+          colorBlindMode:
+            rootElement.dataset.appearanceColorBlindMode === "true",
+          showBadges: rootElement.dataset.appearanceShowBadges === "true",
+        }}
+      >
         <JobsProvider>
           <Container />
           <PageDescription
