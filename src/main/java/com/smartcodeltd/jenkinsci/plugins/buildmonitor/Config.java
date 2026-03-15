@@ -115,7 +115,7 @@ public class Config implements Describable<Config> {
     }
 
     public int getAutoRefreshEvery() {
-        return Optional.ofNullable(autoRefreshEvery).orElse(3);
+        return Math.max(1, Optional.ofNullable(autoRefreshEvery).orElse(4));
     }
 
     public void setAutoRefreshEvery(int autoRefreshEvery) {
@@ -123,7 +123,7 @@ public class Config implements Describable<Config> {
     }
 
     public int getMaxColumns() {
-        return Optional.ofNullable(maxColumns).orElse(4);
+        return Optional.ofNullable(maxColumns).orElse(3);
     }
 
     public void setMaxColumns(int maxColumns) {
