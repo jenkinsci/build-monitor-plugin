@@ -6,7 +6,7 @@ jenkins:
         recurse: true
         title: "My Monitor"
         config:
-          maxColumns: 3
+          maxColumns: 2
           order: "byStatus"
           displayCommitters: false
           colourBlindMode: true
