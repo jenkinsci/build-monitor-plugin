@@ -9,13 +9,14 @@ import static org.hamcrest.Matchers.is;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class HasHeadlineWhichShowsNothingTest {
+class HasHeadlineWhichShowsNothingTest {
+
     private JobView view;
 
     @Test
-    public void should_say_nothing_if_no_builds_were_executed() {
+    void should_say_nothing_if_no_builds_were_executed() {
         view = a(jobView().which(hasHeadlineThatShowsCommitters()).of(a(job().thatHasNeverRun())));
 
         assertThat(headlineOf(view), is(emptyString()));

@@ -14,20 +14,18 @@ import io.jenkins.plugins.casc.ConfiguratorRegistry;
 import io.jenkins.plugins.casc.misc.ConfiguredWithCode;
 import io.jenkins.plugins.casc.misc.JenkinsConfiguredWithCodeRule;
 import io.jenkins.plugins.casc.misc.Util;
+import io.jenkins.plugins.casc.misc.junit.jupiter.WithJenkinsConfiguredWithCode;
 import io.jenkins.plugins.casc.model.CNode;
 import java.util.Collection;
 import jenkins.model.Jenkins;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ConfigurationAsCodeTest {
-
-    @ClassRule
-    @ConfiguredWithCode("configuration-as-code.yml")
-    public static JenkinsConfiguredWithCodeRule j = new JenkinsConfiguredWithCodeRule();
+@WithJenkinsConfiguredWithCode
+class ConfigurationAsCodeTest {
 
     @Test
-    public void should_support_configuration_as_code() {
+    @ConfiguredWithCode("configuration-as-code.yml")
+    void should_support_configuration_as_code(JenkinsConfiguredWithCodeRule j) {
         Collection<View> views = Jenkins.get().getViews();
 
         assertThat(views.size(), is(1));
@@ -48,7 +46,8 @@ public class ConfigurationAsCodeTest {
     }
 
     @Test
-    public void should_support_configuration_export() throws Exception {
+    @ConfiguredWithCode("configuration-as-code.yml")
+    void should_support_configuration_export(JenkinsConfiguredWithCodeRule j) throws Exception {
         ConfiguratorRegistry registry = ConfiguratorRegistry.get();
         ConfigurationContext context = new ConfigurationContext(registry);
         CNode yourAttribute = Util.getJenkinsRoot(context).get("views");

@@ -15,38 +15,39 @@ import static org.mockito.Mockito.mockStatic;
 
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import jenkins.model.Jenkins;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-public class HasJunitRealtimeTest {
+class HasJunitRealtimeTest {
+
     private JobView job;
 
     private MockedStatic<Jenkins> mockedJenkins;
     private Jenkins jenkins;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void beforeEach() {
         mockedJenkins = mockStatic(Jenkins.class);
         jenkins = mock(Jenkins.class);
         mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void afterEach() {
         mockedJenkins.close();
     }
 
     @Test
-    public void should_support_jobs_without_realtime_test_actions() {
+    void should_support_jobs_without_realtime_test_actions() {
         job = a(jobView().which(hasJunitRealtime()).of(a(job())));
 
         assertThat(serialisedRealtimeTestsDetailsOf(job), is(nullValue()));
     }
 
     @Test
-    public void should_ignore_actions_without_test_progress() {
+    void should_ignore_actions_without_test_progress() {
         job = a(jobView()
                 .which(hasJunitRealtime())
                 .of(a(job().whereTheLast(build().isStillBuilding()
@@ -56,7 +57,7 @@ public class HasJunitRealtimeTest {
     }
 
     @Test
-    public void should_show_progress_during_build() {
+    void should_show_progress_during_build() {
         job = a(jobView()
                 .which(hasJunitRealtime())
                 .of(a(job().whereTheLast(build().isStillBuilding()
@@ -66,7 +67,7 @@ public class HasJunitRealtimeTest {
     }
 
     @Test
-    public void should_support_multiple_test_actions() {
+    void should_support_multiple_test_actions() {
         job = a(jobView()
                 .which(hasJunitRealtime())
                 .of(a(job().whereTheLast(build().isStillBuilding()

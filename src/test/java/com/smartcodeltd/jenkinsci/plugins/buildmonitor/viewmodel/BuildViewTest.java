@@ -8,15 +8,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 
 import jenkins.model.Jenkins;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-public class BuildViewTest {
+class BuildViewTest {
 
     private static final String theName = "1.5+build.3";
 
     @Test
-    public void should_know_the_name_of_the_job_its_based_on() {
+    void should_know_the_name_of_the_job_its_based_on() {
         try (MockedStatic<Jenkins> mockedJenkins = mockStatic(Jenkins.class)) {
             createMockJenkins(mockedJenkins);
 
