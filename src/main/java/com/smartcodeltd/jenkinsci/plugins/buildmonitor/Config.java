@@ -114,7 +114,7 @@ public class Config implements Describable<Config> {
     }
 
     public int getMaxColumns() {
-        return Optional.ofNullable(maxColumns).orElse(2);
+        return Optional.ofNullable(maxColumns).orElse(3);
     }
 
     public void setMaxColumns(int maxColumns) {

@@ -1,100 +1,78 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:d="jelly:define">
+  <f:section title="${%Jobs}" description="Select the jobs to show in this view.">
+    <f:entry field="recurse">
+      <f:checkbox title="${%Recurse in subfolders}" id="recurse" />
+    </f:entry>
 
-  <!-- BEGIN cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.532/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
-
-  <f:section title="${%Job Filters}">
-
-  <f:entry title="${%Status Filter}" help="/help/view-config/statusFilter.html">
-    <div class="jenkins-select">
-      <select name="statusFilter" class="jenkins-select__input">
-        <f:option value="" selected="${it.statusFilter==null}">${%All selected jobs}</f:option>
-        <f:option value="1" selected="${it.statusFilter==true}">${%Enabled jobs only}</f:option>
-        <f:option value="2" selected="${it.statusFilter==false}">${%Disabled jobs only}</f:option>
-      </select>
-    </div>
-  </f:entry>
-
-  <f:entry field="recurse">
-    <f:checkbox id="recurse" title="${%Recurse in subfolders}" />
-  </f:entry>
-
-  <f:entry title="${%Jobs}">
-    <div class="listview-jobs">
-      <j:forEach var="job" items="${h.getAllTopLevelItems(it.ownerItemGroup)}">
-        <j:set var="spanClass" value=""/>
-        <j:set var="spanStyle" value=""/>
-        <j:if test="${job.parent!=it.ownerItemGroup}">
-          <j:set var="spanClass" value="nested"/>
-          <j:set var="spanStyle" value="${it.recurse?'':'display:none'}"/>
+    <d:taglib uri="local">
+      <d:tag name="checkbox">
+        <f:checkbox name="item_${job.getRelativeNameFromGroup(it.ownerItemGroup)}"
+                    checked="${it.jobNamesContains(job)}"
+                    title="${job.displayName}"
+                    tooltip="${!job.fullName.equals(job.displayName) ? job.fullName : null}"
+                    json="true" />
+        <j:if test="${job.getItems().size() gt 0}">
+          <div class="listview-jobs listview-jobs--nested" style="${it.recurse ? '' : 'display: none'}">
+            <j:forEach var="job" items="${job.getItems()}">
+              <local:checkbox xmlns:local="local" job="${job}" />
+            </j:forEach>
+          </div>
         </j:if>
-        <span class="${spanClass}" style="${spanStyle}">
-          <f:checkbox name="item_${job.getRelativeNameFromGroup(it.ownerItemGroup)}" checked="${it.jobNamesContains(job)}" title="${h.getRelativeDisplayNameFrom(job,it.ownerItemGroup)}" tooltip="${job.fullName}" json="true"/>
-          <br/>
-        </span>
-      </j:forEach>
-    </div>
-  </f:entry>
+      </d:tag>
+    </d:taglib>
 
-  <f:optionalBlock name="useincluderegex" title="${%Use a regular expression to include jobs into the view}"
-                   checked="${it.includeRegex != null}" help="/help/view-config/includeregex.html">
-    <f:entry title="${%Regular expression}">
-      <f:textbox name="includeRegex" field="includeRegex" />
+    <f:entry>
+      <div class="listview-jobs" xmlns:local="local">
+        <j:forEach var="job" items="${it.ownerItemGroup.getItems()}">
+          <local:checkbox job="${job}" />
+        </j:forEach>
+      </div>
     </f:entry>
-  </f:optionalBlock>
 
-  <j:if test="${it.hasJobFilterExtensions()}">
-    <f:block>
-      <f:repeatableHeteroProperty field="jobFilters" hasHeader="true" addCaption="${%Add Job Filter}" />
-    </f:block>
-  </j:if>
-
+    <f:optionalBlock name="useincluderegex" title="${%Use a regular expression to include jobs into the view}"
+                     checked="${it.includeRegex != null}" help="/help/view-config/includeregex.html">
+      <f:entry title="${%Regular expression}">
+        <f:textbox name="includeRegex" field="includeRegex" />
+      </f:entry>
+    </f:optionalBlock>
   </f:section>
 
-  <!-- END cut'n'paste from https://github.com/jenkinsci/jenkins/blob/jenkins-1.532/core/src/main/resources/hudson/model/ListView/configure-entries.jelly -->
+  <f:section title="${%Filters}" description="Filter the jobs that show in this view based on specific conditions.">
+    <f:entry title="${%Status Filter}" help="/help/view-config/statusFilter.html">
+      <div class="jenkins-select">
+        <select name="statusFilter" class="jenkins-select__input">
+          <f:option value="" selected="${it.statusFilter==null}">${%All selected jobs}</f:option>
+          <f:option value="1" selected="${it.statusFilter==true}">${%Enabled jobs only}</f:option>
+          <f:option value="2" selected="${it.statusFilter==false}">${%Disabled jobs only}</f:option>
+        </select>
+      </div>
+    </f:entry>
 
-  <f:section title="${%Build Monitor - View Settings}">
-
-  <f:entry title="${%Title}">
-    <f:textbox name="title" value="${it.title}"/>
-  </f:entry>
-
-  <f:entry title="${%Ordered by}">
-    <div class="jenkins-select">
-      <select name="order" class="jenkins-select__input">
-        <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
-        <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
-        <f:option value="ByFullName" selected="${it.currentOrder()=='ByFullName'}">${%Full name}</f:option>
-        <f:option value="ByStatus" selected="${it.currentOrder()=='ByStatus'}">${%Status}</f:option>
-        <f:option value="ByLastBuildTime" selected="${it.currentOrder()=='ByLastBuildTime'}">${%Last build time}</f:option>
-        <f:option value="ByEstimatedDuration" selected="${it.currentOrder()=='ByEstimatedDuration'}">${%Estimated duration}</f:option>
-      </select>
-    </div>
-  </f:entry>
-
+    <j:if test="${it.hasJobFilterExtensions()}">
+      <f:block>
+        <f:repeatableHeteroProperty field="jobFilters" hasHeader="true" addCaption="${%Add Job Filter}" />
+      </f:block>
+    </j:if>
   </f:section>
 
-  <f:section title="${%Build Monitor - Default Display Settings}">
-
-    <f:entry title="${%Text scale}" field="textScale">
-      <f:textbox name="textScale" value="${it.textScale}" />
+  <f:section title="${%Build Monitor}">
+    <f:entry title="${%Title}">
+      <f:textbox name="title" value="${it.title}"/>
     </f:entry>
 
-    <f:entry title="${%Maximum number of columns}" field="maxColumns">
-      <f:textbox name="maxColumns" value="${it.maxColumns}" />
+    <f:entry title="${%Ordered by}">
+      <div class="jenkins-select">
+        <select name="order" class="jenkins-select__input">
+          <f:option value="ByName" selected='${it.currentOrder()=="ByName"}'>${%Name}</f:option>
+          <f:option value="ByDisplayName" selected="${it.currentOrder()=='ByDisplayName'}">${%Display name}</f:option>
+          <f:option value="ByFullName" selected="${it.currentOrder()=='ByFullName'}">${%Full name}</f:option>
+          <f:option value="ByStatus" selected="${it.currentOrder()=='ByStatus'}">${%Status}</f:option>
+          <f:option value="ByLastBuildTime" selected="${it.currentOrder()=='ByLastBuildTime'}">${%Last build time}</f:option>
+          <f:option value="ByEstimatedDuration" selected="${it.currentOrder()=='ByEstimatedDuration'}">${%Estimated duration}</f:option>
+        </select>
+      </div>
     </f:entry>
-
-    <f:entry title="${%Enable Colour blind mode}">
-      <f:checkbox id="colourBlindMode" field="colourBlindMode" />
-    </f:entry>
-
-    <f:entry title="${%Enable Show badges}">
-      <f:checkbox id="showBadges" field="showBadges" />
-    </f:entry>
-
-  </f:section>
-
-  <f:section title="${%Build Monitor - Widget Settings}">
 
     <f:entry title="${%Display committers}" help="${descriptor.getHelpFile('displayCommitters')}">
       <f:checkbox id="displayCommitters" field="displayCommitters" />
@@ -134,5 +112,23 @@
     </f:entry>
 
   </f:section>
-  
+
+  <f:section title="${%Appearance}"
+             description="${%These are the default settings for this view. Users can change these separately in the 'More actions' menu.}">
+    <f:entry title="${%Text size}" field="textScale">
+      <f:textbox name="textScale" value="${it.textScale}" />
+    </f:entry>
+
+    <f:entry title="${%Maximum number of columns}" field="maxColumns">
+      <f:textbox name="maxColumns" value="${it.maxColumns}" />
+    </f:entry>
+
+    <f:entry title="${%Show badges}">
+      <f:checkbox id="showBadges" field="showBadges" />
+    </f:entry>
+
+    <f:entry title="${%Color blind mode}">
+      <f:checkbox id="colourBlindMode" field="colourBlindMode" />
+    </f:entry>
+  </f:section>
 </j:jelly>

@@ -4,7 +4,7 @@
       displayBadgesFrom: "getLastBuild"
       displayCommitters: false
       displayJUnitProgress: false
-      maxColumns: 3
+      maxColumns: 2
       order: "byStatus"
       showBadges: false
     includeRegex: ".+\\/(my-job-.*)\\/(master|demo)"

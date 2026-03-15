@@ -19,13 +19,6 @@ interface MonitorPreferences {
   isResettable: boolean;
 }
 
-const defaultPreferences = {
-  colorBlindMode: false,
-  textSize: 1,
-  maximumNumberOfColumns: 3,
-  showBadges: true,
-};
-
 const UserPreferencesContext = createContext<MonitorPreferences | undefined>(
   undefined,
 );
@@ -55,9 +48,16 @@ const loadFromLocalStorage = <T,>(key: string, fallback: T): T => {
 export const UserPreferencesProvider = ({
   monitorId,
   children,
+  defaultPreferences,
 }: {
   monitorId: string;
   children: ReactNode;
+  defaultPreferences: {
+    textSize: number;
+    maximumNumberOfColumns: number;
+    colorBlindMode: boolean;
+    showBadges: boolean;
+  };
 }) => {
   const colorBlindKey = makeKey(monitorId, "colorBlind");
   const textSizeKey = makeKey(monitorId, "textSize");
@@ -105,23 +105,6 @@ export const UserPreferencesProvider = ({
     setTextSizeState(defaultPreferences.textSize);
     setMaximumNumberOfColumnsState(defaultPreferences.maximumNumberOfColumns);
     setShowBadgesState(defaultPreferences.showBadges);
-
-    window.localStorage.setItem(
-      colorBlindKey,
-      String(defaultPreferences.colorBlindMode),
-    );
-    window.localStorage.setItem(
-      textSizeKey,
-      String(defaultPreferences.textSize),
-    );
-    window.localStorage.setItem(
-      maximumNumberOfColumnsKey,
-      String(defaultPreferences.maximumNumberOfColumns),
-    );
-    window.localStorage.setItem(
-      showBadgesKey,
-      String(defaultPreferences.showBadges),
-    );
   }
 
   return (

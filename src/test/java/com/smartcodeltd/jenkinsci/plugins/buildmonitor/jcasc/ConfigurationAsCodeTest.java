@@ -40,7 +40,7 @@ class ConfigurationAsCodeTest {
         assertThat(view.getConfig().getDisplayBadgesFrom(), isA(GetLastBuild.class));
         assertThat(view.getConfig().getDisplayCommitters(), is(false));
         assertThat(view.getConfig().getDisplayJUnitProgress(), is(false));
-        assertThat(view.getConfig().getMaxColumns(), is(3));
+        assertThat(view.getConfig().getMaxColumns(), is(2));
         assertThat(view.getConfig().getOrder(), isA(ByStatus.class));
         assertThat(view.getConfig().getShowBadges(), is(false));
     }
