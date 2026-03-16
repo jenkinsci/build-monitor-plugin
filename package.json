@@ -35,7 +35,7 @@
     "eslint": "9.32.0",
     "eslint-formatter-checkstyle": "8.40.0",
     "eslint-plugin-simple-import-sort": "12.1.1",
-    "jsdom": "26.1.0",
+    "jsdom": "28.1.0",
     "neostandard": "0.12.2",
     "prettier": "3.6.2",
     "sass-embedded": "1.89.2",
