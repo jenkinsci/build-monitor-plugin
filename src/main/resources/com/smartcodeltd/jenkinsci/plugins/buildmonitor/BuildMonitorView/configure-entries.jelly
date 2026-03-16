@@ -1,5 +1,7 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:d="jelly:define">
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:d="jelly:define" xmlns:st="jelly:stapler">
+  <st:adjunct includes="hudson.model.ListView.configure-entries-resources" />
+
   <f:section title="${%Jobs}" description="Select the jobs to show in this view.">
     <f:entry field="recurse">
       <f:checkbox title="${%Recurse in subfolders}" id="recurse" />
