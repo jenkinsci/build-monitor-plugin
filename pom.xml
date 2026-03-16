@@ -56,7 +56,7 @@
     <gitHubRepo>jenkinsci/build-monitor-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
     <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
-    <node.version>22.14.0</node.version>
+    <node.version>22.22.1</node.version>
     <npm.version>11.11.1</npm.version>
   </properties>
 
