@@ -56,8 +56,8 @@
     <gitHubRepo>jenkinsci/build-monitor-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
     <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
-    <node.version>22.14.0</node.version>
-    <npm.version>11.2.0</npm.version>
+    <node.version>24.14.0</node.version>
+    <npm.version>11.11.1</npm.version>
   </properties>
 
   <dependencyManagement>
@@ -65,7 +65,7 @@
       <dependency>
         <groupId>io.jenkins.tools.bom</groupId>
         <artifactId>bom-${jenkins.baseline}.x</artifactId>
-        <version>6077.v303e2d08985d</version>
+        <version>6146.vc53a_0edb_e986</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -141,7 +141,7 @@
     <dependency>
       <groupId>com.microsoft.playwright</groupId>
       <artifactId>playwright</artifactId>
-      <version>1.52.0</version>
+      <version>1.58.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
