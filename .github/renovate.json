@@ -3,7 +3,8 @@
   "extends": [
     "github>jenkinsci/renovate-config",
     ":disableRateLimiting",
-    "schedule:earlyMondays"
+    "schedule:earlyMondays",
+    "group:vite"
   ],
   "automerge": true,
   "automergeType": "pr",
