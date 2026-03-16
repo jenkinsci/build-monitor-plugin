@@ -31,7 +31,7 @@
     "@types/node": "24.1.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "4.7.0",
+    "@vitejs/plugin-react": "6.0.0",
     "eslint": "9.39.4",
     "eslint-formatter-checkstyle": "8.40.0",
     "eslint-plugin-simple-import-sort": "12.1.1",
