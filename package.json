@@ -36,7 +36,7 @@
     "eslint-formatter-checkstyle": "8.40.0",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "jsdom": "28.1.0",
-    "neostandard": "0.12.2",
+    "neostandard": "0.13.0",
     "prettier": "3.8.1",
     "sass-embedded": "1.89.2",
     "typescript": "5.9.3",
