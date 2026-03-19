@@ -10,18 +10,22 @@ function styleStringToObject(style?: string): CSSProperties | undefined {
     return;
   }
 
-  const json = `{"${style
-    .replace(/; /g, '", "')
-    .replace(/: /g, '": "')
-    .replace(";", "")}"}`;
+  try {
+    const json = `{"${style
+      .replace(/; /g, '", "')
+      .replace(/: /g, '": "')
+      .replace(";", "")}"}`;
 
-  const obj = JSON.parse(json);
+    const obj = JSON.parse(json);
 
-  const keyValues = Object.keys(obj).map((key) => {
-    const camelCased = key.replace(/-[a-z]/g, (g) => g[1].toUpperCase());
-    return { [camelCased]: obj[key] };
-  });
-  return Object.assign({}, ...keyValues);
+    const keyValues = Object.keys(obj).map((key) => {
+      const camelCased = key.replace(/-[a-z]/g, (g) => g[1].toUpperCase());
+      return { [camelCased]: obj[key] };
+    });
+    return Object.assign({}, ...keyValues);
+  } catch (err) {
+    console.error("Failed to parse badge style", style, err);
+  }
 }
 
 export default function Badges({ job }: { job: Job }) {
