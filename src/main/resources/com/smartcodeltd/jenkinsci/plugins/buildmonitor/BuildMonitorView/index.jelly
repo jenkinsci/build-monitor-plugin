@@ -17,7 +17,7 @@
                 data-appearance-show-badges="${it.showBadges}"
                 data-auto-refresh-every="${it.autoRefreshEvery}" />
 
-           <script src="${rootURL}/plugin/build-monitor-plugin/js/bundles/app.js" />
+           <script src="${rootURL}/plugin/build-monitor-plugin/js/bundles/app.js" type="module" />
        </l:main-panel>
     </l:layout>
 </j:jelly>
