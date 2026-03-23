@@ -57,7 +57,7 @@
     <spotless.check.skip>false</spotless.check.skip>
     <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
     <node.version>24.14.0</node.version>
-    <npm.version>11.11.1</npm.version>
+    <npm.version>11.12.0</npm.version>
   </properties>
 
   <dependencyManagement>
@@ -65,7 +65,7 @@
       <dependency>
         <groupId>io.jenkins.tools.bom</groupId>
         <artifactId>bom-${jenkins.baseline}.x</artifactId>
-        <version>6146.vc53a_0edb_e986</version>
+        <version>6166.va_a_8b_5eda_8ef5</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

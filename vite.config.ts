@@ -13,7 +13,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
     cssCodeSplit: true,
-    rollupOptions: {
+    rolldownOptions: {
       input: {
         "app":
           "src/main/frontend/index.tsx",
