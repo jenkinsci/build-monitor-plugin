@@ -3,6 +3,7 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e;
 import com.microsoft.playwright.Page;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.pages.BuildMonitorViewPage;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils;
+import hudson.model.Job;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject;
@@ -23,12 +24,14 @@ class ShouldSupportMultibranchPipelinesTest {
         // Create branch jobs and add them to the multibranch project
         WorkflowJob branch1 = new WorkflowJob(multibranch, "master");
         branch1.setDefinition(new CpsFlowDefinition("pipeline { stages { stage('Test') { steps { echo 'Hello' } } }", true));
-        // Properly add the branch to the multibranch project
-        multibranch.add(branch1);
+        // Add branch via reflection (add method may be non-public)
+        java.lang.reflect.Method addMethod = WorkflowMultiBranchProject.class.getDeclaredMethod("add", Job.class);
+        addMethod.setAccessible(true);
+        addMethod.invoke(multibranch, branch1);
 
         WorkflowJob branch2 = new WorkflowJob(multibranch, "develop");
         branch2.setDefinition(new CpsFlowDefinition("pipeline { stages { stage('Test') { steps { echo 'Hello' } } }", true));
-        multibranch.add(branch2);
+        addMethod.invoke(multibranch, branch2);
 
         // Save the projects to persist state
         multibranch.save();
