@@ -32,6 +32,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobViews;
 import hudson.Extension;
 import hudson.Util;
 import hudson.model.Descriptor.FormException;
+import hudson.model.ItemGroup;
 import hudson.model.Job;
 import hudson.model.ListView;
 import hudson.model.View;
@@ -218,9 +219,7 @@ public class BuildMonitorView extends ListView {
     private List<JobView> jobViews() {
         JobViews views = new JobViews(new StaticJenkinsAPIs(), currentConfig());
 
-        // A little bit of evil to make the type system happy.
-        @SuppressWarnings({"unchecked", "rawtypes"})
-        List<Job<?, ?>> projects = new ArrayList(Util.filter(super.getItems(), Job.class));
+        List<Job<?, ?>> projects = getJobsToDisplay();
         List<JobView> jobs = new ArrayList<>();
 
         projects.sort(currentConfig().getOrder());
@@ -230,6 +229,55 @@ public class BuildMonitorView extends ListView {
         }
 
         return jobs;
+    }
+
+    /**
+     * Returns the list of jobs to be displayed in the view, with multibranch pipeline projects
+     * expanded into their constituent branch jobs. This ensures that branches from multibranch
+     * pipelines are shown even when recursion is disabled, and that the multibranch project
+     * itself (which typically has no builds) is not displayed.
+     */
+    private List<Job<?, ?>> getJobsToDisplay() {
+        // A little bit of evil to make the type system happy.
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        List<Job<?, ?>> rawJobs = new ArrayList(Util.filter(super.getItems(), Job.class));
+        List<Job<?, ?>> processedJobs = new ArrayList<>();
+        boolean recurse = isRecurse();
+
+        for (Job<?, ?> job : rawJobs) {
+            if (isMultibranchPipeline(job)) {
+                if (recurse) {
+                    // When recursion is enabled, children are already included via super.getItems().
+                    // Skip the multibranch project itself to avoid showing a container with no builds.
+                    continue;
+                } else {
+                    // Expand into branch jobs
+                    @SuppressWarnings("unchecked")
+                    ItemGroup<Job<?, ?>> group = (ItemGroup<Job<?, ?>>) job;
+                    for (Job<?, ?> child : group.getItems()) {
+                        processedJobs.add(child);
+                    }
+                }
+            } else {
+                processedJobs.add(job);
+            }
+        }
+
+        return processedJobs;
+    }
+
+    /**
+     * Checks whether the given job is a multibranch pipeline project.
+     * Uses reflection to avoid a hard dependency on the workflow-multibranch plugin.
+     */
+    private boolean isMultibranchPipeline(Job<?, ?> job) {
+        try {
+            Class<?> mbpClass = Class.forName("org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject");
+            return mbpClass.isInstance(job);
+        } catch (ClassNotFoundException e) {
+            // Multibranch pipeline plugin not installed
+            return false;
+        }
     }
 
     /**
