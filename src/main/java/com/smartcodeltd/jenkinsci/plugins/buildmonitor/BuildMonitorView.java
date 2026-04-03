@@ -245,50 +245,56 @@ public class BuildMonitorView extends ListView {
         boolean recurse = isRecurse();
 
         for (TopLevelItem item : super.getItems()) {
-            if (item instanceof Job<?, ?> job) {
-                if (isMultibranchPipeline(job)) {
-                    if (recurse) {
-                        // When recursion is enabled, children should already be discovered by Jenkins view recursion.
-                        // Skip the multibranch container itself to avoid showing a container with no builds.
-                        continue;
-                    }
-
-                    if (job instanceof ItemGroup<?> group) {
-                        for (Object child : group.getItems()) {
-                            if (child instanceof Job<?, ?> childJob) {
-                                processedJobs.add(childJob);
-                            }
-                        }
-                    }
-                } else {
-                    processedJobs.add(job);
+            if (isMultibranchPipeline(item)) {
+                if (recurse) {
+                    // When recursion is enabled, children are already discovered by Jenkins.
+                    // Skip the multibranch container to avoid showing it with no builds.
+                    continue;
                 }
-            } else if (!recurse && isMultibranchPipeline(item)) {
-                if (item instanceof ItemGroup<?> group) {
-                    for (Object child : group.getItems()) {
-                        if (child instanceof Job<?, ?> childJob) {
-                            processedJobs.add(childJob);
-                        }
-                    }
-                }
+                // Expand multibranch into branch jobs
+                expandIfItemGroup(item, processedJobs);
+            } else if (item instanceof Job<?, ?> job) {
+                processedJobs.add(job);
             }
         }
 
         return processedJobs;
     }
 
+    private void expandIfItemGroup(Object item, List<Job<?, ?>> target) {
+        if (item instanceof ItemGroup<?> group) {
+            Collection<? extends TopLevelItem> children = group.getItems();
+            if (children != null) {
+                for (TopLevelItem child : children) {
+                    if (child instanceof Job<?, ?> childJob) {
+                        target.add(childJob);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Checks whether the given job is a multibranch pipeline project.
      * Uses reflection to avoid a hard dependency on the workflow-multibranch plugin.
+     * The Class.forName result is cached for performance.
      */
+    private static Class<?> cachedMbpClass = null;
+    private static boolean mbpClassResolved = false;
+
     private boolean isMultibranchPipeline(Object item) {
-        try {
-            Class<?> mbpClass = Class.forName("org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject");
-            return mbpClass.isInstance(item);
-        } catch (ClassNotFoundException e) {
-            // Multibranch pipeline plugin not installed
-            return false;
+        if (!mbpClassResolved) {
+            try {
+                cachedMbpClass = Class.forName("org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject");
+            } catch (ClassNotFoundException e) {
+                logger.fine("Multibranch pipeline plugin not installed, skipping detection");
+            } catch (LinkageError e) {
+                logger.warning("Failed to load multibranch class: " + e.getMessage());
+            }
+            mbpClassResolved = true;
         }
+        return cachedMbpClass != null && cachedMbpClass.isInstance(item);
+    }
     }
 
     /**
