@@ -39,6 +39,8 @@ import hudson.model.View;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.logging.Logger;
 import java.util.Comparator;
 import java.util.List;
 import jenkins.model.Jenkins;
@@ -52,6 +54,7 @@ import org.kohsuke.stapler.WebMethod;
  * @author Jan Molak
  */
 public class BuildMonitorView extends ListView {
+    private static final Logger logger = Logger.getLogger(BuildMonitorView.class.getName());
     @Extension
     public static final BuildMonitorDescriptor descriptor = new BuildMonitorDescriptor();
 
@@ -354,3 +357,4 @@ public class BuildMonitorView extends ListView {
     private Comparator<Job<?, ?>>
             order; // note: this field can be removed when people stop using versions prior to 1.6+build.150
 }
+
