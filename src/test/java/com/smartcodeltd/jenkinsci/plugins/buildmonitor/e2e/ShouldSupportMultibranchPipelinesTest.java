@@ -8,10 +8,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.config.PlaywrightConf
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.pages.BuildMonitorViewPage;
 import hudson.model.Item;
 import hudson.model.ItemGroup;
-import hudson.model.TopLevelItem;
-import java.util.ArrayList;
-import java.util.List;
-import jenkins.branch.MultiBranchProject;
+import java.lang.reflect.Method;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject;
@@ -28,14 +25,16 @@ class ShouldSupportMultibranchPipelinesTest {
         // Create a multibranch pipeline project
         WorkflowMultiBranchProject multibranch = j.createProject(WorkflowMultiBranchProject.class, "MyMultibranch");
 
-        // Create branch jobs and register them properly through the Jenkins API
-        WorkflowJob branch1 = multibranch.createProject(WorkflowJob.class, "master");
+        // Create branch jobs using Jenkins' ItemGroup API
+        // WorkflowMultiBranchProject extends AbstractFolder which extends ItemGroup
+        // We use getItem(String) / putProject to add children through the proper API
+        WorkflowJob branch1 = new WorkflowJob(multibranch, "master");
         branch1.setDefinition(new CpsFlowDefinition("pipeline { stages { stage('Test') { steps { echo 'Hello' } } } }", true));
-        branch1.save();
+        addBranch(multibranch, branch1);
 
-        WorkflowJob branch2 = multibranch.createProject(WorkflowJob.class, "develop");
+        WorkflowJob branch2 = new WorkflowJob(multibranch, "develop");
         branch2.setDefinition(new CpsFlowDefinition("pipeline { stages { stage('Test') { steps { echo 'Hello' } } } }", true));
-        branch2.save();
+        addBranch(multibranch, branch2);
 
         multibranch.save();
 
@@ -47,5 +46,27 @@ class ShouldSupportMultibranchPipelinesTest {
                 .goTo()
                 .hasJob("MyMultibranch / master")
                 .hasJob("MyMultibranch / develop");
+    }
+
+    /**
+     * Adds a branch job to the multibranch project using the protected addLoadedChild method.
+     * AbstractFolder (parent of WorkflowMultiBranchProject) exposes this for exactly this purpose.
+     */
+    private void addBranch(WorkflowMultiBranchProject parent, WorkflowJob child) throws Exception {
+        // Walk up the class hierarchy to find addLoadedChild — it's in AbstractFolder
+        Class<?> clazz = parent.getClass();
+        Method addMethod = null;
+        while (clazz != null && addMethod == null) {
+            try {
+                addMethod = clazz.getDeclaredMethod("addLoadedChild", Item.class);
+            } catch (NoSuchMethodException e) {
+                clazz = clazz.getSuperclass();
+            }
+        }
+        if (addMethod == null) {
+            throw new RuntimeException("Could not find addLoadedChild method in class hierarchy");
+        }
+        addMethod.setAccessible(true);
+        addMethod.invoke(parent, child);
     }
 }
