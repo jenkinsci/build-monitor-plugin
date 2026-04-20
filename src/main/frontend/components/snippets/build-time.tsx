@@ -9,6 +9,10 @@ export default function BuildTime({ job }: { job: Job }) {
   const hasLastCompletedBuild =
     job.lastCompletedBuild?.timeElapsedSince && job.progress === 0;
 
+  if (!hasCurrentBuilds && !hasLastCompletedBuild) {
+    return null;
+  }
+
   return (
     <div>
       {hasCurrentBuilds &&
