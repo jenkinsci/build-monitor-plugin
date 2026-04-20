@@ -39,7 +39,7 @@
     "neostandard": "0.13.0",
     "prettier": "3.8.1",
     "sass-embedded": "1.99.0",
-    "typescript": "6.0.2",
+    "typescript": "6.0.3",
     "vite": "8.0.8",
     "vite-plugin-css-injected-by-js": "4.0.1",
     "vitest": "4.1.4"
