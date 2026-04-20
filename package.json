@@ -41,7 +41,7 @@
     "sass-embedded": "1.99.0",
     "typescript": "6.0.2",
     "vite": "8.0.8",
-    "vite-plugin-css-injected-by-js": "4.0.1",
+    "vite-plugin-css-injected-by-js": "5.0.0",
     "vitest": "4.1.4"
   },
   "engines": {
