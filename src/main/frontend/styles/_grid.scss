@@ -12,11 +12,13 @@
   gap: calc(var(--section-padding) / 2);
   padding-inline: calc(var(--section-padding) / 2);
   padding-bottom: calc(var(--section-padding) / 2);
-  // Force all rows to have equal height
-  grid-auto-rows: 1fr;
-  // Fill the height of the parent container
+  // Rows are at least as tall as their content, share space equally when there's room
+  grid-auto-rows: minmax(min-content, 1fr);
+  // Fill the height of the parent container and allow scrolling
   flex: 1 1 auto;
-  max-height: 100vh;
+  min-height: 0;
+  overflow-y: auto;
+  align-content: start;
 
   @media screen and (prefers-reduced-motion: no-preference) {
     & > * {

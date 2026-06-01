@@ -27,34 +27,37 @@ function Cell({ job }: { job: Job }) {
         style={{ width: job.progress + "%" }}
       />
 
-      <h2>
-        <Label
-          text={job.name}
-          style={{
-            fontSize: "1.25em",
-            fontWeight: "550",
-            color:
-              "var(--bm-contrast, color-mix(in srgb, var(--bm-cell-color), var(--text-color)))",
-          }}
-        />
-      </h2>
+      <div className="bm-cell__content">
+        <h2>
+          <Label
+            text={job.name}
+            style={{
+              fontSize: "1.25em",
+              fontWeight: "550",
+              color:
+                "var(--bm-contrast, color-mix(in srgb, var(--bm-cell-color), var(--text-color)))",
+            }}
+          />
+        </h2>
 
-      {job.headline && !job.claim?.active && <Label text={job.headline} />}
+        {job.headline && !job.claim?.active && <Label text={job.headline} />}
 
-      {job.lastCompletedBuild.description && (
-        <Label text={job.lastCompletedBuild.description} />
-      )}
+        {job.lastCompletedBuild.description && (
+          <Label text={job.lastCompletedBuild.description} />
+        )}
 
-      <Claim job={job} />
-      <Problems job={job} />
-      <Tests job={job} />
-      <Badges job={job} />
-
-      <div className={"bm-cell__details"}>
-        <BuildNumber job={job} />
-
-        <BuildTime job={job} />
+        <Claim job={job} />
+        <Problems job={job} />
+        <Tests job={job} />
+        <Badges job={job} />
       </div>
+
+      {(job.lastCompletedBuild?.name || !!job.currentBuilds?.length) && (
+        <div className={"bm-cell__details"}>
+          <BuildNumber job={job} />
+          <BuildTime job={job} />
+        </div>
+      )}
     </a>
   );
 }
