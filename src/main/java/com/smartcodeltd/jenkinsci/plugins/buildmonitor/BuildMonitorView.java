@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -226,10 +227,45 @@ public class BuildMonitorView extends ListView {
         projects.sort(currentConfig().getOrder());
 
         for (Job<?, ?> project : projects) {
-            jobs.add(views.viewOf(project));
+            List<Job<?, ?>> branchJobs = getBranchJobsIfMultiBranchProject(project);
+            if (branchJobs != null) {
+                // Multibranch Pipeline: display each branch as a separate job
+                for (Job<?, ?> branch : branchJobs) {
+                    jobs.add(views.viewOf(branch));
+                }
+            } else {
+                jobs.add(views.viewOf(project));
+            }
         }
 
         return jobs;
+    }
+
+    /**
+     * If the given project is a WorkflowMultiBranchProject, returns its branch jobs.
+     * Uses reflection to avoid compile-time dependency on the workflow-multibranch plugin.
+     * Returns null if the project is not a multibranch project.
+     */
+    @SuppressWarnings("unchecked")
+    private List<Job<?, ?>> getBranchJobsIfMultiBranchProject(Job<?, ?> project) {
+        try {
+            Class<?> multiBranchProjectClass = Class.forName(
+                    "org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject");
+            if (multiBranchProjectClass.isInstance(project)) {
+                // It's a multibranch project - get its branch jobs via getJobs()
+                java.lang.reflect.Method getJobsMethod =
+                        multiBranchProjectClass.getMethod("getJobs");
+                Map<String, Job<?, ?>> branchJobs =
+                        (Map<String, Job<?, ?>>) getJobsMethod.invoke(project);
+                return new ArrayList<>(branchJobs.values());
+            }
+        } catch (ClassNotFoundException e) {
+            // workflow-multibranch plugin not installed
+        } catch (NoSuchMethodException | IllegalAccessException |
+                 java.lang.reflect.InvocationTargetException e) {
+            // Unexpected error, treat as regular project
+        }
+        return null;
     }
 
     /**
