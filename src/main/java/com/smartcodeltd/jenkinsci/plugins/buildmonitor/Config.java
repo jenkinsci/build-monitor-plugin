@@ -27,6 +27,7 @@ public class Config implements Describable<Config> {
     private GetBuildViewModel displayBadgesFrom;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     private Boolean displayJUnitProgress;
+    private Boolean displayJobDescription;
     private Integer autoRefreshEvery;
 
     public static Config defaultConfig() {
@@ -112,6 +113,14 @@ public class Config implements Describable<Config> {
 
     public void setDisplayJUnitProgress(boolean flag) {
         this.displayJUnitProgress = flag;
+    }
+
+    public boolean getDisplayJobDescription() {
+        return Optional.ofNullable(displayJobDescription).orElse(true);
+    }
+
+    public void setDisplayJobDescription(boolean flag) {
+        this.displayJobDescription = flag;
     }
 
     public int getAutoRefreshEvery() {

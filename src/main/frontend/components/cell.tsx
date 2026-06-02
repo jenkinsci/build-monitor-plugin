@@ -11,6 +11,8 @@ import Tests from "./snippets/tests.tsx";
 
 function Cell({ job }: { job: Job }) {
   const { colorBlindMode } = useUserPreferences();
+  const showJobDescription =
+    document.getElementById("app")?.dataset.appearanceShowJobDescription !== "false";
 
   return (
     <a
@@ -41,7 +43,7 @@ function Cell({ job }: { job: Job }) {
 
       {job.headline && !job.claim?.active && <Label text={job.headline} />}
 
-      {job.lastCompletedBuild.description && (
+      {showJobDescription && job.lastCompletedBuild.description && (
         <Label text={job.lastCompletedBuild.description} />
       )}
 

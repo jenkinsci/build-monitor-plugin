@@ -134,6 +134,10 @@
       <f:checkbox id="showBadges" field="showBadges" />
     </f:entry>
 
+    <f:entry title="${%Show job description}">
+      <f:checkbox id="displayJobDescription" field="displayJobDescription" />
+    </f:entry>
+
     <f:entry title="${%Color blind mode}">
       <f:checkbox id="colourBlindMode" field="colourBlindMode" />
     </f:entry>
