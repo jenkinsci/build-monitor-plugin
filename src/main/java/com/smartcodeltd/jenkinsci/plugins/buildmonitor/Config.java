@@ -28,6 +28,7 @@ public class Config implements Describable<Config> {
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     private Boolean displayJUnitProgress;
     private Boolean displayJobDescription;
+    private Boolean displayJobNameOnly;
     private Integer autoRefreshEvery;
 
     public static Config defaultConfig() {
@@ -121,6 +122,14 @@ public class Config implements Describable<Config> {
 
     public void setDisplayJobDescription(boolean flag) {
         this.displayJobDescription = flag;
+    }
+
+    public boolean getDisplayJobNameOnly() {
+        return Optional.ofNullable(displayJobNameOnly).orElse(false);
+    }
+
+    public void setDisplayJobNameOnly(boolean flag) {
+        this.displayJobNameOnly = flag;
     }
 
     public int getAutoRefreshEvery() {

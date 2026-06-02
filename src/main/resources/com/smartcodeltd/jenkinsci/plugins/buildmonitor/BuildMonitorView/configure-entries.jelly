@@ -80,6 +80,10 @@
       <f:checkbox id="displayCommitters" field="displayCommitters" />
     </f:entry>
 
+    <f:entry title="${%Display job name only}">
+      <f:checkbox id="displayJobNameOnly" field="displayJobNameOnly" />
+    </f:entry>
+
     <f:entry title="${%Failure Analyzer Plugin: Field to display}" help="${descriptor.getHelpFile('buildFailureAnalyzerDisplayedField')}">
       <div class="jenkins-select">
         <select name="buildFailureAnalyzerDisplayedField" class="jenkins-select__input">
