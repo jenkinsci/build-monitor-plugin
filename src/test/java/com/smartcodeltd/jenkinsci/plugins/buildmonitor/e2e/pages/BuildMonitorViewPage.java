@@ -6,6 +6,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.e2e.utils.BuildMonitorViewUtils;
+import java.util.List;
 
 public class BuildMonitorViewPage extends JenkinsPage<BuildMonitorViewPage> {
 
@@ -20,8 +21,8 @@ public class BuildMonitorViewPage extends JenkinsPage<BuildMonitorViewPage> {
     @Override
     BuildMonitorViewPage waitForLoaded() {
         super.waitForLoaded();
-        Locator grid = page.locator(".bm-grid");
-        assertThat(grid).isVisible();
+        Locator content = page.locator(".bm-grid-viewport, .jenkins-notice").first();
+        assertThat(content).isVisible();
         return this;
     }
 
@@ -49,6 +50,39 @@ public class BuildMonitorViewPage extends JenkinsPage<BuildMonitorViewPage> {
         Locator link = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Add some jobs"));
         assertThat(heading).isVisible();
         assertThat(link).isVisible();
+        return this;
+    }
+
+    public BuildMonitorViewPage hasPageCount(int pageCount) {
+        Locator pages = page.locator(".bm-grid-page");
+        assertThat(pages).hasCount(pageCount);
+        return this;
+    }
+
+    public BuildMonitorViewPage scrollPastPageBoundaryTowards(int pageNumber) {
+        int pageIndex = pageNumber - 1;
+        Locator viewport = page.locator(".bm-grid-viewport");
+        viewport.evaluate(
+                "(element, pageIndex) => element.scrollTo({ left: element.clientWidth * pageIndex + 120 })", pageIndex);
+        return this;
+    }
+
+    public BuildMonitorViewPage hasSnappedToPage(int pageNumber) {
+        int pageIndex = pageNumber - 1;
+
+        page.waitForFunction(
+                "([selector, pageIndex]) => {"
+                        + "  const element = document.querySelector(selector);"
+                        + "  return !!element && Math.abs(element.scrollLeft - (element.clientWidth * pageIndex)) < 4;"
+                        + "}",
+                List.of(".bm-grid-viewport", pageIndex));
+
+        return this;
+    }
+
+    public BuildMonitorViewPage hasActivePage(int pageNumber) {
+        Locator dot = page.locator(".bm-grid-pagination__dot").nth(pageNumber - 1);
+        assertThat(dot).hasAttribute("aria-current", "page");
         return this;
     }
 }

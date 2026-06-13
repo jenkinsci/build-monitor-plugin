@@ -46,6 +46,16 @@ public class BuildMonitorViewUtils {
             return this;
         }
 
+        public FluentBuildMonitorView withMaximumColumns(int maxColumns) {
+            view.getConfig().setMaxColumns(maxColumns);
+            return this;
+        }
+
+        public FluentBuildMonitorView withTextScale(double textScale) {
+            view.getConfig().setTextScale(textScale);
+            return this;
+        }
+
         public BuildMonitorView get() {
             return view;
         }
