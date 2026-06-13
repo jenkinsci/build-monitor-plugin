@@ -11,6 +11,10 @@ import Tests from "./snippets/tests.tsx";
 
 function Cell({ job }: { job: Job }) {
   const { colorBlindMode } = useUserPreferences();
+  const showJobDescription =
+    document.getElementById("app")?.dataset.appearanceShowJobDescription !== "false";
+  const displayJobNameOnly =
+    document.getElementById("app")?.dataset.displayJobNameOnly === "true";
 
   return (
     <a
@@ -29,7 +33,7 @@ function Cell({ job }: { job: Job }) {
 
       <h2>
         <Label
-          text={job.name}
+          text={displayJobNameOnly ? job.displayName : job.name}
           style={{
             fontSize: "1.25em",
             fontWeight: "550",
@@ -41,7 +45,7 @@ function Cell({ job }: { job: Job }) {
 
       {job.headline && !job.claim?.active && <Label text={job.headline} />}
 
-      {job.lastCompletedBuild.description && (
+      {showJobDescription && job.lastCompletedBuild.description && (
         <Label text={job.lastCompletedBuild.description} />
       )}
 

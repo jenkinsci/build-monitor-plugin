@@ -60,6 +60,10 @@ public class JobView {
         return relative.name();
     }
 
+    public String displayName() {
+        return job.getDisplayName();
+    }
+
     public String url() {
         return relative.url();
     }
