@@ -57,7 +57,7 @@
     <spotless.check.skip>false</spotless.check.skip>
     <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
     <node.version>24.16.0</node.version>
-    <npm.version>11.16.0</npm.version>
+    <npm.version>11.17.0</npm.version>
   </properties>
 
   <dependencyManagement>
