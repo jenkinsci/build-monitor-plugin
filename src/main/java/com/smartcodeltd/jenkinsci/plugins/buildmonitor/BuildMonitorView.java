@@ -30,14 +30,17 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.BaseOrder;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
 import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobViews;
 import hudson.Extension;
-import hudson.Util;
 import hudson.model.Descriptor.FormException;
+import hudson.model.ItemGroup;
 import hudson.model.Job;
 import hudson.model.ListView;
+import hudson.model.TopLevelItem;
 import hudson.model.View;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.logging.Logger;
 import java.util.Comparator;
 import java.util.List;
 import jenkins.model.Jenkins;
@@ -51,6 +54,7 @@ import org.kohsuke.stapler.WebMethod;
  * @author Jan Molak
  */
 public class BuildMonitorView extends ListView {
+    private static final Logger logger = Logger.getLogger(BuildMonitorView.class.getName());
     @Extension
     public static final BuildMonitorDescriptor descriptor = new BuildMonitorDescriptor();
 
@@ -218,9 +222,7 @@ public class BuildMonitorView extends ListView {
     private List<JobView> jobViews() {
         JobViews views = new JobViews(new StaticJenkinsAPIs(), currentConfig());
 
-        // A little bit of evil to make the type system happy.
-        @SuppressWarnings({"unchecked", "rawtypes"})
-        List<Job<?, ?>> projects = new ArrayList(Util.filter(super.getItems(), Job.class));
+        List<Job<?, ?>> projects = getJobsToDisplay();
         List<JobView> jobs = new ArrayList<>();
 
         projects.sort(currentConfig().getOrder());
@@ -230,6 +232,69 @@ public class BuildMonitorView extends ListView {
         }
 
         return jobs;
+    }
+
+    /**
+     * Returns the list of jobs to be displayed in the view, with multibranch pipeline projects
+     * expanded into their constituent branch jobs. This ensures that branches from multibranch
+     * pipelines are shown even when recursion is disabled, and that the multibranch project
+     * itself (which typically has no builds) is not displayed.
+     */
+    private List<Job<?, ?>> getJobsToDisplay() {
+        List<Job<?, ?>> processedJobs = new ArrayList<>();
+        boolean recurse = isRecurse();
+
+        for (TopLevelItem item : super.getItems()) {
+            if (isMultibranchPipeline(item)) {
+                if (recurse) {
+                    // When recursion is enabled, children are already discovered by Jenkins.
+                    // Skip the multibranch container to avoid showing it with no builds.
+                    continue;
+                }
+                // Expand multibranch into branch jobs
+                expandIfItemGroup(item, processedJobs);
+            } else if (item instanceof Job<?, ?> job) {
+                processedJobs.add(job);
+            }
+        }
+
+        return processedJobs;
+    }
+
+    private void expandIfItemGroup(Object item, List<Job<?, ?>> target) {
+        if (item instanceof ItemGroup<?> group) {
+            Collection<? extends TopLevelItem> children = group.getItems();
+            if (children != null) {
+                for (TopLevelItem child : children) {
+                    if (child instanceof Job<?, ?> childJob) {
+                        target.add(childJob);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Checks whether the given job is a multibranch pipeline project.
+     * Uses reflection to avoid a hard dependency on the workflow-multibranch plugin.
+     * The Class.forName result is cached for performance.
+     */
+    private static Class<?> cachedMbpClass = null;
+    private static boolean mbpClassResolved = false;
+
+    private boolean isMultibranchPipeline(Object item) {
+        if (!mbpClassResolved) {
+            try {
+                cachedMbpClass = Class.forName("org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject");
+            } catch (ClassNotFoundException e) {
+                logger.fine("Multibranch pipeline plugin not installed, skipping detection");
+            } catch (LinkageError e) {
+                logger.warning("Failed to load multibranch class: " + e.getMessage());
+            }
+            mbpClassResolved = true;
+        }
+        return cachedMbpClass != null && cachedMbpClass.isInstance(item);
+    }
     }
 
     /**
@@ -298,3 +363,4 @@ public class BuildMonitorView extends ListView {
     private Comparator<Job<?, ?>>
             order; // note: this field can be removed when people stop using versions prior to 1.6+build.150
 }
+
