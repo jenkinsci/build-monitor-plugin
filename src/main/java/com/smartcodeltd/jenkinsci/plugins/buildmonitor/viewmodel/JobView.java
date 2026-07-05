@@ -21,18 +21,24 @@ public class JobView {
     private final Date systemTime;
     private final Job<?, ?> job;
     private final boolean isPipelineJob;
+    private final boolean isMultiBranchBranch;
     private final RelativeLocation relative;
 
     private final List<Feature> features = new ArrayList<>();
 
     public static JobView of(Job<?, ?> job, List<Feature> features, boolean isPipelineJob) {
-        return new JobView(job, features, isPipelineJob, RelativeLocation.of(job), new Date());
+        return new JobView(job, features, isPipelineJob, false, RelativeLocation.of(job), new Date());
+    }
+
+    public static JobView of(Job<?, ?> job, List<Feature> features, boolean isPipelineJob, boolean isMultiBranchBranch) {
+        return new JobView(job, features, isPipelineJob, isMultiBranchBranch, RelativeLocation.of(job), new Date());
     }
 
     public JobView(
-            Job<?, ?> job, List<Feature> features, boolean isPipelineJob, RelativeLocation relative, Date systemTime) {
+            Job<?, ?> job, List<Feature> features, boolean isPipelineJob, boolean isMultiBranchBranch, RelativeLocation relative, Date systemTime) {
         this.job = job;
         this.isPipelineJob = isPipelineJob;
+        this.isMultiBranchBranch = isMultiBranchBranch;
         this.relative = relative;
         this.systemTime = systemTime;
 
@@ -61,6 +67,9 @@ public class JobView {
     }
 
     public String displayName() {
+        if (isMultiBranchBranch && job.getParent() instanceof hudson.model.Item parent) {
+            return parent.getName() + " \u00bb " + job.getName();
+        }
         return job.getDisplayName();
     }
 
