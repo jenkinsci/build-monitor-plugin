@@ -8,6 +8,8 @@ import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.util.RunList;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,9 +70,9 @@ public class JobView {
 
     public String displayName() {
         if (isMultiBranchBranch && job.getParent() instanceof hudson.model.Item parent) {
-            return parent.getName() + " \u00bb " + job.getName();
+            return decode(parent.getDisplayName()) + " \u00bb " + decode(job.getDisplayName());
         }
-        return job.getDisplayName();
+        return decode(job.getDisplayName());
     }
 
     public String url() {
@@ -87,6 +89,10 @@ public class JobView {
 
     public String timeElapsedSinceLastBuild() {
         return formatted(lastCompletedBuild().timeElapsedSince());
+    }
+
+    private static String decode(String value) {
+        return URLDecoder.decode(value, StandardCharsets.UTF_8);
     }
 
     private String formatted(Duration duration) {
