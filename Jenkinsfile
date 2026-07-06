@@ -1,5 +1,7 @@
 pipeline { 
-    agent any  
+    agent { 
+	    label 'windows-cloud'
+	}
     stages { 
         stage('Build HPI') { 
             steps { 
