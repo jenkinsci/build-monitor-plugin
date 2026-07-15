@@ -1,14 +1,3 @@
-pipeline { 
-    agent { 
-	    label 'windows-cloud'
-	}
-    stages { 
-        stage('Build HPI') { 
-            steps { 
-               git branch: 'feature/show-displayname-plus-hide-description', url: 'https://github.com/hqplus-software/build-monitor-plugin'
-               powershell 'mvn clean package -DskipTests'
-               archiveArtifacts artifacts: 'target/*.hpi', fingerprint: true
-            }
-        }
-    }
-}
+buildPlugin(timeout: 120, useContainerAgent: true, configurations: [
+    [platform: 'linux', jdk: 21],
+])
