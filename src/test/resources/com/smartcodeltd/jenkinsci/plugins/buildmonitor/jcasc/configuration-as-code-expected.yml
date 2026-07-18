@@ -5,6 +5,7 @@
       displayBadgesFrom: "getLastBuild"
       displayCommitters: false
       displayJUnitProgress: false
+      jobStatusIgnoreRunning: false
       maxColumns: 2
       order: "byStatus"
       showBadges: false
