@@ -1,7 +1,6 @@
 package com.smartcodeltd.jenkinsci.plugins.buildmonitor;
 
 import hudson.util.FormValidation;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,7 +40,14 @@ public class BuildMonitorDescriptorTest {
     }
 
     private String htmlDecoded(String message) {
-        return StringEscapeUtils.unescapeHtml(message);
+        // FormValidation escapes the message; decode the handful of entities it can produce
+        // rather than pulling in a library just for a test helper.
+        return message
+                .replace("&#039;", "'")
+                .replace("&quot;", "\"")
+                .replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&amp;", "&");
     }
 
     private String itShouldAllow(String regex) {
