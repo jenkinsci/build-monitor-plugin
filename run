@@ -1,7 +1,0 @@
-#!/bin/sh
-
-pushd build-monitor-plugin
-
-MAVEN_OPTS="-Xmx4096m -XX:MaxPermSize=2048m" mvn clean && mvn hpi:run -Dhudson.Main.development=true
-
-popd

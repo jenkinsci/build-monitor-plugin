@@ -1,0 +1,102 @@
+package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
+
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.a;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.badgePluginBadge;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.build;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.hasBadgePluginBadges;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.job;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.jobView;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.withConfig;
+import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.syntacticsugar.Sugar.withDefaultConfig;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
+import jenkins.model.Jenkins;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+
+class HasBadgesBadgePluginTest {
+
+    private JobView job;
+
+    private MockedStatic<Jenkins> mockedJenkins;
+    private Jenkins jenkins;
+
+    @BeforeEach
+    void beforeEach() {
+        mockedJenkins = mockStatic(Jenkins.class);
+        jenkins = mock(Jenkins.class);
+        mockedJenkins.when(Jenkins::get).thenReturn(jenkins);
+    }
+
+    @AfterEach
+    void afterEach() {
+        mockedJenkins.close();
+    }
+
+    @Test
+    void should_support_job_without_badges() {
+        job = a(jobView().which(hasBadgePluginBadges(withDefaultConfig())).of(a(job())));
+
+        assertThat(serialisedBadgesDetailsOf(job), is(nullValue()));
+    }
+
+    @Test
+    void should_convert_badges_to_json() {
+        job = a(jobView()
+                .which(hasBadgePluginBadges(withDefaultConfig()))
+                .of(a(job().whereTheLast(build().hasBadges(
+                                badgePluginBadge().withText("badge1"),
+                                badgePluginBadge().withText("badge2"))))));
+
+        assertThat(serialisedBadgesDetailsOf(job).value(), hasSize(2));
+    }
+
+    @Test
+    void should_ignore_badges_with_icon() {
+        job = a(jobView()
+                .which(hasBadgePluginBadges(withDefaultConfig()))
+                .of(a(job().whereTheLast(build().hasBadges(
+                                badgePluginBadge().withIcon("icon.gif", "badge1"),
+                                badgePluginBadge().withText("badge2"))))));
+
+        assertThat(serialisedBadgesDetailsOf(job).value(), hasSize(1));
+    }
+
+    @Test
+    void should_report_badges_from_latest_build() {
+        job = a(jobView()
+                .which(hasBadgePluginBadges(withDefaultConfig()))
+                .of(a(job().whereTheLast(build().isStillBuilding()
+                                .hasBadges(badgePluginBadge().withText("badge1")))
+                        .andThePrevious(build().hasBadges(
+                                        badgePluginBadge().withText("badge1"),
+                                        badgePluginBadge().withText("badge2"))))));
+
+        assertThat(serialisedBadgesDetailsOf(job).value(), hasSize(1));
+    }
+
+    @Test
+    void should_report_badges_from_last_completed_build() {
+        job = a(jobView()
+                .which(hasBadgePluginBadges(withConfig().withBadgesFromLastCompletedBuild()))
+                .of(a(job().whereTheLast(build().isStillBuilding()
+                                .hasBadges(badgePluginBadge().withText("badge1")))
+                        .andThePrevious(build().hasBadges(
+                                        badgePluginBadge().withText("badge1"),
+                                        badgePluginBadge().withText("badge2"))))));
+
+        assertThat(serialisedBadgesDetailsOf(job).value(), hasSize(2));
+    }
+
+    private HasBadgesBadgePlugin.Badges serialisedBadgesDetailsOf(JobView job) {
+        return job.which(HasBadgesBadgePlugin.class).asJson();
+    }
+}

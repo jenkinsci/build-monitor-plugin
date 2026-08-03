@@ -1,0 +1,15 @@
+jenkins:
+  views:
+    - buildMonitor:
+        includeRegex: ".+\\/(my-job-.*)\\/(master|demo)"
+        name: "My-Monitor"
+        recurse: true
+        title: "My Monitor"
+        config:
+          maxColumns: 2
+          order: "byStatus"
+          displayCommitters: false
+          colourBlindMode: true
+          displayJUnitProgress: false
+          showBadges: false
+          autoRefreshEvery: 10

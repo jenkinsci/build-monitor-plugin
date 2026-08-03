@@ -1,0 +1,54 @@
+package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features;
+
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.JobView;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.CandidateHeadline;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.Headline;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineConfig;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineOfAborted;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineOfExecuting;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineOfFailing;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.HeadlineOfFixed;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headline.NoHeadline;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * @author Jan Molak
+ */
+public class HasHeadline implements Feature<Headline> {
+
+    private final HeadlineConfig config;
+    private JobView job;
+
+    public HasHeadline(HeadlineConfig config) {
+        this.config = config;
+    }
+
+    @Override
+    public HasHeadline of(JobView jobView) {
+        this.job = jobView;
+
+        return this;
+    }
+
+    @Override
+    public Headline asJson() {
+        return headlineOf(job).asJson();
+    }
+
+    private CandidateHeadline headlineOf(final JobView job) {
+        List<CandidateHeadline> availableHeadlines = new ArrayList<>();
+        Collections.addAll(
+                availableHeadlines,
+                new HeadlineOfExecuting(job, config),
+                new HeadlineOfAborted(job, config),
+                new HeadlineOfFixed(job, config),
+                new HeadlineOfFailing(job, config));
+
+        return availableHeadlines.stream()
+                .filter(candidateHeadline -> candidateHeadline.isApplicableTo(job))
+                .findFirst()
+                .orElse(new NoHeadline());
+    }
+}

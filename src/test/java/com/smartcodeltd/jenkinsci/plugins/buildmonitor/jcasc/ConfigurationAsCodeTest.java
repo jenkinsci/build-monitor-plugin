@@ -1,0 +1,62 @@
+package com.smartcodeltd.jenkinsci.plugins.buildmonitor.jcasc;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.Is.isA;
+import static org.hamcrest.core.IsNull.notNullValue;
+
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.build.GetLastBuild;
+import com.smartcodeltd.jenkinsci.plugins.buildmonitor.order.ByStatus;
+import hudson.model.View;
+import io.jenkins.plugins.casc.ConfigurationContext;
+import io.jenkins.plugins.casc.ConfiguratorRegistry;
+import io.jenkins.plugins.casc.misc.ConfiguredWithCode;
+import io.jenkins.plugins.casc.misc.JenkinsConfiguredWithCodeRule;
+import io.jenkins.plugins.casc.misc.Util;
+import io.jenkins.plugins.casc.misc.junit.jupiter.WithJenkinsConfiguredWithCode;
+import io.jenkins.plugins.casc.model.CNode;
+import java.util.Collection;
+import jenkins.model.Jenkins;
+import org.junit.jupiter.api.Test;
+
+@WithJenkinsConfiguredWithCode
+class ConfigurationAsCodeTest {
+
+    @Test
+    @ConfiguredWithCode("configuration-as-code.yml")
+    void should_support_configuration_as_code(JenkinsConfiguredWithCodeRule j) {
+        Collection<View> views = Jenkins.get().getViews();
+
+        assertThat(views.size(), is(1));
+
+        BuildMonitorView view = (BuildMonitorView) views.iterator().next();
+        assertThat(view.getTitle(), is("My Monitor"));
+        assertThat(view.getIncludeRegex(), is(".+\\/(my-job-.*)\\/(master|demo)"));
+        assertThat(view.getViewName(), is("My-Monitor"));
+        assertThat(view.isRecurse(), is(true));
+        assertThat(view.getConfig(), notNullValue());
+        assertThat(view.getConfig().getColourBlindMode(), is(true));
+        assertThat(view.getConfig().getDisplayBadgesFrom(), isA(GetLastBuild.class));
+        assertThat(view.getConfig().getDisplayCommitters(), is(false));
+        assertThat(view.getConfig().getDisplayJUnitProgress(), is(false));
+        assertThat(view.getConfig().getMaxColumns(), is(2));
+        assertThat(view.getConfig().getOrder(), isA(ByStatus.class));
+        assertThat(view.getConfig().getShowBadges(), is(false));
+        assertThat(view.getConfig().getAutoRefreshEvery(), is(10));
+    }
+
+    @Test
+    @ConfiguredWithCode("configuration-as-code.yml")
+    void should_support_configuration_export(JenkinsConfiguredWithCodeRule j) throws Exception {
+        ConfiguratorRegistry registry = ConfiguratorRegistry.get();
+        ConfigurationContext context = new ConfigurationContext(registry);
+        CNode yourAttribute = Util.getJenkinsRoot(context).get("views");
+
+        String exported = Util.toYamlString(yourAttribute);
+
+        String expected = Util.toStringFromYamlFile(this, "configuration-as-code-expected.yml");
+
+        assertThat(exported, is(expected));
+    }
+}

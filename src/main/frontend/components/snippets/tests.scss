@@ -1,0 +1,30 @@
+.bm-progress {
+  display: flex;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--bm-cell-color) 10%, var(--white));
+  width: 180px;
+  height: 0.5em;
+  border-radius: 1em;
+  padding: var(--jenkins-border-width);
+
+  .bar {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background-color: var(--accent-color);
+    transition: width 0.6s ease;
+
+    &.bar-progress2 {
+      opacity: 0.6;
+    }
+    &.bar-progress2 + .bar {
+      order: -1;
+    }
+  }
+
+  &--red {
+    .bar {
+      background-color: var(--error-color);
+    }
+  }
+}
