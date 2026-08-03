@@ -42,8 +42,7 @@ class BuildMonitorDescriptorTest {
     private String htmlDecoded(String message) {
         // FormValidation escapes the message; decode the handful of entities it can produce
         // rather than pulling in a library just for a test helper.
-        return message
-                .replace("&#039;", "'")
+        return message.replace("&#039;", "'")
                 .replace("&quot;", "\"")
                 .replace("&lt;", "<")
                 .replace("&gt;", ">")
