@@ -28,6 +28,7 @@ public class Config implements Describable<Config> {
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     private Boolean displayJUnitProgress;
     private Integer autoRefreshEvery;
+    private Boolean jobStatusIgnoreRunning;
 
     public static Config defaultConfig() {
         return new Config();
@@ -80,6 +81,14 @@ public class Config implements Describable<Config> {
 
     public void setDisplayCommitters(boolean flag) {
         this.displayCommitters = flag;
+    }
+
+    public boolean getJobStatusIgnoreRunning() {
+        return Optional.ofNullable(jobStatusIgnoreRunning).orElse(true);
+    }
+
+    public void setJobStatusIgnoreRunning(boolean flag) {
+        this.jobStatusIgnoreRunning = flag;
     }
 
     public boolean getShowBadges() {
