@@ -15,6 +15,7 @@ import com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headli
 import hudson.model.Job;
 import java.util.ArrayList;
 import java.util.List;
+import jenkins.branch.MultiBranchProject;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 
 /**
@@ -24,6 +25,7 @@ public class JobViews {
     private static final String Claim = "claim";
     private static final String Build_Failure_Analyzer = "build-failure-analyzer";
     private static final String Badge_Plugin = "badge";
+    private static final String Branch_API = "branch-api";
     private static final String Pipeline = "workflow-job";
     private static final String Junit_Realtime = "junit-realtime-test-reporter";
 
@@ -63,7 +65,8 @@ public class JobViews {
         }
 
         boolean isPipelineJob = jenkins.hasPlugin(Pipeline) && job instanceof WorkflowJob;
+        boolean isMultiBranchBranch = jenkins.hasPlugin(Branch_API) && job.getParent() instanceof MultiBranchProject;
 
-        return JobView.of(job, viewFeatures, isPipelineJob);
+        return JobView.of(job, viewFeatures, isPipelineJob, isMultiBranchBranch);
     }
 }
