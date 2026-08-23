@@ -23,6 +23,19 @@ export function getColumnCount(
   return Math.min(jobCount, safeMaximumColumns);
 }
 
+/**
+ * The shortest a cell may be at the given text size. Pagination uses it to work
+ * out how many rows fit on a page; the scrolling layout uses it as the row height.
+ */
+export function getMinimumCellHeight(textSize: number) {
+  const safeTextSize = Number.isFinite(textSize) ? Math.max(0.1, textSize) : 1;
+
+  return Math.max(
+    MINIMUM_CELL_HEIGHT_PX,
+    Math.round(BASE_CELL_HEIGHT_PX * safeTextSize),
+  );
+}
+
 export function getRowsPerPage({
   viewportHeight,
   textSize,
@@ -31,11 +44,7 @@ export function getRowsPerPage({
     return 1;
   }
 
-  const safeTextSize = Number.isFinite(textSize) ? Math.max(0.1, textSize) : 1;
-  const minimumCellHeight = Math.max(
-    MINIMUM_CELL_HEIGHT_PX,
-    Math.round(BASE_CELL_HEIGHT_PX * safeTextSize),
-  );
+  const minimumCellHeight = getMinimumCellHeight(textSize);
 
   return Math.max(
     1,

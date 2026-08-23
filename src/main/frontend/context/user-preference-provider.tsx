@@ -11,10 +11,12 @@ interface MonitorPreferences {
   textSize: number;
   maximumNumberOfColumns: number;
   showBadges: boolean;
+  paginated: boolean;
   setColorBlindMode: (val: boolean) => void;
   setTextSize: (val: number) => void;
   setMaximumNumberOfColumns: (val: number) => void;
   setShowBadges: (val: boolean) => void;
+  setPaginated: (val: boolean) => void;
   reset: () => void;
   isResettable: boolean;
 }
@@ -57,12 +59,14 @@ export const UserPreferencesProvider = ({
     maximumNumberOfColumns: number;
     colorBlindMode: boolean;
     showBadges: boolean;
+    paginated: boolean;
   };
 }) => {
   const colorBlindKey = makeKey(monitorId, "colorBlind");
   const textSizeKey = makeKey(monitorId, "textSize");
   const maximumNumberOfColumnsKey = makeKey(monitorId, "numberOfColumns");
   const showBadgesKey = makeKey(monitorId, "showBadges");
+  const paginatedKey = makeKey(monitorId, "paginated");
 
   const [colorBlindMode, setColorBlindModeState] = useState<boolean>(
     loadFromLocalStorage(colorBlindKey, defaultPreferences.colorBlindMode),
@@ -79,6 +83,9 @@ export const UserPreferencesProvider = ({
     );
   const [showBadges, setShowBadgesState] = useState<boolean>(
     loadFromLocalStorage(showBadgesKey, defaultPreferences.showBadges),
+  );
+  const [paginated, setPaginatedState] = useState<boolean>(
+    loadFromLocalStorage(paginatedKey, defaultPreferences.paginated),
   );
 
   useEffect(() => {
@@ -100,11 +107,16 @@ export const UserPreferencesProvider = ({
     window.localStorage.setItem(showBadgesKey, String(showBadges));
   }, [showBadges]);
 
+  useEffect(() => {
+    window.localStorage.setItem(paginatedKey, String(paginated));
+  }, [paginated]);
+
   function reset() {
     setColorBlindModeState(defaultPreferences.colorBlindMode);
     setTextSizeState(defaultPreferences.textSize);
     setMaximumNumberOfColumnsState(defaultPreferences.maximumNumberOfColumns);
     setShowBadgesState(defaultPreferences.showBadges);
+    setPaginatedState(defaultPreferences.paginated);
   }
 
   return (
@@ -114,17 +126,20 @@ export const UserPreferencesProvider = ({
         textSize,
         maximumNumberOfColumns,
         showBadges,
+        paginated,
         setColorBlindMode: setColorBlindModeState,
         setTextSize: setTextSizeState,
         setMaximumNumberOfColumns: setMaximumNumberOfColumnsState,
         setShowBadges: setShowBadgesState,
+        setPaginated: setPaginatedState,
         reset,
         isResettable:
           colorBlindMode === defaultPreferences.colorBlindMode &&
           textSize === defaultPreferences.textSize &&
           maximumNumberOfColumns ===
             defaultPreferences.maximumNumberOfColumns &&
-          showBadges === defaultPreferences.showBadges,
+          showBadges === defaultPreferences.showBadges &&
+          paginated === defaultPreferences.paginated,
       }}
     >
       {children}

@@ -22,6 +22,8 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
     setColorBlindMode,
     showBadges,
     setShowBadges,
+    paginated,
+    setPaginated,
     reset,
     isResettable,
   } = useUserPreferences();
@@ -90,6 +92,13 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
                     id="settings-color-blind-mode"
                     value={colorBlindMode}
                     setValue={(e) => setColorBlindMode(e)}
+                    disabled={controlsEnabled}
+                  />
+                  <Checkbox
+                    label={"Paginate jobs"}
+                    id="settings-paginated"
+                    value={paginated}
+                    setValue={(e) => setPaginated(e)}
                     disabled={controlsEnabled}
                   />
                 </div>,
