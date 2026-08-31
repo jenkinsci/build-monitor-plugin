@@ -5,17 +5,20 @@
            <l:pageHeader title="${null}"
                          logoAlt="${null}"
                          searchPlaceholder="${null}"
-                         searchHelpUrl="$null}"
+                         searchHelpUrl="${null}"
                          logout="${null}" />
 
            <div id="app"
                 data-build-monitor-id="${it.displayName.hashCode()}"
+                data-build-monitor-title="${it.title}"
                 data-build-monitor-description="${it.description}"
                 data-appearance-text-size="${it.textScale}"
                 data-appearance-maximum-number-of-columns="${it.maxColumns}"
                 data-appearance-color-blind-mode="${it.colourBlindMode}"
                 data-appearance-show-badges="${it.showBadges}"
                 data-auto-refresh-every="${it.autoRefreshEvery}" />
+
+           <h1 id="build-monitor-title">${it.title}</h1>
 
            <script src="${rootURL}/plugin/build-monitor-plugin/js/bundles/app.js" type="module" />
        </l:main-panel>
