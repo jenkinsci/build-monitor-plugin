@@ -14,6 +14,7 @@ public class JobViewSerialiser extends JsonSerializer<JobView> {
     public void serialize(JobView job, JsonGenerator jgen, SerializerProvider provider) throws IOException {
         jgen.writeStartObject();
         jgen.writeObjectField("name", job.name());
+        jgen.writeObjectField("displayName", job.displayName());
         jgen.writeObjectField("url", job.url());
         jgen.writeObjectField("status", job.status());
         jgen.writeObjectField("disabled", job.isDisabled());

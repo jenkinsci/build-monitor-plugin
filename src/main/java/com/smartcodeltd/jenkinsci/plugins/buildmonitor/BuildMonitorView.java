@@ -131,6 +131,16 @@ public class BuildMonitorView extends ListView {
         return currentConfig().getDisplayJUnitProgress();
     }
 
+    @SuppressWarnings("unused") // used in the configure-entries.jelly and index.jelly
+    public boolean isDisplayJobDescription() {
+        return currentConfig().getDisplayJobDescription();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly and index.jelly
+    public boolean isDisplayJobNameOnly() {
+        return currentConfig().getDisplayJobNameOnly();
+    }
+
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public int getAutoRefreshEvery() {
         return currentConfig().getAutoRefreshEvery();
@@ -168,6 +178,8 @@ public class BuildMonitorView extends ListView {
             currentConfig()
                     .setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
             currentConfig().setDisplayJUnitProgress(json.optBoolean("displayJUnitProgress", true));
+            currentConfig().setDisplayJobDescription(json.optBoolean("displayJobDescription", true));
+            currentConfig().setDisplayJobNameOnly(json.optBoolean("displayJobNameOnly", false));
             currentConfig().setAutoRefreshEvery(json.optInt("autoRefreshEvery", 4));
 
             try {

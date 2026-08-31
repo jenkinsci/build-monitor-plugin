@@ -80,6 +80,10 @@
       <f:checkbox id="displayCommitters" field="displayCommitters" />
     </f:entry>
 
+    <f:entry title="${%Display job name only}">
+      <f:checkbox id="displayJobNameOnly" field="displayJobNameOnly" />
+    </f:entry>
+
     <f:entry title="${%Failure Analyzer Plugin: Field to display}" help="${descriptor.getHelpFile('buildFailureAnalyzerDisplayedField')}">
       <div class="jenkins-select">
         <select name="buildFailureAnalyzerDisplayedField" class="jenkins-select__input">
@@ -132,6 +136,10 @@
 
     <f:entry title="${%Show badges}">
       <f:checkbox id="showBadges" field="showBadges" />
+    </f:entry>
+
+    <f:entry title="${%Show job description}">
+      <f:checkbox id="displayJobDescription" field="displayJobDescription" />
     </f:entry>
 
     <f:entry title="${%Color blind mode}">
