@@ -28,6 +28,7 @@ public class Config implements Describable<Config> {
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
     private Boolean displayJUnitProgress;
     private Integer autoRefreshEvery;
+    private Boolean paginated;
 
     public static Config defaultConfig() {
         return new Config();
@@ -136,6 +137,14 @@ public class Config implements Describable<Config> {
 
     public void setTextScale(double scale) {
         this.textScale = scale;
+    }
+
+    public boolean getPaginated() {
+        return Optional.ofNullable(paginated).orElse(true);
+    }
+
+    public void setPaginated(boolean flag) {
+        this.paginated = flag;
     }
 
     @Override

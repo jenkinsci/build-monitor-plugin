@@ -3,4 +3,5 @@ export interface UserPreferences {
   maximumNumberOfColumns: number;
   colorBlindMode: boolean;
   showBadges: boolean;
+  paginated: boolean;
 }

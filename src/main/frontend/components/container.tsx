@@ -6,7 +6,7 @@ import PagedGrid from "./paged-grid.tsx";
 
 function Container() {
   const { jobs, isLoading } = useJobs();
-  const { textSize, maximumNumberOfColumns } = useUserPreferences();
+  const { textSize, maximumNumberOfColumns, paginated } = useUserPreferences();
 
   return (
     <>
@@ -18,6 +18,7 @@ function Container() {
               jobs={jobs}
               textSize={textSize}
               maximumNumberOfColumns={maximumNumberOfColumns}
+              paginated={paginated}
             />
           )}
         </>

@@ -7,6 +7,7 @@
       displayJUnitProgress: false
       maxColumns: 2
       order: "byStatus"
+      paginated: false
       showBadges: false
     includeRegex: ".+\\/(my-job-.*)\\/(master|demo)"
     name: "My-Monitor"
