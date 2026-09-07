@@ -1,5 +1,6 @@
 export interface Job {
   name: string;
+  displayName: string;
   url: string;
   status: JobStatus;
   disabled: boolean;
