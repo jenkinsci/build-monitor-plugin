@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Job } from "../models/job.ts";
 import {
   getColumnCount,
+  getMinimumCellHeight,
   getRowsPerPage,
   paginateItems,
 } from "../utils/grid-pagination.ts";
@@ -17,9 +18,15 @@ interface PagedGridProps {
   jobs: Job[];
   textSize: number;
   maximumNumberOfColumns: number;
+  paginated: boolean;
 }
 
-function PagedGrid({ jobs, textSize, maximumNumberOfColumns }: PagedGridProps) {
+function PagedGrid({
+  jobs,
+  textSize,
+  maximumNumberOfColumns,
+  paginated,
+}: PagedGridProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [viewportHeight, setViewportHeight] = useState(
     getInitialViewportHeight,
@@ -29,9 +36,11 @@ function PagedGrid({ jobs, textSize, maximumNumberOfColumns }: PagedGridProps) {
 
   const columnCount = getColumnCount(jobs.length, maximumNumberOfColumns);
   const rowsPerPage = getRowsPerPage({ viewportHeight, textSize });
+
+  // Without pagination every job goes on a single, vertically scrolled page
   const pages = useMemo(
-    () => paginateItems(jobs, columnCount, rowsPerPage),
-    [jobs, columnCount, rowsPerPage],
+    () => (paginated ? paginateItems(jobs, columnCount, rowsPerPage) : [jobs]),
+    [paginated, jobs, columnCount, rowsPerPage],
   );
 
   const scrollToPage = (pageIndex: number, behavior: ScrollBehavior = "smooth") => {
@@ -75,12 +84,12 @@ function PagedGrid({ jobs, textSize, maximumNumberOfColumns }: PagedGridProps) {
   }, [pages.length]);
 
   useEffect(() => {
-    if (viewportWidth <= 0) {
+    if (!paginated || viewportWidth <= 0) {
       return;
     }
 
     scrollToPage(currentPage, "auto");
-  }, [viewportWidth]);
+  }, [paginated, viewportWidth]);
 
   useEffect(() => {
     const lastPageIndex = Math.max(pages.length - 1, 0);
@@ -115,22 +124,34 @@ function PagedGrid({ jobs, textSize, maximumNumberOfColumns }: PagedGridProps) {
     <div className="bm-grid-shell">
       <div
         ref={viewportRef}
-        className="bm-grid-viewport"
-        onScroll={handleScroll}
+        className={
+          "bm-grid-viewport" + (paginated ? "" : " bm-grid-viewport--scrolling")
+        }
+        onScroll={paginated ? handleScroll : undefined}
       >
         <div className="bm-grid-track">
           {pages.map((pageJobs, pageIndex) => (
             <section
               key={`page-${pageIndex}`}
               className="bm-grid-page"
-              aria-label={`Page ${pageIndex + 1} of ${pages.length}`}
+              aria-label={
+                paginated
+                  ? `Page ${pageIndex + 1} of ${pages.length}`
+                  : undefined
+              }
             >
               <div
                 className="bm-grid"
                 style={{
                   fontSize: textSize + "rem",
                   gridTemplateColumns: "1fr ".repeat(columnCount),
-                  gridTemplateRows: "minmax(0, 1fr) ".repeat(rowsPerPage),
+                  ...(paginated
+                    ? {
+                        gridTemplateRows: "minmax(0, 1fr) ".repeat(rowsPerPage),
+                      }
+                    : {
+                        gridAutoRows: `minmax(${getMinimumCellHeight(textSize)}px, auto)`,
+                      }),
                 }}
               >
                 {pageJobs.map((job) => (

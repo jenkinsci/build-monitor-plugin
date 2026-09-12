@@ -117,6 +117,11 @@ public class BuildMonitorView extends ListView {
     }
 
     @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public boolean isPaginated() {
+        return currentConfig().getPaginated();
+    }
+
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
     public String currentDisplayBadges() {
         return currentConfig().getDisplayBadges().name();
     }
@@ -168,6 +173,7 @@ public class BuildMonitorView extends ListView {
 
             currentConfig().setColourBlindMode(json.optBoolean("colourBlindMode", false));
             currentConfig().setShowBadges(json.optBoolean("showBadges", true));
+            currentConfig().setPaginated(json.optBoolean("paginated", true));
             currentConfig().setDisplayBadges(req.getParameter("displayBadges"));
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
             currentConfig().setJobStatusIgnoreRunning(json.optBoolean("jobStatusIgnoreRunning", false));

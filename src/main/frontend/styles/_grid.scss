@@ -57,6 +57,25 @@
   @media screen and (prefers-reduced-motion: no-preference) {
     scroll-behavior: smooth;
   }
+
+  // Pagination disabled: one page scrolled vertically rather than fitted to the
+  // screen, with the rows taking their height from the grid
+  &--scrolling {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-type: none;
+    touch-action: pan-y pinch-zoom;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      display: revert;
+    }
+
+    .bm-grid-track,
+    .bm-grid {
+      height: auto;
+    }
+  }
 }
 
 .bm-grid-track {

@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 import hudson.util.FormValidation;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
@@ -41,7 +40,13 @@ class BuildMonitorDescriptorTest {
     }
 
     private String htmlDecoded(String message) {
-        return StringEscapeUtils.unescapeHtml(message);
+        // FormValidation escapes the message; decode the handful of entities it can produce
+        // rather than pulling in a library just for a test helper.
+        return message.replace("&#039;", "'")
+                .replace("&quot;", "\"")
+                .replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&amp;", "&");
     }
 
     private String itShouldAllow(String regex) {
