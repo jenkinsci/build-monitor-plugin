@@ -24,6 +24,7 @@ $cell-padding: 1rem;
   outline: none;
   overflow: hidden;
   text-align: center;
+  overflow-wrap: anywhere;
   color: var(
     --bm-contrast,
     color-mix(in srgb, var(--bm-cell-color) 75%, var(--text-color))
