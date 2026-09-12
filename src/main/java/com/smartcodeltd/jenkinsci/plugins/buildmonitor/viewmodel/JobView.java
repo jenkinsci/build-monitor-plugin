@@ -22,19 +22,27 @@ public class JobView {
     private final Job<?, ?> job;
     private final boolean isPipelineJob;
     private final RelativeLocation relative;
+    private final boolean jobStatusIgnoreRunning;
 
     private final List<Feature> features = new ArrayList<>();
 
-    public static JobView of(Job<?, ?> job, List<Feature> features, boolean isPipelineJob) {
-        return new JobView(job, features, isPipelineJob, RelativeLocation.of(job), new Date());
+    public static JobView of(
+            Job<?, ?> job, List<Feature> features, boolean isPipelineJob, boolean jobStatusIgnoreRunning) {
+        return new JobView(job, features, isPipelineJob, RelativeLocation.of(job), new Date(), jobStatusIgnoreRunning);
     }
 
     public JobView(
-            Job<?, ?> job, List<Feature> features, boolean isPipelineJob, RelativeLocation relative, Date systemTime) {
+            Job<?, ?> job,
+            List<Feature> features,
+            boolean isPipelineJob,
+            RelativeLocation relative,
+            Date systemTime,
+            boolean jobStatusIgnoreRunning) {
         this.job = job;
         this.isPipelineJob = isPipelineJob;
         this.relative = relative;
         this.systemTime = systemTime;
+        this.jobStatusIgnoreRunning = jobStatusIgnoreRunning;
 
         for (Feature feature : features) {
             this.features.add(feature.of(this));
@@ -82,6 +90,10 @@ public class JobView {
 
     public int progress() {
         return lastBuild().progress();
+    }
+
+    public boolean jobStatusIgnoreRunning() {
+        return jobStatusIgnoreRunning;
     }
 
     public boolean isDisabled() {
