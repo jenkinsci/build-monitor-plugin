@@ -134,6 +134,10 @@
       <f:checkbox id="showBadges" field="showBadges" />
     </f:entry>
 
+    <f:entry title="${%Paginate jobs}" help="${descriptor.getHelpFile('paginated')}">
+      <f:checkbox id="paginated" field="paginated" />
+    </f:entry>
+
     <f:entry title="${%Color blind mode}">
       <f:checkbox id="colourBlindMode" field="colourBlindMode" />
     </f:entry>

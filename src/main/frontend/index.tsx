@@ -27,6 +27,7 @@ root.render(
           colorBlindMode:
             rootElement.dataset.appearanceColorBlindMode === "true",
           showBadges: rootElement.dataset.appearanceShowBadges === "true",
+          paginated: rootElement.dataset.appearancePaginated === "true",
         }}
       >
         <JobsProvider

@@ -56,6 +56,11 @@ public class BuildMonitorViewUtils {
             return this;
         }
 
+        public FluentBuildMonitorView withoutPagination() {
+            view.getConfig().setPaginated(false);
+            return this;
+        }
+
         public BuildMonitorView get() {
             return view;
         }

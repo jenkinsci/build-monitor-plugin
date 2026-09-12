@@ -53,6 +53,33 @@ public class BuildMonitorViewPage extends JenkinsPage<BuildMonitorViewPage> {
         return this;
     }
 
+    public BuildMonitorViewPage hasNoPageControls() {
+        assertThat(page.locator(".bm-grid-pagination")).hasCount(0);
+        return this;
+    }
+
+    public BuildMonitorViewPage scrollsVertically() {
+        if (!overflowsVertically()) {
+            throw new AssertionError("Expected the jobs to overflow the viewport so that it can be scrolled");
+        }
+
+        return this;
+    }
+
+    public BuildMonitorViewPage doesNotScrollVertically() {
+        if (overflowsVertically()) {
+            throw new AssertionError("Expected the jobs to be paginated to fit the viewport, without scrolling");
+        }
+
+        return this;
+    }
+
+    private boolean overflowsVertically() {
+        Locator viewport = page.locator(".bm-grid-viewport");
+
+        return (Boolean) viewport.evaluate("viewport => viewport.scrollHeight > viewport.clientHeight + 1");
+    }
+
     public BuildMonitorViewPage hasPageCount(int pageCount) {
         Locator pages = page.locator(".bm-grid-page");
         assertThat(pages).hasCount(pageCount);

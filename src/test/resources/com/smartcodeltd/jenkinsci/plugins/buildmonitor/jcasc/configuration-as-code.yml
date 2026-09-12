@@ -12,4 +12,5 @@ jenkins:
           colourBlindMode: true
           displayJUnitProgress: false
           showBadges: false
+          paginated: false
           autoRefreshEvery: 10
