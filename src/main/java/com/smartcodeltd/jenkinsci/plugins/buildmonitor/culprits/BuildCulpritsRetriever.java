@@ -12,14 +12,19 @@ import java.util.Set;
  */
 public abstract class BuildCulpritsRetriever {
 
+    private StaticJenkinsAPIs staticJenkinsAPIs;
+
     public static BuildCulpritsRetriever getInstanceForRun(Run<?, ?> run, StaticJenkinsAPIs staticJenkinsAPIs) {
+        BuildCulpritsRetriever retriever;
         if (PipelineHelper.isWorkflowRun(run, staticJenkinsAPIs)) {
-            return new BuildCulpritsWorkflowRun();
+            retriever = new BuildCulpritsWorkflowRun();
         } else if (run instanceof AbstractBuild) {
-            return new BuildCulpritsAbstractBuild();
+            retriever = new BuildCulpritsAbstractBuild();
         } else {
-            return new BuildCulpritsNotImplemented();
+            retriever = new BuildCulpritsNotImplemented();
         }
+        retriever.staticJenkinsAPIs = staticJenkinsAPIs;
+        return retriever;
     }
 
     public abstract Set<String> getCulprits(Run<?, ?> run);
@@ -34,7 +39,10 @@ public abstract class BuildCulpritsRetriever {
             if (upstreamCause != null) {
                 Run<?, ?> upstreamRun = upstreamCause.getUpstreamRun();
                 if (upstreamRun != null) {
-                    committers.addAll(getCommitters(upstreamRun));
+                    // Use the correct retriever for the upstream run type — it may differ from this one
+                    // (e.g. a Pipeline triggered by a FreeStyleProject).
+                    BuildCulpritsRetriever upstreamRetriever = getInstanceForRun(upstreamRun, staticJenkinsAPIs);
+                    committers.addAll(upstreamRetriever.getCommitters(upstreamRun));
                 }
             }
         }
