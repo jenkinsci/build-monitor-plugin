@@ -37,7 +37,7 @@
     "eslint-plugin-simple-import-sort": "14.0.0",
     "jsdom": "30.1.0",
     "neostandard": "0.13.0",
-    "prettier": "3.9.6",
+    "prettier": "3.9.8",
     "sass-embedded": "1.104.1",
     "typescript": "7.0.2",
     "vite": "8.3.0",
