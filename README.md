@@ -6,15 +6,16 @@
 
 ## Introduction
 
-Build Monitor Plugin provides a highly visible view of the status of selected Jenkins jobs.
+The Build Monitor Plugin provides a highly visible dashboard showing the status of selected Jenkins jobs.
 
-It easily accommodates different computer screen sizes and is ideal as an Extreme Feedback Device to be displayed on a screen on your office wall.
+It accommodates different screen sizes and is ideal as an Extreme Feedback Device displayed on an office wall monitor.
 
 Have a question? Perhaps it's already been answered - check the [FAQ](#faq) section below.
 
 ## Features
 
-* Displays the status and progress of selected jobs. By default, the view refreshes every 4 seconds. This can be configured.
+* Displays the status and progress of selected jobs.
+* The view updates automatically every few seconds using AJAX.
 * Displays the names of people who might be responsible for "breaking the build".
 * Supports [Claim plugin](https://plugins.jenkins.io/claim/), so that you can see who's fixing a broken build.
 * Supports [View Job Filters](https://plugins.jenkins.io/view-job-filters/), so that you can easily create Build Monitors for "slow builds", "only failing", etc.
@@ -29,11 +30,18 @@ Have a question? Perhaps it's already been answered - check the [FAQ](#faq) sect
 
 ## Getting started
 
-To create a new Build Monitor View, click on the "New View" tab, select "Build Monitor View" and select jobs you wish to display on the monitor.
+To create a new Build Monitor View:
 
-Simple, right? :-) You can have as many Build Monitor Views as you want - the most popular approach is to have one per team or one per project.
+1. Click the **New View** tab in Jenkins.
+2. Select **Build Monitor View**.
+3. Choose the jobs you want to display.
 
-# A picture is worth a thousand words
+Simple, right? :-) 
+
+You can create multiple Build Monitor Views.  
+A common approach is to create one monitor per team or project.
+
+## A picture is worth a thousand words
 
 ![Adding jobs](docs/empty.png)
 ![Three columns view](docs/jobs.png)
@@ -56,7 +64,7 @@ Wouldn't it be great to know _what_ made your build fail? Well of course it woul
 You have several options here:
 
 1. **review the granularity of your jobs**: If you have too many low-level jobs displayed on one screen, consider consolidating them using [Promoted Builds Plugin](https://plugins.jenkins.io/promoted-builds/) or [MultiJob Plugin](https://plugins.jenkins.io/jenkins-multijob-plugin/)
-1. **use job filters**: Build Monitor supports Jenkins [View Job Filters Plugin](https://plugins.jenkins.io/view-job-filters/), if you have it installed
+1. **use job filters**: Build Monitor supports Jenkins [View Job Filters Plugin](https://plugins.jenkins.io/view-job-filters/), if you have the plugin installed
 1. get a bigger screen ...
 
 ## Your feedback matters!
