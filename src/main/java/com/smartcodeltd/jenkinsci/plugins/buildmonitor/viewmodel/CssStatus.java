@@ -28,7 +28,7 @@ public class CssStatus {
             status = "disabled";
         }
 
-        if (job.isRunning()) {
+        if (job.isRunning() && !job.jobStatusIgnoreRunning()) {
             status = "running";
         }
 
