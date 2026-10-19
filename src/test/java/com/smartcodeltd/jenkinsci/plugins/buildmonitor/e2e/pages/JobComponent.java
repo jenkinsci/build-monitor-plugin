@@ -62,6 +62,49 @@ public class JobComponent {
         return this;
     }
 
+    public JobComponent hasNameContainedWithinCell() {
+        Locator heading = component.locator("h2");
+
+        Number overflow = (Number) heading.evaluate("heading => {"
+                + "  const bounds = heading.closest('.bm-cell').getBoundingClientRect();"
+                + "  const name = heading.getBoundingClientRect();"
+                + "  return Math.max(bounds.left - name.left, name.right - bounds.right, 0);"
+                + "}");
+
+        if (overflow.doubleValue() > 0.5) {
+            throw new AssertionError(
+                    "Job name '" + heading.textContent() + "' overflows its cell by " + overflow + "px");
+        }
+
+        return this;
+    }
+
+    public JobComponent hasNameWrappedOntoMultipleLines() {
+        Locator heading = component.locator("h2");
+
+        Number lines = (Number) heading.evaluate("heading => {"
+                + "  const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);"
+                + "  const tops = new Set();"
+                + "  let node;"
+                + "  while ((node = walker.nextNode())) {"
+                + "    for (let i = 0; i < node.textContent.length; i++) {"
+                + "      const range = document.createRange();"
+                + "      range.setStart(node, i);"
+                + "      range.setEnd(node, i + 1);"
+                + "      tops.add(Math.round(range.getBoundingClientRect().top));"
+                + "    }"
+                + "  }"
+                + "  return tops.size;"
+                + "}");
+
+        if (lines.intValue() < 2) {
+            throw new AssertionError(
+                    "Job name '" + heading.textContent() + "' fits on one line, so it no longer exercises wrapping");
+        }
+
+        return this;
+    }
+
     public JobComponent hasStage(String stage) {
         assertThat(component).containsText(stage);
         return this;
