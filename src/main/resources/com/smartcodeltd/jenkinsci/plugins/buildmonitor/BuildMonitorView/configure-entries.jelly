@@ -119,6 +119,9 @@
       <f:number min="1" clazz="number" />
     </f:entry>
   </f:section>
+  <f:entry title="${%Ignore running status color}" help="${descriptor.getHelpFile('jobStatusIgnoreRunning')}">
+    <f:checkbox id="jobStatusIgnoreRunning" field="jobStatusIgnoreRunning"/>
+  </f:entry>
 
   <f:section title="${%Appearance}"
              description="${%These are the default settings for this view. Users can change these separately in the 'More actions' menu.}">
