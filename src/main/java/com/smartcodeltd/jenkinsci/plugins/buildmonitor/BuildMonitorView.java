@@ -141,6 +141,11 @@ public class BuildMonitorView extends ListView {
         return currentConfig().getAutoRefreshEvery();
     }
 
+    @SuppressWarnings("unused") // used in the configure-entries.jelly form
+    public boolean getJobStatusIgnoreRunning() {
+        return currentConfig().getJobStatusIgnoreRunning();
+    }
+
     @Override
     protected void initColumns() {}
 
@@ -171,6 +176,7 @@ public class BuildMonitorView extends ListView {
             currentConfig().setPaginated(json.optBoolean("paginated", true));
             currentConfig().setDisplayBadges(req.getParameter("displayBadges"));
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
+            currentConfig().setJobStatusIgnoreRunning(json.optBoolean("jobStatusIgnoreRunning", false));
             currentConfig()
                     .setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
             currentConfig().setDisplayJUnitProgress(json.optBoolean("displayJUnitProgress", true));

@@ -15,6 +15,7 @@ public class JobViewRecipe implements Supplier<JobView> {
     private Date systemTime = new Date();
     private List<Feature> features = new ArrayList<>();
     private boolean isPipeline;
+    private boolean jobStatusIgnoreRunning;
 
     public JobViewRecipe of(Job<?, ?> job) {
         this.job = job;
@@ -43,8 +44,13 @@ public class JobViewRecipe implements Supplier<JobView> {
         return this;
     }
 
+    public JobViewRecipe ignoreRunningStatus(boolean ignore) {
+        this.jobStatusIgnoreRunning = ignore;
+        return this;
+    }
+
     @Override
     public JobView get() {
-        return new JobView(job, features, isPipeline, relative, systemTime);
+        return new JobView(job, features, isPipeline, relative, systemTime, jobStatusIgnoreRunning);
     }
 }
