@@ -1,6 +1,7 @@
 import { useUserPreferences } from "../context/user-preference-provider.tsx";
 import { Job } from "../models/job";
 import { buildStatusToClass } from "../utils/utils.ts";
+import BuildDescription from "./build-description.tsx";
 import Label from "./label";
 import Badges from "./snippets/badges.tsx";
 import BuildNumber from "./snippets/build-number.tsx";
@@ -13,8 +14,7 @@ function Cell({ job }: { job: Job }) {
   const { colorBlindMode } = useUserPreferences();
 
   return (
-    <a
-      href={job.url}
+    <div
       className={
         "bm-cell bm-cell" +
         buildStatusToClass(job) +
@@ -22,6 +22,7 @@ function Cell({ job }: { job: Job }) {
         (colorBlindMode ? "bm-cell--color-blind-mode" : "")
       }
     >
+      <a className="bm-cell__link" href={job.url} aria-label={job.name} />
       <div
         className={"bm-cell-duration bm-cell-duration--animate"}
         style={{ width: job.progress + "%" }}
@@ -42,7 +43,7 @@ function Cell({ job }: { job: Job }) {
       {job.headline && !job.claim?.active && <Label text={job.headline} />}
 
       {job.lastCompletedBuild.description && (
-        <Label text={job.lastCompletedBuild.description} />
+        <BuildDescription description={job.lastCompletedBuild.description} />
       )}
 
       <Claim job={job} />
@@ -55,7 +56,7 @@ function Cell({ job }: { job: Job }) {
 
         <BuildTime job={job} />
       </div>
-    </a>
+    </div>
   );
 }
 
