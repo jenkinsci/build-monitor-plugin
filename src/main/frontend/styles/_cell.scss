@@ -126,6 +126,30 @@ $cell-padding: 1rem;
     z-index: 10;
   }
 
+  &__link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+  }
+
+  &__link:focus-visible {
+    outline: 0.25rem solid currentColor;
+    outline-offset: -0.25rem;
+  }
+
+  & > :not(.bm-cell__link) {
+    pointer-events: none;
+
+    :is(a, button, input, select, textarea, [role="button"], [tabindex]) {
+      pointer-events: auto;
+    }
+  }
+
+  &__description a {
+    text-decoration: underline;
+  }
+
   &__details {
     position: absolute;
     left: $cell-padding;
