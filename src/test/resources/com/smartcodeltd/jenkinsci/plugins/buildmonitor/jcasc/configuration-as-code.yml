@@ -13,4 +13,5 @@ jenkins:
           displayJUnitProgress: false
           showBadges: false
           paginated: false
+          fadeIn: false
           autoRefreshEvery: 10

@@ -80,6 +80,31 @@ public class BuildMonitorViewPage extends JenkinsPage<BuildMonitorViewPage> {
         return (Boolean) viewport.evaluate("viewport => viewport.scrollHeight > viewport.clientHeight + 1");
     }
 
+    public BuildMonitorViewPage fadesInJobs() {
+        if (countAnimatedJobs() == 0) {
+            throw new AssertionError("Expected the jobs to fade in");
+        }
+
+        return this;
+    }
+
+    public BuildMonitorViewPage doesNotFadeInJobs() {
+        int animated = countAnimatedJobs();
+        if (animated > 0) {
+            throw new AssertionError("Expected no job to fade in, but " + animated + " did");
+        }
+
+        return this;
+    }
+
+    private int countAnimatedJobs() {
+        return (Integer) page.locator(".bm-grid")
+                .first()
+                .evaluate("grid => [...grid.querySelectorAll('.bm-cell')]"
+                        + ".filter(cell => cell.getAnimations().some(a => a.animationName === 'scale-in'))"
+                        + ".length");
+    }
+
     public BuildMonitorViewPage hasPageCount(int pageCount) {
         Locator pages = page.locator(".bm-grid-page");
         assertThat(pages).hasCount(pageCount);

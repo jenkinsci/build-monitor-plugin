@@ -19,6 +19,7 @@ interface PagedGridProps {
   textSize: number;
   maximumNumberOfColumns: number;
   paginated: boolean;
+  fadeIn: boolean;
 }
 
 function PagedGrid({
@@ -26,6 +27,7 @@ function PagedGrid({
   textSize,
   maximumNumberOfColumns,
   paginated,
+  fadeIn,
 }: PagedGridProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [viewportHeight, setViewportHeight] = useState(
@@ -141,7 +143,7 @@ function PagedGrid({
               }
             >
               <div
-                className="bm-grid"
+                className={"bm-grid" + (fadeIn ? " bm-grid--fade-in" : "")}
                 style={{
                   fontSize: textSize + "rem",
                   gridTemplateColumns: "1fr ".repeat(columnCount),

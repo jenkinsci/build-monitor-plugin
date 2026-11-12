@@ -61,6 +61,11 @@ public class BuildMonitorViewUtils {
             return this;
         }
 
+        public FluentBuildMonitorView withoutFadeIn() {
+            view.getConfig().setFadeIn(false);
+            return this;
+        }
+
         public BuildMonitorView get() {
             return view;
         }
