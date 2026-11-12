@@ -24,6 +24,8 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
     setShowBadges,
     paginated,
     setPaginated,
+    fadeIn,
+    setFadeIn,
     reset,
     isResettable,
   } = useUserPreferences();
@@ -99,6 +101,13 @@ const OutsideButtonWithDropdown = ({ amountOfJobs }: OptionsButtonProps) => {
                     id="settings-paginated"
                     value={paginated}
                     setValue={(e) => setPaginated(e)}
+                    disabled={controlsEnabled}
+                  />
+                  <Checkbox
+                    label={"Fade in jobs"}
+                    id="settings-fade-in"
+                    value={fadeIn}
+                    setValue={(e) => setFadeIn(e)}
                     disabled={controlsEnabled}
                   />
                 </div>,

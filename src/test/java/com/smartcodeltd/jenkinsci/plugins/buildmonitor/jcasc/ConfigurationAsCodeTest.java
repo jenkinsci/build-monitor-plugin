@@ -44,6 +44,7 @@ class ConfigurationAsCodeTest {
         assertThat(view.getConfig().getOrder(), isA(ByStatus.class));
         assertThat(view.getConfig().getShowBadges(), is(false));
         assertThat(view.getConfig().getPaginated(), is(false));
+        assertThat(view.getConfig().getFadeIn(), is(false));
         assertThat(view.getConfig().getAutoRefreshEvery(), is(10));
     }
 
