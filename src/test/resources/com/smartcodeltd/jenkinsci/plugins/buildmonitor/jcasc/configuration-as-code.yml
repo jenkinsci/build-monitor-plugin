@@ -11,6 +11,7 @@ jenkins:
           displayCommitters: false
           colourBlindMode: true
           displayJUnitProgress: false
+          jobStatusIgnoreRunning: false
           showBadges: false
           paginated: false
           autoRefreshEvery: 10
