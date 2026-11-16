@@ -29,11 +29,11 @@ public class FailureCauseManagementPage extends JenkinsPage<FailureCauseManageme
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add Indication"))
                 .click();
 
-        page.getByRole(
-                        AriaRole.BUTTON,
-                        new Page.GetByRoleOptions()
-                                .setName("Build Log Indication")
-                                .setExact(true))
+        // Dropdown items have the menuitem role since jenkinsci/jenkins#26321, and the button role before it
+        Page.GetByRoleOptions buildLogIndication =
+                new Page.GetByRoleOptions().setName("Build Log Indication").setExact(true);
+        page.getByRole(AriaRole.MENUITEM, buildLogIndication)
+                .or(page.getByRole(AriaRole.BUTTON, buildLogIndication))
                 .click();
 
         page.locator("input[name=\"pattern\"]").fill(pattern);
