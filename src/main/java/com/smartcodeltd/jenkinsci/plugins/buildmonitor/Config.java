@@ -29,6 +29,7 @@ public class Config implements Describable<Config> {
     private Boolean displayJUnitProgress;
     private Integer autoRefreshEvery;
     private Boolean paginated;
+    private Boolean fadeIn;
 
     public static Config defaultConfig() {
         return new Config();
@@ -145,6 +146,14 @@ public class Config implements Describable<Config> {
 
     public void setPaginated(boolean flag) {
         this.paginated = flag;
+    }
+
+    public boolean getFadeIn() {
+        return Optional.ofNullable(fadeIn).orElse(true);
+    }
+
+    public void setFadeIn(boolean flag) {
+        this.fadeIn = flag;
     }
 
     @Override

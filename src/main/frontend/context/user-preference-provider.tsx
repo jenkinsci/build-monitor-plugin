@@ -12,11 +12,13 @@ interface MonitorPreferences {
   maximumNumberOfColumns: number;
   showBadges: boolean;
   paginated: boolean;
+  fadeIn: boolean;
   setColorBlindMode: (val: boolean) => void;
   setTextSize: (val: number) => void;
   setMaximumNumberOfColumns: (val: number) => void;
   setShowBadges: (val: boolean) => void;
   setPaginated: (val: boolean) => void;
+  setFadeIn: (val: boolean) => void;
   reset: () => void;
   isResettable: boolean;
 }
@@ -60,6 +62,7 @@ export const UserPreferencesProvider = ({
     colorBlindMode: boolean;
     showBadges: boolean;
     paginated: boolean;
+    fadeIn: boolean;
   };
 }) => {
   const colorBlindKey = makeKey(monitorId, "colorBlind");
@@ -67,6 +70,7 @@ export const UserPreferencesProvider = ({
   const maximumNumberOfColumnsKey = makeKey(monitorId, "numberOfColumns");
   const showBadgesKey = makeKey(monitorId, "showBadges");
   const paginatedKey = makeKey(monitorId, "paginated");
+  const fadeInKey = makeKey(monitorId, "fadeIn");
 
   const [colorBlindMode, setColorBlindModeState] = useState<boolean>(
     loadFromLocalStorage(colorBlindKey, defaultPreferences.colorBlindMode),
@@ -86,6 +90,9 @@ export const UserPreferencesProvider = ({
   );
   const [paginated, setPaginatedState] = useState<boolean>(
     loadFromLocalStorage(paginatedKey, defaultPreferences.paginated),
+  );
+  const [fadeIn, setFadeInState] = useState<boolean>(
+    loadFromLocalStorage(fadeInKey, defaultPreferences.fadeIn),
   );
 
   useEffect(() => {
@@ -111,12 +118,17 @@ export const UserPreferencesProvider = ({
     window.localStorage.setItem(paginatedKey, String(paginated));
   }, [paginated]);
 
+  useEffect(() => {
+    window.localStorage.setItem(fadeInKey, String(fadeIn));
+  }, [fadeIn]);
+
   function reset() {
     setColorBlindModeState(defaultPreferences.colorBlindMode);
     setTextSizeState(defaultPreferences.textSize);
     setMaximumNumberOfColumnsState(defaultPreferences.maximumNumberOfColumns);
     setShowBadgesState(defaultPreferences.showBadges);
     setPaginatedState(defaultPreferences.paginated);
+    setFadeInState(defaultPreferences.fadeIn);
   }
 
   return (
@@ -127,11 +139,13 @@ export const UserPreferencesProvider = ({
         maximumNumberOfColumns,
         showBadges,
         paginated,
+        fadeIn,
         setColorBlindMode: setColorBlindModeState,
         setTextSize: setTextSizeState,
         setMaximumNumberOfColumns: setMaximumNumberOfColumnsState,
         setShowBadges: setShowBadgesState,
         setPaginated: setPaginatedState,
+        setFadeIn: setFadeInState,
         reset,
         isResettable:
           colorBlindMode === defaultPreferences.colorBlindMode &&
@@ -139,7 +153,8 @@ export const UserPreferencesProvider = ({
           maximumNumberOfColumns ===
             defaultPreferences.maximumNumberOfColumns &&
           showBadges === defaultPreferences.showBadges &&
-          paginated === defaultPreferences.paginated,
+          paginated === defaultPreferences.paginated &&
+          fadeIn === defaultPreferences.fadeIn,
       }}
     >
       {children}

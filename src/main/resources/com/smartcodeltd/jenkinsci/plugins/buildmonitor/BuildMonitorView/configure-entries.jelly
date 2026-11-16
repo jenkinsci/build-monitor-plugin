@@ -138,6 +138,10 @@
       <f:checkbox id="paginated" field="paginated" />
     </f:entry>
 
+    <f:entry title="${%Fade in jobs}" help="${descriptor.getHelpFile('fadeIn')}">
+      <f:checkbox id="fadeIn" field="fadeIn" />
+    </f:entry>
+
     <f:entry title="${%Color blind mode}">
       <f:checkbox id="colourBlindMode" field="colourBlindMode" />
     </f:entry>

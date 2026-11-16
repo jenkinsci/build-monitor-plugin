@@ -4,4 +4,5 @@ export interface UserPreferences {
   colorBlindMode: boolean;
   showBadges: boolean;
   paginated: boolean;
+  fadeIn: boolean;
 }
